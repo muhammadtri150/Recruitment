@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FinalProject_adp3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="TB_ACCESS_MENU">
+    <Key>
+      <PropertyRef Name="ACCESS_MENU_ID" />
+    </Key>
+    <Property Name="ACCESS_MENU_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ROLE_ID" Type="Int32" Nullable="false" />
+    <Property Name="MENU_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="TB_MENU" Relationship="Self.FK_TB_ACCESS_MENU_TB_MENU" FromRole="TB_ACCESS_MENU" ToRole="TB_MENU" />
+    <NavigationProperty Name="TB_ACCESS_MENU1" Relationship="FinalProject_adp3Model.FK_TB_ACCESS_MENU_TB_ACCESS_MENU" FromRole="TB_ACCESS_MENU" ToRole="TB_ACCESS_MENU1" />
+    <NavigationProperty Name="TB_ACCESS_MENU2" Relationship="FinalProject_adp3Model.FK_TB_ACCESS_MENU_TB_ACCESS_MENU" FromRole="TB_ACCESS_MENU1" ToRole="TB_ACCESS_MENU" />
+    <NavigationProperty Name="TB_ROLE" Relationship="FinalProject_adp3Model.FK_TB_ACCESS_MENU_TB_MENU1" FromRole="TB_ACCESS_MENU" ToRole="TB_ROLE" />
+  </EntityType>
+  <EntityType Name="TB_MENU">
+    <Key>
+      <PropertyRef Name="MENU_ID" />
+    </Key>
+    <Property Name="MENU_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TITLE_MENU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="TB_ACCESS_MENU" Relationship="Self.FK_TB_ACCESS_MENU_TB_MENU" FromRole="TB_MENU" ToRole="TB_ACCESS_MENU" />
+    <NavigationProperty Name="TB_SUBMENU" Relationship="Self.FK_TB_SUBMENU_TB_MENU" FromRole="TB_MENU" ToRole="TB_SUBMENU" />
+    <Property Name="LOGO_MENU" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="TB_ROLE">
+    <Key>
+      <PropertyRef Name="ROLE_ID" />
+    </Key>
+    <Property Name="ROLE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ROLE_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="TB_USER" Relationship="Self.FK_TB_USER_TB_ROLE" FromRole="TB_ROLE" ToRole="TB_USER" />
+    <NavigationProperty Name="TB_ACCESS_MENU" Relationship="FinalProject_adp3Model.FK_TB_ACCESS_MENU_TB_MENU1" FromRole="TB_ROLE" ToRole="TB_ACCESS_MENU" />
+  </EntityType>
+  <EntityType Name="TB_SUBMENU">
+    <Key>
+      <PropertyRef Name="SUB_MENU_ID" />
+    </Key>
+    <Property Name="MENU_ID" Type="Int32" Nullable="false" />
+    <Property Name="SUB_MENU_ID" Type="Int32" Nullable="false" />
+    <Property Name="TITLE_SUBMENU" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="TB_MENU" Relationship="Self.FK_TB_SUBMENU_TB_MENU" FromRole="TB_SUBMENU" ToRole="TB_MENU" />
+    <Property Name="LOGO_SUBMENU" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="TB_USER">
+    <Key>
+      <PropertyRef Name="USER_ID" />
+    </Key>
+    <Property Name="USER_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ROLE_ID" Type="Int32" Nullable="false" />
+    <Property Name="USERNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FULL_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="TB_ROLE" Relationship="Self.FK_TB_USER_TB_ROLE" FromRole="TB_USER" ToRole="TB_ROLE" />
+  </EntityType>
+  <Association Name="FK_TB_ACCESS_MENU_TB_MENU">
+    <End Role="TB_MENU" Type="Self.TB_MENU" Multiplicity="1" />
+    <End Role="TB_ACCESS_MENU" Type="Self.TB_ACCESS_MENU" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TB_MENU">
+        <PropertyRef Name="MENU_ID" />
+      </Principal>
+      <Dependent Role="TB_ACCESS_MENU">
+        <PropertyRef Name="MENU_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TB_SUBMENU_TB_MENU">
+    <End Role="TB_MENU" Type="Self.TB_MENU" Multiplicity="1" />
+    <End Role="TB_SUBMENU" Type="Self.TB_SUBMENU" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TB_MENU">
+        <PropertyRef Name="MENU_ID" />
+      </Principal>
+      <Dependent Role="TB_SUBMENU">
+        <PropertyRef Name="MENU_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TB_USER_TB_ROLE">
+    <End Role="TB_ROLE" Type="Self.TB_ROLE" Multiplicity="1" />
+    <End Role="TB_USER" Type="Self.TB_USER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TB_ROLE">
+        <PropertyRef Name="ROLE_ID" />
+      </Principal>
+      <Dependent Role="TB_USER">
+        <PropertyRef Name="ROLE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="TB_ACCESS_MENU" EntityType="Self.TB_ACCESS_MENU" />
+    <EntitySet Name="TB_MENU" EntityType="Self.TB_MENU" />
+    <EntitySet Name="TB_ROLE" EntityType="Self.TB_ROLE" />
+    <EntitySet Name="TB_SUBMENU" EntityType="Self.TB_SUBMENU" />
+    <EntitySet Name="TB_USER" EntityType="Self.TB_USER" />
+    <AssociationSet Name="FK_TB_ACCESS_MENU_TB_MENU" Association="Self.FK_TB_ACCESS_MENU_TB_MENU">
+      <End Role="TB_MENU" EntitySet="TB_MENU" />
+      <End Role="TB_ACCESS_MENU" EntitySet="TB_ACCESS_MENU" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TB_SUBMENU_TB_MENU" Association="Self.FK_TB_SUBMENU_TB_MENU">
+      <End Role="TB_MENU" EntitySet="TB_MENU" />
+      <End Role="TB_SUBMENU" EntitySet="TB_SUBMENU" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TB_USER_TB_ROLE" Association="Self.FK_TB_USER_TB_ROLE">
+      <End Role="TB_ROLE" EntitySet="TB_ROLE" />
+      <End Role="TB_USER" EntitySet="TB_USER" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TB_ACCESS_MENU_TB_ACCESS_MENU" Association="FinalProject_adp3Model.FK_TB_ACCESS_MENU_TB_ACCESS_MENU">
+      <End Role="TB_ACCESS_MENU" EntitySet="TB_ACCESS_MENU" />
+      <End Role="TB_ACCESS_MENU1" EntitySet="TB_ACCESS_MENU" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TB_ACCESS_MENU_TB_MENU1" Association="FinalProject_adp3Model.FK_TB_ACCESS_MENU_TB_MENU1">
+      <End Role="TB_ROLE" EntitySet="TB_ROLE" />
+      <End Role="TB_ACCESS_MENU" EntitySet="TB_ACCESS_MENU" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="FK_TB_ACCESS_MENU_TB_ACCESS_MENU">
+    <End Type="FinalProject_adp3Model.TB_ACCESS_MENU" Role="TB_ACCESS_MENU" Multiplicity="1" />
+    <End Type="FinalProject_adp3Model.TB_ACCESS_MENU" Role="TB_ACCESS_MENU1" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="TB_ACCESS_MENU">
+        <PropertyRef Name="ACCESS_MENU_ID" />
+      </Principal>
+      <Dependent Role="TB_ACCESS_MENU1">
+        <PropertyRef Name="ACCESS_MENU_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TB_ACCESS_MENU_TB_MENU1">
+    <End Type="FinalProject_adp3Model.TB_ROLE" Role="TB_ROLE" Multiplicity="1" />
+    <End Type="FinalProject_adp3Model.TB_ACCESS_MENU" Role="TB_ACCESS_MENU" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TB_ROLE">
+        <PropertyRef Name="ROLE_ID" />
+      </Principal>
+      <Dependent Role="TB_ACCESS_MENU">
+        <PropertyRef Name="ROLE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
