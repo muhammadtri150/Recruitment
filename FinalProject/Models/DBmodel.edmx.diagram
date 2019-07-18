@@ -15,6 +15,7 @@
         <AssociationConnector Association="FinalProject_adp3Model.FK_TB_USER_TB_ROLE" ManuallyRouted="false" />
         <AssociationConnector Association="FinalProject_adp3Model.FK_TB_ACCESS_MENU_TB_ACCESS_MENU" />
         <AssociationConnector Association="FinalProject_adp3Model.FK_TB_ACCESS_MENU_TB_MENU1" />
+        <EntityTypeShape EntityType="FinalProject_adp3Model.JOB_PORTAL" Width="1.5" PointX="5.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

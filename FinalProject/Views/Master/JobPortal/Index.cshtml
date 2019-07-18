@@ -1,0 +1,100 @@
+﻿@model IEnumerable<FinalProject.DTO.JobPortalDTO>
+@section title{
+    @ViewBag.DataView["title"]
+}
+@section content{
+    <div class="container">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#AddJobPortal">
+            Add Job Portal
+        </button>
+
+        @if (TempData.Peek("message") != null)
+        {
+            <div class="alert alert-@TempData["type"] alert-dismissible fade show " role="alert">
+                @TempData["message"]
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Job Portal Name</th>
+                    <th scope="col">Added Date</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var job in Model)
+                {
+                <tr>
+                    <td>@job.JOBPORTAL_NAME</td>
+                    <td>@job.JOBPORTAL_ADDED</td>
+                    <td><button type="button" class="btn editbtn" data-toggle="modal" data-target="#EditJobPortal" data-id="@job.JOB_ID" data-name="@job.JOBPORTAL_NAME"><i class="fas fa-edit"></i></button></td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+
+
+    <!-- Modal add job portal -->
+    <div class="modal fade" id="AddJobPortal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Add new Job Portal</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="~/master/jobportal/add" method="post">
+                        <div class="form-group">
+                            <label for="jobname">Job Portal Name</label>
+                            <input type="text" class="form-control" id="jobname" name="JOBPORTAL_NAME">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Job Portal</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal edit job portal -->
+    <div class="modal fade" id="EditJobPortal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Edit Job Portal</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="~/master/jobportal/edit" method="post">
+                        <div class="form-group">
+                            <label for="jobname">Job Portal Name</label>
+                            <input type="text" class="form-control" id="jobnameedit" name="JOBPORTAL_NAME" value="">
+                        </div>
+                        <input type="hidden" class="form-control" id="jobid" name="JOB_ID" value="">
+                        <button type="submit" class="btn btn-primary">Add Job Portal</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/Assets/Js/master/JobPortal/EditJobPortal.js" type="text/javascript"></script>
+}

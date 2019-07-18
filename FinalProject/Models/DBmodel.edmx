@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="FinalProject_adp3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="JOB_PORTAL">
+          <Key>
+            <PropertyRef Name="JOB_ID" />
+          </Key>
+          <Property Name="JOB_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JOBPORTAL_NAME" Type="varchar" MaxLength="30" />
+          <Property Name="JOBPORTAL_ADDED" Type="date" />
+        </EntityType>
         <EntityType Name="TB_ACCESS_MENU">
           <Key>
             <PropertyRef Name="ACCESS_MENU_ID" />
@@ -110,6 +118,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="FinalProject_adp3ModelStoreContainer">
+          <EntitySet Name="JOB_PORTAL" EntityType="Self.JOB_PORTAL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_ACCESS_MENU" EntityType="Self.TB_ACCESS_MENU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_MENU" EntityType="Self.TB_MENU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_ROLE" EntityType="Self.TB_ROLE" Schema="dbo" store:Type="Tables" />
@@ -256,6 +265,7 @@
             <End Role="TB_ROLE" EntitySet="TB_ROLE" />
             <End Role="TB_ACCESS_MENU" EntitySet="TB_ACCESS_MENU" />
           </AssociationSet>
+          <EntitySet Name="JOB_PORTAL" EntityType="FinalProject_adp3Model.JOB_PORTAL" />
         </EntityContainer>
         <Association Name="FK_TB_ACCESS_MENU_TB_ACCESS_MENU">
           <End Type="FinalProject_adp3Model.TB_ACCESS_MENU" Role="TB_ACCESS_MENU" Multiplicity="1" />
@@ -281,6 +291,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="JOB_PORTAL">
+          <Key>
+            <PropertyRef Name="JOB_ID" />
+          </Key>
+          <Property Name="JOB_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JOBPORTAL_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="JOBPORTAL_ADDED" Type="DateTime" Precision="0" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -333,6 +351,15 @@
                 <ScalarProperty Name="PASSWORD" ColumnName="PASSWORD" />
                 <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
                 <ScalarProperty Name="FULL_NAME" ColumnName="FULL_NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JOB_PORTAL">
+            <EntityTypeMapping TypeName="FinalProject_adp3Model.JOB_PORTAL">
+              <MappingFragment StoreEntitySet="JOB_PORTAL">
+                <ScalarProperty Name="JOBPORTAL_ADDED" ColumnName="JOBPORTAL_ADDED" />
+                <ScalarProperty Name="JOBPORTAL_NAME" ColumnName="JOBPORTAL_NAME" />
+                <ScalarProperty Name="JOB_ID" ColumnName="JOB_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

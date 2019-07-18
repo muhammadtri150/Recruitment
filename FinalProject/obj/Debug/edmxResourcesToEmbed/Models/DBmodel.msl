@@ -50,5 +50,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="JOB_PORTAL">
+      <EntityTypeMapping TypeName="FinalProject_adp3Model.JOB_PORTAL">
+        <MappingFragment StoreEntitySet="JOB_PORTAL">
+          <ScalarProperty Name="JOBPORTAL_ADDED" ColumnName="JOBPORTAL_ADDED" />
+          <ScalarProperty Name="JOBPORTAL_NAME" ColumnName="JOBPORTAL_NAME" />
+          <ScalarProperty Name="JOB_ID" ColumnName="JOB_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

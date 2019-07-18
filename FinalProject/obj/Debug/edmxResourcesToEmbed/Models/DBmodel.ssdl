@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="FinalProject_adp3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="JOB_PORTAL">
+    <Key>
+      <PropertyRef Name="JOB_ID" />
+    </Key>
+    <Property Name="JOB_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="JOBPORTAL_NAME" Type="varchar" MaxLength="30" />
+    <Property Name="JOBPORTAL_ADDED" Type="date" />
+  </EntityType>
   <EntityType Name="TB_ACCESS_MENU">
     <Key>
       <PropertyRef Name="ACCESS_MENU_ID" />
@@ -105,6 +113,7 @@
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="FinalProject_adp3ModelStoreContainer">
+    <EntitySet Name="JOB_PORTAL" EntityType="Self.JOB_PORTAL" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_ACCESS_MENU" EntityType="Self.TB_ACCESS_MENU" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_MENU" EntityType="Self.TB_MENU" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_ROLE" EntityType="Self.TB_ROLE" Schema="dbo" store:Type="Tables" />

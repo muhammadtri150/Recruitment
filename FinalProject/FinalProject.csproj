@@ -140,6 +140,7 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DTO\AccessMenuDTO.cs" />
     <Compile Include="DTO\MenuDTO.cs" />
+    <Compile Include="DTO\JobPortalDTO.cs" />
     <Compile Include="DTO\RoleDTO.cs" />
     <Compile Include="DTO\SubMenuDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
@@ -162,6 +163,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DBmodel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\JOB_PORTAL.cs">
+      <DependentUpon>DBmodel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_ACCESS_MENU.cs">
       <DependentUpon>DBmodel.tt</DependentUpon>
     </Compile>
@@ -181,11 +185,8 @@
     <Compile Include="Utils\MenuUtils.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Images\Logo\logo ACE.png" />
+    <Content Include="Content\Assets\Images\Logo\logo ACE.png" />
+    <Content Include="Content\Assets\Js\master\JobPortal\EditJobPortal.js" />
     <Content Include="Content\Vendor\bootstrap\css\bootstrap-grid.css" />
     <Content Include="Content\Vendor\bootstrap\css\bootstrap-grid.min.css" />
     <Content Include="Content\Vendor\bootstrap\css\bootstrap-reboot.css" />
@@ -271,7 +272,6 @@
     <Content Include="Content\Vendor\sbadmin2\vendor\jquery\jquery.slim.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="Models\DBmodel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DBmodel.Context.cs</LastGenOutput>
@@ -2030,10 +2030,17 @@
     <Content Include="Views\Master\_ViewStart.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\_ViewStart.cshtml" />
+    <Content Include="Views\Master\JobPortal\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Images\User\" />
+    <Folder Include="Content\Assets\Css\" />
+    <Folder Include="Content\Assets\Images\User\" />
+    <Folder Include="Views\Master\Client\" />
+    <Folder Include="Views\Master\MenuManagement\" />
+    <Folder Include="Views\Master\Skill\" />
+    <Folder Include="Views\Master\SubMenuManagement\" />
+    <Folder Include="Views\Master\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -2041,10 +2048,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />

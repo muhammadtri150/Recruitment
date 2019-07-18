@@ -32,7 +32,7 @@ namespace FinalProject.Utils
                                          {
                                              MENU_ID = Menu.MENU_ID,
                                              TITLE_MENU = Menu.TITLE_MENU,
-                                             LOGO_MENU = Menu.LOGO_MENU
+                                             LOGO_MENU = Menu.LOGO_MENU,
                                          }).ToList();
                 return ListMenu;
             }
@@ -49,7 +49,8 @@ namespace FinalProject.Utils
                                                        SUB_MENU_ID = SubMenu.SUB_MENU_ID,
                                                        MENU_ID = SubMenu.MENU_ID,
                                                        TITLE_SUBMENU = SubMenu.TITLE_SUBMENU,
-                                                       LOGO_SUBMENU = SubMenu.LOGO_SUBMENU
+                                                       LOGO_SUBMENU = SubMenu.LOGO_SUBMENU,
+                                                       URL = SubMenu.URL
                                                    } ).ToList();
                 return ListSubMenuDTO;
             }

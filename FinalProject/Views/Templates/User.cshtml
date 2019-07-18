@@ -12,10 +12,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title> @RenderSection("title", required: false) </title>
+    <script src="~/Content/Vendor/bootstrap/js/jquery.js"></script>
     <!-- Custom fonts for this template-->
     <link href="/Content/Vendor/sbadmin2/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="/Content/Vendor/sbadmin2/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="~/Content/Vendor/bootstrap/css/bootstrap.min.css" />
     <!-- Custom styles for this template-->
     <link href="/Content/Vendor/sbadmin2/css/sb-admin-2.min.css" rel="stylesheet">
 </head>
@@ -26,17 +28,16 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
                 <div class="sidebar-brand-icon">
-                    <i class="fas fa-laptop-code"></i>
+                    <img src="~/Content/Assets/Images/Logo/logo ACE.png" class="img-thumbnail thumbnail" />
                 </div>
-                <div class="sidebar-brand-text mx-3">ESEMKA</div>
             </a>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
             <!-- Heading -->
-            
+
             @foreach (var Menu in (new MenuUtils().GetMenus()))
             {
                 <div class="sidebar-heading">
@@ -301,5 +302,10 @@
         <!-- Page level custom scripts -->
         <script src="/Content/Vendor/sbadmin2/js/demo/chart-area-demo.js"></script>
         <script src="/Content/Vendor/sbadmin2/js/demo/chart-pie-demo.js"></script>
+
+        <!-- bootstrap additional JavaScript -->
+        <script src="~/Content/Vendor/bootstrap/js/jquery.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="~/Content/Vendor/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

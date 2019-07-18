@@ -116,6 +116,7 @@
       <End Role="TB_ROLE" EntitySet="TB_ROLE" />
       <End Role="TB_ACCESS_MENU" EntitySet="TB_ACCESS_MENU" />
     </AssociationSet>
+    <EntitySet Name="JOB_PORTAL" EntityType="FinalProject_adp3Model.JOB_PORTAL" />
   </EntityContainer>
   <Association Name="FK_TB_ACCESS_MENU_TB_ACCESS_MENU">
     <End Type="FinalProject_adp3Model.TB_ACCESS_MENU" Role="TB_ACCESS_MENU" Multiplicity="1" />
@@ -141,4 +142,12 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="JOB_PORTAL">
+    <Key>
+      <PropertyRef Name="JOB_ID" />
+    </Key>
+    <Property Name="JOB_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="JOBPORTAL_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="JOBPORTAL_ADDED" Type="DateTime" Precision="0" />
+  </EntityType>
 </Schema>
