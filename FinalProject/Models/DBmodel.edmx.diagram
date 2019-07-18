@@ -16,6 +16,9 @@
         <AssociationConnector Association="FinalProject_adp3Model.FK_TB_ACCESS_MENU_TB_ACCESS_MENU" />
         <AssociationConnector Association="FinalProject_adp3Model.FK_TB_ACCESS_MENU_TB_MENU1" />
         <EntityTypeShape EntityType="FinalProject_adp3Model.JOB_PORTAL" Width="1.5" PointX="5.375" PointY="4.75" />
+        <EntityTypeShape EntityType="FinalProject_adp3Model.TB_CLIENT" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="FinalProject_adp3Model.TB_SKILL" Width="1.5" PointX="2.75" PointY="6.75" />
+        <EntityTypeShape EntityType="FinalProject_adp3Model.TB_PREFIX" Width="1.5" PointX="7.75" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

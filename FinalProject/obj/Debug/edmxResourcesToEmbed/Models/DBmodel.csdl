@@ -117,6 +117,9 @@
       <End Role="TB_ACCESS_MENU" EntitySet="TB_ACCESS_MENU" />
     </AssociationSet>
     <EntitySet Name="JOB_PORTAL" EntityType="FinalProject_adp3Model.JOB_PORTAL" />
+    <EntitySet Name="TB_CLIENT" EntityType="FinalProject_adp3Model.TB_CLIENT" />
+    <EntitySet Name="TB_SKILL" EntityType="FinalProject_adp3Model.TB_SKILL" />
+    <EntitySet Name="TB_PREFIX" EntityType="FinalProject_adp3Model.TB_PREFIX" />
   </EntityContainer>
   <Association Name="FK_TB_ACCESS_MENU_TB_ACCESS_MENU">
     <End Type="FinalProject_adp3Model.TB_ACCESS_MENU" Role="TB_ACCESS_MENU" Multiplicity="1" />
@@ -149,5 +152,32 @@
     <Property Name="JOB_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="JOBPORTAL_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
     <Property Name="JOBPORTAL_ADDED" Type="DateTime" Precision="0" />
+  </EntityType>
+  <EntityType Name="TB_CLIENT">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CLIENT_ID" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="CLIENT_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="CLIENT_ADDRESS" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="CLIENT_OTHERADDRESS" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="CLIENT_INDUSTRIES" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="TB_SKILL">
+    <Key>
+      <PropertyRef Name="SKILL_ID" />
+    </Key>
+    <Property Name="SKILL_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SKILL_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="TB_PREFIX">
+    <Key>
+      <PropertyRef Name="PREFIX" />
+      <PropertyRef Name="DATA_NAME" />
+    </Key>
+    <Property Name="ID" Type="Int32" />
+    <Property Name="PREFIX" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DATA_NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
 </Schema>

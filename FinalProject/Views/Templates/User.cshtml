@@ -47,7 +47,7 @@
                 foreach (var SubMenu in (new MenuUtils().GetSubmenu(Menu)))
                 {
                     <li class="nav-item @(SubMenu.TITLE_SUBMENU == ViewBag.DataView["title"] ? "active":"") ">
-                        <a class="nav-link pd-0" href="@SubMenu.URL">
+                        <a class="nav-link pd-0" href="~/@SubMenu.URL">
                             <i class="@SubMenu.LOGO_SUBMENU"></i>
                             @SubMenu.TITLE_SUBMENU
                         </a>

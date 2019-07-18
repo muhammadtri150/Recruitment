@@ -59,5 +59,34 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="TB_CLIENT">
+      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_CLIENT">
+        <MappingFragment StoreEntitySet="TB_CLIENT">
+          <ScalarProperty Name="CLIENT_INDUSTRIES" ColumnName="CLIENT_INDUSTRIES" />
+          <ScalarProperty Name="CLIENT_OTHERADDRESS" ColumnName="CLIENT_OTHERADDRESS" />
+          <ScalarProperty Name="CLIENT_ADDRESS" ColumnName="CLIENT_ADDRESS" />
+          <ScalarProperty Name="CLIENT_NAME" ColumnName="CLIENT_NAME" />
+          <ScalarProperty Name="CLIENT_ID" ColumnName="CLIENT_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_SKILL">
+      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_SKILL">
+        <MappingFragment StoreEntitySet="TB_SKILL">
+          <ScalarProperty Name="SKILL_NAME" ColumnName="SKILL_NAME" />
+          <ScalarProperty Name="SKILL_ID" ColumnName="SKILL_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_PREFIX">
+      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_PREFIX">
+        <MappingFragment StoreEntitySet="TB_PREFIX">
+          <ScalarProperty Name="DATA_NAME" ColumnName="DATA_NAME" />
+          <ScalarProperty Name="PREFIX" ColumnName="PREFIX" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

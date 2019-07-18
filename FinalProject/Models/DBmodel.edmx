@@ -21,6 +21,17 @@
           <Property Name="ROLE_ID" Type="int" Nullable="false" />
           <Property Name="MENU_ID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="TB_CLIENT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CLIENT_ID" Type="varchar" MaxLength="30" />
+          <Property Name="CLIENT_NAME" Type="varchar" MaxLength="30" />
+          <Property Name="CLIENT_ADDRESS" Type="varchar" MaxLength="30" />
+          <Property Name="CLIENT_OTHERADDRESS" Type="varchar" MaxLength="30" />
+          <Property Name="CLIENT_INDUSTRIES" Type="varchar" MaxLength="30" />
+        </EntityType>
         <EntityType Name="TB_MENU">
           <Key>
             <PropertyRef Name="MENU_ID" />
@@ -29,12 +40,30 @@
           <Property Name="TITLE_MENU" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="LOGO_MENU" Type="text" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TB_PREFIX">
+          <Key>
+            <PropertyRef Name="PREFIX" />
+            <PropertyRef Name="DATA_NAME" />
+          </Key>
+          <Property Name="ID" Type="int" />
+          <Property Name="PREFIX" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DATA_NAME" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="TB_ROLE">
           <Key>
             <PropertyRef Name="ROLE_ID" />
           </Key>
           <Property Name="ROLE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ROLE_NAME" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TB_SKILL">
+          <Key>
+            <PropertyRef Name="SKILL_ID" />
+          </Key>
+          <Property Name="SKILL_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SKILL_NAME" Type="varchar" MaxLength="30" />
         </EntityType>
         <EntityType Name="TB_SUBMENU">
           <Key>
@@ -120,10 +149,19 @@
         <EntityContainer Name="FinalProject_adp3ModelStoreContainer">
           <EntitySet Name="JOB_PORTAL" EntityType="Self.JOB_PORTAL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_ACCESS_MENU" EntityType="Self.TB_ACCESS_MENU" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_CLIENT" EntityType="Self.TB_CLIENT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_MENU" EntityType="Self.TB_MENU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_ROLE" EntityType="Self.TB_ROLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_SKILL" EntityType="Self.TB_SKILL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_SUBMENU" EntityType="Self.TB_SUBMENU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_USER" EntityType="Self.TB_USER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_PREFIX" EntityType="Self.TB_PREFIX" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TB_PREFIX].[ID] AS [ID], 
+    [TB_PREFIX].[PREFIX] AS [PREFIX], 
+    [TB_PREFIX].[DATA_NAME] AS [DATA_NAME]
+    FROM [dbo].[TB_PREFIX] AS [TB_PREFIX]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_TB_ACCESS_MENU_TB_ACCESS_MENU" Association="Self.FK_TB_ACCESS_MENU_TB_ACCESS_MENU">
             <End Role="TB_ACCESS_MENU" EntitySet="TB_ACCESS_MENU" />
             <End Role="TB_ACCESS_MENU1" EntitySet="TB_ACCESS_MENU" />
@@ -266,6 +304,9 @@
             <End Role="TB_ACCESS_MENU" EntitySet="TB_ACCESS_MENU" />
           </AssociationSet>
           <EntitySet Name="JOB_PORTAL" EntityType="FinalProject_adp3Model.JOB_PORTAL" />
+          <EntitySet Name="TB_CLIENT" EntityType="FinalProject_adp3Model.TB_CLIENT" />
+          <EntitySet Name="TB_SKILL" EntityType="FinalProject_adp3Model.TB_SKILL" />
+          <EntitySet Name="TB_PREFIX" EntityType="FinalProject_adp3Model.TB_PREFIX" />
         </EntityContainer>
         <Association Name="FK_TB_ACCESS_MENU_TB_ACCESS_MENU">
           <End Type="FinalProject_adp3Model.TB_ACCESS_MENU" Role="TB_ACCESS_MENU" Multiplicity="1" />
@@ -298,6 +339,33 @@
           <Property Name="JOB_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="JOBPORTAL_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="JOBPORTAL_ADDED" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="TB_CLIENT">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CLIENT_ID" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CLIENT_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CLIENT_ADDRESS" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CLIENT_OTHERADDRESS" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CLIENT_INDUSTRIES" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          </EntityType>
+        <EntityType Name="TB_SKILL">
+          <Key>
+            <PropertyRef Name="SKILL_ID" />
+          </Key>
+          <Property Name="SKILL_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SKILL_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TB_PREFIX">
+          <Key>
+            <PropertyRef Name="PREFIX" />
+            <PropertyRef Name="DATA_NAME" />
+          </Key>
+          <Property Name="ID" Type="Int32" />
+          <Property Name="PREFIX" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DATA_NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -360,6 +428,35 @@
                 <ScalarProperty Name="JOBPORTAL_ADDED" ColumnName="JOBPORTAL_ADDED" />
                 <ScalarProperty Name="JOBPORTAL_NAME" ColumnName="JOBPORTAL_NAME" />
                 <ScalarProperty Name="JOB_ID" ColumnName="JOB_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_CLIENT">
+            <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_CLIENT">
+              <MappingFragment StoreEntitySet="TB_CLIENT">
+                <ScalarProperty Name="CLIENT_INDUSTRIES" ColumnName="CLIENT_INDUSTRIES" />
+                <ScalarProperty Name="CLIENT_OTHERADDRESS" ColumnName="CLIENT_OTHERADDRESS" />
+                <ScalarProperty Name="CLIENT_ADDRESS" ColumnName="CLIENT_ADDRESS" />
+                <ScalarProperty Name="CLIENT_NAME" ColumnName="CLIENT_NAME" />
+                <ScalarProperty Name="CLIENT_ID" ColumnName="CLIENT_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_SKILL">
+            <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_SKILL">
+              <MappingFragment StoreEntitySet="TB_SKILL">
+                <ScalarProperty Name="SKILL_NAME" ColumnName="SKILL_NAME" />
+                <ScalarProperty Name="SKILL_ID" ColumnName="SKILL_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_PREFIX">
+            <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_PREFIX">
+              <MappingFragment StoreEntitySet="TB_PREFIX">
+                <ScalarProperty Name="DATA_NAME" ColumnName="DATA_NAME" />
+                <ScalarProperty Name="PREFIX" ColumnName="PREFIX" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -139,6 +139,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DTO\AccessMenuDTO.cs" />
+    <Compile Include="DTO\ClientDTO.cs" />
     <Compile Include="DTO\MenuDTO.cs" />
     <Compile Include="DTO\JobPortalDTO.cs" />
     <Compile Include="DTO\RoleDTO.cs" />
@@ -169,10 +170,19 @@
     <Compile Include="Models\TB_ACCESS_MENU.cs">
       <DependentUpon>DBmodel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_CLIENT.cs">
+      <DependentUpon>DBmodel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_MENU.cs">
       <DependentUpon>DBmodel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_PREFIX.cs">
+      <DependentUpon>DBmodel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_ROLE.cs">
+      <DependentUpon>DBmodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_SKILL.cs">
       <DependentUpon>DBmodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_SUBMENU.cs">
@@ -2031,12 +2041,12 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\_ViewStart.cshtml" />
     <Content Include="Views\Master\JobPortal\Index.cshtml" />
+    <Content Include="Views\Master\Client\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Assets\Css\" />
     <Folder Include="Content\Assets\Images\User\" />
-    <Folder Include="Views\Master\Client\" />
     <Folder Include="Views\Master\MenuManagement\" />
     <Folder Include="Views\Master\Skill\" />
     <Folder Include="Views\Master\SubMenuManagement\" />
