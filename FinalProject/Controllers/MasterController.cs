@@ -94,7 +94,7 @@ namespace FinalProject.Controllers
                 return Redirect("~/auth/error");
             }
         }
-
+ //------------------------------------------ edit job portal----------------------------------------------------
         [Route("master/jobportal/edit")]
         public ActionResult JobPortalEdit(JobPortalDTO JobPortalDTO)
         {
@@ -122,8 +122,34 @@ namespace FinalProject.Controllers
                 return Redirect("~/auth/error");
             }
         }
-
-
+        // ---------------------------------------------------- remove job portal -------------------------------------------------------------
+        [Route("master/jobportal/edit/{id?}")]
+        public ActionResult JobPortalDelete(string id = ?)
+        {
+            try
+            {
+                using (DBEntities db = new DBEntities())
+                {
+                    JOB_PORTAL TB_JobPortal = db.JOB_PORTAL.FirstOrDefault(p => p.JOB_ID == JobPortalDTO.JOB_ID);
+                    TB_JobPortal.JOBPORTAL_NAME = JobPortalDTO.JOBPORTAL_NAME;
+                    if (db.SaveChanges() > 0)
+                    {
+                        TempData.Add("message", "Job Portal edited successfully");
+                        TempData.Add("type", "success");
+                    }
+                    else
+                    {
+                        TempData.Add("message", "Job Portal failed to edit");
+                        TempData.Add("type", "warning");
+                    }
+                    return Redirect("~/master/jobportal");
+                }
+            }
+            catch (Exception e)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
 
 
 
