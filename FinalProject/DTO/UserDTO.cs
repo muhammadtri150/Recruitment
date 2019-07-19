@@ -9,8 +9,6 @@ namespace FinalProject.DTO
     public class UserDTO
     {
         
-        public int ROLE_ID { get; set; }
-
         [Required(ErrorMessage = "Role is required")]
         public int USER_ID { get; set; }
 
@@ -32,5 +30,10 @@ namespace FinalProject.DTO
         [Required]
         [RegularExpression(@"/\[a-z]{1,30}/i")]
         public string FULL_NAME { get; set; }
+
+        public int ROLE_ID { get; set; }
+
+        [Required]
+        public string ROLE_NAME { get; set; }
     }
 }

@@ -196,6 +196,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Assets\Images\Logo\logo ACE.png" />
+    <Content Include="Content\Assets\Js\master\Client\EditClient.js" />
     <Content Include="Content\Assets\Js\master\JobPortal\EditJobPortal.js" />
     <Content Include="Content\Vendor\bootstrap\css\bootstrap-grid.css" />
     <Content Include="Content\Vendor\bootstrap\css\bootstrap-grid.min.css" />
@@ -2042,6 +2043,7 @@
     <Content Include="Views\User\_ViewStart.cshtml" />
     <Content Include="Views\Master\JobPortal\Index.cshtml" />
     <Content Include="Views\Master\Client\Index.cshtml" />
+    <Content Include="Views\Master\User\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2050,7 +2052,6 @@
     <Folder Include="Views\Master\MenuManagement\" />
     <Folder Include="Views\Master\Skill\" />
     <Folder Include="Views\Master\SubMenuManagement\" />
-    <Folder Include="Views\Master\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

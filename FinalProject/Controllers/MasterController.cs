@@ -69,26 +69,33 @@ namespace FinalProject.Controllers
         {
             try
             {
-                using (DBEntities db = new DBEntities())
+                if (ModelState.IsValid)
                 {
-                    //--inisialisasi object tb_jobportal and generate added time
-                    db.JOB_PORTAL.Add(new JOB_PORTAL
+                    using (DBEntities db = new DBEntities())
                     {
-                        JOBPORTAL_NAME = JobPortalDTO.JOBPORTAL_NAME,
-                        JOBPORTAL_ADDED = DateTime.Now
-                    });
-                    if (db.SaveChanges() > 0)
-                    {
-                        TempData.Add("message", "Job Portal added successfully");
-                        TempData.Add("type", "success");
+                        //--inisialisasi object tb_jobportal and generate added time
+                        db.JOB_PORTAL.Add(new JOB_PORTAL
+                        {
+                            JOBPORTAL_NAME = JobPortalDTO.JOBPORTAL_NAME,
+                            JOBPORTAL_ADDED = DateTime.Now
+                        });
+                        if (db.SaveChanges() > 0)
+                        {
+                            TempData.Add("message", "Job Portal added successfully");
+                            TempData.Add("type", "success");
+                        }
+                        else
+                        {
+                            TempData.Add("message", "Job Portal failed to add");
+                            TempData.Add("type", "warning");
+                        }
+                        return Redirect("~/master/jobportal");
                     }
-                    else
-                    {
-                        TempData.Add("message", "Job Portal failed to add");
-                        TempData.Add("type", "warning");
-                    }
-                    return Redirect("~/master/jobportal");
+
                 }
+                TempData.Add("message", "Please fill the field");
+                TempData.Add("type", "danger");
+                return Redirect("~/master/jobportal");
             }
             catch (Exception e)
             {
@@ -101,22 +108,28 @@ namespace FinalProject.Controllers
         {
             try
             {
-                using (DBEntities db = new DBEntities())
+                if (ModelState.IsValid)
                 {
-                    JOB_PORTAL TB_JobPortal = db.JOB_PORTAL.FirstOrDefault(p => p.JOB_ID == JobPortalDTO.JOB_ID);
-                    TB_JobPortal.JOBPORTAL_NAME = JobPortalDTO.JOBPORTAL_NAME;
-                    if (db.SaveChanges() > 0)
+                    using (DBEntities db = new DBEntities())
                     {
-                        TempData.Add("message", "Job Portal edited successfully");
-                        TempData.Add("type", "success");
+                        JOB_PORTAL TB_JobPortal = db.JOB_PORTAL.FirstOrDefault(p => p.JOB_ID == JobPortalDTO.JOB_ID);
+                        TB_JobPortal.JOBPORTAL_NAME = JobPortalDTO.JOBPORTAL_NAME;
+                        if (db.SaveChanges() > 0)
+                        {
+                            TempData.Add("message", "Job Portal edited successfully");
+                            TempData.Add("type", "success");
+                        }
+                        else
+                        {
+                            TempData.Add("message", "Job Portal failed to edit");
+                            TempData.Add("type", "warning");
+                        }
+                        return Redirect("~/master/jobportal");
                     }
-                    else
-                    {
-                        TempData.Add("message", "Job Portal failed to edit");
-                        TempData.Add("type", "warning");
-                    }
-                    return Redirect("~/master/jobportal");
                 }
+                TempData.Add("message", HtmlHelper.ValidationSummaryMessageElement);
+                TempData.Add("type", "danger");
+                return Redirect("~/master/jobportal");
             }
             catch (Exception e)
             {
@@ -169,7 +182,8 @@ namespace FinalProject.Controllers
         }
 
 
-        //############################################################### Sub menu Client add, delete,update ##########################################
+//################################################################### Sub menu Client add, delete,update ##################################################
+
         //---------------------------------------------------------- view of client -------------------------------------------------------------------
         [Route("master/client")]
         public ActionResult Client()
@@ -209,41 +223,88 @@ namespace FinalProject.Controllers
         {
             try
             {
-                using (DBEntities db = new DBEntities())
+                if (ModelState.IsValid)
                 {
-                    // generate id client
-                    string ClientId = "CLA" + DateTime.Now.ToString("fffff");
+                    using (DBEntities db = new DBEntities())
+                    {
+                        // generate id client
+                        string ClientId = "CLA" + DateTime.Now.ToString("fffff");
 
-                    //prosess to insert data 
-                    db.TB_CLIENT.Add(new TB_CLIENT
-                    {
-                        CLIENT_ID = ClientId,
-                        CLIENT_NAME = DataNewClient.CLIENT_NAME,
-                        CLIENT_ADDRESS = DataNewClient.CLIENT_ADDRESS,
-                        CLIENT_OTHERADDRESS = DataNewClient.CLIENT_OTHERADDRESS,
-                        CLIENT_INDUSTRIES = DataNewClient.CLIENT_INDUSTRIES,
-                    });
-                    //check prosses success or not
-                    if (db.SaveChanges() > 0)
-                    {
-                        TempData.Add("message", "Job Portal have been deleted");
-                        TempData.Add("type", "success");
+                        //prosess to insert data 
+                        db.TB_CLIENT.Add(new TB_CLIENT
+                        {
+                            CLIENT_ID = ClientId,
+                            CLIENT_NAME = DataNewClient.CLIENT_NAME,
+                            CLIENT_ADDRESS = DataNewClient.CLIENT_ADDRESS,
+                            CLIENT_OTHERADDRESS = DataNewClient.CLIENT_OTHERADDRESS,
+                            CLIENT_INDUSTRIES = DataNewClient.CLIENT_INDUSTRIES,
+                        });
+                        //check prosses success or not
+                        if (db.SaveChanges() > 0)
+                        {
+                            TempData.Add("message", "New Client added Successfully");
+                            TempData.Add("type", "success");
+                        }
+
+                        else
+                        {
+                            TempData.Add("message", "New Client failed to added");
+                            TempData.Add("type", "danger");
+                        }
                     }
-
-                    else
-                    {
-                        TempData.Add("message", "Job Portal failed to deleted");
-                        TempData.Add("type", "danger");
-                    }
-
                     return Redirect("~/master/client");
                 }
+                TempData.Add("message", "Please complete the form add");
+                TempData.Add("type", "danger");
+                return Redirect("~/master/client");
             }
             catch (Exception)
             {
                 return Redirect("~/auth/error");
             }
         }
+
+        //------------------------------------------------ for edit client ---------------------------------------------------------
+        [Route("master/client/edit")]
+        public ActionResult ClientEdit(ClientDTO DataEditClient)
+        {
+            try
+            {
+                using (DBEntities db = new DBEntities())
+                {
+                    
+                    if (ModelState.IsValid)
+                    {
+                        //get data from table clirnt base on data of parameter and
+                        TB_CLIENT Tb_Client = db.TB_CLIENT.FirstOrDefault(c => c.ID == DataEditClient.ID);
+                        Tb_Client.CLIENT_NAME = DataEditClient.CLIENT_NAME;
+                        Tb_Client.CLIENT_ADDRESS = DataEditClient.CLIENT_ADDRESS;
+                        Tb_Client.CLIENT_OTHERADDRESS = DataEditClient.CLIENT_OTHERADDRESS;
+                        Tb_Client.CLIENT_INDUSTRIES = DataEditClient.CLIENT_INDUSTRIES;
+
+                        if (db.SaveChanges() > 0)
+                        {
+                            TempData.Add("message", "Client edit Successfully");
+                            TempData.Add("type", "success");
+                        }
+
+                        else
+                        {
+                            TempData.Add("message", "New Client failed to edit");
+                            TempData.Add("type", "danger");
+                        }
+                        return Redirect("~/master/client");
+                    }
+                    TempData.Add("message","Please Complete the form edit");
+                    TempData.Add("type", "danger");
+                    return Redirect("~/master/client");
+                }
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+    }
+}
 
         //-------------------------------------------------------- for delete client ----------------------------------------------------
         [Route("master/client/delete/{id?}")]
@@ -297,10 +358,40 @@ namespace FinalProject.Controllers
             }
         }
 
+//################################################################### Sub Menu User Management (user) ####################################################
 
+       //-------------------------------------------------------------- view for user management sub menu 
 
+        [Route("master/usermanagement")]
+        public ActionResult User()
+        {
+            try
+            {
+                using(DBEntities db = new DBEntities())
+                {
+                    //prepare data user dto for view
 
+                    List<UserDTO> ListUser = db.TB_USER.Select(u =>
+                        new UserDTO
+                        {
+                            USER_ID = u.USER_ID,
+                            FULL_NAME = u.FULL_NAME,
+                            USERNAME = u.USERNAME,
+                            PASSWORD = u.PASSWORD,
+                            ROLE_ID = u.ROLE_ID,
+                            ROLE_NAME = db.TB_ROLE.FirstOrDefault(r => r.ROLE_ID == u.ROLE_ID).ROLE_NAME
+                        }
+                    ).ToList();
 
+                    //return view and send with list users
+                    return View("User/Index", ListUser);
+                }
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
 
 
 
@@ -312,12 +403,11 @@ namespace FinalProject.Controllers
 
 
         // --------------------------------------------------------------------Sub Menu Add User-------------------------------------------------------
-        [Route("master/adduser")]
+        [Route("master/usermanagement/add")]
         public ActionResult AddUser(UserDTO NewUser)
         {
             if (NewUser != null)
             {
-
                 using (DBEntities db = new DBEntities())
                 {
                     if (ModelState.IsValid)
