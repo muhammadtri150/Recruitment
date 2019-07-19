@@ -27,6 +27,22 @@
     <Property Name="CLIENT_OTHERADDRESS" Type="varchar" MaxLength="30" />
     <Property Name="CLIENT_INDUSTRIES" Type="varchar" MaxLength="30" />
   </EntityType>
+  <EntityType Name="TB_JOB_POSITION">
+    <Key>
+      <PropertyRef Name="JOBPOSITION_ID" />
+    </Key>
+    <Property Name="JOBPOSITION_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="JOBPOSITION_NAME" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="TB_LOG_USER_ACTIVITY">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="USER_ID" Type="int" Nullable="false" />
+    <Property Name="Notes" Type="text" Nullable="false" />
+    <Property Name="Time" Type="datetime" Nullable="false" />
+  </EntityType>
   <EntityType Name="TB_MENU">
     <Key>
       <PropertyRef Name="MENU_ID" />
@@ -77,8 +93,8 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
     <Property Name="USER_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ROLE_ID" Type="int" Nullable="false" />
     <Property Name="USERNAME" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="PASSWORD" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="EMAIL" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PASSWORD" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="EMAIL" Type="varchar" MaxLength="50" />
     <Property Name="FULL_NAME" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <Association Name="FK_TB_ACCESS_MENU_TB_ACCESS_MENU">
@@ -145,6 +161,8 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
     <EntitySet Name="JOB_PORTAL" EntityType="Self.JOB_PORTAL" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_ACCESS_MENU" EntityType="Self.TB_ACCESS_MENU" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_CLIENT" EntityType="Self.TB_CLIENT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TB_JOB_POSITION" EntityType="Self.TB_JOB_POSITION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TB_LOG_USER_ACTIVITY" EntityType="Self.TB_LOG_USER_ACTIVITY" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_MENU" EntityType="Self.TB_MENU" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_ROLE" EntityType="Self.TB_ROLE" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_SKILL" EntityType="Self.TB_SKILL" Schema="dbo" store:Type="Tables" />

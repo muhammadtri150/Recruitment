@@ -173,6 +173,12 @@
     <Compile Include="Models\TB_CLIENT.cs">
       <DependentUpon>DBmodel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_JOB_POSITION.cs">
+      <DependentUpon>DBmodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_LOG_USER_ACTIVITY.cs">
+      <DependentUpon>DBmodel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_MENU.cs">
       <DependentUpon>DBmodel.tt</DependentUpon>
     </Compile>
@@ -192,12 +198,15 @@
       <DependentUpon>DBmodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\CryptographyUtils.cs" />
     <Compile Include="Utils\MenuUtils.cs" />
+    <Compile Include="Utils\UserLogingUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Assets\Images\Logo\logo ACE.png" />
     <Content Include="Content\Assets\Js\master\Client\EditClient.js" />
     <Content Include="Content\Assets\Js\master\JobPortal\EditJobPortal.js" />
+    <Content Include="Content\Assets\Js\master\User\EditUser.js" />
     <Content Include="Content\Vendor\bootstrap\css\bootstrap-grid.css" />
     <Content Include="Content\Vendor\bootstrap\css\bootstrap-grid.min.css" />
     <Content Include="Content\Vendor\bootstrap\css\bootstrap-reboot.css" />
@@ -2044,6 +2053,7 @@
     <Content Include="Views\Master\JobPortal\Index.cshtml" />
     <Content Include="Views\Master\Client\Index.cshtml" />
     <Content Include="Views\Master\User\Index.cshtml" />
+    <Content Include="Views\Master\Role\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

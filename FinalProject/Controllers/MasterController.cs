@@ -8,6 +8,7 @@ using FinalProject.DTO;
 using FinalProject.Filters;
 using System.Security.Cryptography;
 using System.Text;
+using FinalProject.Utils;
 
 namespace FinalProject.Controllers
 {
@@ -83,6 +84,8 @@ namespace FinalProject.Controllers
                         {
                             TempData.Add("message", "Job Portal added successfully");
                             TempData.Add("type", "success");
+
+                            UserLogingUtils.SaveLoggingUserActivity("add new job portal "+ JobPortalDTO.JOBPORTAL_NAME);
                         }
                         else
                         {
@@ -118,6 +121,8 @@ namespace FinalProject.Controllers
                         {
                             TempData.Add("message", "Job Portal edited successfully");
                             TempData.Add("type", "success");
+
+                            UserLogingUtils.SaveLoggingUserActivity("edit job portal " + JobPortalDTO.JOBPORTAL_NAME);
                         }
                         else
                         {
@@ -165,6 +170,7 @@ namespace FinalProject.Controllers
                         {
                             TempData.Add("message", "Job Portal have been deleted");
                             TempData.Add("type", "success");
+                            UserLogingUtils.SaveLoggingUserActivity("remove job portal " + Tb_JobPortal.JOBPORTAL_NAME);
                         }
                         else
                         {
@@ -204,7 +210,7 @@ namespace FinalProject.Controllers
                     //set data to show in view
                     ViewBag.DataView = new Dictionary<string, string>()
                     {
-                        {"title","Job Portal" }
+                        {"title","Client" }
                     };
 
                     return View("Client/Index", ListClient);
@@ -244,6 +250,7 @@ namespace FinalProject.Controllers
                         {
                             TempData.Add("message", "New Client added Successfully");
                             TempData.Add("type", "success");
+                            UserLogingUtils.SaveLoggingUserActivity("add new client "+ClientId);
                         }
 
                         else
@@ -286,6 +293,7 @@ namespace FinalProject.Controllers
                         {
                             TempData.Add("message", "Client edit Successfully");
                             TempData.Add("type", "success");
+                            UserLogingUtils.SaveLoggingUserActivity("edit client " + Tb_Client.CLIENT_ID);
                         }
 
                         else
@@ -303,8 +311,8 @@ namespace FinalProject.Controllers
             catch (Exception)
             {
                 return Redirect("~/auth/error");
-    }
-}
+            }
+        }
 
         //-------------------------------------------------------- for delete client ----------------------------------------------------
         [Route("master/client/delete/{id?}")]
@@ -340,7 +348,8 @@ namespace FinalProject.Controllers
                     {
                         TempData.Add("message", "Job Portal have been deleted");
                         TempData.Add("type", "success");
-                    }
+                        UserLogingUtils.SaveLoggingUserActivity("delete client " + DataClient.CLIENT_ID);
+                     }
 
                     else
                     {
@@ -360,7 +369,7 @@ namespace FinalProject.Controllers
 
 //################################################################### Sub Menu User Management (user) ####################################################
 
-       //-------------------------------------------------------------- view for user management sub menu 
+       //-------------------------------------------------------------- view for user management sub menu -------------------------------
 
         [Route("master/usermanagement")]
         public ActionResult User()
@@ -384,6 +393,12 @@ namespace FinalProject.Controllers
                     ).ToList();
 
                     //return view and send with list users
+                    ViewBag.DataView = new Dictionary<string, object>()
+                    {
+                        {"title","User Management"},
+                        {"ListRole",db.TB_ROLE.Select(r => new RoleDTO{ ROLE_NAME = r.ROLE_NAME, ROLE_ID = r.ROLE_ID}).ToList() }
+
+                    };
                     return View("User/Index", ListUser);
                 }
             }
@@ -393,54 +408,175 @@ namespace FinalProject.Controllers
             }
         }
 
-
-
-
-
-
-
-
-
-
-        // --------------------------------------------------------------------Sub Menu Add User-------------------------------------------------------
+        //--------------------------------------------------------------- add new user -----------------------------------------------
         [Route("master/usermanagement/add")]
-        public ActionResult AddUser(UserDTO NewUser)
+        public ActionResult UserAdd(UserDTO DataNewUser)
         {
-            if (NewUser != null)
+            try
             {
-                using (DBEntities db = new DBEntities())
+                var d = DataNewUser;
+                var a = "S";
+                if (ModelState.IsValid)
                 {
-                    if (ModelState.IsValid)
+                    using (DBEntities db = new DBEntities())
                     {
-                        //encrypt password with sha256
-
-                        TB_USER DataNewUser = new TB_USER
+                        //prepare data new user
+                        //password user is encrypte with algo sha256
+                        TB_USER Tb_User = new TB_USER
                         {
-                            ROLE_ID = NewUser.ROLE_ID,
-                            USERNAME = NewUser.USERNAME,
-                            PASSWORD = new SHA256Managed().ComputeHash(Encoding.UTF8.GetBytes(NewUser.PASSWORD)).ToString(),
-                            FULL_NAME = NewUser.FULL_NAME,
-                            EMAIL = NewUser.EMAIL
+                            FULL_NAME = DataNewUser.FULL_NAME,
+                            USERNAME = DataNewUser.USERNAME,
+                            PASSWORD = CryptographyUtils.Encrypt(DataNewUser.PASSWORD),
+                            ROLE_ID = DataNewUser.ROLE_ID,
+                            EMAIL = DataNewUser.EMAIL
                         };
 
-                        db.TB_USER.Add(DataNewUser);
+                        db.TB_USER.Add(Tb_User);
 
-                        if (db.SaveChanges() < 1)
+                        //check prosses insert data 
+                        if (db.SaveChanges() > 0)
                         {
-                            TempData.Add("message", "Add new user is fail");
-                            TempData.Add("type", "warning");
-                            return Redirect("~/auth/login");
+                            TempData.Add("message", "New User Successfully to added");
+                            TempData.Add("type", "success");
+                            UserLogingUtils.SaveLoggingUserActivity("Add new user " + Tb_User.USERNAME);
                         }
                         else
                         {
-                            TempData.Add("message", "Add new User Successfully");
+                            TempData.Add("message", "User failed to Added");
+                            TempData.Add("type", "danger");
+                        } 
+                    }
+                    return Redirect("~/master/usermanagement");
+                }
+                TempData.Add("message", "Please Complete the form add User");
+                TempData.Add("type", "danger");
+                return Redirect("~/master/usermanagement");
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+        // -------------------------------------------------------------- Edit User -------------------------------------------------------
+        [Route("master/usermanagement/edit")]
+        public ActionResult UserEdit(UserDTO DataEditUser)
+        {
+            try
+            {
+                ModelState.Remove("CONFIRM_PASSWORD");
+                using (DBEntities db = new DBEntities())
+                {
+
+                    if (ModelState.IsValid)
+                    {
+                        //get data from table user base on data of parameter and change the data directly
+                        TB_USER Tb_User = db.TB_USER.FirstOrDefault(u => u.USER_ID == DataEditUser.USER_ID);
+                        Tb_User.FULL_NAME = DataEditUser.FULL_NAME;
+                        Tb_User.USERNAME = DataEditUser.USERNAME;
+                        Tb_User.PASSWORD = CryptographyUtils.Encrypt(DataEditUser.PASSWORD);
+                        Tb_User.EMAIL = DataEditUser.EMAIL;
+                        Tb_User.ROLE_ID = DataEditUser.ROLE_ID;
+
+                        //check proses update
+                        if (db.SaveChanges() > 0)
+                        {
+                            TempData.Add("message", "Edit User Successfully");
                             TempData.Add("type", "success");
-                            return Redirect("~/auth/login");
+                            UserLogingUtils.SaveLoggingUserActivity("edit user id " + Tb_User.USER_ID);
                         }
+
+                        else
+                        {
+                            TempData.Add("message", "User failed to edit");
+                            TempData.Add("type", "danger");
+                        }
+                        return Redirect("~/master/usermanagement");
+                    }
+                    TempData.Add("message", "Please Complete the form edit");
+                    TempData.Add("type", "danger");
+                    return Redirect("~/master/usermanagement");
+                }
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+        //------------------------------------------------------ Delete User ----------------------------------------------------------
+        [Route("master/usermanagement/delete/{id?}")]
+        public ActionResult UserDelete(string id = null)
+        {
+            try
+            {
+                using (DBEntities db = new DBEntities())
+                {
+
+                    //prosess to insert data 
+                    if (id == null)
+                    {
+                        return Redirect("~/master/usermanagement");
+                    }
+                    //convert id to int for search client in tble
+
+                    int UserId = Convert.ToInt16(id);
+                    TB_USER DataUser = db.TB_USER.FirstOrDefault(u => u.USER_ID == UserId);
+
+
+                    if (DataUser == null)
+                    {
+                        return Redirect("~/master/usermanagement");
+                    }
+
+                    //if client is already the remove it
+                    else
+                    {
+                        db.TB_USER.Remove(DataUser);
+                        //check prosses success or not
+                        if (db.SaveChanges() > 0)
+                        {
+                            TempData.Add("message", "User have been deleted");
+                            TempData.Add("type", "success");
+                            UserLogingUtils.SaveLoggingUserActivity("delete user id " + DataUser.USER_ID);
+                        }
+
+                        else
+                        {
+                            TempData.Add("message", "User failed to deleted");
+                            TempData.Add("type", "danger");
+                        }
+
+                        return Redirect("~/master/usermanagement");
                     }
                 }
             }
-            return View("AddUser");
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+ //################################################################## Job Position Management ######################################################
+
+        [Route("master/jobpositionmanagement")]
+        public ActionResult JobPositionManagement()
+        {
+            try
+            {
+                using(DBEntities db = new DBEntities())
+                {
+                    //List<> ListRole = db.TB_ROLE.Select(r => new RoleDTO {
+                    //    ROLE_ID = r.ROLE_ID,
+                    //    ROLE_NAME = r.ROLE_NAME
+                    //}).ToList();
+
+                    return View("JobPositionManagement/index");
+                }
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
         }
     }
 }

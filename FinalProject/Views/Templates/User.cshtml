@@ -46,7 +46,11 @@
                 <!-- Sub Menu  -->
                 foreach (var SubMenu in (new MenuUtils().GetSubmenu(Menu)))
                 {
-                    <li class="nav-item @(SubMenu.TITLE_SUBMENU == ViewBag.DataView["title"] ? "active":"") ">
+                    <!-- check position sub menu -->
+                    string title = ViewBag.DataView["title"];
+                    title = title.ToLower();
+
+                    <li class="nav-item @(SubMenu.TITLE_SUBMENU.ToLower() == title  ? "active":"") "> <!-- for add class active -->
                         <a class="nav-link pd-0" href="~/@SubMenu.URL">
                             <i class="@SubMenu.LOGO_SUBMENU"></i>
                             @SubMenu.TITLE_SUBMENU

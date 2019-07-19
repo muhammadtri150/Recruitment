@@ -34,5 +34,7 @@ namespace FinalProject.Models
         public virtual DbSet<TB_CLIENT> TB_CLIENT { get; set; }
         public virtual DbSet<TB_SKILL> TB_SKILL { get; set; }
         public virtual DbSet<TB_PREFIX> TB_PREFIX { get; set; }
+        public virtual DbSet<TB_JOB_POSITION> TB_JOB_POSITION { get; set; }
+        public virtual DbSet<TB_LOG_USER_ACTIVITY> TB_LOG_USER_ACTIVITY { get; set; }
     }
 }

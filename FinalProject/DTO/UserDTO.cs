@@ -8,8 +8,6 @@ namespace FinalProject.DTO
 {
     public class UserDTO
     {
-        
-        [Required(ErrorMessage = "Role is required")]
         public int USER_ID { get; set; }
 
         [RegularExpression(".{5,30}")]
@@ -23,17 +21,14 @@ namespace FinalProject.DTO
         [Required(ErrorMessage = "Password Must Be fill")]
         public string CONFIRM_PASSWORD { get; set; }
 
-        [Required()]
-        [EmailAddress]
         public string EMAIL { get; set; }
 
         [Required]
-        [RegularExpression(@"/\[a-z]{1,30}/i")]
         public string FULL_NAME { get; set; }
 
-        public int ROLE_ID { get; set; }
-
         [Required]
+        public int ROLE_ID { get; set; }
+        
         public string ROLE_NAME { get; set; }
     }
 }

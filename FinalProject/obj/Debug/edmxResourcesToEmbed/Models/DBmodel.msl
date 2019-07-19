@@ -88,5 +88,23 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="TB_JOB_POSITION">
+      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_JOB_POSITION">
+        <MappingFragment StoreEntitySet="TB_JOB_POSITION">
+          <ScalarProperty Name="JOBPOSITION_NAME" ColumnName="JOBPOSITION_NAME" />
+          <ScalarProperty Name="JOBPOSITION_ID" ColumnName="JOBPOSITION_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_LOG_USER_ACTIVITY">
+      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_LOG_USER_ACTIVITY">
+        <MappingFragment StoreEntitySet="TB_LOG_USER_ACTIVITY">
+          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

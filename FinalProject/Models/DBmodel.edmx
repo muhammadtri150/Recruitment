@@ -32,6 +32,23 @@
           <Property Name="CLIENT_OTHERADDRESS" Type="varchar" MaxLength="30" />
           <Property Name="CLIENT_INDUSTRIES" Type="varchar" MaxLength="30" />
         </EntityType>
+        <EntityType Name="TB_JOB_POSITION">
+          <Key>
+            <PropertyRef Name="JOBPOSITION_ID" />
+          </Key>
+          <Property Name="JOBPOSITION_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JOBPOSITION_NAME" Type="varchar" MaxLength="30" />
+          <Property Name="JOBPOSITION_NOTE" Type="text" />
+        </EntityType>
+        <EntityType Name="TB_LOG_USER_ACTIVITY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USER_ID" Type="int" Nullable="false" />
+          <Property Name="Notes" Type="text" Nullable="false" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="TB_MENU">
           <Key>
             <PropertyRef Name="MENU_ID" />
@@ -82,8 +99,8 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <Property Name="USER_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ROLE_ID" Type="int" Nullable="false" />
           <Property Name="USERNAME" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="PASSWORD" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="EMAIL" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PASSWORD" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="EMAIL" Type="varchar" MaxLength="50" />
           <Property Name="FULL_NAME" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <Association Name="FK_TB_ACCESS_MENU_TB_ACCESS_MENU">
@@ -150,6 +167,8 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <EntitySet Name="JOB_PORTAL" EntityType="Self.JOB_PORTAL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_ACCESS_MENU" EntityType="Self.TB_ACCESS_MENU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_CLIENT" EntityType="Self.TB_CLIENT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_JOB_POSITION" EntityType="Self.TB_JOB_POSITION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_LOG_USER_ACTIVITY" EntityType="Self.TB_LOG_USER_ACTIVITY" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_MENU" EntityType="Self.TB_MENU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_ROLE" EntityType="Self.TB_ROLE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_SKILL" EntityType="Self.TB_SKILL" Schema="dbo" store:Type="Tables" />
@@ -236,8 +255,8 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <Property Name="USER_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ROLE_ID" Type="Int32" Nullable="false" />
           <Property Name="USERNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PASSWORD" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FULL_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="TB_ROLE" Relationship="Self.FK_TB_USER_TB_ROLE" FromRole="TB_USER" ToRole="TB_ROLE" />
         </EntityType>
@@ -307,6 +326,8 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <EntitySet Name="TB_CLIENT" EntityType="FinalProject_adp3Model.TB_CLIENT" />
           <EntitySet Name="TB_SKILL" EntityType="FinalProject_adp3Model.TB_SKILL" />
           <EntitySet Name="TB_PREFIX" EntityType="FinalProject_adp3Model.TB_PREFIX" />
+          <EntitySet Name="TB_JOB_POSITION" EntityType="FinalProject_adp3Model.TB_JOB_POSITION" />
+          <EntitySet Name="TB_LOG_USER_ACTIVITY" EntityType="FinalProject_adp3Model.TB_LOG_USER_ACTIVITY" />
         </EntityContainer>
         <Association Name="FK_TB_ACCESS_MENU_TB_ACCESS_MENU">
           <End Type="FinalProject_adp3Model.TB_ACCESS_MENU" Role="TB_ACCESS_MENU" Multiplicity="1" />
@@ -366,6 +387,23 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <Property Name="ID" Type="Int32" />
           <Property Name="PREFIX" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DATA_NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TB_JOB_POSITION">
+          <Key>
+            <PropertyRef Name="JOBPOSITION_ID" />
+          </Key>
+          <Property Name="JOBPOSITION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JOBPOSITION_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="JOBPOSITION_NOTE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TB_LOG_USER_ACTIVITY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USER_ID" Type="Int32" Nullable="false" />
+          <Property Name="Notes" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -456,6 +494,25 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
               <MappingFragment StoreEntitySet="TB_PREFIX">
                 <ScalarProperty Name="DATA_NAME" ColumnName="DATA_NAME" />
                 <ScalarProperty Name="PREFIX" ColumnName="PREFIX" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_JOB_POSITION">
+            <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_JOB_POSITION">
+              <MappingFragment StoreEntitySet="TB_JOB_POSITION">
+                <ScalarProperty Name="JOBPOSITION_NOTE" ColumnName="JOBPOSITION_NOTE" />
+                <ScalarProperty Name="JOBPOSITION_NAME" ColumnName="JOBPOSITION_NAME" />
+                <ScalarProperty Name="JOBPOSITION_ID" ColumnName="JOBPOSITION_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_LOG_USER_ACTIVITY">
+            <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_LOG_USER_ACTIVITY">
+              <MappingFragment StoreEntitySet="TB_LOG_USER_ACTIVITY">
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

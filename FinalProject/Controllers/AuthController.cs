@@ -8,9 +8,11 @@ using FinalProject.DTO;
 using FinalProject.Filters;
 using System.Security.Cryptography;
 using System.Text;
+using FinalProject.Utils;
 
 namespace FinalProject.Controllers
 {
+    [AllowAnonymous]
     public class AuthController : Controller
     {
  //-------------------------------------------- ini untuk namplin view login :) ------------------------------------------------------
@@ -57,52 +59,59 @@ namespace FinalProject.Controllers
         {
             try
             {
-                if (UserLogin != null)
+                //remove validation because for login only need username and password
+                ModelState.Remove("FULL_NAME");
+                ModelState.Remove("CONFIRM_PASSWORD");
+                ModelState.Remove("ROLE_ID");
+                ModelState.Remove("ROLE_NAME");
+                ModelState.Remove("USER_ID");
+
+                if (ModelState.IsValid)
                 {
-                    using (DBEntities db = new DBEntities())
+                    if (UserLogin != null)
                     {
-                        ModelState.Remove("EMAIL");
-                        ModelState.Remove("CONFIRM_PASSWORD");
-                        ModelState.Remove("FULL_NAME");
-                        ModelState.Remove("ROLE_ID");
-                        if (ModelState.IsValid)
+                        using (DBEntities db = new DBEntities())
                         {
-                            //encrypt password with sha256
-                            TB_USER user = db.TB_USER.FirstOrDefault(u => u.USERNAME == UserLogin.USERNAME);
-                            //if user is not already in database
-                            if (user == null)
+                            if (ModelState.IsValid)
                             {
-                                TempData.Add("message", "User is not valid");
-                                TempData.Add("type", "warning");
-                                return Redirect("~/auth/login");
-                            }
-                            //if user is already in database
-                            else
-                            {
-                                if (user.PASSWORD != UserLogin.PASSWORD)
+                                //encrypt password with sha256
+                                TB_USER user = db.TB_USER.FirstOrDefault(u => u.USERNAME == UserLogin.USERNAME);
+                                //if user is not already in database
+                                if (user == null)
                                 {
-                                    TempData.Add("message", "Password Wrong");
+                                    TempData.Add("message", "User is not valid");
                                     TempData.Add("type", "warning");
                                     return Redirect("~/auth/login");
                                 }
+                                //if user is already in database
                                 else
                                 {
-                                    //make session is filed by userDTO 
-                                    UserDTO userDTO = new UserDTO
+                                    string d = CryptographyUtils.Encrypt(UserLogin.PASSWORD);
+                                    if (user.PASSWORD != CryptographyUtils.Encrypt(UserLogin.PASSWORD))
                                     {
-                                        ROLE_ID = user.ROLE_ID,
-                                        USER_ID = user.USER_ID,
-                                        USERNAME = user.USERNAME,
-                                        EMAIL = user.EMAIL,
-                                        FULL_NAME = user.FULL_NAME
-                                    };
-                                    Session.Add("UserLogin", userDTO);
-                                    return Redirect("~/user");
+                                        TempData.Add("message", "Password Wrong");
+                                        TempData.Add("type", "warning");
+                                        return Redirect("~/auth/login");
+                                    }
+                                    else
+                                    {
+                                        //make session is filed by userDTO 
+                                        UserDTO userDTO = new UserDTO
+                                        {
+                                            ROLE_ID = user.ROLE_ID,
+                                            USER_ID = user.USER_ID,
+                                            USERNAME = user.USERNAME,
+                                            EMAIL = user.EMAIL,
+                                            FULL_NAME = user.FULL_NAME
+                                        };
+                                        Session.Add("UserLogin", userDTO);
+                                        return Redirect("~/user");
+                                    }
                                 }
                             }
                         }
+                        return Redirect("~/auth/login");
                     }
-                    return Redirect("~/auth/login");
                 }
                 return Redirect("~/auth/login");
             }

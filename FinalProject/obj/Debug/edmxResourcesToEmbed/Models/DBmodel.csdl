@@ -49,8 +49,8 @@
     <Property Name="USER_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ROLE_ID" Type="Int32" Nullable="false" />
     <Property Name="USERNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="PASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-    <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PASSWORD" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="FULL_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="TB_ROLE" Relationship="Self.FK_TB_USER_TB_ROLE" FromRole="TB_USER" ToRole="TB_ROLE" />
   </EntityType>
@@ -120,6 +120,8 @@
     <EntitySet Name="TB_CLIENT" EntityType="FinalProject_adp3Model.TB_CLIENT" />
     <EntitySet Name="TB_SKILL" EntityType="FinalProject_adp3Model.TB_SKILL" />
     <EntitySet Name="TB_PREFIX" EntityType="FinalProject_adp3Model.TB_PREFIX" />
+    <EntitySet Name="TB_JOB_POSITION" EntityType="FinalProject_adp3Model.TB_JOB_POSITION" />
+    <EntitySet Name="TB_LOG_USER_ACTIVITY" EntityType="FinalProject_adp3Model.TB_LOG_USER_ACTIVITY" />
   </EntityContainer>
   <Association Name="FK_TB_ACCESS_MENU_TB_ACCESS_MENU">
     <End Type="FinalProject_adp3Model.TB_ACCESS_MENU" Role="TB_ACCESS_MENU" Multiplicity="1" />
@@ -179,5 +181,21 @@
     <Property Name="ID" Type="Int32" />
     <Property Name="PREFIX" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="DATA_NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="TB_JOB_POSITION">
+    <Key>
+      <PropertyRef Name="JOBPOSITION_ID" />
+    </Key>
+    <Property Name="JOBPOSITION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="JOBPOSITION_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="TB_LOG_USER_ACTIVITY">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="USER_ID" Type="Int32" Nullable="false" />
+    <Property Name="Notes" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
   </EntityType>
 </Schema>

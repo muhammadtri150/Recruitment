@@ -19,6 +19,8 @@
         <EntityTypeShape EntityType="FinalProject_adp3Model.TB_CLIENT" Width="1.5" PointX="0.75" PointY="6.75" />
         <EntityTypeShape EntityType="FinalProject_adp3Model.TB_SKILL" Width="1.5" PointX="2.75" PointY="6.75" />
         <EntityTypeShape EntityType="FinalProject_adp3Model.TB_PREFIX" Width="1.5" PointX="7.75" PointY="4.75" />
+        <EntityTypeShape EntityType="FinalProject_adp3Model.TB_JOB_POSITION" Width="1.5" PointX="5.375" PointY="7.75" />
+        <EntityTypeShape EntityType="FinalProject_adp3Model.TB_LOG_USER_ACTIVITY" Width="1.5" PointX="7.375" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
