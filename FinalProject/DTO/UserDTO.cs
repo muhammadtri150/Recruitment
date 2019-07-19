@@ -24,6 +24,7 @@ namespace FinalProject.DTO
         public string EMAIL { get; set; }
 
         [Required]
+        [RegularExpression(@"([a-z]|\W){5,30}",ErrorMessage = "only letters")]
         public string FULL_NAME { get; set; }
 
         [Required]

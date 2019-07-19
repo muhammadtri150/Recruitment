@@ -91,6 +91,7 @@
     <EntitySetMapping Name="TB_JOB_POSITION">
       <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_JOB_POSITION">
         <MappingFragment StoreEntitySet="TB_JOB_POSITION">
+          <ScalarProperty Name="JOBPOSITION_NOTE" ColumnName="JOBPOSITION_NOTE" />
           <ScalarProperty Name="JOBPOSITION_NAME" ColumnName="JOBPOSITION_NAME" />
           <ScalarProperty Name="JOBPOSITION_ID" ColumnName="JOBPOSITION_ID" />
         </MappingFragment>

@@ -1,0 +1,118 @@
+﻿@model IEnumerable<FinalProject.DTO.JobPositionDTO>
+@using FinalProject.DTO
+@section title{
+
+    @ViewBag.DataView["title"]
+
+}
+@section content{
+
+    <div class="container">
+        <!-- Button trigger modal add client-->
+        <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#AddJob">
+            Add New Job Position
+        </button>
+
+        @if (TempData.Peek("message") != null)
+        {
+            <div class="alert alert-@TempData["type"] alert-dismissible fade show " role="alert">
+                @TempData["message"]
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Job Position</th>
+                    <th scope="col">Notes</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var job in Model)
+                {
+                <tr>
+                    <td>@job.JOBPOSITION_ID</td>
+                    <td>@job.JOBPOSITION_NAME</td>
+                    <td>@job.JOBPOSITION_NOTE</td>
+                    <td>
+                        <button type="button" class="btn btn-edit" data-toggle="modal" data-target="#EditJob"
+                                data-jobposition_id ="@job.JOBPOSITION_ID"
+                                data-jobposition_name="@job.JOBPOSITION_NAME"
+                                data-jobposition_note="@job.JOBPOSITION_NOTE">
+                            <i class="fas fa-pencil-alt m-3"></i>
+                        </button>
+
+                        <a onclick="return confirm('Are you sure to delete this Job Position ?')" href="~/master/jobpositionmanagement/delete/@job.JOBPOSITION_ID"><i class="fas fa-trash-alt"></i></a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- Modal add Job Position -->
+    <div class="modal fade" id="AddJob" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Add New Job Position</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="~/master/jobpositionmanagement/add" method="post">
+                        <div class="form-group">
+                            <label for="JOBPOSITION_NAME">JOBPOSITION NAME</label>
+                            <input type="text" class="form-control" id="JOBPOSITION_NAME" name="JOBPOSITION_NAME">
+                        </div>
+                        <div class="form-group">
+                            <label for="JOBPOSITION_NOTE">Note</label>
+                            <textarea class="form-control" name="JOBPOSITION_NOTE" id="JOBPOSITION_NOTE"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal edit Job Position -->
+    <div class="modal fade" id="EditJob" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Edit Job Position</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="~/master/jobpositionmanagement/edit" method="post">
+                        <input type="hidden" id="Edit_JOBPOSITION_ID" name="JOBPOSITION_ID" />
+                        <div class="form-group">
+                            <label for="Edit_JOBPOSITION_NAME">JOBPOSITION NAME</label>
+                            <input type="text" class="form-control" id="Edit_JOBPOSITION_NAME" name="JOBPOSITION_NAME">
+                        </div>
+                        <div class="form-group">
+                            <label for="JOBPOSITION_NOTE">Note</label>
+                            <textarea class="form-control" id="Edit_JOBPOSITION_NOTE" name="JOBPOSITION_NOTE"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/Assets/Js/master/JobPosition/EditJobPosition.js"></script>
+}

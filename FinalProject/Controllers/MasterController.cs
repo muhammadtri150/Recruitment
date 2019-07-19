@@ -512,7 +512,7 @@ namespace FinalProject.Controllers
                 using (DBEntities db = new DBEntities())
                 {
 
-                    //prosess to insert data 
+                    //prosess to delete data 
                     if (id == null)
                     {
                         return Redirect("~/master/usermanagement");
@@ -565,12 +565,147 @@ namespace FinalProject.Controllers
             {
                 using(DBEntities db = new DBEntities())
                 {
-                    //List<> ListRole = db.TB_ROLE.Select(r => new RoleDTO {
-                    //    ROLE_ID = r.ROLE_ID,
-                    //    ROLE_NAME = r.ROLE_NAME
-                    //}).ToList();
+                    List<JobPositionDTO> ListJobPosition = db.TB_JOB_POSITION.Select(j => new JobPositionDTO
+                    {
+                        JOBPOSITION_ID = j.JOBPOSITION_ID,
+                        JOBPOSITION_NAME = j.JOBPOSITION_NAME,
+                        JOBPOSITION_NOTE = j.JOBPOSITION_NOTE
+                    }).ToList();
 
-                    return View("JobPositionManagement/index");
+                    //prepare data for show at view
+                    ViewBag.DataView = new Dictionary<string, object>()
+                    {
+                        {"title","Job Position Management"}
+                    };
+
+                    return View("JobPositionManagement/index",ListJobPosition);
+                }
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+        //---------------------------------------------------- job position add ------------------------------------------
+        [Route("master/jobpositionmanagement/add")]
+        public ActionResult JobPositionManagementAdd(JobPositionDTO DataJobPosition)
+        {
+            try
+            {
+                using (DBEntities db = new DBEntities())
+                {
+                    if (ModelState.IsValid)
+                    {
+                        db.TB_JOB_POSITION.Add(new TB_JOB_POSITION
+                        {
+                            JOBPOSITION_NAME = DataJobPosition.JOBPOSITION_NAME,
+                            JOBPOSITION_NOTE = DataJobPosition.JOBPOSITION_NOTE
+                        });
+
+                        //check prosses success or not
+                        if (db.SaveChanges() > 0)
+                        {
+                            TempData.Add("message", "New Job Position added successfully");
+                            TempData.Add("type", "success");
+                            UserLogingUtils.SaveLoggingUserActivity("delete user id " + DataJobPosition.JOBPOSITION_NAME);
+                        }
+
+                        else
+                        {
+                            TempData.Add("message", "New Job Position failed to added");
+                            TempData.Add("type", "danger");
+                        }
+
+                        return Redirect("~/master/jobpositionmanagement");
+                    }
+                    TempData.Add("message", "please complete form add job position");
+                    TempData.Add("type", "danger");
+                    return Redirect("~/master/jobpositionmanagement");
+                }
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+        //--------------------------------------------------- job position edit --------------------------------------------
+        [Route("master/jobpositionmanagement/edit")]
+        public ActionResult JobPositionManagementEdit(JobPositionDTO DataJobPosition)
+        {
+            //try
+            //{
+                using (DBEntities db = new DBEntities())
+                {
+                    if (ModelState.IsValid)
+                    {
+                        TB_JOB_POSITION Tb_Job_Position = db.TB_JOB_POSITION.FirstOrDefault(j => j.JOBPOSITION_ID == DataJobPosition.JOBPOSITION_ID);
+
+                        Tb_Job_Position.JOBPOSITION_NAME = DataJobPosition.JOBPOSITION_NAME;
+                        Tb_Job_Position.JOBPOSITION_NOTE = DataJobPosition.JOBPOSITION_NOTE;
+
+                        //check prosses success or not
+                        if (db.SaveChanges() > 0)
+                        {
+                            TempData.Add("message", "New Job Position edit successfully");
+                            TempData.Add("type", "success");
+                            UserLogingUtils.SaveLoggingUserActivity("delete user id " + DataJobPosition.JOBPOSITION_NAME);
+                        }
+
+                        else
+                        {
+                            TempData.Add("message", "Job Position failed to edit");
+                            TempData.Add("type", "danger");
+                        }
+
+                        return Redirect("~/master/jobpositionmanagement");
+                    }
+                    TempData.Add("message", "please complete form edit job position");
+                    TempData.Add("type", "danger");
+                    return Redirect("~/master/jobpositionmanagement");
+                }
+            //}
+            //catch (Exception)
+            //{
+            //    return Redirect("~/auth/error");
+            //}
+        }
+
+        //--------------------------------------------------- job position Delete --------------------------------------------
+        [Route("master/jobpositionmanagement/delete/{id?}")]
+        public ActionResult JobPositionManagementDelete(string id = null)
+        {
+            try
+            {
+                using (DBEntities db = new DBEntities())
+                {
+                    if (id == null)
+                    {
+                        return Redirect("~/master/usermanagement");
+                    }
+                    //convert id to int for search client in tble
+
+                    int JobId = Convert.ToInt16(id);
+
+                    TB_JOB_POSITION Tb_Job_Position = db.TB_JOB_POSITION.FirstOrDefault(j => j.JOBPOSITION_ID == JobId);
+                    db.TB_JOB_POSITION.Remove(Tb_Job_Position);
+
+                        //check prosses success or not
+                    if (db.SaveChanges() > 0)
+                    {
+                        TempData.Add("message", "New Job Position delete successfully");
+                        TempData.Add("type", "success");
+                        UserLogingUtils.SaveLoggingUserActivity("delete user id " + Tb_Job_Position.JOBPOSITION_ID);
+                    }
+
+                    else
+                    {
+                        TempData.Add("message", "Job Position failed to delete");
+                        TempData.Add("type", "danger");
+                    }
+
+                        return Redirect("~/master/jobpositionmanagement");
                 }
             }
             catch (Exception)

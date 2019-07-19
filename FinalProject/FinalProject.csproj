@@ -140,6 +140,7 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DTO\AccessMenuDTO.cs" />
     <Compile Include="DTO\ClientDTO.cs" />
+    <Compile Include="DTO\JobPositionDTO.cs" />
     <Compile Include="DTO\MenuDTO.cs" />
     <Compile Include="DTO\JobPortalDTO.cs" />
     <Compile Include="DTO\RoleDTO.cs" />
@@ -206,6 +207,7 @@
     <Content Include="Content\Assets\Images\Logo\logo ACE.png" />
     <Content Include="Content\Assets\Js\master\Client\EditClient.js" />
     <Content Include="Content\Assets\Js\master\JobPortal\EditJobPortal.js" />
+    <Content Include="Content\Assets\Js\master\JobPosition\EditJobPosition.js" />
     <Content Include="Content\Assets\Js\master\User\EditUser.js" />
     <Content Include="Content\Vendor\bootstrap\css\bootstrap-grid.css" />
     <Content Include="Content\Vendor\bootstrap\css\bootstrap-grid.min.css" />
@@ -2053,7 +2055,7 @@
     <Content Include="Views\Master\JobPortal\Index.cshtml" />
     <Content Include="Views\Master\Client\Index.cshtml" />
     <Content Include="Views\Master\User\Index.cshtml" />
-    <Content Include="Views\Master\Role\Index.cshtml" />
+    <Content Include="Views\Master\JobPositionManagement\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

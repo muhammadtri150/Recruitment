@@ -33,6 +33,7 @@
     </Key>
     <Property Name="JOBPOSITION_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="JOBPOSITION_NAME" Type="varchar" MaxLength="30" />
+    <Property Name="JOBPOSITION_NOTE" Type="text" />
   </EntityType>
   <EntityType Name="TB_LOG_USER_ACTIVITY">
     <Key>
