@@ -1,0 +1,119 @@
+﻿@model IEnumerable<FinalProject.DTO.RoleDTO>
+
+@section title{
+
+    @ViewBag.DataView["title"]
+
+}
+
+@section content{
+
+    <div class="container">
+        <!-- Button trigger modal add user-->
+        <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#AddRole">
+            Add Role
+        </button>
+
+        @if (TempData.Peek("message") != null)
+        {
+            <div class="alert alert-@TempData["type"] alert-dismissible fade show " role="alert">
+                @TempData["message"]
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Role</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var Role in Model)
+                {
+                <tr>
+                    <td>@Role.ROLE_NAME</td>
+                    <td>
+                    <td>
+                        @*################################################## edit access menu ###############################################*@
+                        <a href="~/master/rolemanagement/accessmenu/@Role.ROLE_ID"><i class="fas fa-key"></i></a>
+                        @*################################################## edit role ###############################################*@
+                        <button type="button" class="btn btn-edit" data-toggle="modal" data-target="#EditRole" data-role_id="@Role.ROLE_ID" data-role_name="@Role.ROLE_NAME">
+                            <i class="fas fa-pencil-alt m-3"></i>
+                        </button>
+                        @*################################################## delete Role ###############################################*@
+                        <a onclick="return confirm('Are you sure to delete this role ?')" href="~/master/rolemanagement/delete/@Role.ROLE_ID"><i class="fas fa-trash-alt"></i></a>
+
+                    </td>
+                    </td>
+                </tr>
+                }
+                </tbody>
+        </table>
+    </div>
+
+    <!-- Modal add Role -->
+    <div class="modal fade" id="AddRole" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Add New Role</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="~/master/rolemanagement/add" method="post">
+                        <div class="form-group">
+                            <label for="ROLE_NAME">Role Name</label>
+                            <input type="text" class="form-control" id="ROLE_NAME" name="ROLE_NAME">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Modal edit Role -->
+    <div class="modal fade" id="EditRole" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Edit Role</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="~/master/rolemanagement/edit" method="post">
+                        <input type="hidden" id="Edit_ROLE_ID" name="ROLE_ID" />
+                        <div class="form-group">
+                            <label for="Edit_ROLE_NAME">Role Name</label>
+                            <input type="text" class="form-control" id="Edit_ROLE_NAME" name="ROLE_NAME">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/Assets/Js/master/RoleManagement/Role_and_Access_Management.js"></script>
+}
+
+
+

@@ -465,6 +465,7 @@ namespace FinalProject.Controllers
             try
             {
                 ModelState.Remove("CONFIRM_PASSWORD");
+                ModelState.Remove("PASSWORD");
                 using (DBEntities db = new DBEntities())
                 {
 
@@ -474,7 +475,7 @@ namespace FinalProject.Controllers
                         TB_USER Tb_User = db.TB_USER.FirstOrDefault(u => u.USER_ID == DataEditUser.USER_ID);
                         Tb_User.FULL_NAME = DataEditUser.FULL_NAME;
                         Tb_User.USERNAME = DataEditUser.USERNAME;
-                        Tb_User.PASSWORD = CryptographyUtils.Encrypt(DataEditUser.PASSWORD);
+                        if (DataEditUser.PASSWORD != null) Tb_User.PASSWORD = CryptographyUtils.Encrypt(DataEditUser.PASSWORD);
                         Tb_User.EMAIL = DataEditUser.EMAIL;
                         Tb_User.ROLE_ID = DataEditUser.ROLE_ID;
 
@@ -713,5 +714,610 @@ namespace FinalProject.Controllers
                 return Redirect("~/auth/error");
             }
         }
+
+ //################################################################ Skill Management #################################################
+
+        [Route("master/skillmanagement")]
+        public ActionResult Skill()
+        {
+            try
+            {
+                using(DBEntities db = new DBEntities())
+                {
+                    //prepare data skill
+                    List<SkillDTO> ListSkill = db.TB_SKILL.Select(s => new SkillDTO
+                    {
+                        SKILL_ID = s.SKILL_ID,
+                        SKILL_NAME = s.SKILL_NAME
+                    }).ToList();
+
+                    ViewBag.DataView = new Dictionary<string, object>()
+                    {
+                        {"title","Skill Management" }
+                    };
+
+                    return View("SkillManagement/Index", ListSkill);
+                }
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+        //---------------------------------------------------------- add skill --------------------------------------------------
+        [Route("master/skillmanagement/add")]
+        public ActionResult SkillAdd(SkillDTO DataNewSkill)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    using (DBEntities db = new DBEntities())
+                    {
+                        //prepare data skill and insert to database directly
+                        db.TB_SKILL.Add(new TB_SKILL
+                        {
+                            SKILL_NAME = DataNewSkill.SKILL_NAME
+                        });
+
+                        //check prosses success or not
+                        if (db.SaveChanges() > 0)
+                        {
+                            TempData.Add("message", "New Skill saddedd successfully");
+                            TempData.Add("type", "success");
+                            UserLogingUtils.SaveLoggingUserActivity("Add skill " + DataNewSkill.SKILL_NAME);
+                        }
+
+                        else
+                        {
+                            TempData.Add("message", "New skill failed to added");
+                            TempData.Add("type", "danger");
+                        }
+
+                        return Redirect("~/master/skillmanagement");
+                    }
+                }
+                TempData.Add("message", "Please complete form add skill");
+                TempData.Add("type", "danger");
+                return Redirect("~/master/skillmanagement");
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+        //---------------------------------------------------------- edit skill --------------------------------------------------
+        [Route("master/skillmanagement/edit")]
+        public ActionResult SkillEdit(SkillDTO DataSkill)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    using (DBEntities db = new DBEntities())
+                    {
+                        //prepare data skill and update
+
+                        TB_SKILL Tb_Skill = db.TB_SKILL.FirstOrDefault(s => s.SKILL_ID == DataSkill.SKILL_ID);
+
+                        Tb_Skill.SKILL_NAME = DataSkill.SKILL_NAME;
+
+                        //check prosses success or not
+                        if (db.SaveChanges() > 0)
+                        {
+                            TempData.Add("message", "Skill edit successfully");
+                            TempData.Add("type", "success");
+                            UserLogingUtils.SaveLoggingUserActivity("Edit skill id " + DataSkill.SKILL_NAME);
+                        }
+
+                        else
+                        {
+                            TempData.Add("message", "skill failed to edit");
+                            TempData.Add("type", "danger");
+                        }
+
+                        return Redirect("~/master/skillmanagement");
+                    }
+                }
+                TempData.Add("message", "Please complete form add skill");
+                TempData.Add("type", "danger");
+                return Redirect("~/master/skillmanagement");
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+        //---------------------------------------------------------- delete skill --------------------------------------------------
+        [Route("master/skillmanagement/delete/{id?}")]
+        public ActionResult SkillDelete(string id = null)
+        {
+            try
+            {
+                using (DBEntities db = new DBEntities())
+                {
+                    if(id == null)
+                    {
+                        return Redirect("~/master/skillmanagement");
+                    } 
+
+                    //Prepare data table skill and then remove directly while instance data skill
+                    int SkillId = Convert.ToInt16(id);
+                    TB_SKILL Tb_Skill = db.TB_SKILL.FirstOrDefault(s => s.SKILL_ID == SkillId);
+                    db.TB_SKILL.Remove(Tb_Skill);
+
+                    //ceck data is already or not
+                    if (Tb_Skill == null)
+                    {
+                        return Redirect("~/master/skillmanagement");
+                    }
+
+                    //check prosses success or not
+                    if (db.SaveChanges() > 0)
+                     {
+                            TempData.Add("message", "Skill delete successfully");
+                            TempData.Add("type", "success");
+                            UserLogingUtils.SaveLoggingUserActivity("Delete skill id " + SkillId);
+                     }
+
+                     else
+                     {
+                            TempData.Add("message", "skill failed to delete");
+                            TempData.Add("type", "danger");
+                     }
+
+                     return Redirect("~/master/skillmanagement");
+                }
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+        //############################################### access menu management #####################################################
+
+        [Route("master/rolemanagement")]
+        public ActionResult RoleManagement()
+        {
+            try
+            {
+               using(DBEntities db = new DBEntities()){
+
+                    //prepare daa view by access menu DTO, dto and model wil deffrent structure because for show at view
+                    //get data from tb menu, tb user and tb access menu
+                    List<MenuDTO> ListMenu = db.TB_MENU.Select(m => new MenuDTO{
+                        MENU_ID = m.MENU_ID,
+                        TITLE_MENU = m.TITLE_MENU,
+                        LOGO_MENU = m.LOGO_MENU
+                    }).ToList();
+
+                    List<RoleDTO> ListRole = db.TB_ROLE.Select(r => new RoleDTO
+                    {
+                        ROLE_ID = r.ROLE_ID,
+                        ROLE_NAME = r.ROLE_NAME
+                    }).ToList();
+
+
+                    //add list for view in viewbag for check box
+                    ViewBag.DataView = new Dictionary<string, object>() {
+                        {"title","Role Management"},
+                        {"ListMenu", ListMenu}
+                    };
+
+                    return View("RoleManagement/Index", ListRole);
+                }
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+        //------------------------------------------------------------- add role ----------------------------------------------------
+        [Route("master/rolemanagement/add")]
+        //--- this proccess for add role to tb_role but receive parameter accessmenudto because there data is needed from that dto ok
+        public ActionResult RoleAdd(AccessMenuDTO DataNewRole)
+        {
+            try
+            {
+                ModelState.Remove("MENU_ID");
+
+                if (ModelState.IsValid)
+                {
+                    using (DBEntities db = new DBEntities())
+                    {
+                        //prepare data new role and insert to database directly
+                        db.TB_ROLE.Add(new TB_ROLE
+                        {
+                            ROLE_NAME = DataNewRole.ROLE_NAME
+                        });
+
+                        //check prosses success or not
+                        if (db.SaveChanges() > 0)
+                        {
+                            TempData.Add("message", "New Role added successfully");
+                            TempData.Add("type", "success");
+                            UserLogingUtils.SaveLoggingUserActivity("Add new Role " + DataNewRole.ROLE_NAME);
+                        }
+
+                        else
+                        {
+                            TempData.Add("message", "New role failed to added");
+                            TempData.Add("type", "danger");
+                        }
+
+                        return Redirect("~/master/rolemanagement");
+                    }
+                }
+                TempData.Add("message", "Please complete form add role");
+                TempData.Add("type", "danger");
+                return Redirect("~/master/rolemanagement");
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+        //------------------------------------------------------------- edit role ----------------------------------------------------
+        [Route("master/rolemanagement/edit")]
+        //--- this proccess for add role to tb_role but receive parameter accessmenudto because there data is needed from that dto ok
+        public ActionResult RoleEdit(AccessMenuDTO DataRole)
+        {
+            try
+            {
+
+                if (ModelState.IsValid)
+                {
+                    using (DBEntities db = new DBEntities())
+                    {
+                        //prepare data rolw and update
+
+                        TB_ROLE Tb_Role = db.TB_ROLE.FirstOrDefault(r => r.ROLE_ID == DataRole.ROLE_ID);
+
+                        Tb_Role.ROLE_NAME = DataRole.ROLE_NAME;
+
+                        //check prosses success or not
+                        if (db.SaveChanges() > 0)
+                        {
+                            TempData.Add("message", "Role edit successfully");
+                            TempData.Add("type", "success");
+                            UserLogingUtils.SaveLoggingUserActivity("Edit Role id " + Tb_Role.ROLE_ID);
+                        }
+
+                        else
+                        {
+                            TempData.Add("message", "Role failed to edit");
+                            TempData.Add("type", "danger");
+                        }
+
+                        return Redirect("~/master/rolemanagement");
+                    }
+                }
+                TempData.Add("message", "Please complete form edit role");
+                TempData.Add("type", "danger");
+                return Redirect("~/master/rolemanagement");
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+        //------------------------------------------------------------- DELETE role ----------------------------------------------------
+        [Route("master/rolemanagement/delete/{id?}")]
+        //--- this proccess for add role to tb_role but receive parameter accessmenudto because there data is needed from that dto ok
+        public ActionResult RoleDelete(string id = null)
+        {
+            try
+            {
+                using (DBEntities db = new DBEntities())
+                {
+                    //convert id to string for sort data role
+                    int Role_Id = Convert.ToInt16(id);
+
+                    //if delete role, that mean data row in tb access menu base of role id deleted will be deleted to
+                    //looping for remove data access menu based on id role
+                    foreach (var data in db.TB_ACCESS_MENU.Where(ac => ac.ROLE_ID == Role_Id).ToList())
+                    {
+                        db.TB_ACCESS_MENU.Remove(data);
+                    }
+                    //remove role
+                    db.TB_ROLE.Remove(db.TB_ROLE.FirstOrDefault(r => r.ROLE_ID == Role_Id));
+                        //check prosses success or not
+                    if (db.SaveChanges() > 0)
+                    {
+                        TempData.Add("message", "Role delete successfully");
+                        TempData.Add("type", "success");
+                        UserLogingUtils.SaveLoggingUserActivity("Edit Role id " + Role_Id);
+                    }
+
+                    else
+                    {
+                        TempData.Add("message", "Role failed to delete");
+                        TempData.Add("type", "danger");
+                    }
+
+                    return Redirect("~/master/rolemanagement");
+                }
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+        //----------------------------------------------------- for view access menu -------------------------------------------
+        [Route("master/rolemanagement/accessmenu/{id?}")]
+        public ActionResult AccessManagement(string id = null)
+        {
+            try
+            {
+                if(id == null)
+                {
+                    return Redirect("~/master/rolemanagement/");
+                }
+                else
+                {
+                    using(DBEntities db = new DBEntities())
+                    {
+                        List<MenuDTO> List_Menu = db.TB_MENU.Select(m => new MenuDTO
+                        {
+                            MENU_ID = m.MENU_ID,
+                            TITLE_MENU = m.TITLE_MENU,
+                            LOGO_MENU = m.LOGO_MENU
+                        }).ToList();
+
+                        int RoleId = Convert.ToInt16(id);
+                        ViewBag.DataView = new Dictionary<string, object>()
+                        {
+                            {"title", "Access Menu Management"},
+                            {"RoleId",RoleId}
+                        };
+
+                        return View("RoleManagement/AccessMenu", List_Menu);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+        //------------------------------------------------------ for edit access process ---------------------------------------
+        [Route("master/rolemanagement/accessmenu/proccess")]
+        public ActionResult AccessManagement(AccessMenuDTO DataAccess)
+        {
+            try
+            {
+                    using(DBEntities db = new DBEntities())
+                    {
+                        //check availablity of access menu, delete if already and add if not there ok
+                        TB_ACCESS_MENU Tb_Access_Menu = db.TB_ACCESS_MENU.FirstOrDefault(ac =>
+                            ac.MENU_ID == DataAccess.MENU_ID && ac.ROLE_ID == DataAccess.ROLE_ID
+                        );
+                        
+                        if(Tb_Access_Menu != null)
+                        {
+                            db.TB_ACCESS_MENU.Remove(Tb_Access_Menu);
+                            if (db.SaveChanges() > 0)
+                            {
+                                TempData.Add("message", "Access menu successfully");
+                                TempData.Add("type", "success");
+                                UserLogingUtils.SaveLoggingUserActivity("Delete Access menu, menu id" + DataAccess.MENU_ID + "with role id "+ DataAccess.ROLE_ID);
+                            }
+
+                            else
+                            {
+                                TempData.Add("message", "Access menu failed to delete");
+                                TempData.Add("type", "danger");
+                            }
+
+                        }
+                        else
+                        {
+                            // if data is not already that mean insert deata access
+
+                            db.TB_ACCESS_MENU.Add(new TB_ACCESS_MENU { ROLE_ID = DataAccess.ROLE_ID, MENU_ID = DataAccess.MENU_ID });
+
+                            if (db.SaveChanges() > 0)
+                            {
+                                TempData.Add("message", "New Access menu added successfully");
+                                TempData.Add("type", "success");
+                                UserLogingUtils.SaveLoggingUserActivity("Add new Acess Menu " + DataAccess.MENU_ID +" with role id "+DataAccess.ROLE_ID);
+                            }
+
+                            else
+                            {
+                                TempData.Add("message", "New Access menu failed to added");
+                                TempData.Add("type", "danger");
+                            }
+                        }
+                    
+                }
+                return Redirect("~/master/rolemanagement/accessmenu");
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+ //########################################################## Sub Menu Management ##############################################################
+        [Route("master/submenumanagement")]
+        public ActionResult SubMenu()
+        {
+            try
+            {
+                using (DBEntities db = new DBEntities())
+                {
+                    List<SubMenuDTO> ListSubMenu = db.TB_SUBMENU.Select(sm => new SubMenuDTO {
+                        MENU_ID = sm.MENU_ID,
+                        TITLE_SUBMENU = sm.TITLE_SUBMENU,
+                        LOGO_SUBMENU = sm.LOGO_SUBMENU,
+                        URL = sm.URL,
+                        SUB_MENU_ID = sm.SUB_MENU_ID,
+                        TITLE_MENU = db.TB_MENU.FirstOrDefault(menu => menu.MENU_ID == sm.MENU_ID).TITLE_MENU
+                    }).ToList();
+                    
+                    ViewBag.DataView = new Dictionary<string, object>()
+                    {
+                        {"title","Submenu Management"},
+                        {"ListMenu",db.TB_MENU.Select(m => new MenuDTO{  MENU_ID = m.MENU_ID, TITLE_MENU = m.TITLE_MENU }).ToList() }
+                    };
+
+                    return View("SubMenuManagement/Index",ListSubMenu);
+                }    
+            }
+            catch(Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+        //--------------------------------------------------------- Add Sub Menu -----------------------------------------------------
+        [Route("master/submenumanagement/add")]
+        public ActionResult SubMenuAdd(SubMenuDTO DataNewSubMenu)
+        {
+            try
+            {
+                ModelState.Remove("SUB_MENU_ID");
+                ModelState.Remove("SUB_MENU_ID");
+                if (ModelState.IsValid)
+                {
+                   using(DBEntities db = new DBEntities())
+                    {
+                        //----------------------------------- prepare data new sub menu------------------------------
+                        db.TB_SUBMENU.Add(new TB_SUBMENU {
+                            MENU_ID = DataNewSubMenu.MENU_ID,
+                            TITLE_SUBMENU = DataNewSubMenu.TITLE_SUBMENU,
+                            LOGO_SUBMENU = DataNewSubMenu.LOGO_SUBMENU,
+                            URL = DataNewSubMenu.URL
+                        });
+
+                        if (db.SaveChanges() > 0)
+                        {
+                            TempData.Add("message", "New Sub menu added successfully");
+                            TempData.Add("type", "success");
+                            UserLogingUtils.SaveLoggingUserActivity("Add new Sub Menu " + DataNewSubMenu.TITLE_SUBMENU + " in menu id " + DataNewSubMenu.MENU_ID);
+                        }
+
+                        else
+                        {
+                            TempData.Add("message", "New sub menu failed to added");
+                            TempData.Add("type", "danger");
+                        }
+                    }
+                    return Redirect("~/master/submenumanagement");
+                }
+                TempData.Add("message", "Please complete form add sub menu");
+                TempData.Add("type", "danger");
+                return Redirect("~/master/submenumanagement");
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+        //--------------------------------------------------------- Edit Sub MENU ----------------------------------------------------
+        [Route("master/submenumanagement/edit")]
+        public ActionResult SubMenuEdit(SubMenuDTO DataSubMenu)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    using (DBEntities db = new DBEntities())
+                    {
+                        //----------------------------------- prepare data new sub menu------------------------------
+                        TB_SUBMENU Tb_SubMenu = db.TB_SUBMENU.FirstOrDefault(sm => sm.SUB_MENU_ID == DataSubMenu.SUB_MENU_ID);
+                        Tb_SubMenu.TITLE_SUBMENU = DataSubMenu.TITLE_SUBMENU;
+                        Tb_SubMenu.LOGO_SUBMENU = DataSubMenu.LOGO_SUBMENU;
+                        Tb_SubMenu.URL = DataSubMenu.URL;
+                        Tb_SubMenu.MENU_ID = DataSubMenu.MENU_ID;
+
+                        if (db.SaveChanges() > 0)
+                        {
+                            TempData.Add("message", "New Sub menu added successfully");
+                            TempData.Add("type", "success");
+                            UserLogingUtils.SaveLoggingUserActivity("Edit Sub Menu " + DataSubMenu.TITLE_SUBMENU + " in menu id " + DataSubMenu.MENU_ID);
+                        }
+
+                        else
+                        {
+                            TempData.Add("message", "sub menu failed to edit");
+                            TempData.Add("type", "danger");
+                        }
+                    }
+                    return Redirect("~/master/submenumanagement");
+                }
+                TempData.Add("message", "Please complete form edit sub menu");
+                TempData.Add("type", "danger");
+                return Redirect("~/master/submenumanagement");
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+        //--------------------------------------------------------- Delete Sub MENU ----------------------------------------------------
+        [Route("master/submenumanagement/delete/{id?}")]
+        public ActionResult SubMenuDelete(string id = null)
+        {
+            try
+            {
+                if(id == null)
+                {
+                    return Redirect("~/master/submenumanagement");
+                }
+
+                if (ModelState.IsValid)
+                {
+                    using (DBEntities db = new DBEntities())
+                    {
+                        //----------------------------------- prepare data new sub menu------------------------------
+
+                        int SubMenuId = Convert.ToInt16(id);
+                        TB_SUBMENU Tb_SubMenu = db.TB_SUBMENU.FirstOrDefault(sm => sm.SUB_MENU_ID == SubMenuId);
+
+                        if(Tb_SubMenu == null)
+                        {
+                            return Redirect("~/master/submenumanagement");
+                        }
+
+                        else
+                        {
+                            db.TB_SUBMENU.Remove(Tb_SubMenu);
+
+                            if (db.SaveChanges() > 0)
+                            {
+                                TempData.Add("message", "New Sub menu added successfully");
+                                TempData.Add("type", "success");
+                                UserLogingUtils.SaveLoggingUserActivity("Edit Sub Menu " + SubMenuId + " in menu id " + Tb_SubMenu.MENU_ID);
+                            }
+
+                            else
+                            {
+                                TempData.Add("message", "sub menu failed to edit");
+                                TempData.Add("type", "danger");
+                            }
+                        }
+                    }
+                }
+                return Redirect("~/master/submenumanagement");
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
     }
 }

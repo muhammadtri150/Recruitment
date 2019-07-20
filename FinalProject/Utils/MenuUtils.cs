@@ -55,5 +55,24 @@ namespace FinalProject.Utils
                 return ListSubMenuDTO;
             }
         }
+ //---------------------------------------------------method for check access menu base menu id and role id ----------------------------
+    
+        public static String CheckAccess(int RoleId, int MenuId)
+        {
+            string res = null;
+
+            using(DBEntities db  = new DBEntities())
+            {
+                TB_ACCESS_MENU Tb_Access_Menu = db.TB_ACCESS_MENU.FirstOrDefault(ac => ac.MENU_ID == MenuId && ac.ROLE_ID == RoleId);
+
+                if(Tb_Access_Menu != null)
+                {
+                    res = "checked='checked'";
+                }
+
+                return res;
+            }
+
+        }
     }
 }

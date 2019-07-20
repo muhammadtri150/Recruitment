@@ -1,0 +1,34 @@
+﻿@model IEnumerable<FinalProject.DTO.MenuDTO>
+@using FinalProject.Utils
+@section title{
+
+    @ViewBag.DataView["title"]
+
+}
+
+@section content{
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Menu</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var menu in Model)
+            {
+                <tr>
+                    <td><i class="@menu.LOGO_MENU mr-3"></i> @menu.TITLE_MENU</td>
+                    <td>
+                        <input class="form-check-input CheckAcc" type="checkbox"
+                               data-role_id="@ViewBag.DataView["RoleId"]"
+                               data-menu_id="@menu.MENU_ID"
+                               @MenuUtils.CheckAccess(ViewBag.DataView["RoleId"],menu.MENU_ID)>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <script src="~/Content/Assets/Js/master/RoleManagement/AccessManagement.js"></script>
+}

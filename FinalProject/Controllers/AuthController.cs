@@ -120,11 +120,35 @@ namespace FinalProject.Controllers
                 return Redirect("~/auth/error");
             }
         }
- //-------------------------------------------------------- untuk menampilkan error jika tidak ada access menu-----------------
+ //--------------------------------------- untuk menampilkan error jika tidak ada access menu :) ----------------------------------------
          [Route("auth/error")]
          public ActionResult Error()
         {
             return View("404");
         }
+
+//-------------------------------------- ini untuk logout yah :), hanya hapus session dan redirect ke "auth/login" :) -------------------
+
+        [Route("auth/logout")]
+        public ActionResult Logout()
+        {
+            try
+            {
+                if(Session["UserLogin"] != null)
+                {
+                    Session.Remove("UserLogin");
+                    return Redirect("~/auth/login");
+                }
+                else
+                {
+                   return Redirect("~/auth/login");
+                }
+            }
+            catch
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
     }
 }
