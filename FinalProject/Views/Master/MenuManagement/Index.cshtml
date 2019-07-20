@@ -1,0 +1,120 @@
+﻿@model IEnumerable<FinalProject.DTO.MenuDTO>
+
+@section title{
+
+    @ViewBag.DataView["title"]
+
+}
+
+@section content{
+
+    <div class="container">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#AddMenu">
+            Add New Menu
+        </button>
+
+        @if (TempData.Peek("message") != null)
+        {
+            <div class="alert alert-@TempData["type"] alert-dismissible fade show " role="alert">
+                @TempData["message"]
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Menu</th>
+                    <th scope="col">Logo</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var Menu in Model)
+                {
+                    <tr>
+                        <td>@Menu.TITLE_MENU</td>
+                        <td><i class="@Menu.LOGO_MENU"></i></td>
+                        <td>
+                            <button type="button" class="btn btn-edit" data-toggle="modal" data-target="#EditMenu"
+                                    data-id="@Menu.MENU_ID"
+                                    data-title="@Menu.TITLE_MENU"
+                                    data-logo="@Menu.LOGO_MENU">
+                                <i class="fas fa-pencil-alt m-3"></i>
+                            </button>
+                            <a href="~/master/submenumanagement/delete/@Menu.MENU_ID" onclick="return confirm('Are you sure you want to delete this Menu?');"><i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+
+
+    <!-- Modal add Sub Menu -->
+    <div class="modal fade" id="AddMenu" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Add new Menu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="~/master/menumanagement/add" method="post">
+                        <div class="form-group">
+                            <label for="TITLE_MENU">Title Menu</label>
+                            <input type="text" class="form-control" id="TITLE_MENU" name="TITLE_MENU">
+                        </div>
+                        <div class="form-group">
+                            <label for="LOGO_MENU">Logo</label>
+                            <input type="text" class="form-control" id="LOGO_MENU" name="LOGO_MENU">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal edit Sub Menu -->
+    <div class="modal fade" id="EditMenu" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Edit Job Portal</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="~/master/menumanagement/edit" method="post">
+                        <input type="hidden" id="Edit_MENU_ID" name="MENU_ID" />
+                        <div class="form-group">
+                            <label for="Edit_TITLE_MENU">Title Menu</label>
+                            <input type="text" class="form-control" id="Edit_TITLE_MENU" name="TITLE_MENU">
+                        </div>
+                        <div class="form-group">
+                            <label for="Edit_LOGO_MENU">Logo</label>
+                            <input type="text" class="form-control" id="Edit_LOGO_MENU" name="LOGO_MENU">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/Assets/Js/master/MenuManagement/MenuManagement.js"></script>
+}

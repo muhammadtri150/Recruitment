@@ -43,7 +43,7 @@
             @foreach (var Menu in (new MenuUtils().GetMenus()))
             {
                 <div class="sidebar-heading">
-                    @Menu.TITLE_MENU
+                <i class="@Menu.LOGO_MENU"></i>    @Menu.TITLE_MENU
                 </div>
                 <!-- Sub Menu  -->
                 foreach (var SubMenu in (new MenuUtils().GetSubmenu(Menu)))

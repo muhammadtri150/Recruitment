@@ -209,6 +209,7 @@
     <Content Include="Content\Assets\Js\master\Client\EditClient.js" />
     <Content Include="Content\Assets\Js\master\JobPortal\EditJobPortal.js" />
     <Content Include="Content\Assets\Js\master\JobPosition\EditJobPosition.js" />
+    <Content Include="Content\Assets\Js\master\MenuManagement\MenuManagement.js" />
     <Content Include="Content\Assets\Js\master\RoleManagement\AccessManagement.js" />
     <Content Include="Content\Assets\Js\master\RoleManagement\Role_and_Access_Management.js" />
     <Content Include="Content\Assets\Js\master\SkillManagement\EditSkill.js" />
@@ -2065,12 +2066,12 @@
     <Content Include="Views\Master\RoleManagement\Index.cshtml" />
     <Content Include="Views\Master\RoleManagement\AccessMenu.cshtml" />
     <Content Include="Views\Master\SubMenuManagement\Index.cshtml" />
+    <Content Include="Views\Master\MenuManagement\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Assets\Css\" />
     <Folder Include="Content\Assets\Images\User\" />
-    <Folder Include="Views\Master\MenuManagement\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

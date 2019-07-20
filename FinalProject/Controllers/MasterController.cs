@@ -1298,14 +1298,14 @@ namespace FinalProject.Controllers
 
                             if (db.SaveChanges() > 0)
                             {
-                                TempData.Add("message", "New Sub menu added successfully");
+                                TempData.Add("message", "New Sub menu DELETE successfully");
                                 TempData.Add("type", "success");
                                 UserLogingUtils.SaveLoggingUserActivity("Edit Sub Menu " + SubMenuId + " in menu id " + Tb_SubMenu.MENU_ID);
                             }
 
                             else
                             {
-                                TempData.Add("message", "sub menu failed to edit");
+                                TempData.Add("message", "sub menu failed to DELETE");
                                 TempData.Add("type", "danger");
                             }
                         }
@@ -1318,6 +1318,172 @@ namespace FinalProject.Controllers
                 return Redirect("~/auth/error");
             }
         }
+        //####################################################################### Menu Management #####################################
+        [Route("master/menumanagement")]
+        public ActionResult MenuManagement()
+        {
+            try
+            {
+                using(DBEntities db = new DBEntities())
+                {
 
+                    List<MenuDTO> ListMenu = db.TB_MENU.Select(m => new MenuDTO
+                    {
+                        MENU_ID = m.MENU_ID,
+                        TITLE_MENU = m.TITLE_MENU,
+                        LOGO_MENU = m.LOGO_MENU
+                    }).ToList();
+
+                    ViewBag.DataView = new Dictionary<string, object>()
+                    {
+                        {"title","Menu Management" }
+                    };
+
+                    return View("MenuManagement/Index", ListMenu);
+
+                }
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+
+
+
+
+
+
+        //---------------------------------------------------- for edit menu -----------------------------------------------------
+        [Route("master/menumanagement/edit")]
+        public ActionResult MenuEdit(MenuDTO DataMenu)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    using (DBEntities db = new DBEntities())
+                    {
+                        //----------------------------------- prepare data menu------------------------------
+                        TB_MENU Tb_Menu = db.TB_MENU.FirstOrDefault(m => m.MENU_ID == DataMenu.MENU_ID);
+                        Tb_Menu.TITLE_MENU = DataMenu.TITLE_MENU;
+                        Tb_Menu.LOGO_MENU = DataMenu.LOGO_MENU;
+
+                        if (db.SaveChanges() > 0)
+                        {
+                            TempData.Add("message", "Menu edit successfully");
+                            TempData.Add("type", "success");
+                            UserLogingUtils.SaveLoggingUserActivity("Edit Menu ID " + DataMenu.MENU_ID);
+                        }
+
+                        else
+                        {
+                            TempData.Add("message", "Menu failed to edit");
+                            TempData.Add("type", "danger");
+                        }
+                    }
+                    return Redirect("~/master/menumanagement");
+                }
+                TempData.Add("message", "Please complete form edit menu");
+                TempData.Add("type", "danger");
+                return Redirect("~/master/menumanagement");
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+        //---------------------------------------------------- for add menu -----------------------------------------------------
+        [Route("master/menumanagement/add")]
+        public ActionResult MenuAdd(MenuDTO DataNewMenu)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    using (DBEntities db = new DBEntities())
+                    {
+                        //----------------------------------- prepare data menu and insert to database directly ------------------------------
+
+                        db.TB_MENU.Add(new TB_MENU { TITLE_MENU = DataNewMenu.TITLE_MENU, LOGO_MENU = DataNewMenu.LOGO_MENU });
+
+                        if (db.SaveChanges() > 0)
+                        {
+                            TempData.Add("message", "Menu edit successfully");
+                            TempData.Add("type", "success");
+                            UserLogingUtils.SaveLoggingUserActivity("Add Menu " + DataNewMenu.TITLE_MENU);
+                        }
+
+                        else
+                        {
+                            TempData.Add("message", "Menu failed to Add");
+                            TempData.Add("type", "danger");
+                        }
+                    }
+                    return Redirect("~/master/menumanagement");
+                }
+                TempData.Add("message", "Please complete form edit menu");
+                TempData.Add("type", "danger");
+                return Redirect("~/master/menumanagement");
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+        //---------------------------------------------- delete menu -------------------------------------------------------
+        [Route("master/menumanagement/delete/{id?}")]
+        public ActionResult MenuDelete(string id = null)
+        {
+            try
+            {
+                if (id == null)
+                {
+                    return Redirect("~/master/menumanagement");
+                }
+
+                if (ModelState.IsValid)
+                {
+                    using (DBEntities db = new DBEntities())
+                    {
+                        //----------------------------------- prepare data new sub menu------------------------------
+
+                        int MenuId = Convert.ToInt16(id);
+                        TB_MENU Tb_Menu = db.TB_MENU.FirstOrDefault(m => m.MENU_ID == MenuId);
+
+                        if (Tb_Menu == null)
+                        {
+                            return Redirect("~/master/submenumanagement");
+                        }
+
+                        else
+                        {
+                            db.TB_MENU.Remove(Tb_Menu);
+
+                            if (db.SaveChanges() > 0)
+                            {
+                                TempData.Add("message", "New Sub menu DELETE successfully");
+                                TempData.Add("type", "success");
+                                UserLogingUtils.SaveLoggingUserActivity("delete Menu " + MenuId);
+                            }
+
+                            else
+                            {
+                                TempData.Add("message", "Menu failed to DELETE");
+                                TempData.Add("type", "danger");
+                            }
+                        }
+                    }
+                }
+                return Redirect("~/master/submenumanagement");
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
     }
 }
