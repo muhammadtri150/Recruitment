@@ -1,9 +1,26 @@
-﻿@section title{
+﻿@using FinalProject.Utils
+
+@section title{
     @ViewBag.DataView["title"]
 }
 
 @section content{
 
-    <h1>Home Index</h1>
+    <div class="ml-5 mb-5 card" style="width: 18rem;">
+        <img src="~/Content/Assets/Images/Logo/logo ACE.png" class="card-img-top" alt="...">
+        <div class="card-body">
+            <table class="table">
+                <tr>
+                    <td>Username : @UserLogingUtils.GetDataUserLogin().USERNAME</td>
+                </tr>
+                <tr>
+                    <td>Full Name : @UserLogingUtils.GetDataUserLogin().FULL_NAME</td>
+                </tr>
+                <tr>
+                    <td>Email : @UserLogingUtils.GetDataUserLogin().EMAIL</td>
+                </tr>
+            </table>
+        </div>
+    </div>
 
 }

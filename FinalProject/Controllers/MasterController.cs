@@ -878,7 +878,7 @@ namespace FinalProject.Controllers
             }
         }
 
-        //############################################### access menu management #####################################################
+        //############################################### access menu management and role management ######################################
 
         [Route("master/rolemanagement")]
         public ActionResult RoleManagement()
@@ -1076,7 +1076,25 @@ namespace FinalProject.Controllers
                         ViewBag.DataView = new Dictionary<string, object>()
                         {
                             {"title", "Access Menu Management"},
-                            {"RoleId",RoleId}
+                            {"RoleId",RoleId},
+                            //get data sub menu where menu is candidate (menu id candidate = 7)
+                            {"SubMenuCandidate", db.TB_SUBMENU.Select(sm => new SubMenuDTO{
+                                                            MENU_ID = sm.MENU_ID,
+                                                            SUB_MENU_ID = sm.SUB_MENU_ID,
+                                                            TITLE_MENU = sm.TITLE_SUBMENU,
+                                                            URL = sm.URL,
+                                                            LOGO_SUBMENU = sm.LOGO_SUBMENU
+                                                        }).Where(sm => sm.MENU_ID == 7).ToList()},
+                            //get data state candidate 
+                            {"StateCandidate",db.TB_STATE_CANDIDATE.Select(sc => new StateCandidateDTO{
+                                                             ID = sc.ID,
+                                                             STATE_NAME = sc.STATE_NAME
+                                                         }).ToList() },
+                            //get data action candidate (create,update,delete,read)
+                            {"ActionCandidate",db.TB_ACTION_CANDIDATE.Select(ac => new ActionCandidateDTO{
+                                                              ID = ac.ID,
+                                                              ACTION_NAME = ac.ACTION_NAME
+                                                          }).ToList() }
                         };
 
                         return View("RoleManagement/AccessMenu", List_Menu);
@@ -1089,9 +1107,45 @@ namespace FinalProject.Controllers
             }
         }
 
-        //------------------------------------------------------ for edit access process ---------------------------------------
+        //------------------------------------------------------ PROCESS ACCESS ACTION MENU CANDIDATE ------------------------------------
+        [Route("master/rolemanagement/accesscandidateprocess")]
+        public int AccessMenuCandidate(UserAccessMenuCandidateDTO Data)
+        {
+            try
+            {
+                using(DBEntities db = new DBEntities())
+                {
+                    TB_USER_ACCESS_MENU_CANDIDATE TbAccessMenuCandidate =
+                        db.TB_USER_ACCESS_MENU_CANDIDATE.FirstOrDefault(d =>
+                            d.SUB_MENU_CANDIDATE_ID == Data.SUB_MENU_CANDIDATE_ID &&
+                            d.ROLE_ID == Data.ROLE_ID &&
+                            d.ACTION_CANDIDATE_ID == Data.ACTION_CANDIDATE_ID);
+
+                    if(TbAccessMenuCandidate == null)
+                    {
+                        db.TB_USER_ACCESS_MENU_CANDIDATE.Add(new TB_USER_ACCESS_MENU_CANDIDATE {
+                            SUB_MENU_CANDIDATE_ID = Data.SUB_MENU_CANDIDATE_ID,
+                            ROLE_ID = Data.ROLE_ID,
+                            ACTION_CANDIDATE_ID = Data.ACTION_CANDIDATE_ID
+                        });
+                    }
+                    else
+                    {
+                        db.TB_USER_ACCESS_MENU_CANDIDATE.Remove(TbAccessMenuCandidate);
+                    }
+                    
+                    return db.SaveChanges();
+                }
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
+
+        //------------------------------------------------------ for edit access process add or delete ------------------------------------
         [Route("master/rolemanagement/accessmenu/proccess")]
-        public ActionResult AccessManagement(AccessMenuDTO DataAccess)
+        public int AccessManagement(AccessMenuDTO DataAccess)
         {
             try
             {
@@ -1105,46 +1159,20 @@ namespace FinalProject.Controllers
                         if(Tb_Access_Menu != null)
                         {
                             db.TB_ACCESS_MENU.Remove(Tb_Access_Menu);
-                            if (db.SaveChanges() > 0)
-                            {
-                                TempData.Add("message", "Access menu successfully");
-                                TempData.Add("type", "success");
-                                UserLogingUtils.SaveLoggingUserActivity("Delete Access menu, menu id" + DataAccess.MENU_ID + "with role id "+ DataAccess.ROLE_ID);
-                            }
-
-                            else
-                            {
-                                TempData.Add("message", "Access menu failed to delete");
-                                TempData.Add("type", "danger");
-                            }
-
                         }
                         else
                         {
                             // if data is not already that mean insert deata access
-
                             db.TB_ACCESS_MENU.Add(new TB_ACCESS_MENU { ROLE_ID = DataAccess.ROLE_ID, MENU_ID = DataAccess.MENU_ID });
-
-                            if (db.SaveChanges() > 0)
-                            {
-                                TempData.Add("message", "New Access menu added successfully");
-                                TempData.Add("type", "success");
-                                UserLogingUtils.SaveLoggingUserActivity("Add new Acess Menu " + DataAccess.MENU_ID +" with role id "+DataAccess.ROLE_ID);
-                            }
-
-                            else
-                            {
-                                TempData.Add("message", "New Access menu failed to added");
-                                TempData.Add("type", "danger");
-                            }
                         }
                     
-                }
-                return Redirect("~/master/rolemanagement/accessmenu");
+                
+                        return db.SaveChanges();
+                    }
             }
             catch (Exception)
             {
-                return Redirect("~/auth/error");
+                return 0;
             }
         }
 
@@ -1348,12 +1376,7 @@ namespace FinalProject.Controllers
                 return Redirect("~/auth/error");
             }
         }
-
-
-
-
-
-
+        
 
         //---------------------------------------------------- for edit menu -----------------------------------------------------
         [Route("master/menumanagement/edit")]

@@ -1,0 +1,72 @@
+﻿@model IEnumerable<FinalProject.DTO.CandidateDTO>
+@using FinalProject.Utils
+@section title{
+
+    Candidate - @ViewBag.DataView["title"]
+
+}
+
+@*###################################### In Index view is showing data from tb_candidate ########################################*@
+@section content{
+    <div class="container">
+        <!-- Search form -->
+        <a class="btn btn-primary" href="~/candidate/preselection/create">Add New Candidate</a>
+        <form class="form-inline md-form form-sm mt-4">
+            <input class="form-control form-control-sm mr-3 w-50" type="text" placeholder="Search"
+                   aria-label="Search">
+            <i class="fas fa-search mr-3" aria-hidden="true"></i>
+            <select class="form-control form-control-sm mr-3 float-right">
+                <option>.Net Developer</option>
+                <option>Java Developer</option>
+            </select>
+            <select class="form-control form-control-sm mr-3 float-right">
+                <option>Process</option>
+                <option>Not Proccess</option>
+            </select>
+            <input type="button" class="btn btn-primary mr-3 float-right" value="Filter" />
+        </form>
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th scope="col">Nama</th>
+                    <th scope="col">Applied Potition</th>
+                    <th scope="col">Suitable Potition</th>
+                    <th scope="col">Source</th>
+                    <th scope="col">Number</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">PIC</th>
+                    <th scope="col">Sourcing Date</th>
+                    <th scope="col">State</th>
+                    <th scope="col">Notes</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @*@foreach (var candidate in Model)*@
+                <tr>
+                    @foreach (var candidate in Model)
+                    {
+                        <tr>
+                            <td>@candidate.CANDIDATE_NAME</td>
+                            <td>@(new DataCandidateUtils().GetDataSelectionHistory().FirstOrDefault(sh => sh.CANDIDATE_ID == candidate.ID && sh.CANDIDATE_STATE == candidate.CANDIDATE_STATE_ID).CANDIDATE_APPLIED_POSITION)</td>
+                            <td>@(new DataCandidateUtils().GetDataSelectionHistory().FirstOrDefault(sh => sh.CANDIDATE_ID == candidate.ID && sh.CANDIDATE_STATE == candidate.CANDIDATE_STATE_ID).CANDIDATE_SUITABLE_POSITION)</td>
+                            <td>@candidate.SOURCE</td>
+                            <td>@candidate.CANDIDATE_PHONENUMBER</td>
+                            <td>@candidate.CANDIDATE_EMAIL</td>
+                            <td>@candidate.SOURCING_DATE</td>
+                            <td>@candidate.CANDIDATE_STATE_NAME</td>
+                            <td>@(new DataCandidateUtils().GetDataSelectionHistory().FirstOrDefault(sh => sh.CANDIDATE_ID == candidate.ID && sh.CANDIDATE_STATE == candidate.CANDIDATE_STATE_ID).NOTES)</td>
+                            </tr>
+                    <td><button type="button" class="btn editbtn" data-toggle="modal"><i class="fas fa-edit"></i></button></td>
+                    }
+                </tr>
+            </tbody>
+        </table>
+        <form class="form-inline md-form form-sm mt-3 float-left">
+            <input type="button" class="btn btn-primary" name="" value="<<" />
+            <input type="button" class="btn btn-primary ml-3" name="" value="<" />
+            <input type="button" class="btn btn-primary ml-3" name="" value=">" />
+            <input type="button" class="btn btn-primary ml-3" name="" value=">>" />
+        </form>
+    </div>
+}

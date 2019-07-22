@@ -21,6 +21,102 @@
           <Property Name="ROLE_ID" Type="int" Nullable="false" />
           <Property Name="MENU_ID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="TB_ACTION_CANDIDATE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ACTION_NAME" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="TB_CANDIDATE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CANDIDATE_ID" Type="varchar" MaxLength="30" />
+          <Property Name="CANDIDATE_NAME" Type="varchar" MaxLength="30" />
+          <Property Name="CANDIDATE_AGE" Type="int" />
+          <Property Name="CANDIDATE_BIRTH_DATE" Type="date" />
+          <Property Name="CANDIDATE_PLACE_BIRTH" Type="varchar" MaxLength="30" />
+          <Property Name="MARITAL_STATUS_ID" Type="int" />
+          <Property Name="GENDER_ID" Type="int" />
+          <Property Name="RELIGION_ID" Type="int" />
+          <Property Name="CANDIDATE_ETNIC" Type="varchar" MaxLength="50" />
+          <Property Name="CANDIDATE_HOMENUMBER" Type="varchar" MaxLength="10" />
+          <Property Name="CANDIDATE_PHONENUMBER" Type="varchar" MaxLength="50" />
+          <Property Name="CANDIDATE_EMAIL" Type="varchar" MaxLength="50" />
+          <Property Name="CANDIDATE_CITY" Type="int" />
+          <Property Name="CANDIDATE_PROVINCE" Type="int" />
+          <Property Name="CANDIDATE_CURRENT_ADDRESS" Type="text" />
+          <Property Name="CANDIDATE_KTP_NUMBER" Type="varchar" MaxLength="50" />
+          <Property Name="CANDDIATE_NPWP_NUMBER" Type="varchar" MaxLength="50" />
+          <Property Name="CANDIDATE_CV" Type="text" />
+          <Property Name="CANDIDATE_PHOTO" Type="text" />
+          <Property Name="CANDIDATE_LAST_EDUCATON" Type="varchar" MaxLength="50" />
+          <Property Name="CANDIDATE_GPA" Type="float" />
+          <Property Name="CANDIDATE_MAJOR" Type="varchar" MaxLength="50" />
+          <Property Name="CANDIDATE_DEGREE" Type="varchar" MaxLength="50" />
+          <Property Name="CANDIDATE_STATE_ID" Type="int" />
+          <Property Name="SOURCE" Type="varchar" MaxLength="50" />
+          <Property Name="SOURCING_DATE" Type="date" />
+        </EntityType>
+        <EntityType Name="TB_CANDIDATE_EDUCATION_HISTORY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CANDIDATE_SCHOOL_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="CANDIDATE_SCHOOL_MAJOR" Type="varchar" MaxLength="50" />
+          <Property Name="CANDIDATE_SCHOOL_DEGREE" Type="varchar" MaxLength="10" />
+          <Property Name="CANDIDATE_SCHOOL_GPA" Type="float" />
+        </EntityType>
+        <EntityType Name="TB_CANDIDATE_JOB_EXPERIENCE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CANDIDATE_ID" Type="int" />
+          <Property Name="INDUSTRIES" Type="varchar" MaxLength="50" />
+          <Property Name="CANDIDATE_POSITION" Type="varchar" MaxLength="50" />
+          <Property Name="START_DATE" Type="date" />
+          <Property Name="END_DATE" Type="date" />
+          <Property Name="CURRENT_SALARY" Type="money" />
+          <Property Name="SKILL_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="JOBDESC" Type="text" />
+          <Property Name="BENEFIT" Type="text" />
+          <Property Name="COMPANY_NAME" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TB_CANDIDATE_SELECTION_HISTORY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CANDIDATE_ID" Type="int" />
+          <Property Name="PIC_ID" Type="int" />
+          <Property Name="CANDIDATE_APPLIED_POSITION" Type="varchar" MaxLength="50" />
+          <Property Name="CANDIDATE_SUITABLE_POSITION" Type="varchar" MaxLength="50" />
+          <Property Name="CANDIDATE_SOURCE" Type="varchar" MaxLength="50" />
+          <Property Name="CANDIDATE_STATE" Type="int" />
+          <Property Name="CANDIDATE_EXPECTED_SALARY" Type="money" />
+          <Property Name="PROCESS_DATE" Type="datetime" />
+          <Property Name="NOTES" Type="text" />
+        </EntityType>
+        <EntityType Name="TB_CANDIDATE_SKILL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CANDIATE_ID" Type="varchar" MaxLength="30" />
+          <Property Name="SKILL" Type="text" />
+        </EntityType>
+        <EntityType Name="TB_CITY">
+          <Key>
+            <PropertyRef Name="CITY_ID" />
+          </Key>
+          <Property Name="CITY_ID" Type="int" Nullable="false" />
+          <Property Name="CITY_NAME" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PROVINCE_ID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="TB_CLIENT">
           <Key>
             <PropertyRef Name="ID" />
@@ -31,6 +127,13 @@
           <Property Name="CLIENT_ADDRESS" Type="varchar" MaxLength="30" />
           <Property Name="CLIENT_OTHERADDRESS" Type="varchar" MaxLength="30" />
           <Property Name="CLIENT_INDUSTRIES" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="TB_GENDER">
+          <Key>
+            <PropertyRef Name="GENDER_ID" />
+          </Key>
+          <Property Name="GENDER_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GENDER_NAME" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="TB_JOB_POSITION">
           <Key>
@@ -48,6 +151,13 @@
           <Property Name="USER_ID" Type="int" Nullable="false" />
           <Property Name="Notes" Type="text" Nullable="false" />
           <Property Name="Time" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TB_MARITALSTATUS">
+          <Key>
+            <PropertyRef Name="MARITALSTATUS_ID" />
+          </Key>
+          <Property Name="MARITALSTATUS_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MARITALSTATUS_NAME" Type="varchar" MaxLength="15" />
         </EntityType>
         <EntityType Name="TB_MENU">
           <Key>
@@ -68,6 +178,20 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <Property Name="PREFIX" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="DATA_NAME" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="TB_PROVINCE">
+          <Key>
+            <PropertyRef Name="PROVINCE_ID" />
+          </Key>
+          <Property Name="PROVINCE_ID" Type="int" Nullable="false" />
+          <Property Name="PROVINCE_NAME" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TB_RELIGION">
+          <Key>
+            <PropertyRef Name="RELIGION_ID" />
+          </Key>
+          <Property Name="RELIGION_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RELIGION_NAME" Type="varchar" MaxLength="15" />
+        </EntityType>
         <EntityType Name="TB_ROLE">
           <Key>
             <PropertyRef Name="ROLE_ID" />
@@ -81,6 +205,13 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           </Key>
           <Property Name="SKILL_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SKILL_NAME" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="TB_STATE_CANDIDATE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="STATE_NAME" Type="varchar" MaxLength="30" />
         </EntityType>
         <EntityType Name="TB_SUBMENU">
           <Key>
@@ -103,6 +234,159 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <Property Name="EMAIL" Type="varchar" MaxLength="50" />
           <Property Name="FULL_NAME" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="TB_USER_ACCESS_MENU_CANDIDATE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ROLE_ID" Type="int" />
+          <Property Name="SUB_MENU_CANDIDATE_ID" Type="int" />
+          <Property Name="ACTION_CANDIDATE_ID" Type="int" />
+        </EntityType>
+        <Association Name="FK__TB_CANDID__CANDI__71D1E811">
+          <End Role="TB_STATE_CANDIDATE" Type="Self.TB_STATE_CANDIDATE" Multiplicity="0..1" />
+          <End Role="TB_CANDIDATE" Type="Self.TB_CANDIDATE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_STATE_CANDIDATE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TB_CANDIDATE">
+              <PropertyRef Name="CANDIDATE_STATE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_CANDID__CANDI__72C60C4A">
+          <End Role="TB_PROVINCE" Type="Self.TB_PROVINCE" Multiplicity="0..1" />
+          <End Role="TB_CANDIDATE" Type="Self.TB_CANDIDATE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_PROVINCE">
+              <PropertyRef Name="PROVINCE_ID" />
+            </Principal>
+            <Dependent Role="TB_CANDIDATE">
+              <PropertyRef Name="CANDIDATE_PROVINCE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_CANDID__CANDI__75A278F5">
+          <End Role="TB_CANDIDATE" Type="Self.TB_CANDIDATE" Multiplicity="0..1" />
+          <End Role="TB_CANDIDATE_SELECTION_HISTORY" Type="Self.TB_CANDIDATE_SELECTION_HISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_CANDIDATE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TB_CANDIDATE_SELECTION_HISTORY">
+              <PropertyRef Name="CANDIDATE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_CANDID__CANDI__778AC167">
+          <End Role="TB_STATE_CANDIDATE" Type="Self.TB_STATE_CANDIDATE" Multiplicity="0..1" />
+          <End Role="TB_CANDIDATE_SELECTION_HISTORY" Type="Self.TB_CANDIDATE_SELECTION_HISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_STATE_CANDIDATE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TB_CANDIDATE_SELECTION_HISTORY">
+              <PropertyRef Name="CANDIDATE_STATE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_CANDID__CANDI__7C4F7684">
+          <End Role="TB_CANDIDATE" Type="Self.TB_CANDIDATE" Multiplicity="0..1" />
+          <End Role="TB_CANDIDATE_JOB_EXPERIENCE" Type="Self.TB_CANDIDATE_JOB_EXPERIENCE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_CANDIDATE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TB_CANDIDATE_JOB_EXPERIENCE">
+              <PropertyRef Name="CANDIDATE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_CANDID__GENDE__6FE99F9F">
+          <End Role="TB_GENDER" Type="Self.TB_GENDER" Multiplicity="0..1" />
+          <End Role="TB_CANDIDATE" Type="Self.TB_CANDIDATE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_GENDER">
+              <PropertyRef Name="GENDER_ID" />
+            </Principal>
+            <Dependent Role="TB_CANDIDATE">
+              <PropertyRef Name="GENDER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_CANDID__MARIT__6EF57B66">
+          <End Role="TB_MARITALSTATUS" Type="Self.TB_MARITALSTATUS" Multiplicity="0..1" />
+          <End Role="TB_CANDIDATE" Type="Self.TB_CANDIDATE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_MARITALSTATUS">
+              <PropertyRef Name="MARITALSTATUS_ID" />
+            </Principal>
+            <Dependent Role="TB_CANDIDATE">
+              <PropertyRef Name="MARITAL_STATUS_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_CANDID__RELIG__70DDC3D8">
+          <End Role="TB_RELIGION" Type="Self.TB_RELIGION" Multiplicity="0..1" />
+          <End Role="TB_CANDIDATE" Type="Self.TB_CANDIDATE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_RELIGION">
+              <PropertyRef Name="RELIGION_ID" />
+            </Principal>
+            <Dependent Role="TB_CANDIDATE">
+              <PropertyRef Name="RELIGION_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_CANDID__USER___76969D2E">
+          <End Role="TB_USER" Type="Self.TB_USER" Multiplicity="0..1" />
+          <End Role="TB_CANDIDATE_SELECTION_HISTORY" Type="Self.TB_CANDIDATE_SELECTION_HISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_USER">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="TB_CANDIDATE_SELECTION_HISTORY">
+              <PropertyRef Name="PIC_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_USER_A__ACTIO__5812160E">
+          <End Role="TB_ACTION_CANDIDATE" Type="Self.TB_ACTION_CANDIDATE" Multiplicity="0..1" />
+          <End Role="TB_USER_ACCESS_MENU_CANDIDATE" Type="Self.TB_USER_ACCESS_MENU_CANDIDATE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_ACTION_CANDIDATE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TB_USER_ACCESS_MENU_CANDIDATE">
+              <PropertyRef Name="ACTION_CANDIDATE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_USER_A__ROLE___5629CD9C">
+          <End Role="TB_ROLE" Type="Self.TB_ROLE" Multiplicity="0..1" />
+          <End Role="TB_USER_ACCESS_MENU_CANDIDATE" Type="Self.TB_USER_ACCESS_MENU_CANDIDATE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_ROLE">
+              <PropertyRef Name="ROLE_ID" />
+            </Principal>
+            <Dependent Role="TB_USER_ACCESS_MENU_CANDIDATE">
+              <PropertyRef Name="ROLE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_USER_A__SUB_M__571DF1D5">
+          <End Role="TB_SUBMENU" Type="Self.TB_SUBMENU" Multiplicity="0..1" />
+          <End Role="TB_USER_ACCESS_MENU_CANDIDATE" Type="Self.TB_USER_ACCESS_MENU_CANDIDATE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_SUBMENU">
+              <PropertyRef Name="SUB_MENU_ID" />
+            </Principal>
+            <Dependent Role="TB_USER_ACCESS_MENU_CANDIDATE">
+              <PropertyRef Name="SUB_MENU_CANDIDATE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TB_ACCESS_MENU_TB_ACCESS_MENU">
           <End Role="TB_ACCESS_MENU" Type="Self.TB_ACCESS_MENU" Multiplicity="1" />
           <End Role="TB_ACCESS_MENU1" Type="Self.TB_ACCESS_MENU" Multiplicity="0..1" />
@@ -166,14 +450,27 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
         <EntityContainer Name="FinalProject_adp3ModelStoreContainer">
           <EntitySet Name="JOB_PORTAL" EntityType="Self.JOB_PORTAL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_ACCESS_MENU" EntityType="Self.TB_ACCESS_MENU" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_ACTION_CANDIDATE" EntityType="Self.TB_ACTION_CANDIDATE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_CANDIDATE" EntityType="Self.TB_CANDIDATE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_CANDIDATE_EDUCATION_HISTORY" EntityType="Self.TB_CANDIDATE_EDUCATION_HISTORY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_CANDIDATE_JOB_EXPERIENCE" EntityType="Self.TB_CANDIDATE_JOB_EXPERIENCE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_CANDIDATE_SELECTION_HISTORY" EntityType="Self.TB_CANDIDATE_SELECTION_HISTORY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_CANDIDATE_SKILL" EntityType="Self.TB_CANDIDATE_SKILL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_CITY" EntityType="Self.TB_CITY" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_CLIENT" EntityType="Self.TB_CLIENT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_GENDER" EntityType="Self.TB_GENDER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_JOB_POSITION" EntityType="Self.TB_JOB_POSITION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_LOG_USER_ACTIVITY" EntityType="Self.TB_LOG_USER_ACTIVITY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_MARITALSTATUS" EntityType="Self.TB_MARITALSTATUS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_MENU" EntityType="Self.TB_MENU" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_PROVINCE" EntityType="Self.TB_PROVINCE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_RELIGION" EntityType="Self.TB_RELIGION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_ROLE" EntityType="Self.TB_ROLE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_SKILL" EntityType="Self.TB_SKILL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_STATE_CANDIDATE" EntityType="Self.TB_STATE_CANDIDATE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_SUBMENU" EntityType="Self.TB_SUBMENU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_USER" EntityType="Self.TB_USER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_USER_ACCESS_MENU_CANDIDATE" EntityType="Self.TB_USER_ACCESS_MENU_CANDIDATE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_PREFIX" EntityType="Self.TB_PREFIX" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [TB_PREFIX].[ID] AS [ID], 
@@ -181,6 +478,54 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
     [TB_PREFIX].[DATA_NAME] AS [DATA_NAME]
     FROM [dbo].[TB_PREFIX] AS [TB_PREFIX]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK__TB_CANDID__CANDI__71D1E811" Association="Self.FK__TB_CANDID__CANDI__71D1E811">
+            <End Role="TB_STATE_CANDIDATE" EntitySet="TB_STATE_CANDIDATE" />
+            <End Role="TB_CANDIDATE" EntitySet="TB_CANDIDATE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_CANDID__CANDI__72C60C4A" Association="Self.FK__TB_CANDID__CANDI__72C60C4A">
+            <End Role="TB_PROVINCE" EntitySet="TB_PROVINCE" />
+            <End Role="TB_CANDIDATE" EntitySet="TB_CANDIDATE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_CANDID__CANDI__75A278F5" Association="Self.FK__TB_CANDID__CANDI__75A278F5">
+            <End Role="TB_CANDIDATE" EntitySet="TB_CANDIDATE" />
+            <End Role="TB_CANDIDATE_SELECTION_HISTORY" EntitySet="TB_CANDIDATE_SELECTION_HISTORY" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_CANDID__CANDI__778AC167" Association="Self.FK__TB_CANDID__CANDI__778AC167">
+            <End Role="TB_STATE_CANDIDATE" EntitySet="TB_STATE_CANDIDATE" />
+            <End Role="TB_CANDIDATE_SELECTION_HISTORY" EntitySet="TB_CANDIDATE_SELECTION_HISTORY" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_CANDID__CANDI__7C4F7684" Association="Self.FK__TB_CANDID__CANDI__7C4F7684">
+            <End Role="TB_CANDIDATE" EntitySet="TB_CANDIDATE" />
+            <End Role="TB_CANDIDATE_JOB_EXPERIENCE" EntitySet="TB_CANDIDATE_JOB_EXPERIENCE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_CANDID__GENDE__6FE99F9F" Association="Self.FK__TB_CANDID__GENDE__6FE99F9F">
+            <End Role="TB_GENDER" EntitySet="TB_GENDER" />
+            <End Role="TB_CANDIDATE" EntitySet="TB_CANDIDATE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_CANDID__MARIT__6EF57B66" Association="Self.FK__TB_CANDID__MARIT__6EF57B66">
+            <End Role="TB_MARITALSTATUS" EntitySet="TB_MARITALSTATUS" />
+            <End Role="TB_CANDIDATE" EntitySet="TB_CANDIDATE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_CANDID__RELIG__70DDC3D8" Association="Self.FK__TB_CANDID__RELIG__70DDC3D8">
+            <End Role="TB_RELIGION" EntitySet="TB_RELIGION" />
+            <End Role="TB_CANDIDATE" EntitySet="TB_CANDIDATE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_CANDID__USER___76969D2E" Association="Self.FK__TB_CANDID__USER___76969D2E">
+            <End Role="TB_USER" EntitySet="TB_USER" />
+            <End Role="TB_CANDIDATE_SELECTION_HISTORY" EntitySet="TB_CANDIDATE_SELECTION_HISTORY" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_USER_A__ACTIO__5812160E" Association="Self.FK__TB_USER_A__ACTIO__5812160E">
+            <End Role="TB_ACTION_CANDIDATE" EntitySet="TB_ACTION_CANDIDATE" />
+            <End Role="TB_USER_ACCESS_MENU_CANDIDATE" EntitySet="TB_USER_ACCESS_MENU_CANDIDATE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_USER_A__ROLE___5629CD9C" Association="Self.FK__TB_USER_A__ROLE___5629CD9C">
+            <End Role="TB_ROLE" EntitySet="TB_ROLE" />
+            <End Role="TB_USER_ACCESS_MENU_CANDIDATE" EntitySet="TB_USER_ACCESS_MENU_CANDIDATE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_USER_A__SUB_M__571DF1D5" Association="Self.FK__TB_USER_A__SUB_M__571DF1D5">
+            <End Role="TB_SUBMENU" EntitySet="TB_SUBMENU" />
+            <End Role="TB_USER_ACCESS_MENU_CANDIDATE" EntitySet="TB_USER_ACCESS_MENU_CANDIDATE" />
+          </AssociationSet>
           <AssociationSet Name="FK_TB_ACCESS_MENU_TB_ACCESS_MENU" Association="Self.FK_TB_ACCESS_MENU_TB_ACCESS_MENU">
             <End Role="TB_ACCESS_MENU" EntitySet="TB_ACCESS_MENU" />
             <End Role="TB_ACCESS_MENU1" EntitySet="TB_ACCESS_MENU" />
@@ -236,6 +581,7 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <Property Name="ROLE_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="TB_USER" Relationship="Self.FK_TB_USER_TB_ROLE" FromRole="TB_ROLE" ToRole="TB_USER" />
           <NavigationProperty Name="TB_ACCESS_MENU" Relationship="FinalProject_adp3Model.FK_TB_ACCESS_MENU_TB_MENU1" FromRole="TB_ROLE" ToRole="TB_ACCESS_MENU" />
+          <NavigationProperty Name="TB_USER_ACCESS_MENU_CANDIDATE" Relationship="FinalProject_adp3Model.FK__TB_USER_A__ROLE___5629CD9C" FromRole="TB_ROLE" ToRole="TB_USER_ACCESS_MENU_CANDIDATE" />
         </EntityType>
         <EntityType Name="TB_SUBMENU">
           <Key>
@@ -247,6 +593,7 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <NavigationProperty Name="TB_MENU" Relationship="Self.FK_TB_SUBMENU_TB_MENU" FromRole="TB_SUBMENU" ToRole="TB_MENU" />
           <Property Name="LOGO_SUBMENU" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TB_USER_ACCESS_MENU_CANDIDATE" Relationship="FinalProject_adp3Model.FK__TB_USER_A__SUB_M__571DF1D5" FromRole="TB_SUBMENU" ToRole="TB_USER_ACCESS_MENU_CANDIDATE" />
         </EntityType>
         <EntityType Name="TB_USER">
           <Key>
@@ -259,7 +606,8 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FULL_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="TB_ROLE" Relationship="Self.FK_TB_USER_TB_ROLE" FromRole="TB_USER" ToRole="TB_ROLE" />
-        </EntityType>
+          <NavigationProperty Name="TB_CANDIDATE_SELECTION_HISTORY" Relationship="FinalProject_adp3Model.FK__TB_CANDID__USER___76969D2E" FromRole="TB_USER" ToRole="TB_CANDIDATE_SELECTION_HISTORY" />
+          </EntityType>
         <Association Name="FK_TB_ACCESS_MENU_TB_MENU">
           <End Role="TB_MENU" Type="Self.TB_MENU" Multiplicity="1" />
           <End Role="TB_ACCESS_MENU" Type="Self.TB_ACCESS_MENU" Multiplicity="*" />
@@ -328,7 +676,72 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <EntitySet Name="TB_PREFIX" EntityType="FinalProject_adp3Model.TB_PREFIX" />
           <EntitySet Name="TB_JOB_POSITION" EntityType="FinalProject_adp3Model.TB_JOB_POSITION" />
           <EntitySet Name="TB_LOG_USER_ACTIVITY" EntityType="FinalProject_adp3Model.TB_LOG_USER_ACTIVITY" />
-        </EntityContainer>
+          <EntitySet Name="TB_ACTION_CANDIDATE" EntityType="FinalProject_adp3Model.TB_ACTION_CANDIDATE" />
+          <EntitySet Name="TB_CANDIDATE_SKILL" EntityType="FinalProject_adp3Model.TB_CANDIDATE_SKILL" />
+          <EntitySet Name="TB_GENDER" EntityType="FinalProject_adp3Model.TB_GENDER" />
+          <EntitySet Name="TB_MARITALSTATUS" EntityType="FinalProject_adp3Model.TB_MARITALSTATUS" />
+          <EntitySet Name="TB_RELIGION" EntityType="FinalProject_adp3Model.TB_RELIGION" />
+          <EntitySet Name="TB_STATE_CANDIDATE" EntityType="FinalProject_adp3Model.TB_STATE_CANDIDATE" />
+          <EntitySet Name="TB_USER_ACCESS_MENU_CANDIDATE" EntityType="FinalProject_adp3Model.TB_USER_ACCESS_MENU_CANDIDATE" />
+          <AssociationSet Name="FK__TB_USER_A__ACTIO__5812160E" Association="FinalProject_adp3Model.FK__TB_USER_A__ACTIO__5812160E">
+            <End Role="TB_ACTION_CANDIDATE" EntitySet="TB_ACTION_CANDIDATE" />
+            <End Role="TB_USER_ACCESS_MENU_CANDIDATE" EntitySet="TB_USER_ACCESS_MENU_CANDIDATE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_USER_A__ROLE___5629CD9C" Association="FinalProject_adp3Model.FK__TB_USER_A__ROLE___5629CD9C">
+            <End Role="TB_ROLE" EntitySet="TB_ROLE" />
+            <End Role="TB_USER_ACCESS_MENU_CANDIDATE" EntitySet="TB_USER_ACCESS_MENU_CANDIDATE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_USER_A__SUB_M__571DF1D5" Association="FinalProject_adp3Model.FK__TB_USER_A__SUB_M__571DF1D5">
+            <End Role="TB_SUBMENU" EntitySet="TB_SUBMENU" />
+            <End Role="TB_USER_ACCESS_MENU_CANDIDATE" EntitySet="TB_USER_ACCESS_MENU_CANDIDATE" />
+          </AssociationSet>
+          <EntitySet Name="TB_CANDIDATE_EDUCATION_HISTORY" EntityType="FinalProject_adp3Model.TB_CANDIDATE_EDUCATION_HISTORY" />
+          <EntitySet Name="TB_CITY" EntityType="FinalProject_adp3Model.TB_CITY" />
+          <EntitySet Name="TB_PROVINCE" EntityType="FinalProject_adp3Model.TB_PROVINCE" />
+          <EntitySet Name="TB_CANDIDATE_JOB_EXPERIENCE" EntityType="FinalProject_adp3Model.TB_CANDIDATE_JOB_EXPERIENCE" />
+          <EntitySet Name="TB_CANDIDATE" EntityType="FinalProject_adp3Model.TB_CANDIDATE" />
+          <AssociationSet Name="FK__TB_CANDID__CANDI__71D1E811" Association="FinalProject_adp3Model.FK__TB_CANDID__CANDI__71D1E811">
+            <End Role="TB_CITY" EntitySet="TB_CITY" />
+            <End Role="TB_CANDIDATE" EntitySet="TB_CANDIDATE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_CANDID__CANDI__72C60C4A" Association="FinalProject_adp3Model.FK__TB_CANDID__CANDI__72C60C4A">
+            <End Role="TB_PROVINCE" EntitySet="TB_PROVINCE" />
+            <End Role="TB_CANDIDATE" EntitySet="TB_CANDIDATE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_CANDID__CANDI__7C4F7684" Association="FinalProject_adp3Model.FK__TB_CANDID__CANDI__7C4F7684">
+            <End Role="TB_CANDIDATE" EntitySet="TB_CANDIDATE" />
+            <End Role="TB_CANDIDATE_JOB_EXPERIENCE" EntitySet="TB_CANDIDATE_JOB_EXPERIENCE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_CANDID__GENDE__6FE99F9F" Association="FinalProject_adp3Model.FK__TB_CANDID__GENDE__6FE99F9F">
+            <End Role="TB_GENDER" EntitySet="TB_GENDER" />
+            <End Role="TB_CANDIDATE" EntitySet="TB_CANDIDATE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_CANDID__MARIT__6EF57B66" Association="FinalProject_adp3Model.FK__TB_CANDID__MARIT__6EF57B66">
+            <End Role="TB_MARITALSTATUS" EntitySet="TB_MARITALSTATUS" />
+            <End Role="TB_CANDIDATE" EntitySet="TB_CANDIDATE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_CANDID__RELIG__70DDC3D8" Association="FinalProject_adp3Model.FK__TB_CANDID__RELIG__70DDC3D8">
+            <End Role="TB_RELIGION" EntitySet="TB_RELIGION" />
+            <End Role="TB_CANDIDATE" EntitySet="TB_CANDIDATE" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_CANDID__CANDI__71D1E8111" Association="FinalProject_adp3Model.FK__TB_CANDID__CANDI__71D1E8111">
+            <End Role="TB_STATE_CANDIDATE" EntitySet="TB_STATE_CANDIDATE" />
+            <End Role="TB_CANDIDATE" EntitySet="TB_CANDIDATE" />
+          </AssociationSet>
+          <EntitySet Name="TB_CANDIDATE_SELECTION_HISTORY" EntityType="FinalProject_adp3Model.TB_CANDIDATE_SELECTION_HISTORY" />
+          <AssociationSet Name="FK__TB_CANDID__CANDI__75A278F5" Association="FinalProject_adp3Model.FK__TB_CANDID__CANDI__75A278F5">
+            <End Role="TB_CANDIDATE" EntitySet="TB_CANDIDATE" />
+            <End Role="TB_CANDIDATE_SELECTION_HISTORY" EntitySet="TB_CANDIDATE_SELECTION_HISTORY" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_CANDID__CANDI__778AC167" Association="FinalProject_adp3Model.FK__TB_CANDID__CANDI__778AC167">
+            <End Role="TB_STATE_CANDIDATE" EntitySet="TB_STATE_CANDIDATE" />
+            <End Role="TB_CANDIDATE_SELECTION_HISTORY" EntitySet="TB_CANDIDATE_SELECTION_HISTORY" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TB_CANDID__USER___76969D2E" Association="FinalProject_adp3Model.FK__TB_CANDID__USER___76969D2E">
+            <End Role="TB_USER" EntitySet="TB_USER" />
+            <End Role="TB_CANDIDATE_SELECTION_HISTORY" EntitySet="TB_CANDIDATE_SELECTION_HISTORY" />
+          </AssociationSet>
+          </EntityContainer>
         <Association Name="FK_TB_ACCESS_MENU_TB_ACCESS_MENU">
           <End Type="FinalProject_adp3Model.TB_ACCESS_MENU" Role="TB_ACCESS_MENU" Multiplicity="1" />
           <End Type="FinalProject_adp3Model.TB_ACCESS_MENU" Role="TB_ACCESS_MENU1" Multiplicity="0..1" />
@@ -405,7 +818,326 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <Property Name="Notes" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
-      </Schema>
+        <EntityType Name="TB_ACTION_CANDIDATE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ACTION_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TB_USER_ACCESS_MENU_CANDIDATE" Relationship="FinalProject_adp3Model.FK__TB_USER_A__ACTIO__5812160E" FromRole="TB_ACTION_CANDIDATE" ToRole="TB_USER_ACCESS_MENU_CANDIDATE" />
+        </EntityType>
+        <EntityType Name="TB_CANDIDATE_SKILL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CANDIATE_ID" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="SKILL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TB_GENDER">
+          <Key>
+            <PropertyRef Name="GENDER_ID" />
+          </Key>
+          <Property Name="GENDER_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GENDER_NAME" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TB_CANDIDATE" Relationship="FinalProject_adp3Model.FK__TB_CANDID__GENDE__6FE99F9F" FromRole="TB_GENDER" ToRole="TB_CANDIDATE" />
+        </EntityType>
+        <EntityType Name="TB_MARITALSTATUS">
+          <Key>
+            <PropertyRef Name="MARITALSTATUS_ID" />
+          </Key>
+          <Property Name="MARITALSTATUS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MARITALSTATUS_NAME" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TB_CANDIDATE" Relationship="FinalProject_adp3Model.FK__TB_CANDID__MARIT__6EF57B66" FromRole="TB_MARITALSTATUS" ToRole="TB_CANDIDATE" />
+        </EntityType>
+        <EntityType Name="TB_RELIGION">
+          <Key>
+            <PropertyRef Name="RELIGION_ID" />
+          </Key>
+          <Property Name="RELIGION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RELIGION_NAME" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TB_CANDIDATE" Relationship="FinalProject_adp3Model.FK__TB_CANDID__RELIG__70DDC3D8" FromRole="TB_RELIGION" ToRole="TB_CANDIDATE" />
+        </EntityType>
+        <EntityType Name="TB_STATE_CANDIDATE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="STATE_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TB_CANDIDATE" Relationship="FinalProject_adp3Model.FK__TB_CANDID__CANDI__71D1E8111" FromRole="TB_STATE_CANDIDATE" ToRole="TB_CANDIDATE" />
+          <NavigationProperty Name="TB_CANDIDATE_SELECTION_HISTORY" Relationship="FinalProject_adp3Model.FK__TB_CANDID__CANDI__778AC167" FromRole="TB_STATE_CANDIDATE" ToRole="TB_CANDIDATE_SELECTION_HISTORY" />
+        </EntityType>
+        <EntityType Name="TB_USER_ACCESS_MENU_CANDIDATE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ROLE_ID" Type="Int32" />
+          <Property Name="SUB_MENU_CANDIDATE_ID" Type="Int32" />
+          <Property Name="ACTION_CANDIDATE_ID" Type="Int32" />
+          <NavigationProperty Name="TB_ACTION_CANDIDATE" Relationship="FinalProject_adp3Model.FK__TB_USER_A__ACTIO__5812160E" FromRole="TB_USER_ACCESS_MENU_CANDIDATE" ToRole="TB_ACTION_CANDIDATE" />
+          <NavigationProperty Name="TB_ROLE" Relationship="FinalProject_adp3Model.FK__TB_USER_A__ROLE___5629CD9C" FromRole="TB_USER_ACCESS_MENU_CANDIDATE" ToRole="TB_ROLE" />
+          <NavigationProperty Name="TB_SUBMENU" Relationship="FinalProject_adp3Model.FK__TB_USER_A__SUB_M__571DF1D5" FromRole="TB_USER_ACCESS_MENU_CANDIDATE" ToRole="TB_SUBMENU" />
+        </EntityType>
+        <Association Name="FK__TB_USER_A__ACTIO__5812160E">
+          <End Type="FinalProject_adp3Model.TB_ACTION_CANDIDATE" Role="TB_ACTION_CANDIDATE" Multiplicity="0..1" />
+          <End Type="FinalProject_adp3Model.TB_USER_ACCESS_MENU_CANDIDATE" Role="TB_USER_ACCESS_MENU_CANDIDATE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_ACTION_CANDIDATE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TB_USER_ACCESS_MENU_CANDIDATE">
+              <PropertyRef Name="ACTION_CANDIDATE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_USER_A__ROLE___5629CD9C">
+          <End Type="FinalProject_adp3Model.TB_ROLE" Role="TB_ROLE" Multiplicity="0..1" />
+          <End Type="FinalProject_adp3Model.TB_USER_ACCESS_MENU_CANDIDATE" Role="TB_USER_ACCESS_MENU_CANDIDATE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_ROLE">
+              <PropertyRef Name="ROLE_ID" />
+            </Principal>
+            <Dependent Role="TB_USER_ACCESS_MENU_CANDIDATE">
+              <PropertyRef Name="ROLE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_USER_A__SUB_M__571DF1D5">
+          <End Type="FinalProject_adp3Model.TB_SUBMENU" Role="TB_SUBMENU" Multiplicity="0..1" />
+          <End Type="FinalProject_adp3Model.TB_USER_ACCESS_MENU_CANDIDATE" Role="TB_USER_ACCESS_MENU_CANDIDATE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_SUBMENU">
+              <PropertyRef Name="SUB_MENU_ID" />
+            </Principal>
+            <Dependent Role="TB_USER_ACCESS_MENU_CANDIDATE">
+              <PropertyRef Name="SUB_MENU_CANDIDATE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TB_CANDIDATE_EDUCATION_HISTORY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CANDIDATE_SCHOOL_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CANDIDATE_SCHOOL_MAJOR" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CANDIDATE_SCHOOL_DEGREE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CANDIDATE_SCHOOL_GPA" Type="Double" />
+        </EntityType>
+        <EntityType Name="TB_CITY">
+          <Key>
+            <PropertyRef Name="CITY_ID" />
+          </Key>
+          <Property Name="CITY_ID" Type="Int32" Nullable="false" />
+          <Property Name="CITY_NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PROVINCE_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TB_CANDIDATE" Relationship="FinalProject_adp3Model.FK__TB_CANDID__CANDI__71D1E811" FromRole="TB_CITY" ToRole="TB_CANDIDATE" />
+        </EntityType>
+        <EntityType Name="TB_PROVINCE">
+          <Key>
+            <PropertyRef Name="PROVINCE_ID" />
+          </Key>
+          <Property Name="PROVINCE_ID" Type="Int32" Nullable="false" />
+          <Property Name="PROVINCE_NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TB_CANDIDATE" Relationship="FinalProject_adp3Model.FK__TB_CANDID__CANDI__72C60C4A" FromRole="TB_PROVINCE" ToRole="TB_CANDIDATE" />
+        </EntityType>
+        <EntityType Name="TB_CANDIDATE_JOB_EXPERIENCE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CANDIDATE_ID" Type="Int32" />
+          <Property Name="INDUSTRIES" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CANDIDATE_POSITION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="START_DATE" Type="DateTime" Precision="0" />
+          <Property Name="END_DATE" Type="DateTime" Precision="0" />
+          <Property Name="CURRENT_SALARY" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SKILL_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="JOBDESC" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="BENEFIT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="COMPANY_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TB_CANDIDATE" Relationship="FinalProject_adp3Model.FK__TB_CANDID__CANDI__7C4F7684" FromRole="TB_CANDIDATE_JOB_EXPERIENCE" ToRole="TB_CANDIDATE" />
+        </EntityType>
+        <EntityType Name="TB_CANDIDATE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CANDIDATE_ID" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CANDIDATE_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CANDIDATE_AGE" Type="Int32" />
+          <Property Name="CANDIDATE_BIRTH_DATE" Type="DateTime" Precision="0" />
+          <Property Name="CANDIDATE_PLACE_BIRTH" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="MARITAL_STATUS_ID" Type="Int32" />
+          <Property Name="GENDER_ID" Type="Int32" />
+          <Property Name="RELIGION_ID" Type="Int32" />
+          <Property Name="CANDIDATE_ETNIC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CANDIDATE_HOMENUMBER" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CANDIDATE_PHONENUMBER" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CANDIDATE_EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CANDIDATE_CITY" Type="Int32" />
+          <Property Name="CANDIDATE_PROVINCE" Type="Int32" />
+          <Property Name="CANDIDATE_CURRENT_ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CANDIDATE_KTP_NUMBER" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CANDDIATE_NPWP_NUMBER" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CANDIDATE_CV" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CANDIDATE_PHOTO" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CANDIDATE_LAST_EDUCATON" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TB_CITY" Relationship="FinalProject_adp3Model.FK__TB_CANDID__CANDI__71D1E811" FromRole="TB_CANDIDATE" ToRole="TB_CITY" />
+          <NavigationProperty Name="TB_PROVINCE" Relationship="FinalProject_adp3Model.FK__TB_CANDID__CANDI__72C60C4A" FromRole="TB_CANDIDATE" ToRole="TB_PROVINCE" />
+          <NavigationProperty Name="TB_CANDIDATE_JOB_EXPERIENCE" Relationship="FinalProject_adp3Model.FK__TB_CANDID__CANDI__7C4F7684" FromRole="TB_CANDIDATE" ToRole="TB_CANDIDATE_JOB_EXPERIENCE" />
+          <NavigationProperty Name="TB_GENDER" Relationship="FinalProject_adp3Model.FK__TB_CANDID__GENDE__6FE99F9F" FromRole="TB_CANDIDATE" ToRole="TB_GENDER" />
+          <NavigationProperty Name="TB_MARITALSTATUS" Relationship="FinalProject_adp3Model.FK__TB_CANDID__MARIT__6EF57B66" FromRole="TB_CANDIDATE" ToRole="TB_MARITALSTATUS" />
+          <NavigationProperty Name="TB_RELIGION" Relationship="FinalProject_adp3Model.FK__TB_CANDID__RELIG__70DDC3D8" FromRole="TB_CANDIDATE" ToRole="TB_RELIGION" />
+          <Property Name="CANDIDATE_GPA" Type="Double" />
+          <Property Name="CANDIDATE_MAJOR" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CANDIDATE_DEGREE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CANDIDATE_STATE_ID" Type="Int32" />
+          <NavigationProperty Name="TB_STATE_CANDIDATE" Relationship="FinalProject_adp3Model.FK__TB_CANDID__CANDI__71D1E8111" FromRole="TB_CANDIDATE" ToRole="TB_STATE_CANDIDATE" />
+          <Property Name="SOURCE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SOURCING_DATE" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="TB_CANDIDATE_SELECTION_HISTORY" Relationship="FinalProject_adp3Model.FK__TB_CANDID__CANDI__75A278F5" FromRole="TB_CANDIDATE" ToRole="TB_CANDIDATE_SELECTION_HISTORY" />
+        </EntityType>
+        <Association Name="FK__TB_CANDID__CANDI__71D1E811">
+          <End Type="FinalProject_adp3Model.TB_CITY" Role="TB_CITY" Multiplicity="0..1" />
+          <End Type="FinalProject_adp3Model.TB_CANDIDATE" Role="TB_CANDIDATE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_CITY">
+              <PropertyRef Name="CITY_ID" />
+            </Principal>
+            <Dependent Role="TB_CANDIDATE">
+              <PropertyRef Name="CANDIDATE_CITY" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_CANDID__CANDI__72C60C4A">
+          <End Type="FinalProject_adp3Model.TB_PROVINCE" Role="TB_PROVINCE" Multiplicity="0..1" />
+          <End Type="FinalProject_adp3Model.TB_CANDIDATE" Role="TB_CANDIDATE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_PROVINCE">
+              <PropertyRef Name="PROVINCE_ID" />
+            </Principal>
+            <Dependent Role="TB_CANDIDATE">
+              <PropertyRef Name="CANDIDATE_PROVINCE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_CANDID__CANDI__7C4F7684">
+          <End Type="FinalProject_adp3Model.TB_CANDIDATE" Role="TB_CANDIDATE" Multiplicity="0..1" />
+          <End Type="FinalProject_adp3Model.TB_CANDIDATE_JOB_EXPERIENCE" Role="TB_CANDIDATE_JOB_EXPERIENCE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_CANDIDATE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TB_CANDIDATE_JOB_EXPERIENCE">
+              <PropertyRef Name="CANDIDATE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_CANDID__GENDE__6FE99F9F">
+          <End Type="FinalProject_adp3Model.TB_GENDER" Role="TB_GENDER" Multiplicity="0..1" />
+          <End Type="FinalProject_adp3Model.TB_CANDIDATE" Role="TB_CANDIDATE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_GENDER">
+              <PropertyRef Name="GENDER_ID" />
+            </Principal>
+            <Dependent Role="TB_CANDIDATE">
+              <PropertyRef Name="GENDER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_CANDID__MARIT__6EF57B66">
+          <End Type="FinalProject_adp3Model.TB_MARITALSTATUS" Role="TB_MARITALSTATUS" Multiplicity="0..1" />
+          <End Type="FinalProject_adp3Model.TB_CANDIDATE" Role="TB_CANDIDATE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_MARITALSTATUS">
+              <PropertyRef Name="MARITALSTATUS_ID" />
+            </Principal>
+            <Dependent Role="TB_CANDIDATE">
+              <PropertyRef Name="MARITAL_STATUS_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_CANDID__RELIG__70DDC3D8">
+          <End Type="FinalProject_adp3Model.TB_RELIGION" Role="TB_RELIGION" Multiplicity="0..1" />
+          <End Type="FinalProject_adp3Model.TB_CANDIDATE" Role="TB_CANDIDATE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_RELIGION">
+              <PropertyRef Name="RELIGION_ID" />
+            </Principal>
+            <Dependent Role="TB_CANDIDATE">
+              <PropertyRef Name="RELIGION_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_CANDID__CANDI__71D1E8111">
+          <End Type="FinalProject_adp3Model.TB_STATE_CANDIDATE" Role="TB_STATE_CANDIDATE" Multiplicity="0..1" />
+          <End Type="FinalProject_adp3Model.TB_CANDIDATE" Role="TB_CANDIDATE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_STATE_CANDIDATE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TB_CANDIDATE">
+              <PropertyRef Name="CANDIDATE_STATE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TB_CANDIDATE_SELECTION_HISTORY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CANDIDATE_ID" Type="Int32" />
+          <Property Name="PIC_ID" Type="Int32" />
+          <Property Name="CANDIDATE_APPLIED_POSITION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CANDIDATE_SUITABLE_POSITION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CANDIDATE_SOURCE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CANDIDATE_STATE" Type="Int32" />
+          <Property Name="CANDIDATE_EXPECTED_SALARY" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="PROCESS_DATE" Type="DateTime" Precision="3" />
+          <Property Name="NOTES" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TB_CANDIDATE" Relationship="FinalProject_adp3Model.FK__TB_CANDID__CANDI__75A278F5" FromRole="TB_CANDIDATE_SELECTION_HISTORY" ToRole="TB_CANDIDATE" />
+          <NavigationProperty Name="TB_STATE_CANDIDATE" Relationship="FinalProject_adp3Model.FK__TB_CANDID__CANDI__778AC167" FromRole="TB_CANDIDATE_SELECTION_HISTORY" ToRole="TB_STATE_CANDIDATE" />
+          <NavigationProperty Name="TB_USER" Relationship="FinalProject_adp3Model.FK__TB_CANDID__USER___76969D2E" FromRole="TB_CANDIDATE_SELECTION_HISTORY" ToRole="TB_USER" />
+        </EntityType>
+        <Association Name="FK__TB_CANDID__CANDI__75A278F5">
+          <End Type="FinalProject_adp3Model.TB_CANDIDATE" Role="TB_CANDIDATE" Multiplicity="0..1" />
+          <End Type="FinalProject_adp3Model.TB_CANDIDATE_SELECTION_HISTORY" Role="TB_CANDIDATE_SELECTION_HISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_CANDIDATE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TB_CANDIDATE_SELECTION_HISTORY">
+              <PropertyRef Name="CANDIDATE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_CANDID__CANDI__778AC167">
+          <End Type="FinalProject_adp3Model.TB_STATE_CANDIDATE" Role="TB_STATE_CANDIDATE" Multiplicity="0..1" />
+          <End Type="FinalProject_adp3Model.TB_CANDIDATE_SELECTION_HISTORY" Role="TB_CANDIDATE_SELECTION_HISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_STATE_CANDIDATE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TB_CANDIDATE_SELECTION_HISTORY">
+              <PropertyRef Name="CANDIDATE_STATE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TB_CANDID__USER___76969D2E">
+          <End Type="FinalProject_adp3Model.TB_USER" Role="TB_USER" Multiplicity="0..1" />
+          <End Type="FinalProject_adp3Model.TB_CANDIDATE_SELECTION_HISTORY" Role="TB_CANDIDATE_SELECTION_HISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_USER">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="TB_CANDIDATE_SELECTION_HISTORY">
+              <PropertyRef Name="PIC_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -513,6 +1245,159 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
                 <ScalarProperty Name="Time" ColumnName="Time" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
                 <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_ACTION_CANDIDATE">
+            <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_ACTION_CANDIDATE">
+              <MappingFragment StoreEntitySet="TB_ACTION_CANDIDATE">
+                <ScalarProperty Name="ACTION_NAME" ColumnName="ACTION_NAME" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_CANDIDATE_SKILL">
+            <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_CANDIDATE_SKILL">
+              <MappingFragment StoreEntitySet="TB_CANDIDATE_SKILL">
+                <ScalarProperty Name="SKILL" ColumnName="SKILL" />
+                <ScalarProperty Name="CANDIATE_ID" ColumnName="CANDIATE_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_GENDER">
+            <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_GENDER">
+              <MappingFragment StoreEntitySet="TB_GENDER">
+                <ScalarProperty Name="GENDER_NAME" ColumnName="GENDER_NAME" />
+                <ScalarProperty Name="GENDER_ID" ColumnName="GENDER_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_MARITALSTATUS">
+            <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_MARITALSTATUS">
+              <MappingFragment StoreEntitySet="TB_MARITALSTATUS">
+                <ScalarProperty Name="MARITALSTATUS_NAME" ColumnName="MARITALSTATUS_NAME" />
+                <ScalarProperty Name="MARITALSTATUS_ID" ColumnName="MARITALSTATUS_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_RELIGION">
+            <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_RELIGION">
+              <MappingFragment StoreEntitySet="TB_RELIGION">
+                <ScalarProperty Name="RELIGION_NAME" ColumnName="RELIGION_NAME" />
+                <ScalarProperty Name="RELIGION_ID" ColumnName="RELIGION_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_STATE_CANDIDATE">
+            <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_STATE_CANDIDATE">
+              <MappingFragment StoreEntitySet="TB_STATE_CANDIDATE">
+                <ScalarProperty Name="STATE_NAME" ColumnName="STATE_NAME" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_USER_ACCESS_MENU_CANDIDATE">
+            <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_USER_ACCESS_MENU_CANDIDATE">
+              <MappingFragment StoreEntitySet="TB_USER_ACCESS_MENU_CANDIDATE">
+                <ScalarProperty Name="ACTION_CANDIDATE_ID" ColumnName="ACTION_CANDIDATE_ID" />
+                <ScalarProperty Name="SUB_MENU_CANDIDATE_ID" ColumnName="SUB_MENU_CANDIDATE_ID" />
+                <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_CANDIDATE_EDUCATION_HISTORY">
+            <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_CANDIDATE_EDUCATION_HISTORY">
+              <MappingFragment StoreEntitySet="TB_CANDIDATE_EDUCATION_HISTORY">
+                <ScalarProperty Name="CANDIDATE_SCHOOL_GPA" ColumnName="CANDIDATE_SCHOOL_GPA" />
+                <ScalarProperty Name="CANDIDATE_SCHOOL_DEGREE" ColumnName="CANDIDATE_SCHOOL_DEGREE" />
+                <ScalarProperty Name="CANDIDATE_SCHOOL_MAJOR" ColumnName="CANDIDATE_SCHOOL_MAJOR" />
+                <ScalarProperty Name="CANDIDATE_SCHOOL_NAME" ColumnName="CANDIDATE_SCHOOL_NAME" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_CITY">
+            <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_CITY">
+              <MappingFragment StoreEntitySet="TB_CITY">
+                <ScalarProperty Name="PROVINCE_ID" ColumnName="PROVINCE_ID" />
+                <ScalarProperty Name="CITY_NAME" ColumnName="CITY_NAME" />
+                <ScalarProperty Name="CITY_ID" ColumnName="CITY_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_PROVINCE">
+            <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_PROVINCE">
+              <MappingFragment StoreEntitySet="TB_PROVINCE">
+                <ScalarProperty Name="PROVINCE_NAME" ColumnName="PROVINCE_NAME" />
+                <ScalarProperty Name="PROVINCE_ID" ColumnName="PROVINCE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_CANDIDATE_JOB_EXPERIENCE">
+            <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_CANDIDATE_JOB_EXPERIENCE">
+              <MappingFragment StoreEntitySet="TB_CANDIDATE_JOB_EXPERIENCE">
+                <ScalarProperty Name="COMPANY_NAME" ColumnName="COMPANY_NAME" />
+                <ScalarProperty Name="BENEFIT" ColumnName="BENEFIT" />
+                <ScalarProperty Name="JOBDESC" ColumnName="JOBDESC" />
+                <ScalarProperty Name="SKILL_NAME" ColumnName="SKILL_NAME" />
+                <ScalarProperty Name="CURRENT_SALARY" ColumnName="CURRENT_SALARY" />
+                <ScalarProperty Name="END_DATE" ColumnName="END_DATE" />
+                <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
+                <ScalarProperty Name="CANDIDATE_POSITION" ColumnName="CANDIDATE_POSITION" />
+                <ScalarProperty Name="INDUSTRIES" ColumnName="INDUSTRIES" />
+                <ScalarProperty Name="CANDIDATE_ID" ColumnName="CANDIDATE_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_CANDIDATE">
+            <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_CANDIDATE">
+              <MappingFragment StoreEntitySet="TB_CANDIDATE">
+                <ScalarProperty Name="SOURCING_DATE" ColumnName="SOURCING_DATE" />
+                <ScalarProperty Name="SOURCE" ColumnName="SOURCE" />
+                <ScalarProperty Name="CANDIDATE_STATE_ID" ColumnName="CANDIDATE_STATE_ID" />
+                <ScalarProperty Name="CANDIDATE_DEGREE" ColumnName="CANDIDATE_DEGREE" />
+                <ScalarProperty Name="CANDIDATE_MAJOR" ColumnName="CANDIDATE_MAJOR" />
+                <ScalarProperty Name="CANDIDATE_GPA" ColumnName="CANDIDATE_GPA" />
+                <ScalarProperty Name="CANDIDATE_LAST_EDUCATON" ColumnName="CANDIDATE_LAST_EDUCATON" />
+                <ScalarProperty Name="CANDIDATE_PHOTO" ColumnName="CANDIDATE_PHOTO" />
+                <ScalarProperty Name="CANDIDATE_CV" ColumnName="CANDIDATE_CV" />
+                <ScalarProperty Name="CANDDIATE_NPWP_NUMBER" ColumnName="CANDDIATE_NPWP_NUMBER" />
+                <ScalarProperty Name="CANDIDATE_KTP_NUMBER" ColumnName="CANDIDATE_KTP_NUMBER" />
+                <ScalarProperty Name="CANDIDATE_CURRENT_ADDRESS" ColumnName="CANDIDATE_CURRENT_ADDRESS" />
+                <ScalarProperty Name="CANDIDATE_PROVINCE" ColumnName="CANDIDATE_PROVINCE" />
+                <ScalarProperty Name="CANDIDATE_CITY" ColumnName="CANDIDATE_CITY" />
+                <ScalarProperty Name="CANDIDATE_EMAIL" ColumnName="CANDIDATE_EMAIL" />
+                <ScalarProperty Name="CANDIDATE_PHONENUMBER" ColumnName="CANDIDATE_PHONENUMBER" />
+                <ScalarProperty Name="CANDIDATE_HOMENUMBER" ColumnName="CANDIDATE_HOMENUMBER" />
+                <ScalarProperty Name="CANDIDATE_ETNIC" ColumnName="CANDIDATE_ETNIC" />
+                <ScalarProperty Name="RELIGION_ID" ColumnName="RELIGION_ID" />
+                <ScalarProperty Name="GENDER_ID" ColumnName="GENDER_ID" />
+                <ScalarProperty Name="MARITAL_STATUS_ID" ColumnName="MARITAL_STATUS_ID" />
+                <ScalarProperty Name="CANDIDATE_PLACE_BIRTH" ColumnName="CANDIDATE_PLACE_BIRTH" />
+                <ScalarProperty Name="CANDIDATE_BIRTH_DATE" ColumnName="CANDIDATE_BIRTH_DATE" />
+                <ScalarProperty Name="CANDIDATE_AGE" ColumnName="CANDIDATE_AGE" />
+                <ScalarProperty Name="CANDIDATE_NAME" ColumnName="CANDIDATE_NAME" />
+                <ScalarProperty Name="CANDIDATE_ID" ColumnName="CANDIDATE_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_CANDIDATE_SELECTION_HISTORY">
+            <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_CANDIDATE_SELECTION_HISTORY">
+              <MappingFragment StoreEntitySet="TB_CANDIDATE_SELECTION_HISTORY">
+                <ScalarProperty Name="NOTES" ColumnName="NOTES" />
+                <ScalarProperty Name="PROCESS_DATE" ColumnName="PROCESS_DATE" />
+                <ScalarProperty Name="CANDIDATE_EXPECTED_SALARY" ColumnName="CANDIDATE_EXPECTED_SALARY" />
+                <ScalarProperty Name="CANDIDATE_STATE" ColumnName="CANDIDATE_STATE" />
+                <ScalarProperty Name="CANDIDATE_SOURCE" ColumnName="CANDIDATE_SOURCE" />
+                <ScalarProperty Name="CANDIDATE_SUITABLE_POSITION" ColumnName="CANDIDATE_SUITABLE_POSITION" />
+                <ScalarProperty Name="CANDIDATE_APPLIED_POSITION" ColumnName="CANDIDATE_APPLIED_POSITION" />
+                <ScalarProperty Name="PIC_ID" ColumnName="PIC_ID" />
+                <ScalarProperty Name="CANDIDATE_ID" ColumnName="CANDIDATE_ID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

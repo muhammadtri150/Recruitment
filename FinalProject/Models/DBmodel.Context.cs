@@ -36,5 +36,18 @@ namespace FinalProject.Models
         public virtual DbSet<TB_PREFIX> TB_PREFIX { get; set; }
         public virtual DbSet<TB_JOB_POSITION> TB_JOB_POSITION { get; set; }
         public virtual DbSet<TB_LOG_USER_ACTIVITY> TB_LOG_USER_ACTIVITY { get; set; }
+        public virtual DbSet<TB_ACTION_CANDIDATE> TB_ACTION_CANDIDATE { get; set; }
+        public virtual DbSet<TB_CANDIDATE_SKILL> TB_CANDIDATE_SKILL { get; set; }
+        public virtual DbSet<TB_GENDER> TB_GENDER { get; set; }
+        public virtual DbSet<TB_MARITALSTATUS> TB_MARITALSTATUS { get; set; }
+        public virtual DbSet<TB_RELIGION> TB_RELIGION { get; set; }
+        public virtual DbSet<TB_STATE_CANDIDATE> TB_STATE_CANDIDATE { get; set; }
+        public virtual DbSet<TB_USER_ACCESS_MENU_CANDIDATE> TB_USER_ACCESS_MENU_CANDIDATE { get; set; }
+        public virtual DbSet<TB_CANDIDATE_EDUCATION_HISTORY> TB_CANDIDATE_EDUCATION_HISTORY { get; set; }
+        public virtual DbSet<TB_CITY> TB_CITY { get; set; }
+        public virtual DbSet<TB_PROVINCE> TB_PROVINCE { get; set; }
+        public virtual DbSet<TB_CANDIDATE_JOB_EXPERIENCE> TB_CANDIDATE_JOB_EXPERIENCE { get; set; }
+        public virtual DbSet<TB_CANDIDATE> TB_CANDIDATE { get; set; }
+        public virtual DbSet<TB_CANDIDATE_SELECTION_HISTORY> TB_CANDIDATE_SELECTION_HISTORY { get; set; }
     }
 }

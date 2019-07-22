@@ -19,6 +19,7 @@ namespace FinalProject.Models
         {
             this.TB_USER = new HashSet<TB_USER>();
             this.TB_ACCESS_MENU = new HashSet<TB_ACCESS_MENU>();
+            this.TB_USER_ACCESS_MENU_CANDIDATE = new HashSet<TB_USER_ACCESS_MENU_CANDIDATE>();
         }
     
         public int ROLE_ID { get; set; }
@@ -28,5 +29,7 @@ namespace FinalProject.Models
         public virtual ICollection<TB_USER> TB_USER { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_ACCESS_MENU> TB_ACCESS_MENU { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_USER_ACCESS_MENU_CANDIDATE> TB_USER_ACCESS_MENU_CANDIDATE { get; set; }
     }
 }

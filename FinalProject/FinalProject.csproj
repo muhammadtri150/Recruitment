@@ -139,15 +139,23 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DTO\AccessMenuDTO.cs" />
+    <Compile Include="DTO\ActionCandidateDTO.cs" />
+    <Compile Include="DTO\CandidateDTO.cs" />
+    <Compile Include="DTO\CandidateEducationHistoryDTO.cs" />
+    <Compile Include="DTO\CandidateJobExperienceDTO.cs" />
+    <Compile Include="DTO\CandidateSelectionHistoryDTO.cs" />
     <Compile Include="DTO\ClientDTO.cs" />
     <Compile Include="DTO\JobPositionDTO.cs" />
     <Compile Include="DTO\MenuDTO.cs" />
     <Compile Include="DTO\JobPortalDTO.cs" />
     <Compile Include="DTO\RoleDTO.cs" />
     <Compile Include="DTO\SkillDTO.cs" />
+    <Compile Include="DTO\StateCandidateDTO.cs" />
     <Compile Include="DTO\SubMenuDTO.cs" />
+    <Compile Include="DTO\UserAccessMenuCandidateDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Filters\AuthFilter.cs" />
+    <Compile Include="Filters\UserAccessCandidateFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -172,7 +180,31 @@
     <Compile Include="Models\TB_ACCESS_MENU.cs">
       <DependentUpon>DBmodel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_ACTION_CANDIDATE.cs">
+      <DependentUpon>DBmodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_CANDIDATE.cs">
+      <DependentUpon>DBmodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_CANDIDATE_EDUCATION_HISTORY.cs">
+      <DependentUpon>DBmodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_CANDIDATE_JOB_EXPERIENCE.cs">
+      <DependentUpon>DBmodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_CANDIDATE_SELECTION_HISTORY.cs">
+      <DependentUpon>DBmodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_CANDIDATE_SKILL.cs">
+      <DependentUpon>DBmodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_CITY.cs">
+      <DependentUpon>DBmodel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_CLIENT.cs">
+      <DependentUpon>DBmodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_GENDER.cs">
       <DependentUpon>DBmodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_JOB_POSITION.cs">
@@ -181,10 +213,19 @@
     <Compile Include="Models\TB_LOG_USER_ACTIVITY.cs">
       <DependentUpon>DBmodel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_MARITALSTATUS.cs">
+      <DependentUpon>DBmodel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_MENU.cs">
       <DependentUpon>DBmodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_PREFIX.cs">
+      <DependentUpon>DBmodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_PROVINCE.cs">
+      <DependentUpon>DBmodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_RELIGION.cs">
       <DependentUpon>DBmodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_ROLE.cs">
@@ -193,14 +234,22 @@
     <Compile Include="Models\TB_SKILL.cs">
       <DependentUpon>DBmodel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_STATE_CANDIDATE.cs">
+      <DependentUpon>DBmodel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_SUBMENU.cs">
       <DependentUpon>DBmodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_USER.cs">
       <DependentUpon>DBmodel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_USER_ACCESS_MENU_CANDIDATE.cs">
+      <DependentUpon>DBmodel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Controllers\CandidateController.cs" />
     <Compile Include="Utils\CryptographyUtils.cs" />
+    <Compile Include="Utils\DataCandidateUtils.cs" />
     <Compile Include="Utils\MenuUtils.cs" />
     <Compile Include="Utils\UserLogingUtils.cs" />
   </ItemGroup>
@@ -2067,11 +2116,20 @@
     <Content Include="Views\Master\RoleManagement\AccessMenu.cshtml" />
     <Content Include="Views\Master\SubMenuManagement\Index.cshtml" />
     <Content Include="Views\Master\MenuManagement\Index.cshtml" />
+    <Content Include="Views\Candidate\_ViewStart.cshtml" />
+    <Content Include="Views\Candidate\Preselection\Index.cshtml" />
+    <Content Include="Views\Candidate\Call\Index.cshtml" />
+    <Content Include="Views\Candidate\Delivery\Index.cshtml" />
+    <Content Include="Views\Candidate\Interview\Index.cshtml" />
+    <Content Include="Views\Candidate\Sales\Index.cshtml" />
+    <Content Include="Views\Candidate\Preselection\AddCandidate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\Assets\Css\" />
     <Folder Include="Content\Assets\Images\User\" />
+    <Folder Include="Data\DataCandidate\Cv\" />
+    <Folder Include="Data\DataCandidate\Pict\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

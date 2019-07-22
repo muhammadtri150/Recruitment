@@ -57,7 +57,7 @@ namespace FinalProject.Utils
         }
  //---------------------------------------------------method for check access menu base menu id and role id ----------------------------
     
-        public static String CheckAccess(int RoleId, int MenuId)
+        public static string CheckAccess(int RoleId, int MenuId)
         {
             string res = null;
 
@@ -72,7 +72,26 @@ namespace FinalProject.Utils
 
                 return res;
             }
+        }
+//---------------------------------------------------method for check access menu candidate---------------------------------------------
+        public static string CheckAccessCandidate(int RoleId, int SubMenuCandidateId, int ActionCandidateId)
+        {
+            string res = null;
 
+            using(DBEntities db = new DBEntities())
+            {
+                TB_USER_ACCESS_MENU_CANDIDATE TbUserAccessMenuCandidate =
+                    db.TB_USER_ACCESS_MENU_CANDIDATE.FirstOrDefault(ac =>
+                        ac.ROLE_ID == RoleId &&
+                        ac.SUB_MENU_CANDIDATE_ID == SubMenuCandidateId &&
+                        ac.ACTION_CANDIDATE_ID == ActionCandidateId);
+                if(TbUserAccessMenuCandidate != null)
+                {
+                    res = "checked=checked";
+                }
+            
+                return res;
+            }
         }
     }
 }

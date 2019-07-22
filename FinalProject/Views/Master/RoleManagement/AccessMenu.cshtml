@@ -16,19 +16,95 @@
             </tr>
         </thead>
         <tbody>
-            @foreach(var menu in Model)
+            @foreach (var menu in Model)
             {
                 <tr>
                     <td><i class="@menu.LOGO_MENU mr-3"></i> @menu.TITLE_MENU</td>
                     <td>
-                        <input class="form-check-input CheckAcc" type="checkbox"
-                               data-role_id="@ViewBag.DataView["RoleId"]"
-                               data-menu_id="@menu.MENU_ID"
-                               @MenuUtils.CheckAccess(ViewBag.DataView["RoleId"],menu.MENU_ID)>
+                        @if (menu.MENU_ID == 7)
+                        {
+                            <input class="form-check-input CheckAcc" type="checkbox"
+                                   data-role_id="@ViewBag.DataView["RoleId"]"
+                                   data-menu_id="@menu.MENU_ID"
+                                   @MenuUtils.CheckAccess(ViewBag.DataView["RoleId"], menu.MENU_ID)>
+
+                            <button type='button' class='btn' data-toggle='modal' data-target='#ModalAccessCandidate'><i class="fas fa-key"></i></button>
+                        }
+                        else
+                        {
+                            <input class="form-check-input CheckAcc" type="checkbox"
+                                   data-role_id="@ViewBag.DataView["RoleId"]"
+                                   data-menu_id="@menu.MENU_ID"
+                                   @MenuUtils.CheckAccess(ViewBag.DataView["RoleId"], menu.MENU_ID)>
+                        }
                     </td>
+
                 </tr>
             }
         </tbody>
     </table>
+
+
+
+    <!-- Modal Access Candidate -->
+    <div class="modal fade" id="ModalAccessCandidate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Access Candidate</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @*----------------------------------------------------table---------------------------------------------------------------------*@
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Sub Menu Candidate</th>
+                                <th scope="col">Action</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var MenuCandidate in ViewBag.DataView["SubMenuCandidate"])
+                            {
+                                <tr>
+                                    <td><i class="@MenuCandidate.LOGO_SUBMENU mr-3"></i> @MenuCandidate.TITLE_SUBMENU</td>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                @foreach (var Action in ViewBag.DataView["ActionCandidate"])
+                                                {
+
+                                                    <td>
+                                                        @Action.ACTION_NAME
+                                                        <input class="form-check-input CheckAccCandidate ml-3" type="checkbox"
+                                                               data-role_id="@ViewBag.DataView["RoleId"]"
+                                                               data-menu_id="@MenuCandidate.SUB_MENU_ID"
+                                                               data-action_id="@Action.ID"
+                                                               @MenuUtils.CheckAccessCandidate(@ViewBag.DataView["RoleId"], MenuCandidate.SUB_MENU_ID, Action.ID)>
+                                                    </td>
+
+                                                }
+                                            </tr>
+                                        </table>
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
     <script src="~/Content/Assets/Js/master/RoleManagement/AccessManagement.js"></script>
 }

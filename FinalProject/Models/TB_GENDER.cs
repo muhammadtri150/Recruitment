@@ -12,23 +12,18 @@ namespace FinalProject.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class TB_USER
+    public partial class TB_GENDER
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TB_USER()
+        public TB_GENDER()
         {
-            this.TB_CANDIDATE_SELECTION_HISTORY = new HashSet<TB_CANDIDATE_SELECTION_HISTORY>();
+            this.TB_CANDIDATE = new HashSet<TB_CANDIDATE>();
         }
     
-        public int USER_ID { get; set; }
-        public int ROLE_ID { get; set; }
-        public string USERNAME { get; set; }
-        public string PASSWORD { get; set; }
-        public string EMAIL { get; set; }
-        public string FULL_NAME { get; set; }
+        public int GENDER_ID { get; set; }
+        public string GENDER_NAME { get; set; }
     
-        public virtual TB_ROLE TB_ROLE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TB_CANDIDATE_SELECTION_HISTORY> TB_CANDIDATE_SELECTION_HISTORY { get; set; }
+        public virtual ICollection<TB_CANDIDATE> TB_CANDIDATE { get; set; }
     }
 }

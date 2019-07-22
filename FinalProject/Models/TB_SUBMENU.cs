@@ -14,6 +14,12 @@ namespace FinalProject.Models
     
     public partial class TB_SUBMENU
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TB_SUBMENU()
+        {
+            this.TB_USER_ACCESS_MENU_CANDIDATE = new HashSet<TB_USER_ACCESS_MENU_CANDIDATE>();
+        }
+    
         public int MENU_ID { get; set; }
         public int SUB_MENU_ID { get; set; }
         public string TITLE_SUBMENU { get; set; }
@@ -21,5 +27,7 @@ namespace FinalProject.Models
         public string URL { get; set; }
     
         public virtual TB_MENU TB_MENU { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_USER_ACCESS_MENU_CANDIDATE> TB_USER_ACCESS_MENU_CANDIDATE { get; set; }
     }
 }

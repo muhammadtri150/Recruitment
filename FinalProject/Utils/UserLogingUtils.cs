@@ -48,5 +48,9 @@ namespace FinalProject.Utils
                 return 0;
             }
         }
+        public static UserDTO GetDataUserLogin()
+        {
+            return (UserDTO)HttpContext.Current.Session["UserLogin"];
+        }
     }
 }
