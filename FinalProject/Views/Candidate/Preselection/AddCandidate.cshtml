@@ -50,7 +50,7 @@
 
                         <div class="form-group">
                             <label for="GENDER_ID">Religion</label>
-                            <select class="form-control" id="GENDER_ID" name="GENDER_ID">
+                            <select class="form-control" id="RELIGION_ID" name="RELIGION_ID">
                                 @foreach (var d in new DBEntities().TB_RELIGION)
                                 {
                                     <option value="@d.RELIGION_ID">@d.RELIGION_NAME</option>
@@ -278,7 +278,7 @@
                                 <th scope="row">@(no++)</th>
                                 <td>@d.SKILL_NAME</td>
                                 <td>
-                                    <input type="checkbox" class="form-control" value="@d.SKILL_ID" name="CANDIDATE_SKILL" />
+                                    <input type="checkbox" class="form-control" value="@d.SKILL_NAME" name="CANDIDATE_SKILL" />
                                 </td>
                             </tr>
                         }

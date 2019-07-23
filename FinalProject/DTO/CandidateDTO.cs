@@ -146,16 +146,22 @@ namespace FinalProject.DTO
                     EDUCATION_END_DATE = DataNewCandidate.EDUCATON_END_DATE,
                 });
 
-                //insert skill
-                foreach (string skill in DataNewCandidate.CANDIDATE_SKILL) {
-                    db.TB_CANDIDATE_SKILL.Add(new TB_CANDIDATE_SKILL
-                    {
-                        CANDIDATE_ID = db.TB_CANDIDATE.FirstOrDefault(c => c.CANDIDATE_ID == Candidate_ID).ID,
-                        SKILL = skill
-                    });
-                }
+                int res = 0;
 
-                return new List<object>() { { db.SaveChanges() }, {Candidate_ID} };
+                if (db.SaveChanges() > 0)
+                {
+                    //insert skill
+                    foreach (string skill in DataNewCandidate.CANDIDATE_SKILL)
+                    {
+                        db.TB_CANDIDATE_SKILL.Add(new TB_CANDIDATE_SKILL
+                        {
+                            CANDIDATE_ID = db.TB_CANDIDATE.FirstOrDefault(c => c.CANDIDATE_ID == Candidate_ID).ID,
+                            SKILL = skill
+                        });
+                        res = db.SaveChanges();
+                    }
+                }
+                return new List<object>() { { res }, {Candidate_ID} };
             }
         }
     }

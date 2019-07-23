@@ -70,8 +70,8 @@ namespace FinalProject.Controllers
         [Route("candidate/preselection/create/candidate/process")]
         public ActionResult CandidatePreselectionAdd(CandidateDTO DataNewCandidate,  HttpPostedFileBase Pict, HttpPostedFileBase Cv)
         {
-            try
-            {
+            //try
+            //{
                 if (ModelState.IsValid)
                 {
                     Manage_CandidateDTO Manage_candidate = new Manage_CandidateDTO();
@@ -98,11 +98,11 @@ namespace FinalProject.Controllers
                 TempData.Add("type", "danger");
             
                 return Redirect("~/candidate/preselection");
-            }
-            catch (Exception)
-            {
-                return Redirect("~/auth/error");
-            }
+            //}
+            //catch (Exception)
+            //{
+            //    return Redirect("~/auth/error");
+            //}
         }
 
         //------------------------------------------------------- ADD NEW JOB EXPERIENCE OF CANDIDATE -------------------------------------------------
