@@ -17,8 +17,8 @@ namespace FinalProject.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TB_CANDIDATE()
         {
-            this.TB_CANDIDATE_JOB_EXPERIENCE = new HashSet<TB_CANDIDATE_JOB_EXPERIENCE>();
             this.TB_CANDIDATE_SELECTION_HISTORY = new HashSet<TB_CANDIDATE_SELECTION_HISTORY>();
+            this.TB_CANDIDATE_JOB_EXPERIENCE = new HashSet<TB_CANDIDATE_JOB_EXPERIENCE>();
         }
     
         public int ID { get; set; }
@@ -31,6 +31,10 @@ namespace FinalProject.Models
         public Nullable<int> GENDER_ID { get; set; }
         public Nullable<int> RELIGION_ID { get; set; }
         public string CANDIDATE_ETNIC { get; set; }
+        public string ZIP_CODE { get; set; }
+        public string PARENT_ADDRESS { get; set; }
+        public string RESIDENT_CARD_NUMBER { get; set; }
+        public string TELEPHONE_NUMBER { get; set; }
         public string CANDIDATE_HOMENUMBER { get; set; }
         public string CANDIDATE_PHONENUMBER { get; set; }
         public string CANDIDATE_EMAIL { get; set; }
@@ -41,6 +45,8 @@ namespace FinalProject.Models
         public string CANDDIATE_NPWP_NUMBER { get; set; }
         public string CANDIDATE_CV { get; set; }
         public string CANDIDATE_PHOTO { get; set; }
+        public Nullable<System.DateTime> EDUCATION_START_DATE { get; set; }
+        public Nullable<System.DateTime> EDUCATION_END_DATE { get; set; }
         public string CANDIDATE_LAST_EDUCATON { get; set; }
         public Nullable<double> CANDIDATE_GPA { get; set; }
         public string CANDIDATE_MAJOR { get; set; }
@@ -48,16 +54,20 @@ namespace FinalProject.Models
         public Nullable<int> CANDIDATE_STATE_ID { get; set; }
         public string SOURCE { get; set; }
         public Nullable<System.DateTime> SOURCING_DATE { get; set; }
+        public string POSITION { get; set; }
+        public Nullable<decimal> EXPECTED_SALARY { get; set; }
+        public string NOTES { get; set; }
+        public string RECOMENDATION { get; set; }
+        public Nullable<System.DateTime> AVAILABLE_JOIN { get; set; }
     
-        public virtual TB_CITY TB_CITY { get; set; }
+        public virtual TB_STATE_CANDIDATE TB_STATE_CANDIDATE { get; set; }
         public virtual TB_PROVINCE TB_PROVINCE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_CANDIDATE_SELECTION_HISTORY> TB_CANDIDATE_SELECTION_HISTORY { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_CANDIDATE_JOB_EXPERIENCE> TB_CANDIDATE_JOB_EXPERIENCE { get; set; }
         public virtual TB_GENDER TB_GENDER { get; set; }
         public virtual TB_MARITALSTATUS TB_MARITALSTATUS { get; set; }
         public virtual TB_RELIGION TB_RELIGION { get; set; }
-        public virtual TB_STATE_CANDIDATE TB_STATE_CANDIDATE { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TB_CANDIDATE_SELECTION_HISTORY> TB_CANDIDATE_SELECTION_HISTORY { get; set; }
     }
 }

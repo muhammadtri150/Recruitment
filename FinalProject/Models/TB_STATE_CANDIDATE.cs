@@ -17,16 +17,16 @@ namespace FinalProject.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TB_STATE_CANDIDATE()
         {
-            this.TB_CANDIDATE = new HashSet<TB_CANDIDATE>();
             this.TB_CANDIDATE_SELECTION_HISTORY = new HashSet<TB_CANDIDATE_SELECTION_HISTORY>();
+            this.TB_CANDIDATE = new HashSet<TB_CANDIDATE>();
         }
     
         public int ID { get; set; }
         public string STATE_NAME { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TB_CANDIDATE> TB_CANDIDATE { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_CANDIDATE_SELECTION_HISTORY> TB_CANDIDATE_SELECTION_HISTORY { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_CANDIDATE> TB_CANDIDATE { get; set; }
     }
 }

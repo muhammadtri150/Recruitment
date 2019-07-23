@@ -204,6 +204,9 @@
     <Compile Include="Models\TB_CLIENT.cs">
       <DependentUpon>DBmodel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TB_DELIVERY_HISTORY.cs">
+      <DependentUpon>DBmodel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TB_GENDER.cs">
       <DependentUpon>DBmodel.tt</DependentUpon>
     </Compile>

@@ -15,7 +15,7 @@ namespace FinalProject.Models
     public partial class TB_CANDIDATE_SKILL
     {
         public int ID { get; set; }
-        public string CANDIATE_ID { get; set; }
+        public Nullable<int> CANDIDATE_ID { get; set; }
         public string SKILL { get; set; }
     }
 }

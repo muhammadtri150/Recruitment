@@ -14,17 +14,8 @@ namespace FinalProject.Models
     
     public partial class TB_CITY
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public TB_CITY()
-        {
-            this.TB_CANDIDATE = new HashSet<TB_CANDIDATE>();
-        }
-    
         public int CITY_ID { get; set; }
         public string CITY_NAME { get; set; }
         public int PROVINCE_ID { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TB_CANDIDATE> TB_CANDIDATE { get; set; }
     }
 }

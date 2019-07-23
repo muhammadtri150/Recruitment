@@ -25,6 +25,7 @@ namespace FinalProject.Models
         public string JOBDESC { get; set; }
         public string BENEFIT { get; set; }
         public string COMPANY_NAME { get; set; }
+        public string PROJCT { get; set; }
     
         public virtual TB_CANDIDATE TB_CANDIDATE { get; set; }
     }

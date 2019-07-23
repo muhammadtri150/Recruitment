@@ -37,6 +37,10 @@
     <Property Name="GENDER_ID" Type="int" />
     <Property Name="RELIGION_ID" Type="int" />
     <Property Name="CANDIDATE_ETNIC" Type="varchar" MaxLength="50" />
+    <Property Name="ZIP_CODE" Type="varchar" MaxLength="10" />
+    <Property Name="PARENT_ADDRESS" Type="text" />
+    <Property Name="RESIDENT_CARD_NUMBER" Type="varchar" MaxLength="50" />
+    <Property Name="TELEPHONE_NUMBER" Type="varchar" MaxLength="50" />
     <Property Name="CANDIDATE_HOMENUMBER" Type="varchar" MaxLength="10" />
     <Property Name="CANDIDATE_PHONENUMBER" Type="varchar" MaxLength="50" />
     <Property Name="CANDIDATE_EMAIL" Type="varchar" MaxLength="50" />
@@ -47,6 +51,8 @@
     <Property Name="CANDDIATE_NPWP_NUMBER" Type="varchar" MaxLength="50" />
     <Property Name="CANDIDATE_CV" Type="text" />
     <Property Name="CANDIDATE_PHOTO" Type="text" />
+    <Property Name="EDUCATION_START_DATE" Type="date" />
+    <Property Name="EDUCATION_END_DATE" Type="date" />
     <Property Name="CANDIDATE_LAST_EDUCATON" Type="varchar" MaxLength="50" />
     <Property Name="CANDIDATE_GPA" Type="float" />
     <Property Name="CANDIDATE_MAJOR" Type="varchar" MaxLength="50" />
@@ -54,6 +60,11 @@
     <Property Name="CANDIDATE_STATE_ID" Type="int" />
     <Property Name="SOURCE" Type="varchar" MaxLength="50" />
     <Property Name="SOURCING_DATE" Type="date" />
+    <Property Name="POSITION" Type="varchar" MaxLength="50" />
+    <Property Name="EXPECTED_SALARY" Type="money" />
+    <Property Name="NOTES" Type="text" />
+    <Property Name="RECOMENDATION" Type="varchar" MaxLength="50" />
+    <Property Name="AVAILABLE_JOIN" Type="date" />
   </EntityType>
   <EntityType Name="TB_CANDIDATE_EDUCATION_HISTORY">
     <Key>
@@ -80,6 +91,7 @@
     <Property Name="JOBDESC" Type="text" />
     <Property Name="BENEFIT" Type="text" />
     <Property Name="COMPANY_NAME" Type="varchar" MaxLength="50" />
+    <Property Name="PROJCT" Type="text" />
   </EntityType>
   <EntityType Name="TB_CANDIDATE_SELECTION_HISTORY">
     <Key>
@@ -101,7 +113,7 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="CANDIATE_ID" Type="varchar" MaxLength="30" />
+    <Property Name="CANDIDATE_ID" Type="int" />
     <Property Name="SKILL" Type="text" />
   </EntityType>
   <EntityType Name="TB_CITY">
@@ -122,6 +134,25 @@
     <Property Name="CLIENT_ADDRESS" Type="varchar" MaxLength="30" />
     <Property Name="CLIENT_OTHERADDRESS" Type="varchar" MaxLength="30" />
     <Property Name="CLIENT_INDUSTRIES" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="TB_DELIVERY_HISTORY">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DELIVERY_ID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CANDIDATE_ID" Type="int" Nullable="false" />
+    <Property Name="CANDIDATE_POSITION" Type="varbinary" MaxLength="50" />
+    <Property Name="SOURCE" Type="varchar" MaxLength="50" />
+    <Property Name="CANDIDATE_STATE" Type="int" Nullable="false" />
+    <Property Name="LAST_PIC" Type="int" Nullable="false" />
+    <Property Name="PROCESS_DATE" Type="date" Nullable="false" />
+    <Property Name="CLIENT_ID" Type="int" Nullable="false" />
+    <Property Name="START_DATE" Type="date" Nullable="false" />
+    <Property Name="LAST_UPDATE" Type="date" Nullable="false" />
+    <Property Name="TOTA_DAY" Type="date" />
+    <Property Name="CLIENT_STATE" Type="varchar" MaxLength="50" />
+    <Property Name="NOTE" Type="text" />
   </EntityType>
   <EntityType Name="TB_GENDER">
     <Key>
@@ -453,6 +484,7 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
     <EntitySet Name="TB_CANDIDATE_SKILL" EntityType="Self.TB_CANDIDATE_SKILL" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_CITY" EntityType="Self.TB_CITY" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_CLIENT" EntityType="Self.TB_CLIENT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TB_DELIVERY_HISTORY" EntityType="Self.TB_DELIVERY_HISTORY" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_GENDER" EntityType="Self.TB_GENDER" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_JOB_POSITION" EntityType="Self.TB_JOB_POSITION" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_LOG_USER_ACTIVITY" EntityType="Self.TB_LOG_USER_ACTIVITY" Schema="dbo" store:Type="Tables" />

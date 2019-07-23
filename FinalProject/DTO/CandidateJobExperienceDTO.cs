@@ -17,6 +17,7 @@ namespace FinalProject.DTO
         public string SKILL_NAME { get; set; }
         public string JOBDESC { get; set; }
         public string BENEFIT { get; set; }
+        public string PROJECT { get; set; }
 
         //data candidate
         public int? CANDIDATE_ID { get; set; }
@@ -24,9 +25,12 @@ namespace FinalProject.DTO
         public string CANDIDATE_POSITION { get; set; }
     }
 
-    public class DataCandidateJobExperienceDTO
+    //--------------------------------------------------------- class for mnage data dto ------------------------------------------------------------
+
+    public class Manage_CandidateJobExperienceDTO
     {
-        public static List<CandidateJobExperienceDTO> GetData()
+        // for get entre data of candidate table
+        public List<CandidateJobExperienceDTO> GetData()
         {
             using(DBEntities db = new DBEntities())
             {
@@ -40,16 +44,42 @@ namespace FinalProject.DTO
                     CURRENT_SALARY = j.CURRENT_SALARY,
                     SKILL_NAME = j.SKILL_NAME,
                     JOBDESC = j.JOBDESC,
-                    BENEFIT = j.BENEFIT
+                    BENEFIT = j.BENEFIT,
+                    PROJECT = j.PROJCT
                 }).ToList();
                 return Data;
             }
         } 
 
-        //for get benefit but in arra format, will split the benefit base on ','
-        public static string[] GetBenefit(CandidateJobExperienceDTO Candidate)
+        //for get benefit in array format, will split the benefit base on ','
+        public string[] GetBenefit(CandidateJobExperienceDTO JobExp)
         {
-            return DataCandidateJobExperienceDTO.GetData().FirstOrDefault(d => d.CANDIDATE_ID == Candidate.ID).BENEFIT.Split(',');
+            return this.GetData().FirstOrDefault(d => d.ID == JobExp.ID).BENEFIT.Split(',');
         }
+
+        //for add new job experience of candidate
+        public int AddData(CandidateJobExperienceDTO NewJobExp)
+        {
+            using(DBEntities db = new DBEntities())
+            {
+                db.TB_CANDIDATE_JOB_EXPERIENCE.Add(new TB_CANDIDATE_JOB_EXPERIENCE
+                {
+                    CANDIDATE_ID        = NewJobExp.CANDIDATE_ID,
+                    INDUSTRIES          = NewJobExp.INDUSTRIES,
+                    CANDIDATE_POSITION  = NewJobExp.CANDIDATE_POSITION,
+                    START_DATE          = NewJobExp.START_DATE,
+                    END_DATE            = NewJobExp.END_DATE,
+                    CURRENT_SALARY      = NewJobExp.CURRENT_SALARY,
+                    SKILL_NAME          = NewJobExp.SKILL_NAME,
+                    JOBDESC             = NewJobExp.JOBDESC,
+                    BENEFIT             = NewJobExp.BENEFIT,
+                    COMPANY_NAME        = NewJobExp.COMPANY_NAME,
+                    PROJCT              = NewJobExp.PROJECT
+                });
+
+                return db.SaveChanges();
+            }
+        }
+
     }
 }

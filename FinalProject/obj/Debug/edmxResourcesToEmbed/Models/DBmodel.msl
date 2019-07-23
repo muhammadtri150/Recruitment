@@ -115,15 +115,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="TB_CANDIDATE_SKILL">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_CANDIDATE_SKILL">
-        <MappingFragment StoreEntitySet="TB_CANDIDATE_SKILL">
-          <ScalarProperty Name="SKILL" ColumnName="SKILL" />
-          <ScalarProperty Name="CANDIATE_ID" ColumnName="CANDIATE_ID" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="TB_GENDER">
       <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_GENDER">
         <MappingFragment StoreEntitySet="TB_GENDER">
@@ -197,6 +188,7 @@
     <EntitySetMapping Name="TB_CANDIDATE_JOB_EXPERIENCE">
       <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_CANDIDATE_JOB_EXPERIENCE">
         <MappingFragment StoreEntitySet="TB_CANDIDATE_JOB_EXPERIENCE">
+          <ScalarProperty Name="PROJCT" ColumnName="PROJCT" />
           <ScalarProperty Name="COMPANY_NAME" ColumnName="COMPANY_NAME" />
           <ScalarProperty Name="BENEFIT" ColumnName="BENEFIT" />
           <ScalarProperty Name="JOBDESC" ColumnName="JOBDESC" />
@@ -206,39 +198,6 @@
           <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
           <ScalarProperty Name="CANDIDATE_POSITION" ColumnName="CANDIDATE_POSITION" />
           <ScalarProperty Name="INDUSTRIES" ColumnName="INDUSTRIES" />
-          <ScalarProperty Name="CANDIDATE_ID" ColumnName="CANDIDATE_ID" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TB_CANDIDATE">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_CANDIDATE">
-        <MappingFragment StoreEntitySet="TB_CANDIDATE">
-          <ScalarProperty Name="SOURCING_DATE" ColumnName="SOURCING_DATE" />
-          <ScalarProperty Name="SOURCE" ColumnName="SOURCE" />
-          <ScalarProperty Name="CANDIDATE_STATE_ID" ColumnName="CANDIDATE_STATE_ID" />
-          <ScalarProperty Name="CANDIDATE_DEGREE" ColumnName="CANDIDATE_DEGREE" />
-          <ScalarProperty Name="CANDIDATE_MAJOR" ColumnName="CANDIDATE_MAJOR" />
-          <ScalarProperty Name="CANDIDATE_GPA" ColumnName="CANDIDATE_GPA" />
-          <ScalarProperty Name="CANDIDATE_LAST_EDUCATON" ColumnName="CANDIDATE_LAST_EDUCATON" />
-          <ScalarProperty Name="CANDIDATE_PHOTO" ColumnName="CANDIDATE_PHOTO" />
-          <ScalarProperty Name="CANDIDATE_CV" ColumnName="CANDIDATE_CV" />
-          <ScalarProperty Name="CANDDIATE_NPWP_NUMBER" ColumnName="CANDDIATE_NPWP_NUMBER" />
-          <ScalarProperty Name="CANDIDATE_KTP_NUMBER" ColumnName="CANDIDATE_KTP_NUMBER" />
-          <ScalarProperty Name="CANDIDATE_CURRENT_ADDRESS" ColumnName="CANDIDATE_CURRENT_ADDRESS" />
-          <ScalarProperty Name="CANDIDATE_PROVINCE" ColumnName="CANDIDATE_PROVINCE" />
-          <ScalarProperty Name="CANDIDATE_CITY" ColumnName="CANDIDATE_CITY" />
-          <ScalarProperty Name="CANDIDATE_EMAIL" ColumnName="CANDIDATE_EMAIL" />
-          <ScalarProperty Name="CANDIDATE_PHONENUMBER" ColumnName="CANDIDATE_PHONENUMBER" />
-          <ScalarProperty Name="CANDIDATE_HOMENUMBER" ColumnName="CANDIDATE_HOMENUMBER" />
-          <ScalarProperty Name="CANDIDATE_ETNIC" ColumnName="CANDIDATE_ETNIC" />
-          <ScalarProperty Name="RELIGION_ID" ColumnName="RELIGION_ID" />
-          <ScalarProperty Name="GENDER_ID" ColumnName="GENDER_ID" />
-          <ScalarProperty Name="MARITAL_STATUS_ID" ColumnName="MARITAL_STATUS_ID" />
-          <ScalarProperty Name="CANDIDATE_PLACE_BIRTH" ColumnName="CANDIDATE_PLACE_BIRTH" />
-          <ScalarProperty Name="CANDIDATE_BIRTH_DATE" ColumnName="CANDIDATE_BIRTH_DATE" />
-          <ScalarProperty Name="CANDIDATE_AGE" ColumnName="CANDIDATE_AGE" />
-          <ScalarProperty Name="CANDIDATE_NAME" ColumnName="CANDIDATE_NAME" />
           <ScalarProperty Name="CANDIDATE_ID" ColumnName="CANDIDATE_ID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
@@ -255,6 +214,79 @@
           <ScalarProperty Name="CANDIDATE_SUITABLE_POSITION" ColumnName="CANDIDATE_SUITABLE_POSITION" />
           <ScalarProperty Name="CANDIDATE_APPLIED_POSITION" ColumnName="CANDIDATE_APPLIED_POSITION" />
           <ScalarProperty Name="PIC_ID" ColumnName="PIC_ID" />
+          <ScalarProperty Name="CANDIDATE_ID" ColumnName="CANDIDATE_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_DELIVERY_HISTORY">
+      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_DELIVERY_HISTORY">
+        <MappingFragment StoreEntitySet="TB_DELIVERY_HISTORY">
+          <ScalarProperty Name="NOTE" ColumnName="NOTE" />
+          <ScalarProperty Name="CLIENT_STATE" ColumnName="CLIENT_STATE" />
+          <ScalarProperty Name="TOTA_DAY" ColumnName="TOTA_DAY" />
+          <ScalarProperty Name="LAST_UPDATE" ColumnName="LAST_UPDATE" />
+          <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
+          <ScalarProperty Name="CLIENT_ID" ColumnName="CLIENT_ID" />
+          <ScalarProperty Name="PROCESS_DATE" ColumnName="PROCESS_DATE" />
+          <ScalarProperty Name="LAST_PIC" ColumnName="LAST_PIC" />
+          <ScalarProperty Name="CANDIDATE_STATE" ColumnName="CANDIDATE_STATE" />
+          <ScalarProperty Name="SOURCE" ColumnName="SOURCE" />
+          <ScalarProperty Name="CANDIDATE_POSITION" ColumnName="CANDIDATE_POSITION" />
+          <ScalarProperty Name="CANDIDATE_ID" ColumnName="CANDIDATE_ID" />
+          <ScalarProperty Name="DELIVERY_ID" ColumnName="DELIVERY_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_CANDIDATE">
+      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_CANDIDATE">
+        <MappingFragment StoreEntitySet="TB_CANDIDATE">
+          <ScalarProperty Name="AVAILABLE_JOIN" ColumnName="AVAILABLE_JOIN" />
+          <ScalarProperty Name="RECOMENDATION" ColumnName="RECOMENDATION" />
+          <ScalarProperty Name="NOTES" ColumnName="NOTES" />
+          <ScalarProperty Name="EXPECTED_SALARY" ColumnName="EXPECTED_SALARY" />
+          <ScalarProperty Name="POSITION" ColumnName="POSITION" />
+          <ScalarProperty Name="SOURCING_DATE" ColumnName="SOURCING_DATE" />
+          <ScalarProperty Name="SOURCE" ColumnName="SOURCE" />
+          <ScalarProperty Name="CANDIDATE_STATE_ID" ColumnName="CANDIDATE_STATE_ID" />
+          <ScalarProperty Name="CANDIDATE_DEGREE" ColumnName="CANDIDATE_DEGREE" />
+          <ScalarProperty Name="CANDIDATE_MAJOR" ColumnName="CANDIDATE_MAJOR" />
+          <ScalarProperty Name="CANDIDATE_GPA" ColumnName="CANDIDATE_GPA" />
+          <ScalarProperty Name="CANDIDATE_LAST_EDUCATON" ColumnName="CANDIDATE_LAST_EDUCATON" />
+          <ScalarProperty Name="EDUCATION_END_DATE" ColumnName="EDUCATION_END_DATE" />
+          <ScalarProperty Name="EDUCATION_START_DATE" ColumnName="EDUCATION_START_DATE" />
+          <ScalarProperty Name="CANDIDATE_PHOTO" ColumnName="CANDIDATE_PHOTO" />
+          <ScalarProperty Name="CANDIDATE_CV" ColumnName="CANDIDATE_CV" />
+          <ScalarProperty Name="CANDDIATE_NPWP_NUMBER" ColumnName="CANDDIATE_NPWP_NUMBER" />
+          <ScalarProperty Name="CANDIDATE_KTP_NUMBER" ColumnName="CANDIDATE_KTP_NUMBER" />
+          <ScalarProperty Name="CANDIDATE_CURRENT_ADDRESS" ColumnName="CANDIDATE_CURRENT_ADDRESS" />
+          <ScalarProperty Name="CANDIDATE_PROVINCE" ColumnName="CANDIDATE_PROVINCE" />
+          <ScalarProperty Name="CANDIDATE_CITY" ColumnName="CANDIDATE_CITY" />
+          <ScalarProperty Name="CANDIDATE_EMAIL" ColumnName="CANDIDATE_EMAIL" />
+          <ScalarProperty Name="CANDIDATE_PHONENUMBER" ColumnName="CANDIDATE_PHONENUMBER" />
+          <ScalarProperty Name="CANDIDATE_HOMENUMBER" ColumnName="CANDIDATE_HOMENUMBER" />
+          <ScalarProperty Name="TELEPHONE_NUMBER" ColumnName="TELEPHONE_NUMBER" />
+          <ScalarProperty Name="RESIDENT_CARD_NUMBER" ColumnName="RESIDENT_CARD_NUMBER" />
+          <ScalarProperty Name="PARENT_ADDRESS" ColumnName="PARENT_ADDRESS" />
+          <ScalarProperty Name="ZIP_CODE" ColumnName="ZIP_CODE" />
+          <ScalarProperty Name="CANDIDATE_ETNIC" ColumnName="CANDIDATE_ETNIC" />
+          <ScalarProperty Name="RELIGION_ID" ColumnName="RELIGION_ID" />
+          <ScalarProperty Name="GENDER_ID" ColumnName="GENDER_ID" />
+          <ScalarProperty Name="MARITAL_STATUS_ID" ColumnName="MARITAL_STATUS_ID" />
+          <ScalarProperty Name="CANDIDATE_PLACE_BIRTH" ColumnName="CANDIDATE_PLACE_BIRTH" />
+          <ScalarProperty Name="CANDIDATE_BIRTH_DATE" ColumnName="CANDIDATE_BIRTH_DATE" />
+          <ScalarProperty Name="CANDIDATE_AGE" ColumnName="CANDIDATE_AGE" />
+          <ScalarProperty Name="CANDIDATE_NAME" ColumnName="CANDIDATE_NAME" />
+          <ScalarProperty Name="CANDIDATE_ID" ColumnName="CANDIDATE_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_CANDIDATE_SKILL">
+      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_CANDIDATE_SKILL">
+        <MappingFragment StoreEntitySet="TB_CANDIDATE_SKILL">
+          <ScalarProperty Name="SKILL" ColumnName="SKILL" />
           <ScalarProperty Name="CANDIDATE_ID" ColumnName="CANDIDATE_ID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>

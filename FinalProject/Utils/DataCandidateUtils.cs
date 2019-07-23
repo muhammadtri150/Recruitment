@@ -77,7 +77,7 @@ namespace FinalProject.Utils
             }
         }
 
-        public List<CandidateDTO> GetDataCandidatePerState(int StateId)
+        public List<CandidateDTO> GetDataCandidatePerState()
         {
             using (DBEntities db = new DBEntities())
             {
@@ -113,8 +113,11 @@ namespace FinalProject.Utils
                     CANDIDATE_STATE_ID = ca.CANDIDATE_STATE_ID,
                     CANDIDATE_STATE_NAME = db.TB_STATE_CANDIDATE.FirstOrDefault(st => st.ID == ca.CANDIDATE_STATE_ID).STATE_NAME,
                     SOURCE = ca.SOURCE,
-                    SOURCING_DATE = ca.SOURCING_DATE
-                }).ToList().FindAll(ca => ca.CANDIDATE_STATE_ID == StateId);
+                    SOURCING_DATE = ca.SOURCING_DATE,
+                    ZIP_CODE = ca.ZIP_CODE
+                }).ToList();
+
+                
 
                 return ListCandidateDTO;
             }
