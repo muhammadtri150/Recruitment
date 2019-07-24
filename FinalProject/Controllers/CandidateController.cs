@@ -78,7 +78,7 @@ namespace FinalProject.Controllers
                     }
                     //============================ end process searchng ============================
                     
-                    //retutn view
+                    //return view
                     return View("Preselection/Index", ListCandidate);
                 }
             }
@@ -88,7 +88,7 @@ namespace FinalProject.Controllers
             }
         }
 
-        //---------------------------------------------------------- Detail candidate personal ----------------------------------------
+        //---------------------------------------------------------- Detail candidate  ----------------------------------------
         [Route("candidate/preselection/read/detailcandidate/{id?}")]
         public ActionResult DetailCandidate(string id = null)
         {
@@ -102,7 +102,13 @@ namespace FinalProject.Controllers
 
                 if(DataDetail == null) return Redirect("~/candidate/preselection");
 
+                ViewBag.DataView = new Dictionary<string, object>()
+                {
+                    {"title","Preselection"},
+                };
+
                 return View("Preselection/DetailCandidate", DataDetail);
+
             }
             catch (Exception)
             {
@@ -113,22 +119,41 @@ namespace FinalProject.Controllers
 
         //--------------------------------------------------------- Edit Data Candidate -------------------------------------------------
         [Route("candidate/preselection/edit/candidate")]
-        public ActionResult CandidateEdit(CandidateDTO Data)
+        public ActionResult CandidateEdit(CandidateDTO Data, HttpPostedFileBase Pict, HttpPostedFileBase Cv)
         {
             try
             {
+                if (ModelState.IsValid)
+                {
+                    var ProcessEdit = Manage_CandidateDTO.EditCandidate(Data, Pict, Cv);
 
+                    if(ProcessEdit > 0)
+                    {
+                        TempData.Add("message", "Candidate Update successfully");
+                        TempData.Add("type", "success");
+                        UserLogingUtils.SaveLoggingUserActivity("Edit Candidate" + Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID));
+                    }
+                    else
+                    {
+                        TempData.Add("message", "Candidate failed to Update");
+                        TempData.Add("type", "warning");
+                    }
+
+                    return Redirect("~/candidate/preselection/read/detailcandidate/" + Data.ID);
+                }
+                TempData.Add("message", "Candidate failed to Update, please complete form edit");
+                TempData.Add("type", "danger");
+                return Redirect("~/candidate/preselection/read/detailcandidate/" + Data.ID);
             }
             catch
             {
-
+                return Redirect("~/auth/error");
             }
         }
 
+        //*********************************************************************** add new candidate **********************************************************
 
-        //*********************************************************************** add new candidate **********************************************************************
-
-        //----------------------------------------------------------- view form add new candidate ----------------------------------------------------------------
+        //----------------------------------------------------------- view form add new candidate -----------------------------------------------------------
         [Route("candidate/preselection/create/candidate")]
         public ActionResult CandidatePreselectionAdd()
         {
@@ -187,21 +212,7 @@ namespace FinalProject.Controllers
         }
 
         //************************************************************** ADD NEW JOB EXPERIENCE OF CANDIDATE *****************************************************
-       
-        //---------------------------------------------------------- View ADD NEW JOB EXPERIENCE OF CANDIDATE ----------------------------------------------------
 
-        //[Route("candidate/preselection/read/jobExp")]
-        //public ActionResult JobExp(CandidateJobExperienceDTO NewJobExp)
-        //{
-        //    try
-        //    {
-        //        return View("~/candidate/preselection/create/JobExp");
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return Redirect("~/auth/error");
-        //    }
-        //}
 
         //------------------------------------------------------------ process add new job experience ----------------------------------------
         [Route("candidate/preselection/create/jobExp")]
@@ -229,18 +240,54 @@ namespace FinalProject.Controllers
                         return Redirect("~/candidate/preselection/create/jobExp");
                     }
                 }
-            
+
                 TempData.Add("message", "Candidate new job experience failed to add please complete form add");
                 TempData.Add("type", "danger");
-                return Redirect("~/candidate/preselection/create/jobExp");
-                
+                return Redirect("~/candidate/preselection/read/detailcandidate/" + NewJobExp.CANDIDATE_ID);
+             }
             catch (Exception)
             {
                 return Redirect("~/auth/error");
             }
         }
 
+        //----------------------------------------------------------- process edit job exp--------------------------
+        [Route("candidate/preselection/edit/jobExp")]
+        public ActionResult JobExpEdit(CandidateJobExperienceDTO NewJobExp)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    using (DBEntities db = new DBEntities())
+                    {
+                        var ProcessAdd = Manage_CandidateJobExperienceDTO.EditData(NewJobExp);
 
+                        if (ProcessAdd > 0)
+                        {
+                            TempData.Add("message", "Candidate job experience edited successfully");
+                            TempData.Add("type", "success");
+                            UserLogingUtils.SaveLoggingUserActivity("edit job experience Candidate " + NewJobExp.CANDIDATE_ID + " Job Experience in " + NewJobExp.COMPANY_NAME);
+                        }
+                        else
+                        {
+                            TempData.Add("message", "Candidate job experience failed to edit");
+                            TempData.Add("type", "warning");
+                        }
+                        return Redirect("~/candidate/preselection/create/jobExp");
+                    }
+                }
+
+                TempData.Add("message", "Candidate job experience failed to edit please complete form edit");
+                TempData.Add("type", "danger");
+                return Redirect("~/candidate/preselection/read/detailcandidate/" + NewJobExp.CANDIDATE_ID);
+
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
 
         //------------------------------------------------------------ candidate call -----------------------------------------
 

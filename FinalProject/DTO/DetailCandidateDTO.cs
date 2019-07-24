@@ -24,9 +24,9 @@ namespace FinalProject.DTO
             return new DetailCandidateDTO
             {
                 DataCandidate = Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == id),
-                DataJobExp = Manage_CandidateJobExperienceDTO.GetData().FindAll(d => d.CANDIDATE_ID == id),
-                DataDeliveryHistory = Manage_DeliveryHistoryDTO.GetData().FindAll(d => d.CANDIDATE_ID == id),
-                DataSelectionHistory = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().FindAll(d => d.CANDIDATE_ID == id)
+                DataJobExp = Manage_CandidateJobExperienceDTO.GetData().Where(d => d.CANDIDATE_ID == id).ToList(),
+                DataDeliveryHistory = Manage_DeliveryHistoryDTO.GetData().Where(d => d.CANDIDATE_ID == id).ToList(),
+                DataSelectionHistory = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().Where(d => d.CANDIDATE_ID == id).ToList()
             };
         }
     }

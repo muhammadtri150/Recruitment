@@ -28,6 +28,14 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ACTION_NAME" Type="varchar" MaxLength="30" />
         </EntityType>
+        <EntityType Name="TB_BENEFIT_JOB_EXPERIENCE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JOB_EXP_ID" Type="int" />
+          <Property Name="BENEFIT" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="TB_CANDIDATE">
           <Key>
             <PropertyRef Name="ID" />
@@ -236,6 +244,14 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           </Key>
           <Property Name="SKILL_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SKILL_NAME" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="TB_SKILL_JOB_EXPERIENCE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_JOBEXP" Type="int" />
+          <Property Name="SKILL_NAME" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="TB_STATE_CANDIDATE">
           <Key>
@@ -482,6 +498,7 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <EntitySet Name="JOB_PORTAL" EntityType="Self.JOB_PORTAL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_ACCESS_MENU" EntityType="Self.TB_ACCESS_MENU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_ACTION_CANDIDATE" EntityType="Self.TB_ACTION_CANDIDATE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_BENEFIT_JOB_EXPERIENCE" EntityType="Self.TB_BENEFIT_JOB_EXPERIENCE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_CANDIDATE" EntityType="Self.TB_CANDIDATE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_CANDIDATE_EDUCATION_HISTORY" EntityType="Self.TB_CANDIDATE_EDUCATION_HISTORY" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_CANDIDATE_JOB_EXPERIENCE" EntityType="Self.TB_CANDIDATE_JOB_EXPERIENCE" Schema="dbo" store:Type="Tables" />
@@ -499,6 +516,7 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <EntitySet Name="TB_RELIGION" EntityType="Self.TB_RELIGION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_ROLE" EntityType="Self.TB_ROLE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_SKILL" EntityType="Self.TB_SKILL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_SKILL_JOB_EXPERIENCE" EntityType="Self.TB_SKILL_JOB_EXPERIENCE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_STATE_CANDIDATE" EntityType="Self.TB_STATE_CANDIDATE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_SUBMENU" EntityType="Self.TB_SUBMENU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_USER" EntityType="Self.TB_USER" Schema="dbo" store:Type="Tables" />
@@ -770,6 +788,8 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           </AssociationSet>
           <EntitySet Name="TB_CANDIDATE_SKILL" EntityType="FinalProject_adp3Model.TB_CANDIDATE_SKILL" />
           <EntitySet Name="TB_DELIVERY_HISTORY" EntityType="FinalProject_adp3Model.TB_DELIVERY_HISTORY" />
+          <EntitySet Name="TB_SKILL_JOB_EXPERIENCE" EntityType="FinalProject_adp3Model.TB_SKILL_JOB_EXPERIENCE" />
+          <EntitySet Name="TB_BENEFIT_JOB_EXPERIENCE" EntityType="FinalProject_adp3Model.TB_BENEFIT_JOB_EXPERIENCE" />
           </EntityContainer>
         <Association Name="FK_TB_ACCESS_MENU_TB_ACCESS_MENU">
           <End Type="FinalProject_adp3Model.TB_ACCESS_MENU" Role="TB_ACCESS_MENU" Multiplicity="1" />
@@ -1183,6 +1203,22 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <Property Name="CLIENT_STATE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="NOTE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="TB_SKILL_JOB_EXPERIENCE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_JOBEXP" Type="Int32" />
+          <Property Name="SKILL_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TB_BENEFIT_JOB_EXPERIENCE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="JOB_EXP_ID" Type="Int32" />
+          <Property Name="BENEFIT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1476,6 +1512,24 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
                 <ScalarProperty Name="CANDIDATE_POSITION" ColumnName="CANDIDATE_POSITION" />
                 <ScalarProperty Name="CANDIDATE_ID" ColumnName="CANDIDATE_ID" />
                 <ScalarProperty Name="DELIVERY_ID" ColumnName="DELIVERY_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_SKILL_JOB_EXPERIENCE">
+            <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_SKILL_JOB_EXPERIENCE">
+              <MappingFragment StoreEntitySet="TB_SKILL_JOB_EXPERIENCE">
+                <ScalarProperty Name="SKILL_NAME" ColumnName="SKILL_NAME" />
+                <ScalarProperty Name="ID_JOBEXP" ColumnName="ID_JOBEXP" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_BENEFIT_JOB_EXPERIENCE">
+            <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_BENEFIT_JOB_EXPERIENCE">
+              <MappingFragment StoreEntitySet="TB_BENEFIT_JOB_EXPERIENCE">
+                <ScalarProperty Name="BENEFIT" ColumnName="BENEFIT" />
+                <ScalarProperty Name="JOB_EXP_ID" ColumnName="JOB_EXP_ID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

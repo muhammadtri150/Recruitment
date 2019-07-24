@@ -50,5 +50,7 @@ namespace FinalProject.Models
         public virtual DbSet<TB_CANDIDATE> TB_CANDIDATE { get; set; }
         public virtual DbSet<TB_CANDIDATE_SKILL> TB_CANDIDATE_SKILL { get; set; }
         public virtual DbSet<TB_DELIVERY_HISTORY> TB_DELIVERY_HISTORY { get; set; }
+        public virtual DbSet<TB_SKILL_JOB_EXPERIENCE> TB_SKILL_JOB_EXPERIENCE { get; set; }
+        public virtual DbSet<TB_BENEFIT_JOB_EXPERIENCE> TB_BENEFIT_JOB_EXPERIENCE { get; set; }
     }
 }

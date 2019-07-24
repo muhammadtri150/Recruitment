@@ -28,6 +28,7 @@ namespace FinalProject.DTO
         public string CANDIDATE_PHONENUMBER { get; set; }
         public string CANDIDATE_EMAIL { get; set; }
         public List<string> CANDIDATE_SKILL { get; set; }
+        public string SUITABLE_POSITION { get; set; }
 
 
         public System.DateTime? AVAILABLE_JOIN { get; set; }
@@ -194,7 +195,7 @@ namespace FinalProject.DTO
             }
         }
 
-        //--------------------------------------------------------- edit data candidate ------------------------------------------------
+        //--------------------------------------------------------- edit data candidate -------------------------------------------------
         public static int EditCandidate(CandidateDTO Data, HttpPostedFileBase Pict, HttpPostedFileBase Cv)
         {
             using(DBEntities db = new DBEntities())
@@ -263,6 +264,23 @@ namespace FinalProject.DTO
                 Candidate.POSITION = Data.POSITION;
                 Candidate.EDUCATION_START_DATE = edu_start_date;
                 Candidate.EDUCATION_END_DATE = edu_end_date;
+                
+                if(Candidate.CANDIDATE_STATE_ID != Data.CANDIDATE_STATE_ID) {
+                    //insert selection history
+                    UserDTO UserLogin = (UserDTO)HttpContext.Current.Session["UserLogin"];
+                    Manage_CandidateSelectionHistoryDTO.AddData(new CandidateSelectionHistoryDTO
+                    {
+                        CANDIDATE_ID = Data.ID,
+                        PIC_ID = UserLogin.USER_ID,
+                        CANDIDATE_APPLIED_POSITION = Data.POSITION,
+                        CANDIDATE_SUITABLE_POSITION = Data.SUITABLE_POSITION,
+                        CANDIDATE_SOURCE = Data.SOURCE,
+                        CANDIDATE_EXPECTED_SALARY = Data.EXPECTED_sALARY,
+                        CANDIDATE_STATE = Data.CANDIDATE_STATE_ID,
+                        NOTES = Data.NOTES
+                    });
+                }
+
                 return db.SaveChanges();
             }
         }
