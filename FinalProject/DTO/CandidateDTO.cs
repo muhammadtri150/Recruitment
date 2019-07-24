@@ -92,25 +92,37 @@ namespace FinalProject.DTO
                 string Candidate_ID = "CA" + DateTime.Now.ToString("fffff");
 
                 //process file pict candidate
-                string pict_ext = Pict.FileName.Split('.')[1];
-                string pict_name = "Pict_"+Candidate_ID +"."+ pict_ext;
-                string path_pict = Path.Combine(System.Web.HttpContext.Current.Server.MapPath("~/Data/DataCandidate/Pict/"), pict_name);
-                Pict.SaveAs(path_pict);
+                string pict_name = "-";
+                if (Pict != null)
+                {
+                    string pict_ext = Pict.FileName.Split('.')[1];
+                    pict_name = "Pict_" + Candidate_ID + "." + pict_ext;
+                    string path_pict = Path.Combine(System.Web.HttpContext.Current.Server.MapPath("~/Data/DataCandidate/Pict/"), pict_name);
+                    Pict.SaveAs(path_pict);
+                }
 
                 //process file Cv
-                string Cv_ext = Cv.FileName.Split('.')[1];
-                string Cv_name = "Cv_"+Candidate_ID +"."+ Cv_ext;
-                string path_cv = Path.Combine(System.Web.HttpContext.Current.Server.MapPath("~/Data/DataCandidate/Cv/"), Cv_name);
-                Cv.SaveAs(path_cv);
+                string Cv_name = "-";
+                if (Cv != null)
+                {
+                    string Cv_ext = Cv.FileName.Split('.')[1];
+                    Cv_name = "Cv_" + Candidate_ID + "." + Cv_ext;
+                    string path_cv = Path.Combine(System.Web.HttpContext.Current.Server.MapPath("~/Data/DataCandidate/Cv/"), Cv_name);
+                    Cv.SaveAs(path_cv);
+                }
 
-                
+                //process to convert datetime
+                var birth_date = Convert.ToDateTime(DataNewCandidate.CANDIDATE_BIRTH_DATE);
+                var edu_start_date = Convert.ToDateTime(DataNewCandidate.EDUCATON_START_DATE);
+                var edu_end_date = Convert.ToDateTime(DataNewCandidate.EDUCATON_END_DATE);
+
                 //process insert data
                 db.TB_CANDIDATE.Add(new TB_CANDIDATE
                 {
                     CANDIDATE_ID = Candidate_ID,
                     CANDIDATE_NAME = DataNewCandidate.CANDIDATE_NAME,
                     CANDIDATE_AGE = DataNewCandidate.CANDIDATE_AGE,
-                    CANDIDATE_BIRTH_DATE = DataNewCandidate.CANDIDATE_BIRTH_DATE,
+                    CANDIDATE_BIRTH_DATE = birth_date,
                     CANDIDATE_PLACE_BIRTH = DataNewCandidate.CANDIDATE_PLACE_BIRTH,
                     MARITAL_STATUS_ID = DataNewCandidate.MARITAL_STATUS_ID,
                     GENDER_ID = DataNewCandidate.GENDER_ID,
@@ -130,9 +142,9 @@ namespace FinalProject.DTO
                     CANDIDATE_GPA = DataNewCandidate.CANDIDATE_GPA,
                     CANDIDATE_MAJOR = DataNewCandidate.CANDIDATE_MAJOR,
                     CANDIDATE_DEGREE = DataNewCandidate.CANDIDATE_DEGREE,
-                    CANDIDATE_STATE_ID = DataNewCandidate.CANDIDATE_STATE_ID,
+                    CANDIDATE_STATE_ID = 1,
                     SOURCE = DataNewCandidate.SOURCE,
-                    SOURCING_DATE = DataNewCandidate.SOURCING_DATE,
+                    SOURCING_DATE = DateTime.Now,
                     ZIP_CODE = DataNewCandidate.ZIP_CODE,
                     PARENT_ADDRESS = DataNewCandidate.PARENT_ADDRESS,
                     RESIDENT_CARD_NUMBER = DataNewCandidate.RESIDENT_CARD_NUMBER,
@@ -142,8 +154,8 @@ namespace FinalProject.DTO
                     EXPECTED_SALARY = DataNewCandidate.EXPECTED_sALARY,
                     NOTES = DataNewCandidate.NOTES,
                     POSITION = DataNewCandidate.POSITION,
-                    EDUCATION_START_DATE = DataNewCandidate.EDUCATON_START_DATE,
-                    EDUCATION_END_DATE = DataNewCandidate.EDUCATON_END_DATE,
+                    EDUCATION_START_DATE = edu_start_date,
+                    EDUCATION_END_DATE = edu_end_date,
                 });
 
                 int res = 0;
@@ -157,6 +169,24 @@ namespace FinalProject.DTO
                         {
                             CANDIDATE_ID = db.TB_CANDIDATE.FirstOrDefault(c => c.CANDIDATE_ID == Candidate_ID).ID,
                             SKILL = skill
+                        });
+                    }
+                    if (db.SaveChanges() > 0)
+                    {
+                        //insert selection history
+                        Manage_CandidateSelectionHistoryDTO Manage_Selection_history = new Manage_CandidateSelectionHistoryDTO();
+
+                        UserDTO UserLogin = (UserDTO)HttpContext.Current.Session["UserLogin"];
+                        Manage_Selection_history.AddData(new CandidateSelectionHistoryDTO
+                        {
+                            CANDIDATE_ID = db.TB_CANDIDATE.FirstOrDefault(ca => ca.CANDIDATE_ID == Candidate_ID).ID,
+                            PIC_ID = UserLogin.USER_ID,
+                            CANDIDATE_APPLIED_POSITION = DataNewCandidate.POSITION,
+                            CANDIDATE_SUITABLE_POSITION = "-",
+                            CANDIDATE_SOURCE = DataNewCandidate.SOURCE,
+                            CANDIDATE_EXPECTED_SALARY = DataNewCandidate.EXPECTED_sALARY,
+                            CANDIDATE_STATE = 1,
+                            NOTES = DataNewCandidate.NOTES
                         });
                         res = db.SaveChanges();
                     }

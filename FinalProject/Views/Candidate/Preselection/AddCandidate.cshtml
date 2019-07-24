@@ -150,7 +150,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="POSITION">Religion</label>
+                            <label for="POSITION">POSITION</label>
                             <select class="form-control" id="POSITION" name="POSITION">
                                 @foreach (var d in new DBEntities().TB_JOB_POSITION)
                                 {
@@ -230,7 +230,7 @@
 
                             <div class="form-group">
                                 <label for="EDUCATION_START_DATE">Start Date</label>
-                                <input type="date" class="form-control" id="EDUCATION_START_DATE" name="EDUCATION_START_DATE" />
+                                @Html.TextBoxFor(m => m.EDUCATON_START_DATE, new { type = "date", @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-sm">
@@ -250,8 +250,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="EDUCATION_START_DATE">Start Date</label>
-                                <input type="date" class="form-control" id="EDUCATION_START_DATE" name="EDUCATION_START_DATE" />
+                                <label for="EDUCATION_END_DATE">End Date</label>
+                                @Html.TextBoxFor(m => m.EDUCATON_END_DATE,new {type = "date", @class = "form-control" })
                             </div>
                         </div>
                     </div>

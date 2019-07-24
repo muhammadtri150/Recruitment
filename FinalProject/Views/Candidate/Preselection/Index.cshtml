@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FinalProject.DTO.CandidateDTO>
+﻿@model IEnumerable<FinalProject.DTO.CandidateSelectionHistoryDTO>
 @using FinalProject.Utils
 @section title{
 
@@ -11,28 +11,33 @@
     <div class="container">
         <!-- Search form -->
         <a class="btn btn-primary" href="~/candidate/preselection/create/candidate">Add New Candidate</a>
-        <form class="form-inline md-form form-sm mt-4">
-            <input class="form-control form-control-sm mr-3 w-50" type="text" placeholder="Search"
-                   aria-label="Search">
+        <form class="form-inline md-form form-sm mt-4" action="~/candidate/preselection" id="FormFilter" method="post">
+            <input class="form-control form-control-sm mr-3 w-50" type="text" placeholder="Search" aria-label="Search" value="" name="Keyword">
             <i class="fas fa-search mr-3" aria-hidden="true"></i>
-            <select class="form-control form-control-sm mr-3 float-right">
-                <option>.Net Developer</option>
-                <option>Java Developer</option>
+            <select class="form-control form-control-sm mr-3 float-right" name="POSITION" id="ListPosition">
+                <option value="all" >All</option>
+                @foreach (var pos in ViewBag.DataView["ListPosition"])
+                {
+                    <option value="@pos.JOBPOSITION_NAME">@pos.JOBPOSITION_NAME</option>
+                }
             </select>
-            <select class="form-control form-control-sm mr-3 float-right">
-                <option>Process</option>
-                <option>Not Proccess</option>
+            <select class="form-control form-control-sm mr-3 float-right" name="CANDIDATE_STATE" id="ListState">
+                <option value="0">All</option>
+                @foreach (var st in ViewBag.DataView["ListState"])
+                {
+                    <option value="@st.ID">@st.STATE_NAME</option>
+                }
             </select>
-            <input type="button" class="btn btn-primary mr-3 float-right" value="Filter" />
+            <input type="submit" class="btn btn-primary mr-3 float-right" value="Filter" name="filter"/>
         </form>
         <table class="table table-striped mt-4">
-            <thead>
-                <tr>
-                    <th scope="col">Nama</th>
+            <thead class="table-primary">
+                <tr class="">
+                    <th scope="col">Name</th>
                     <th scope="col">Applied Potition</th>
                     <th scope="col">Suitable Potition</th>
                     <th scope="col">Source</th>
-                    <th scope="col">Number</th>
+                    <th scope="col">Phone Number</th>
                     <th scope="col">Email</th>
                     <th scope="col">PIC</th>
                     <th scope="col">Sourcing Date</th>
@@ -43,23 +48,27 @@
             </thead>
             <tbody>
                 @*@foreach (var candidate in Model)*@
-                <tr>
-                    @foreach (var candidate in Model)
+                @{var utils = new DataCandidateUtils();}
+                    @foreach (var data in Model)
                     {
-                        <tr>
-                            <td>@candidate.CANDIDATE_NAME</td>
-                            <td>@(new DataCandidateUtils().GetDataSelectionHistory().FirstOrDefault(sh => sh.CANDIDATE_ID == candidate.ID && sh.CANDIDATE_STATE == candidate.CANDIDATE_STATE_ID).CANDIDATE_APPLIED_POSITION)</td>
-                            <td>@(new DataCandidateUtils().GetDataSelectionHistory().FirstOrDefault(sh => sh.CANDIDATE_ID == candidate.ID && sh.CANDIDATE_STATE == candidate.CANDIDATE_STATE_ID).CANDIDATE_SUITABLE_POSITION)</td>
-                            <td>@candidate.SOURCE</td>
-                            <td>@candidate.CANDIDATE_PHONENUMBER</td>
-                            <td>@candidate.CANDIDATE_EMAIL</td>
-                            <td>@candidate.SOURCING_DATE</td>
-                            <td>@candidate.CANDIDATE_STATE_NAME</td>
-                            <td>@(new DataCandidateUtils().GetDataSelectionHistory().FirstOrDefault(sh => sh.CANDIDATE_ID == candidate.ID && sh.CANDIDATE_STATE == candidate.CANDIDATE_STATE_ID).NOTES)</td>
-                            </tr>
-                    <td><button type="button" class="btn editbtn" data-toggle="modal"><i class="fas fa-edit"></i></button></td>
-                    }
+                <tr>
+                    <td>@DataCandidateUtils.GetDataCandidate().FirstOrDefault(d => d.ID == data.CANDIDATE_ID).CANDIDATE_NAME</td>
+                    <td>@data.CANDIDATE_APPLIED_POSITION</td>
+                    <td>@data.CANDIDATE_SUITABLE_POSITION</td>
+                    <td>@data.CANDIDATE_SOURCE</td>
+                    <td>@data.CANDIDATE_PHONE</td>
+                    <td>@DataCandidateUtils.GetDataCandidate().FirstOrDefault(d => d.ID == data.CANDIDATE_ID).CANDIDATE_EMAIL</td>
+                    <td>@DataCandidateUtils.GetDataPIC().FirstOrDefault(d => d.USER_ID == data.PIC_ID).FULL_NAME</td>
+                    <td>@DataCandidateUtils.GetDataCandidate().FirstOrDefault(d => d.ID == data.CANDIDATE_ID).SOURCING_DATE</td>
+                    <td>@data.CANDIDATE_STATE_NAME</td>
+                    <td>@data.NOTES</td>
+                    <td>
+                        <a class="" href=""><i class="fas fa-edit"></i></a>
+                        <a class="ml-3" href=""><i class="fas fa-search-plus"></i></a>
+                    </td>
                 </tr>
+                    
+                    }
             </tbody>
         </table>
         <form class="form-inline md-form form-sm mt-3 float-left">

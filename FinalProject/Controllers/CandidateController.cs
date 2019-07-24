@@ -30,11 +30,53 @@ namespace FinalProject.Controllers
             {
                 using (DBEntities db = new DBEntities())
                 {
-                    List<CandidateDTO> ListCandidate = new DataCandidateUtils().GetDataCandidatePerState().FindAll(d => d.CANDIDATE_STATE_ID == 7 || d.CANDIDATE_STATE_ID == 11);
+                    List<CandidateSelectionHistoryDTO> ListCandidate = DataCandidateUtils.GetDataSelectionHistory().Where(sh =>
+                    sh.CANDIDATE_STATE == 1 || sh.CANDIDATE_STATE == 10 || sh.CANDIDATE_STATE == 11).ToList();
+                //------------------------------------------------------ process searchng -----------------------------
 
-                    ViewBag.DataView = new Dictionary<string, object>(){
-                    {"title","Preselection"}
+                    if(Request["filter"] != null)
+                    {
+                        string Position = Request["POSITION"];
+                        int StateId = Convert.ToInt16(Request["CANDIDATE_STATE"]);
+                        string Keyword = Request["Keyword"];
+
+                        if(StateId != 0 && (Position == "all" && Keyword == ""))
+                        {
+                            ListCandidate = ListCandidate.Where(d => d.CANDIDATE_STATE == StateId).ToList();
+                        }
+                        if(Position != "all"  && (StateId == 0 && Keyword == ""))
+                        {
+                            ListCandidate = ListCandidate.Where(d => 
+                            d.CANDIDATE_APPLIED_POSITION == Position || 
+                            d.CANDIDATE_SUITABLE_POSITION == Position).ToList();
+                        }
+                        if (Keyword != "" && (StateId == 0 && Position == "all"))
+                        {
+                            ListCandidate = ListCandidate.Where(d =>
+                                d.CANDIDATE_EMAIL.Contains(Keyword) ||
+                                d.CANDIDATE_NAME.Contains(Keyword) ||
+                                d.CANDIDATE_PHONE.Contains(Keyword)).ToList();
+                        }
+                        else {
+                            ListCandidate = ListCandidate.Where(d =>
+                             d.CANDIDATE_APPLIED_POSITION == Position || 
+                             d.CANDIDATE_SUITABLE_POSITION == Position || 
+                             d.CANDIDATE_STATE == StateId ||
+                             d.CANDIDATE_EMAIL.Contains(Keyword) ||
+                             d.CANDIDATE_NAME.Contains(Keyword) ||
+                             d.CANDIDATE_PHONE.Contains(Keyword)).ToList();
+                        }
+                    }
+
+                //------------------------------------------------------ end process searchng -----------------------------
+
+                    //prepare data for show in view
+                    ViewBag.DataView = new Dictionary<string, object>{
+                    {"title","Preselection"},
+                    {"ListPosition",Manage_JobPositionDTO.GetData()},
+                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 1 || d.ID == 10 || d.ID == 11)}
                     };
+
                     return View("Preselection/Index", ListCandidate);
                 }
             }
@@ -44,8 +86,9 @@ namespace FinalProject.Controllers
             }
         }
 
-        //----------------------------------------------------------- add new candidate ------------------------------------------------------------------------
-        //----------------------------------------------------------- view form add new candidate ------------------------------------------------------------------------
+//*********************************************************************** add new candidate **********************************************************************
+
+            //----------------------------------------------------------- view form add new candidate ------------------------------------------------------------------------
         [Route("candidate/preselection/create/candidate")]
         public ActionResult CandidatePreselectionAdd()
         {
@@ -66,12 +109,12 @@ namespace FinalProject.Controllers
             }
         }
 
-        //----------------------------------------------------- PROCESS ADD NEW CANDIDATE -------------------------------------------------------------
+        //----------------------------------------------------- PROCESS ADD NEW CANDIDATE ----------------------------------------------------------------------
         [Route("candidate/preselection/create/candidate/process")]
         public ActionResult CandidatePreselectionAdd(CandidateDTO DataNewCandidate,  HttpPostedFileBase Pict, HttpPostedFileBase Cv)
         {
-            //try
-            //{
+            try
+            {
                 if (ModelState.IsValid)
                 {
                     Manage_CandidateDTO Manage_candidate = new Manage_CandidateDTO();
@@ -98,52 +141,67 @@ namespace FinalProject.Controllers
                 TempData.Add("type", "danger");
             
                 return Redirect("~/candidate/preselection");
-            //}
-            //catch (Exception)
-            //{
-            //    return Redirect("~/auth/error");
-            //}
-        }
-
-        //------------------------------------------------------- ADD NEW JOB EXPERIENCE OF CANDIDATE -------------------------------------------------
-       
-        //------------------------------------------------------ View wADD NEW JOB EXPERIENCE OF CANDIDATE --------------------------------------------
-
-        [Route("candidate/preselection/create/jobdesc")]
-        public ActionResult CandidatePreselectionAdd(CandidateJobExperienceDTO NewJobExp)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    Manage_CandidateJobExperienceDTO ManageJobExp = new Manage_CandidateJobExperienceDTO();
-
-                    //process add will return integer, success if return > 0
-
-                    if (ManageJobExp.AddData(NewJobExp) > 0)
-                    {
-                        TempData.Add("message", "Candidate new job experience added successfully");
-                        TempData.Add("type", "success");
-                        UserLogingUtils.SaveLoggingUserActivity("add Candidate " + NewJobExp.CANDIDATE_ID+" Job Experience in "+NewJobExp.COMPANY_NAME);
-                    }
-                    else
-                    {
-                        TempData.Add("message", "Candidate new job experience failed to add");
-                        TempData.Add("type", "warning");
-                    }
-                    return Redirect("~/candidate/preselection");
-                }
-
-                TempData.Add("message", "Candidate new job experience failed to add, please complete form add");
-                TempData.Add("type", "danger");
-
-                return Redirect("~/candidate/preselection");
             }
             catch (Exception)
             {
                 return Redirect("~/auth/error");
             }
         }
+
+        //************************************************* ADD NEW JOB EXPERIENCE OF CANDIDATE *************************************************
+       
+        //------------------------------------------------------ View ADD NEW JOB EXPERIENCE OF CANDIDATE --------------------------------------------
+
+        //[Route("candidate/preselection/read/jobExp")]
+        //public ActionResult JobExp(CandidateJobExperienceDTO NewJobExp)
+        //{
+        //    try
+        //    {
+        //        return View("~/candidate/preselection/create/JobExp");
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return Redirect("~/auth/error");
+        //    }
+        //}
+
+        //------------------------------------------------------------ process add new job experience ----------------------------------------
+        [Route("candidate/preselection/create/jobExp")]
+        public ActionResult JobExpAdd(CandidateJobExperienceDTO NewJobExp)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    using (DBEntities db = new DBEntities())
+                    {
+                        Manage_CandidateJobExperienceDTO Manage_JobEXP = new Manage_CandidateJobExperienceDTO();
+                        var ProcessAdd = Manage_JobEXP.AddData(NewJobExp);
+
+                        if (ProcessAdd > 0)
+                        {
+                            TempData.Add("message", "Candidate new job experience added successfully");
+                            TempData.Add("type", "success");
+                            UserLogingUtils.SaveLoggingUserActivity("add job experience Candidate " + NewJobExp.CANDIDATE_ID + " Job Experience in " + NewJobExp.COMPANY_NAME);
+                        }
+                        else
+                        {
+                            TempData.Add("message", "Candidate new job experience failed to add");
+                            TempData.Add("type", "warning");
+                        }
+                        return Redirect("~/candidate/preselection/create/jobExp");
+                    }
+                }
+                TempData.Add("message", "Candidate new job experience failed to add please complete form add");
+                TempData.Add("type", "danger");
+                return Redirect("~/candidate/preselection/create/jobExp");
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
 
 
         //------------------------------------------------------------ candidate call -----------------------------------------
