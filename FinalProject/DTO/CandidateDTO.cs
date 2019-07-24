@@ -84,7 +84,8 @@ namespace FinalProject.DTO
 
     public class Manage_CandidateDTO
     {
-        public List<object> AddData(CandidateDTO DataNewCandidate, HttpPostedFileBase Pict, HttpPostedFileBase Cv)
+        //----------------------------------------------------------------- add data candidate ------------------------------------------
+        public static List<object> AddData(CandidateDTO DataNewCandidate, HttpPostedFileBase Pict, HttpPostedFileBase Cv)
         {
             using(DBEntities db = new DBEntities())
             {
@@ -174,10 +175,8 @@ namespace FinalProject.DTO
                     if (db.SaveChanges() > 0)
                     {
                         //insert selection history
-                        Manage_CandidateSelectionHistoryDTO Manage_Selection_history = new Manage_CandidateSelectionHistoryDTO();
-
                         UserDTO UserLogin = (UserDTO)HttpContext.Current.Session["UserLogin"];
-                        Manage_Selection_history.AddData(new CandidateSelectionHistoryDTO
+                        Manage_CandidateSelectionHistoryDTO.AddData(new CandidateSelectionHistoryDTO
                         {
                             CANDIDATE_ID = db.TB_CANDIDATE.FirstOrDefault(ca => ca.CANDIDATE_ID == Candidate_ID).ID,
                             PIC_ID = UserLogin.USER_ID,
@@ -192,6 +191,129 @@ namespace FinalProject.DTO
                     }
                 }
                 return new List<object>() { { res }, {Candidate_ID} };
+            }
+        }
+
+        //--------------------------------------------------------- edit data candidate ------------------------------------------------
+        public static int EditCandidate(CandidateDTO Data, HttpPostedFileBase Pict, HttpPostedFileBase Cv)
+        {
+            using(DBEntities db = new DBEntities())
+            {
+                TB_CANDIDATE Candidate = db.TB_CANDIDATE.FirstOrDefault(d => d.ID == Data.ID);
+
+                //process file pict candidate
+                string pict_name = "-";
+                if (Pict != null)
+                {
+                    string pict_ext = Pict.FileName.Split('.')[1];
+                    pict_name = "Pict_" + DateTime.Now.ToString("ffff") + "." + pict_ext;
+                    string path_pict = Path.Combine(System.Web.HttpContext.Current.Server.MapPath("~/Data/DataCandidate/Pict/"), pict_name);
+                    Pict.SaveAs(path_pict);
+                }
+
+                //process file Cv
+                string Cv_name = "-";
+                if (Cv != null)
+                {
+                    string Cv_ext = Cv.FileName.Split('.')[1];
+                    Cv_name = "Cv_" + DateTime.Now.ToString("ffff") + "." + Cv_ext;
+                    string path_cv = Path.Combine(System.Web.HttpContext.Current.Server.MapPath("~/Data/DataCandidate/Cv/"), Cv_name);
+                    Cv.SaveAs(path_cv);
+                }
+
+                //process to convert datetime
+                var birth_date = Convert.ToDateTime(Data.CANDIDATE_BIRTH_DATE);
+                var edu_start_date = Convert.ToDateTime(Data.EDUCATON_START_DATE);
+                var edu_end_date = Convert.ToDateTime(Data.EDUCATON_END_DATE);
+
+                //process update data
+                Candidate.CANDIDATE_NAME = Data.CANDIDATE_NAME;
+                Candidate.CANDIDATE_AGE = Data.CANDIDATE_AGE;
+                Candidate.CANDIDATE_BIRTH_DATE = birth_date;
+                Candidate.CANDIDATE_PLACE_BIRTH = Data.CANDIDATE_PLACE_BIRTH;
+                Candidate.MARITAL_STATUS_ID = Data.MARITAL_STATUS_ID;
+                Candidate.GENDER_ID = Data.GENDER_ID;
+                Candidate.RELIGION_ID = Data.RELIGION_ID;
+                Candidate.CANDIDATE_ETNIC = Data.CANDIDATE_ETNIC;
+                Candidate.CANDIDATE_HOMENUMBER = Data.CANDIDATE_HOMENUMBER;
+                Candidate.CANDIDATE_PHONENUMBER = Data.CANDIDATE_PHONENUMBER;
+                Candidate.CANDIDATE_EMAIL = Data.CANDIDATE_EMAIL;
+                Candidate.CANDIDATE_CITY = Data.CANDIDATE_CITY;
+                Candidate.CANDIDATE_PROVINCE = Data.CANDIDATE_PROVINCE;
+                Candidate.CANDIDATE_CURRENT_ADDRESS = Data.CANDIDATE_CURRENT_ADDRESS;
+                Candidate.CANDIDATE_KTP_NUMBER = Data.CANDIDATE_KTP_NUMBER;
+                Candidate.CANDDIATE_NPWP_NUMBER = Data.CANDDIATE_NPWP_NUMBER;
+                Candidate.CANDIDATE_CV = Cv_name;
+                Candidate.CANDIDATE_PHOTO = pict_name;
+                Candidate.CANDIDATE_LAST_EDUCATON = Data.CANDIDATE_LAST_EDUCATON;
+                Candidate.CANDIDATE_GPA = Data.CANDIDATE_GPA;
+                Candidate.CANDIDATE_MAJOR = Data.CANDIDATE_MAJOR;
+                Candidate.CANDIDATE_DEGREE = Data.CANDIDATE_DEGREE;
+                Candidate.CANDIDATE_STATE_ID = 1;
+                Candidate.SOURCE = Data.SOURCE;
+                Candidate.SOURCING_DATE = DateTime.Now;
+                Candidate.ZIP_CODE = Data.ZIP_CODE;
+                Candidate.PARENT_ADDRESS = Data.PARENT_ADDRESS;
+                Candidate.RESIDENT_CARD_NUMBER = Data.RESIDENT_CARD_NUMBER;
+                Candidate.TELEPHONE_NUMBER = Data.TELEPHONE_NUMBER;
+                Candidate.AVAILABLE_JOIN = Data.AVAILABLE_JOIN;
+                Candidate.RECOMENDATION = Data.RECOMENDATION;
+                Candidate.EXPECTED_SALARY = Data.EXPECTED_sALARY;
+                Candidate.NOTES = Data.NOTES;
+                Candidate.POSITION = Data.POSITION;
+                Candidate.EDUCATION_START_DATE = edu_start_date;
+                Candidate.EDUCATION_END_DATE = edu_end_date;
+                return db.SaveChanges();
+            }
+        }
+
+        //---------------------------------------------------------- Get Data Candidate -----------------------------------------------
+        public static List<CandidateDTO> GetDataCandidate()
+        {
+            using (DBEntities db = new DBEntities())
+            {
+                List<CandidateDTO> ListCandidateDTO = db.TB_CANDIDATE.Select(ca => new CandidateDTO
+                {
+                    ID = ca.ID,
+                    CANDIDATE_ID = ca.CANDIDATE_ID,
+                    CANDIDATE_NAME = ca.CANDIDATE_NAME,
+                    CANDIDATE_AGE = ca.CANDIDATE_AGE,
+                    CANDIDATE_BIRTH_DATE = ca.CANDIDATE_BIRTH_DATE,
+                    CANDIDATE_PLACE_BIRTH = ca.CANDIDATE_PLACE_BIRTH,
+                    MARITAL_STATUS_ID = ca.MARITAL_STATUS_ID,
+                    GENDER_ID = ca.GENDER_ID,
+                    RELIGION_ID = ca.RELIGION_ID,
+                    CANDIDATE_ETNIC = ca.CANDIDATE_ETNIC,
+                    CANDIDATE_HOMENUMBER = ca.CANDIDATE_HOMENUMBER,
+                    CANDIDATE_PHONENUMBER = ca.CANDIDATE_PHONENUMBER,
+                    CANDIDATE_EMAIL = ca.CANDIDATE_EMAIL,
+                    CANDIDATE_CITY = ca.CANDIDATE_CITY,
+                    CANDIDATE_PROVINCE = ca.CANDIDATE_PROVINCE,
+                    CANDIDATE_CURRENT_ADDRESS = ca.CANDIDATE_CURRENT_ADDRESS,
+                    CANDIDATE_KTP_NUMBER = ca.CANDIDATE_KTP_NUMBER,
+                    CANDDIATE_NPWP_NUMBER = ca.CANDDIATE_NPWP_NUMBER,
+                    CANDIDATE_CV = ca.CANDIDATE_CV,
+                    CANDIDATE_PHOTO = ca.CANDIDATE_PHOTO,
+                    CANDIDATE_LAST_EDUCATON = ca.CANDIDATE_LAST_EDUCATON,
+                    CANDIDATE_GPA = ca.CANDIDATE_GPA,
+                    CANDIDATE_MAJOR = ca.CANDIDATE_MAJOR,
+                    CANDIDATE_DEGREE = ca.CANDIDATE_DEGREE,
+                    CANDIDATE_STATE_ID = 1,
+                    SOURCE = ca.SOURCE,
+                    SOURCING_DATE = ca.SOURCING_DATE,
+                    ZIP_CODE = ca.ZIP_CODE,
+                    PARENT_ADDRESS = ca.PARENT_ADDRESS,
+                    RESIDENT_CARD_NUMBER = ca.RESIDENT_CARD_NUMBER,
+                    TELEPHONE_NUMBER = ca.TELEPHONE_NUMBER,
+                    AVAILABLE_JOIN = ca.AVAILABLE_JOIN,
+                    RECOMENDATION = ca.RECOMENDATION,
+                    EXPECTED_sALARY = ca.EXPECTED_SALARY,
+                    NOTES = ca.NOTES,
+                    POSITION = ca.POSITION,
+                    EDUCATON_START_DATE = ca.EDUCATION_START_DATE,
+                    EDUCATON_END_DATE = ca.EDUCATION_END_DATE,
+                }).ToList();
+                return ListCandidateDTO;
             }
         }
     }

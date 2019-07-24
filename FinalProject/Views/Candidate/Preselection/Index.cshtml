@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<FinalProject.DTO.CandidateSelectionHistoryDTO>
-@using FinalProject.Utils
+@using FinalProject.DTO
 @section title{
 
     Candidate - @ViewBag.DataView["title"]
@@ -48,18 +48,17 @@
             </thead>
             <tbody>
                 @*@foreach (var candidate in Model)*@
-                @{var utils = new DataCandidateUtils();}
                     @foreach (var data in Model)
                     {
                 <tr>
-                    <td>@DataCandidateUtils.GetDataCandidate().FirstOrDefault(d => d.ID == data.CANDIDATE_ID).CANDIDATE_NAME</td>
+                    <td>@data.CANDIDATE_NAME</td>
                     <td>@data.CANDIDATE_APPLIED_POSITION</td>
                     <td>@data.CANDIDATE_SUITABLE_POSITION</td>
                     <td>@data.CANDIDATE_SOURCE</td>
                     <td>@data.CANDIDATE_PHONE</td>
-                    <td>@DataCandidateUtils.GetDataCandidate().FirstOrDefault(d => d.ID == data.CANDIDATE_ID).CANDIDATE_EMAIL</td>
-                    <td>@DataCandidateUtils.GetDataPIC().FirstOrDefault(d => d.USER_ID == data.PIC_ID).FULL_NAME</td>
-                    <td>@DataCandidateUtils.GetDataCandidate().FirstOrDefault(d => d.ID == data.CANDIDATE_ID).SOURCING_DATE</td>
+                    <td>@data.CANDIDATE_EMAIL</td>
+                    <td>@data.PIC_FULL_NAME</td>
+                    <td>@data.CANDIDATE_SOURCING_DATE</td>
                     <td>@data.CANDIDATE_STATE_NAME</td>
                     <td>@data.NOTES</td>
                     <td>

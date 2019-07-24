@@ -34,11 +34,11 @@ namespace FinalProject.DTO
         public string PIC_FULL_NAME { get; set; }
     }
 
-    //---------------------------------------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------- Add data ----------------------------------------------------------------
     public class Manage_CandidateSelectionHistoryDTO
     {
 
-        public int AddData(CandidateSelectionHistoryDTO data)
+        public static int AddData(CandidateSelectionHistoryDTO data)
         {
             using(DBEntities db = new DBEntities())
             {
@@ -57,6 +57,36 @@ namespace FinalProject.DTO
                 });
 
                 return db.SaveChanges();
+            }
+        }
+
+        //---------------------------------------------------------- for get data ----------------------------------------------------
+        public static List<CandidateSelectionHistoryDTO> GetDataSelectionHistory()
+        {
+            using (DBEntities db = new DBEntities())
+            {
+                List<CandidateSelectionHistoryDTO> Data = db.TB_CANDIDATE_SELECTION_HISTORY.
+                    Select(sh => new CandidateSelectionHistoryDTO
+                    {
+                        ID = sh.ID,
+                        CANDIDATE_ID = sh.CANDIDATE_ID,
+                        CANDIDATE_APPLIED_POSITION = sh.CANDIDATE_APPLIED_POSITION,
+                        CANDIDATE_SUITABLE_POSITION = sh.CANDIDATE_SUITABLE_POSITION,
+                        CANDIDATE_SOURCE = sh.CANDIDATE_SOURCE,
+                        CANDIDATE_EXPECTED_SALARY = sh.CANDIDATE_EXPECTED_SALARY,
+                        PROCESS_DATE = sh.PROCESS_DATE,
+                        NOTES = sh.NOTES,
+                        CANDIDATE_STATE = sh.CANDIDATE_STATE,
+                        CANDIDATE_STATE_NAME = db.TB_STATE_CANDIDATE.FirstOrDefault(s => s.ID == sh.CANDIDATE_STATE).STATE_NAME,
+                        CANDIDATE_EMAIL = db.TB_CANDIDATE.FirstOrDefault(c => c.ID == sh.CANDIDATE_ID).CANDIDATE_EMAIL,
+                        CANDIDATE_SOURCING_DATE = db.TB_CANDIDATE.FirstOrDefault(c => c.ID == sh.CANDIDATE_ID).SOURCING_DATE,
+                        CANDIDATE_PHONE = db.TB_CANDIDATE.FirstOrDefault(c => c.ID == sh.CANDIDATE_ID).CANDIDATE_PHONENUMBER,
+                        CANDIDATE_NAME = db.TB_CANDIDATE.FirstOrDefault(c => c.ID == sh.CANDIDATE_ID).CANDIDATE_NAME,
+                        PIC_ID = sh.PIC_ID,
+                        PIC_FULL_NAME = db.TB_USER.FirstOrDefault(u => u.USER_ID == sh.PIC_ID).FULL_NAME
+                    }
+                ).ToList();
+                return Data;
             }
         }
 

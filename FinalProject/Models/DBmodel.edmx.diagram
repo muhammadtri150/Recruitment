@@ -37,7 +37,6 @@
         <EntityTypeShape EntityType="FinalProject_adp3Model.TB_CANDIDATE_SELECTION_HISTORY" Width="3" PointX="18" PointY="5" />
         <AssociationConnector Association="FinalProject_adp3Model.FK__TB_CANDID__CANDI__778AC167" />
         <AssociationConnector Association="FinalProject_adp3Model.FK__TB_CANDID__USER___76969D2E" />
-        <EntityTypeShape EntityType="FinalProject_adp3Model.TB_DELIVERY_HISTORY" Width="1.5" PointX="3.375" PointY="13.75" />
         <EntityTypeShape EntityType="FinalProject_adp3Model.TB_CANDIDATE" Width="1.5" PointX="13.375" PointY="1.875" />
         <AssociationConnector Association="FinalProject_adp3Model.FK__TB_CANDID__CANDI__71D1E811" />
         <AssociationConnector Association="FinalProject_adp3Model.FK__TB_CANDID__CANDI__72C60C4A" />
@@ -47,6 +46,7 @@
         <AssociationConnector Association="FinalProject_adp3Model.FK__TB_CANDID__MARIT__6EF57B66" />
         <AssociationConnector Association="FinalProject_adp3Model.FK__TB_CANDID__RELIG__70DDC3D8" />
         <EntityTypeShape EntityType="FinalProject_adp3Model.TB_CANDIDATE_SKILL" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="FinalProject_adp3Model.TB_DELIVERY_HISTORY" Width="1.5" PointX="3.375" PointY="13.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -19,10 +19,9 @@ namespace FinalProject.Controllers
         {
             return Redirect("~/candidate/preselection");
         }
-//################################################################ Sub Menu Candidate Preselection ###################################### 
+//################################################################ Sub Menu Candidate Preselection ############################################################### 
         
-    //------------------------------------------------------- for view candidate preselection -------------------------------------------
-
+    //------------------------------------------------------- for view candidate preselection -----------------------------------------------
         [Route("candidate/preselection")]
         public ActionResult CandidatePreselection()
         {
@@ -30,11 +29,21 @@ namespace FinalProject.Controllers
             {
                 using (DBEntities db = new DBEntities())
                 {
-                    List<CandidateSelectionHistoryDTO> ListCandidate = DataCandidateUtils.GetDataSelectionHistory().Where(sh =>
+                    //---------------------------- prepare data candidate for show in view --------------
+                    //note : data candidate from class Manage_CandidateSelectionHistoryDTO method GetDataSelectionHistory
+                    //not  : data in this view especialy for candidate where state_id is 1,10 or 11 (state in step preselection)
+                    List<CandidateSelectionHistoryDTO> ListCandidate = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().Where(sh =>
                     sh.CANDIDATE_STATE == 1 || sh.CANDIDATE_STATE == 10 || sh.CANDIDATE_STATE == 11).ToList();
-                //------------------------------------------------------ process searchng -----------------------------
 
-                    if(Request["filter"] != null)
+                    //---------------------------- prepare data viewbag --------------------
+                    ViewBag.DataView = new Dictionary<string, object>{
+                    {"title","Preselection"},
+                    {"ListPosition",Manage_JobPositionDTO.GetData()},
+                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 1 || d.ID == 10 || d.ID == 11)}
+                    };
+
+                    //============================ process searchng ============================
+                    if (Request["filter"] != null)
                     {
                         string Position = Request["POSITION"];
                         int StateId = Convert.ToInt16(Request["CANDIDATE_STATE"]);
@@ -67,16 +76,9 @@ namespace FinalProject.Controllers
                              d.CANDIDATE_PHONE.Contains(Keyword)).ToList();
                         }
                     }
-
-                //------------------------------------------------------ end process searchng -----------------------------
-
-                    //prepare data for show in view
-                    ViewBag.DataView = new Dictionary<string, object>{
-                    {"title","Preselection"},
-                    {"ListPosition",Manage_JobPositionDTO.GetData()},
-                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 1 || d.ID == 10 || d.ID == 11)}
-                    };
-
+                    //============================ end process searchng ============================
+                    
+                    //retutn view
                     return View("Preselection/Index", ListCandidate);
                 }
             }
@@ -86,9 +88,47 @@ namespace FinalProject.Controllers
             }
         }
 
-//*********************************************************************** add new candidate **********************************************************************
+        //---------------------------------------------------------- Detail candidate personal ----------------------------------------
+        [Route("candidate/preselection/read/detailcandidate/{id?}")]
+        public ActionResult DetailCandidate(string id = null)
+        {
+            try
+            {
+                if(id == null) return Redirect("~/candidate/preselection");
+               
+                int candidateId = Convert.ToInt16(id);
 
-            //----------------------------------------------------------- view form add new candidate ------------------------------------------------------------------------
+                DetailCandidateDTO DataDetail = Manage_DetailCandidate.GetData(candidateId);
+
+                if(DataDetail == null) return Redirect("~/candidate/preselection");
+
+                return View("Preselection/DetailCandidate", DataDetail);
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+
+        //--------------------------------------------------------- Edit Data Candidate -------------------------------------------------
+        [Route("candidate/preselection/edit/candidate")]
+        public ActionResult CandidateEdit(CandidateDTO Data)
+        {
+            try
+            {
+
+            }
+            catch
+            {
+
+            }
+        }
+
+
+        //*********************************************************************** add new candidate **********************************************************************
+
+        //----------------------------------------------------------- view form add new candidate ----------------------------------------------------------------
         [Route("candidate/preselection/create/candidate")]
         public ActionResult CandidatePreselectionAdd()
         {
@@ -109,7 +149,7 @@ namespace FinalProject.Controllers
             }
         }
 
-        //----------------------------------------------------- PROCESS ADD NEW CANDIDATE ----------------------------------------------------------------------
+        //----------------------------------------------------- PROCESS ADD NEW CANDIDATE ------------------------------------------------------------------------
         [Route("candidate/preselection/create/candidate/process")]
         public ActionResult CandidatePreselectionAdd(CandidateDTO DataNewCandidate,  HttpPostedFileBase Pict, HttpPostedFileBase Cv)
         {
@@ -117,10 +157,8 @@ namespace FinalProject.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    Manage_CandidateDTO Manage_candidate = new Manage_CandidateDTO();
-
                     //process add will return list object, [0] is return from db.saveCahnge() and [1] return candidate_id (CA******)
-                    var ProcessAdd = Manage_candidate.AddData(DataNewCandidate,Pict,Cv);
+                    var ProcessAdd = Manage_CandidateDTO.AddData(DataNewCandidate,Pict,Cv);
 
                     if (Convert.ToInt16(ProcessAdd[0]) > 0)
                     {
@@ -148,9 +186,9 @@ namespace FinalProject.Controllers
             }
         }
 
-        //************************************************* ADD NEW JOB EXPERIENCE OF CANDIDATE *************************************************
+        //************************************************************** ADD NEW JOB EXPERIENCE OF CANDIDATE *****************************************************
        
-        //------------------------------------------------------ View ADD NEW JOB EXPERIENCE OF CANDIDATE --------------------------------------------
+        //---------------------------------------------------------- View ADD NEW JOB EXPERIENCE OF CANDIDATE ----------------------------------------------------
 
         //[Route("candidate/preselection/read/jobExp")]
         //public ActionResult JobExp(CandidateJobExperienceDTO NewJobExp)
@@ -175,8 +213,7 @@ namespace FinalProject.Controllers
                 {
                     using (DBEntities db = new DBEntities())
                     {
-                        Manage_CandidateJobExperienceDTO Manage_JobEXP = new Manage_CandidateJobExperienceDTO();
-                        var ProcessAdd = Manage_JobEXP.AddData(NewJobExp);
+                        var ProcessAdd = Manage_CandidateJobExperienceDTO.AddData(NewJobExp);
 
                         if (ProcessAdd > 0)
                         {
@@ -192,10 +229,11 @@ namespace FinalProject.Controllers
                         return Redirect("~/candidate/preselection/create/jobExp");
                     }
                 }
+            
                 TempData.Add("message", "Candidate new job experience failed to add please complete form add");
                 TempData.Add("type", "danger");
                 return Redirect("~/candidate/preselection/create/jobExp");
-            }
+                
             catch (Exception)
             {
                 return Redirect("~/auth/error");

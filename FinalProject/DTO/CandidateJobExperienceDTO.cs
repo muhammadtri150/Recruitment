@@ -30,7 +30,7 @@ namespace FinalProject.DTO
     public class Manage_CandidateJobExperienceDTO
     {
         // for get entre data of candidate table
-        public List<CandidateJobExperienceDTO> GetData()
+        public static List<CandidateJobExperienceDTO> GetData()
         {
             using(DBEntities db = new DBEntities())
             {
@@ -52,13 +52,13 @@ namespace FinalProject.DTO
         } 
 
         //for get benefit in array format, will split the benefit base on ','
-        public string[] GetBenefit(CandidateJobExperienceDTO JobExp)
+        public static string[] GetBenefit(CandidateJobExperienceDTO JobExp)
         {
-            return this.GetData().FirstOrDefault(d => d.ID == JobExp.ID).BENEFIT.Split(',');
+            return Manage_CandidateJobExperienceDTO.GetData().FirstOrDefault(d => d.ID == JobExp.ID).BENEFIT.Split(',');
         }
 
         //for add new job experience of candidate
-        public int AddData(CandidateJobExperienceDTO NewJobExp)
+        public static int AddData(CandidateJobExperienceDTO NewJobExp)
         {
             using(DBEntities db = new DBEntities())
             {
