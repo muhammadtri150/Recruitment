@@ -1,0 +1,324 @@
+﻿@model FinalProject.DTO.DetailCandidateDTO
+
+@section title{
+    @ViewBag.DataView["title"]
+}
+
+@section content{
+
+
+    <h2><center>PROFILE OF CANDIDATE</center></h2>
+    <hr class="bg-blue" />
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <div class="container">
+                    <div class="panel">
+                        <div class="panel panel-heading mb-3">
+                            <img class="panel-img-top rounded mx-auto d-block" src="~/Data/DataCandidate/Pict/@Model.DataCandidate.CANDIDATE_PHOTO" width="200" height="200">
+                        </div>
+                        <div class="panel-body bg-primary text-light text-center">
+                            @Model.DataCandidate.CANDIDATE_NAME
+                        </div>
+                    </div>
+                    <div class="panel panel-primary mt-5">
+                        <div class="panel-heading fixed bg-primary text-light text-center">Expected</div>
+                        <div class="panel-body text-center">@Model.DataCandidate.EXPECTED_sALARY</div>
+                    </div>
+                    <div class="panel panel-primary mt-5">
+                        <div class="panel-heading fixed bg-primary text-light text-center">Uploaded CV</div>
+                        <div class="panel-body text-center">@Model.DataCandidate.CANDIDATE_CV</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-9">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active col-3" id="nav-personal-tab" data-toggle="tab" href="#nav-personal" role="tab" aria-controls="nav-personal" aria-selected="true">Personal Information</a>
+                        <a class="nav-item nav-link col-3" id="nav-job-tab" data-toggle="tab" href="#nav-job" role="tab" aria-controls="nav-job" aria-selected="false">Job Experienced</a>
+                        <a class="nav-item nav-link col-3" id="nav-selection-tab" data-toggle="tab" href="#nav-selection" role="tab" aria-controls="nav-selection" aria-selected="false">Selection History</a>
+                        <a class="nav-item nav-link col-3" id="nav-delivery-tab" data-toggle="tab" href="#nav-delivery" role="tab" aria-controls="nav-delivery" aria-selected="false">Delivery History</a>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-personal" role="tabpanel" aria-labelledby="nav-personal-tab">
+                        <button onclick="window.location.href = 'edit';" type="button" class="btn btn-primary float-right mt-2 mb-2">
+                            Edit BOSQ
+                        </button>
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <td> Age </td>
+                                    <td> Religion </td>
+                                    <td> City </td>
+                                    <td> Last Education </td>
+                                    <td> Number of KTP </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDIDATE_AGE)</td>
+                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.RELIGION)</td>
+                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDIDATE_CITY_NAME)</td>
+                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDIDATE_LAST_EDUCATON)</td>
+                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDIDATE_KTP_NUMBER)</td>
+                                </tr>
+
+                            </tbody>
+                            <thead>
+                                <tr>
+                                    <td> Place of Birth </td>
+                                    <td> Etnic </td>
+                                    <td> Province </td>
+                                    <td> Major </td>
+                                    <td> Number of NPWP </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDIDATE_PLACE_BIRTH)</td>
+                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDIDATE_ETNIC)</td>
+                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDIDATE_PROVINCE_NAME)</td>
+                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDIDATE_MAJOR)</td>
+                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDDIATE_NPWP_NUMBER)</td>
+                                </tr>
+                            </tbody>
+                            <thead>
+                                <tr>
+                                    <td> Birth Date </td>
+                                    <td> Home Number </td>
+                                    <td> Current Address </td>
+                                    <td> Degree </td>
+                                </tr>
+                            <tbody>
+                                <tr>
+                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDIDATE_BIRTH_DATE)</td>
+                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDIDATE_HOMENUMBER)</td>
+                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDIDATE_CURRENT_ADDRESS)</td>
+                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDIDATE_DEGREE)</td>
+                                </tr>
+                            </tbody>
+                            <thead>
+                                <tr>
+                                    <td> Gender </td>
+                                    <td> Email </td>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.GENDER_NAME)</td>
+                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDIDATE_EMAIL)</td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- For Navigation Job Experienced -->
+                    <div class="tab-pane fade" id="nav-job" role="tabpanel" aria-labelledby="nav-job-tab">
+
+                        <form method="get" action="~/candidate/preselection/personalinformation/addexperience">
+                            <input type="submit" class="btn btn-primary float-right mt-1 mb-2" value="Add Experience" />
+                        </form>
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <td> Position </td>
+                                    <td> Company </td>
+                                    <td> Period </td>
+                                    <td> Last Salary </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var JobExp in Model.DataJobExp)
+                                {
+                                    <tr>
+                                        <td>@JobExp.CANDIDATE_POSITION</td>
+                                        <td>@JobExp.COMPANY_NAME</td>
+                                        <td>@JobExp.START_DATE - @JobExp.END_DATE</td>
+                                        <td>@JobExp.CURRENT_SALARY</td>
+                                        <td>
+                                            <a href="~/candidate/preselection/personalinformation/editexperienced" class="btn btn-warning">Edit</a>
+                                        </td>
+                                        <td>
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                                Details
+                                            </button>
+
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- End Navigation Job Experienced -->
+                    <!-- For Navigation Selecion History -->
+
+                    <div class="tab-pane fade" id="nav-selection" role="tabpanel" aria-labelledby="nav-selection-tab">
+                        <table class="table table-dark">
+                            <thead>
+                                <tr>
+                                    <td colspan="9" align="center">Selection History</td>
+                                </tr>
+                            </thead>
+                        </table>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <td>ID Candidate</td>
+                                    <td>Applied Position</td>
+                                    <td>Last Positon</td>
+                                    <td>Source</td>
+                                    <td>State</td>
+                                    <td>Expected Salary</td>
+                                    <td>Last PIC</td>
+                                    <td>Process Date</td>
+                                    <td>Notes</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var SelectHistory in Model.DataSelectionHistory)
+                                {
+                                    <tr>
+                                        <td>@SelectHistory.CANDIDATE_ID</td>
+                                        <td>@SelectHistory.CANDIDATE_APPLIED_POSITION</td>
+                                        <td>@SelectHistory.CANDIDATE_SUITABLE_POSITION</td>
+                                        <td>@SelectHistory.CANDIDATE_SOURCE</td>
+                                        <td>@SelectHistory.CANDIDATE_STATE_NAME</td>
+                                        <td>@SelectHistory.CANDIDATE_EXPECTED_SALARY</td>
+                                        <td>@SelectHistory.PIC_FULL_NAME</td>
+                                        <td>@SelectHistory.PROCESS_DATE</td>
+                                        <td>@SelectHistory.NOTES</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- End Navigation Selecion History -->
+                    <!-- For Navigation Delivery History -->
+                    <div class="tab-pane fade" id="nav-delivery" role="tabpanel" aria-labelledby="nav-delivery-tab">
+                        <table class="table table-dark">
+                            <thead>
+                                <tr>
+                                    <td colspan="9" align="center">Delivery History</td>
+                                </tr>
+                            </thead>
+                        </table>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <td>ID Candidate</td>
+                                    <td>ID Delivery</td>
+                                    <td>Positon</td>
+                                    <td>Source</td>
+                                    <td>State</td>
+                                    <td>Last PIC</td>
+                                    <td>Process Date  </td>
+                                    <td>Client</td>
+                                    <td>Details</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var DelivHistory in Model.DataDeliveryHistory)
+                                {
+                                    <tr>
+                                        <td>@Model.DataCandidate.CANDIDATE_ID</td>
+                                        <td>@DelivHistory.DELIVERY_ID</td>
+                                        <td>@DelivHistory.CANDIDATE_POSITION</td>
+                                        <td>@DelivHistory.SOURCE</td>
+                                        <td>@DelivHistory.CANDIDATE_STATE</td>
+                                        <td>@DelivHistory.LAST_PIC</td>
+                                        <td>@DelivHistory.PROCESS_DATE</td>
+                                        <td>@DelivHistory.CLIENT_STATE</td>
+                                        <td>
+                                            <!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#example">
+                                                Details
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="example" tabindex="-1" role="dialog" aria-labelledby="example" aria-hidden="true">
+                            <div class="modal-dialog mw-75" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="example">Modal title</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th scope="col" colspan="6" align="center">Process Date</th>
+                                                </tr>
+                                                <tr>
+
+                                                    <th scope="col"></th>
+                                                    <th scope="col">Start</th>
+                                                    <th scope="col">Last Update</th>
+                                                    <th scope="col">Total Day</th>
+                                                    <th scope="col">Client State</th>
+                                                    <th scope="col">Notes</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">1</th>
+                                                    <td>Otto</td>
+                                                    <td>mdo</td>
+                                                    <td>mdo</td>
+                                                    <td>mdo</td>
+                                                    <td>mdo</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+}

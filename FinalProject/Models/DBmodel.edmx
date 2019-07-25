@@ -127,7 +127,7 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CANDIDATE_ID" Type="int" />
-          <Property Name="SKILL" Type="text" />
+          <Property Name="SKILL" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="TB_CITY">
           <Key>
@@ -1182,7 +1182,7 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CANDIDATE_ID" Type="Int32" />
-          <Property Name="SKILL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SKILL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="TB_DELIVERY_HISTORY">
           <Key>

@@ -7,6 +7,7 @@ using FinalProject.Controllers;
 using FinalProject.Filters;
 using FinalProject.Utils;
 using System.IO;
+using System.ComponentModel.DataAnnotations;
 
 namespace FinalProject.DTO
 {
@@ -16,7 +17,11 @@ namespace FinalProject.DTO
 
         public int ID { get; set; }
         public string CANDIDATE_ID { get; set; }
+
+        [Required]
         public string CANDIDATE_NAME { get; set; }
+
+        [Required]
         public int? CANDIDATE_AGE { get; set; }
         public System.DateTime? CANDIDATE_BIRTH_DATE { get; set; }
         public string CANDIDATE_PLACE_BIRTH { get; set; }
@@ -332,6 +337,21 @@ namespace FinalProject.DTO
                     EDUCATON_END_DATE = ca.EDUCATION_END_DATE,
                 }).ToList();
                 return ListCandidateDTO;
+            }
+        }
+
+        //check skill chekcbox
+        public static string CheckBoxSkill(string Skill, int IdCandidate)
+        {
+            string result = "";
+
+            using(DBEntities db = new DBEntities())
+            {
+                string skill = Skill.ToString();
+                TB_CANDIDATE_SKILL Candidate_Skill = db.TB_CANDIDATE_SKILL.FirstOrDefault(d => d.CANDIDATE_ID.Equals(IdCandidate) && d.SKILL.Equals(Skill));
+                if (Candidate_Skill != null) result = "checked";
+
+                return result;
             }
         }
     }

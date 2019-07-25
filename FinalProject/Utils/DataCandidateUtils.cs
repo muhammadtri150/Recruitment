@@ -12,13 +12,10 @@ namespace FinalProject.Utils
     public class DataCandidateUtils
     {
 
-        //for get data entire table selection history
-        
+        //public static List<CandidateSelectionHistoryDTO> SearchDataSelectionHistory(params int[] state)
+        //{
+            
+        //}
 
-        //for get data pic/user where change the state of candidate
-
-
-        //for get entire data candidate in table candidate indb
-        
     }
 }

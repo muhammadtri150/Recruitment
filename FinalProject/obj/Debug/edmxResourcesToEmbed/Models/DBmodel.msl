@@ -219,26 +219,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="TB_DELIVERY_HISTORY">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_DELIVERY_HISTORY">
-        <MappingFragment StoreEntitySet="TB_DELIVERY_HISTORY">
-          <ScalarProperty Name="NOTE" ColumnName="NOTE" />
-          <ScalarProperty Name="CLIENT_STATE" ColumnName="CLIENT_STATE" />
-          <ScalarProperty Name="TOTA_DAY" ColumnName="TOTA_DAY" />
-          <ScalarProperty Name="LAST_UPDATE" ColumnName="LAST_UPDATE" />
-          <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
-          <ScalarProperty Name="CLIENT_ID" ColumnName="CLIENT_ID" />
-          <ScalarProperty Name="PROCESS_DATE" ColumnName="PROCESS_DATE" />
-          <ScalarProperty Name="LAST_PIC" ColumnName="LAST_PIC" />
-          <ScalarProperty Name="CANDIDATE_STATE" ColumnName="CANDIDATE_STATE" />
-          <ScalarProperty Name="SOURCE" ColumnName="SOURCE" />
-          <ScalarProperty Name="CANDIDATE_POSITION" ColumnName="CANDIDATE_POSITION" />
-          <ScalarProperty Name="CANDIDATE_ID" ColumnName="CANDIDATE_ID" />
-          <ScalarProperty Name="DELIVERY_ID" ColumnName="DELIVERY_ID" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="TB_CANDIDATE">
       <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_CANDIDATE">
         <MappingFragment StoreEntitySet="TB_CANDIDATE">
@@ -288,6 +268,44 @@
         <MappingFragment StoreEntitySet="TB_CANDIDATE_SKILL">
           <ScalarProperty Name="SKILL" ColumnName="SKILL" />
           <ScalarProperty Name="CANDIDATE_ID" ColumnName="CANDIDATE_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_DELIVERY_HISTORY">
+      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_DELIVERY_HISTORY">
+        <MappingFragment StoreEntitySet="TB_DELIVERY_HISTORY">
+          <ScalarProperty Name="NOTE" ColumnName="NOTE" />
+          <ScalarProperty Name="CLIENT_STATE" ColumnName="CLIENT_STATE" />
+          <ScalarProperty Name="TOTA_DAY" ColumnName="TOTA_DAY" />
+          <ScalarProperty Name="LAST_UPDATE" ColumnName="LAST_UPDATE" />
+          <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
+          <ScalarProperty Name="CLIENT_ID" ColumnName="CLIENT_ID" />
+          <ScalarProperty Name="PROCESS_DATE" ColumnName="PROCESS_DATE" />
+          <ScalarProperty Name="LAST_PIC" ColumnName="LAST_PIC" />
+          <ScalarProperty Name="CANDIDATE_STATE" ColumnName="CANDIDATE_STATE" />
+          <ScalarProperty Name="SOURCE" ColumnName="SOURCE" />
+          <ScalarProperty Name="CANDIDATE_POSITION" ColumnName="CANDIDATE_POSITION" />
+          <ScalarProperty Name="CANDIDATE_ID" ColumnName="CANDIDATE_ID" />
+          <ScalarProperty Name="DELIVERY_ID" ColumnName="DELIVERY_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_SKILL_JOB_EXPERIENCE">
+      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_SKILL_JOB_EXPERIENCE">
+        <MappingFragment StoreEntitySet="TB_SKILL_JOB_EXPERIENCE">
+          <ScalarProperty Name="SKILL_NAME" ColumnName="SKILL_NAME" />
+          <ScalarProperty Name="ID_JOBEXP" ColumnName="ID_JOBEXP" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_BENEFIT_JOB_EXPERIENCE">
+      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_BENEFIT_JOB_EXPERIENCE">
+        <MappingFragment StoreEntitySet="TB_BENEFIT_JOB_EXPERIENCE">
+          <ScalarProperty Name="BENEFIT" ColumnName="BENEFIT" />
+          <ScalarProperty Name="JOB_EXP_ID" ColumnName="JOB_EXP_ID" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>

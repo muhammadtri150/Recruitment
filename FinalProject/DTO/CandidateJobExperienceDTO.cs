@@ -84,7 +84,8 @@ namespace FinalProject.DTO
                     JOBDESC             = NewJobExp.JOBDESC,
                     BENEFIT             = NewJobExp.BENEFIT,
                     COMPANY_NAME        = NewJobExp.COMPANY_NAME,
-                    PROJCT              = NewJobExp.PROJECT
+                    PROJCT              = NewJobExp.PROJECT,
+                    SKILL_NAME          = NewJobExp.SKILL_NAME
                 });
                 
                 if(db.SaveChanges() > 0)

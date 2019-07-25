@@ -145,9 +145,14 @@
     <Compile Include="DTO\CandidateJobExperienceDTO.cs" />
     <Compile Include="DTO\CandidateSelectionHistoryDTO.cs" />
     <Compile Include="DTO\ClientDTO.cs" />
+    <Compile Include="DTO\DeliveryHistoryDTO.cs" />
+    <Compile Include="DTO\DetailCandidateDTO.cs" />
+    <Compile Include="DTO\GenderDTO.cs" />
     <Compile Include="DTO\JobPositionDTO.cs" />
+    <Compile Include="DTO\MaritalStatusDTO.cs" />
     <Compile Include="DTO\MenuDTO.cs" />
     <Compile Include="DTO\JobPortalDTO.cs" />
+    <Compile Include="DTO\ReligionDTO.cs" />
     <Compile Include="DTO\RoleDTO.cs" />
     <Compile Include="DTO\SkillDTO.cs" />
     <Compile Include="DTO\StateCandidateDTO.cs" />
@@ -181,6 +186,9 @@
       <DependentUpon>DBmodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_ACTION_CANDIDATE.cs">
+      <DependentUpon>DBmodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_BENEFIT_JOB_EXPERIENCE.cs">
       <DependentUpon>DBmodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_CANDIDATE.cs">
@@ -235,6 +243,9 @@
       <DependentUpon>DBmodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_SKILL.cs">
+      <DependentUpon>DBmodel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_SKILL_JOB_EXPERIENCE.cs">
       <DependentUpon>DBmodel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_STATE_CANDIDATE.cs">
@@ -2128,6 +2139,7 @@
     <Content Include="Views\Candidate\Sales\Index.cshtml" />
     <Content Include="Views\Candidate\Preselection\AddCandidate.cshtml" />
     <Content Include="Views\Candidate\Preselection\EditCandidate.cshtml" />
+    <Content Include="Views\Candidate\Preselection\DetailCandidate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
