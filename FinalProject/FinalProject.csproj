@@ -134,6 +134,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Content Include="Content\Assets\Js\candidate\preselection\EditCandidate.js" />
     <Compile Include="Controllers\MasterController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -2140,6 +2141,7 @@
     <Content Include="Views\Candidate\Preselection\AddCandidate.cshtml" />
     <Content Include="Views\Candidate\Preselection\EditCandidate.cshtml" />
     <Content Include="Views\Candidate\Preselection\DetailCandidate.cshtml" />
+    <Content Include="Views\Candidate\Preselection\EditJobExp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -416,6 +416,7 @@
     <NavigationProperty Name="TB_STATE_CANDIDATE" Relationship="FinalProject_adp3Model.FK__TB_CANDID__CANDI__778AC167" FromRole="TB_CANDIDATE_SELECTION_HISTORY" ToRole="TB_STATE_CANDIDATE" />
     <NavigationProperty Name="TB_USER" Relationship="FinalProject_adp3Model.FK__TB_CANDID__USER___76969D2E" FromRole="TB_CANDIDATE_SELECTION_HISTORY" ToRole="TB_USER" />
     <NavigationProperty Name="TB_CANDIDATE" Relationship="FinalProject_adp3Model.FK__TB_CANDID__CANDI__75A278F5" FromRole="TB_CANDIDATE_SELECTION_HISTORY" ToRole="TB_CANDIDATE" />
+    <Property Name="CANDIDATE_INTERVIEW_DATE" Type="DateTime" Precision="3" />
   </EntityType>
   <Association Name="FK__TB_CANDID__CANDI__778AC167">
     <End Type="FinalProject_adp3Model.TB_STATE_CANDIDATE" Role="TB_STATE_CANDIDATE" Multiplicity="0..1" />
@@ -581,7 +582,7 @@
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="CANDIDATE_ID" Type="Int32" />
-    <Property Name="SKILL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="SKILL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="TB_DELIVERY_HISTORY">
     <Key>

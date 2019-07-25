@@ -62,22 +62,22 @@
             @*@foreach (var candidate in Model)*@
             @foreach (var data in Model)
             {
-                <tr>
-                    <td>@data.CANDIDATE_NAME</td>
-                    <td>@data.CANDIDATE_APPLIED_POSITION</td>
-                    <td>@data.CANDIDATE_SUITABLE_POSITION</td>
-                    <td>@data.CANDIDATE_SOURCE</td>
-                    <td>@data.CANDIDATE_PHONE</td>
-                    <td>@data.CANDIDATE_EMAIL</td>
-                    <td>@data.PIC_FULL_NAME</td>
-                    <td>@data.CANDIDATE_SOURCING_DATE</td>
-                    <td>@data.CANDIDATE_STATE_NAME</td>
-                    <td>@data.NOTES</td>
-                    <td>
-                        <a class="" href=""><i class="fas fa-edit"></i></a>
-                        <a class="ml-3" href="~/candidate/preselection/read/detailcandidate/@data.CANDIDATE_ID"><i class="fas fa-search-plus"></i></a>
-                    </td>
-                </tr>
+            <tr>
+                <td>@data.CANDIDATE_NAME</td>
+                <td>@data.CANDIDATE_APPLIED_POSITION</td>
+                <td>@data.CANDIDATE_SUITABLE_POSITION</td>
+                <td>@data.CANDIDATE_SOURCE</td>
+                <td>@data.CANDIDATE_PHONE</td>
+                <td>@data.CANDIDATE_EMAIL</td>
+                <td>@data.PIC_FULL_NAME</td>
+                <td>@data.CANDIDATE_SOURCING_DATE</td>
+                <td>@data.CANDIDATE_STATE_NAME</td>
+                <td>@data.NOTES</td>
+                <td>
+                    <a class="" href=""><i class="fas fa-edit"></i></a>
+                    <a class="ml-3" href="~/candidate/preselection/read/detailcandidate/@data.CANDIDATE_ID"><i class="fas fa-search-plus"></i></a>
+                </td>
+            </tr>
 
             }
         </tbody>

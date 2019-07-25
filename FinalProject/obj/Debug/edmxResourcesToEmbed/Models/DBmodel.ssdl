@@ -113,6 +113,7 @@
     <Property Name="CANDIDATE_SOURCE" Type="varchar" MaxLength="50" />
     <Property Name="CANDIDATE_STATE" Type="int" />
     <Property Name="CANDIDATE_EXPECTED_SALARY" Type="money" />
+    <Property Name="CANDIDATE_INTERVIEW_DATE" Type="datetime" />
     <Property Name="PROCESS_DATE" Type="datetime" />
     <Property Name="NOTES" Type="text" />
   </EntityType>
@@ -122,7 +123,7 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="CANDIDATE_ID" Type="int" />
-    <Property Name="SKILL" Type="text" />
+    <Property Name="SKILL" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="TB_CITY">
     <Key>

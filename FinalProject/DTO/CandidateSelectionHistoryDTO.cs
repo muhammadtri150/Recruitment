@@ -15,12 +15,14 @@ namespace FinalProject.DTO
         
         public string CANDIDATE_APPLIED_POSITION { get; set; }
         public string CANDIDATE_SUITABLE_POSITION { get; set; }
-        public string CANDIDATE_SOURCE { get; set; }
+        
         public int? CANDIDATE_STATE { get; set; }
         public string CANDIDATE_STATE_NAME { get; set; }
         public decimal? CANDIDATE_EXPECTED_SALARY { get; set; }
         public System.DateTime? PROCESS_DATE { get; set; }
         public string NOTES { get; set; }
+        public System.DateTime? CANDIDATE_INTERVIEW_DATE { get; set; }
+
 
         //data candidate
         public int? CANDIDATE_ID { get; set; }
@@ -28,10 +30,13 @@ namespace FinalProject.DTO
         public System.DateTime? CANDIDATE_SOURCING_DATE { get; set; }
         public string CANDIDATE_EMAIL { get; set; }
         public string CANDIDATE_PHONE { get; set; }
+        public string CANDIDATE_SOURCE { get; set; }
+        //public CandidateDTO DataCandidate { get; set; }
 
         //data PIC
         public int? PIC_ID { get; set; }
         public string PIC_FULL_NAME { get; set; }
+        //public UserDTO DataPic { get; set; } 
     }
 
     //--------------------------------------------------------- Add data ----------------------------------------------------------------
@@ -53,7 +58,8 @@ namespace FinalProject.DTO
                     CANDIDATE_STATE = data.CANDIDATE_STATE,
                     CANDIDATE_EXPECTED_SALARY = data.CANDIDATE_EXPECTED_SALARY,
                     PROCESS_DATE = DateTime.Now,
-                    NOTES = data.NOTES
+                    NOTES = data.NOTES,
+                    CANDIDATE_INTERVIEW_DATE = data.CANDIDATE_INTERVIEW_DATE
                 });
 
                 return db.SaveChanges();
@@ -78,12 +84,15 @@ namespace FinalProject.DTO
                         NOTES = sh.NOTES,
                         CANDIDATE_STATE = sh.CANDIDATE_STATE,
                         CANDIDATE_STATE_NAME = db.TB_STATE_CANDIDATE.FirstOrDefault(s => s.ID == sh.CANDIDATE_STATE).STATE_NAME,
+                        //DataCandidate = Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == sh.CANDIDATE_ID),
                         CANDIDATE_EMAIL = db.TB_CANDIDATE.FirstOrDefault(c => c.ID == sh.CANDIDATE_ID).CANDIDATE_EMAIL,
                         CANDIDATE_SOURCING_DATE = db.TB_CANDIDATE.FirstOrDefault(c => c.ID == sh.CANDIDATE_ID).SOURCING_DATE,
                         CANDIDATE_PHONE = db.TB_CANDIDATE.FirstOrDefault(c => c.ID == sh.CANDIDATE_ID).CANDIDATE_PHONENUMBER,
                         CANDIDATE_NAME = db.TB_CANDIDATE.FirstOrDefault(c => c.ID == sh.CANDIDATE_ID).CANDIDATE_NAME,
                         PIC_ID = sh.PIC_ID,
-                        PIC_FULL_NAME = db.TB_USER.FirstOrDefault(u => u.USER_ID == sh.PIC_ID).FULL_NAME
+                        //DataPic = Manage_UserDTO.GetDataUser().FirstOrDefault(d => d.USER_ID == sh.PIC_ID)
+                        PIC_FULL_NAME = db.TB_USER.FirstOrDefault(u => u.USER_ID == sh.PIC_ID).FULL_NAME,
+                        CANDIDATE_INTERVIEW_DATE = sh.CANDIDATE_INTERVIEW_DATE
                     }
                 ).ToList();
                 return Data;

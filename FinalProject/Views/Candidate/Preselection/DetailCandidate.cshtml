@@ -1,15 +1,22 @@
 ﻿@model FinalProject.DTO.DetailCandidateDTO
-
+@using FinalProject.DTO
 @section title{
     @ViewBag.DataView["title"]
 }
 
 @section content{
-
-
     <h2><center>PROFILE OF CANDIDATE</center></h2>
     <hr class="bg-blue" />
     <div class="container">
+        @if (TempData.Peek("message") != null)
+        {
+            <div class="alert alert-@TempData["type"] alert-dismissible fade show " role="alert">
+                @TempData["message"]
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
         <div class="row">
             <div class="col-3">
                 <div class="container">
@@ -59,11 +66,11 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDIDATE_AGE)</td>
-                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.RELIGION)</td>
-                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDIDATE_CITY_NAME)</td>
-                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDIDATE_LAST_EDUCATON)</td>
-                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDIDATE_KTP_NUMBER)</td>
+                                    <td>@Manage_CandidateDTO.GetCandidateAge(Model.DataCandidate.ID)</td>
+                                    <td>@Model.DataCandidate.RELIGION</td>
+                                    <td>@Model.DataCandidate.CANDIDATE_CURRENT_ADDRESS</td>
+                                    <td>@Model.DataCandidate.CANDIDATE_LAST_EDUCATON</td>
+                                    <td>@Model.DataCandidate.CANDIDATE_KTP_NUMBER</td>
                                 </tr>
 
                             </tbody>
@@ -121,9 +128,10 @@
                     <!-- For Navigation Job Experienced -->
                     <div class="tab-pane fade" id="nav-job" role="tabpanel" aria-labelledby="nav-job-tab">
 
-                        <form method="get" action="~/candidate/preselection/personalinformation/addexperience">
-                            <input type="submit" class="btn btn-primary float-right mt-1 mb-2" value="Add Experience" />
-                        </form>
+                        <!-- Button trigger modal Add Job Exp -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AddJobExp">
+                            Add Job Experience
+                        </button>
 
                         <table class="table table-striped">
                             <thead>
@@ -145,39 +153,88 @@
                                         <td>@JobExp.START_DATE - @JobExp.END_DATE</td>
                                         <td>@JobExp.CURRENT_SALARY</td>
                                         <td>
-                                            <a href="~/candidate/preselection/personalinformation/editexperienced" class="btn btn-warning">Edit</a>
+                                            <a href="~/candidate/preselection/edit/jobExp/@JobExp.ID" class="btn btn-warning">Edit</a>
                                         </td>
                                         <td>
-                                            <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                                Details
-                                            </button>
-
-
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
                                     </tr>
                                 }
                             </tbody>
                         </table>
+
+
+                        <!-- Modal Add Job Exp -->
+                        <div class="modal fade" id="AddJobExp" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalScrollableTitle">Modal title</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <form method="post" action="~/candidate/preselection/create/jobExp">
+                                            <input type="hidden" value="@Model.DataCandidate.ID" name="CANDIDATE_ID" />
+                                            <div class="form-row">
+                                                <div class="col-lg-6 col-md-6 col-sm-12 col">
+                                                    <div class="form-group ml-3">
+                                                        <label class="title control-label">Company Name</label>
+                                                        <input type="text" class="form-control" id="COMPANY_NAME" name="COMPANY_NAME" />
+                                                    </div>
+                                                    <div class="form-group ml-3">
+                                                        <label class="title control-label">Industry</label>
+                                                        <input type="text" class="form-control" id="INDUSTRIES" name="INDUSTRIES" />
+                                                    </div>
+                                                    <div class="form-group ml-3">
+                                                        <label class="title control-label">Potition</label>
+                                                        <input type="text" class="form-control" id="CANDIDATE_POSITION" name="CANDIDATE_POSITION" />
+                                                    </div>
+                                                    <div class="form-group ml-3">
+                                                        <label class="title control-label">Job Desc</label>
+                                                        <textarea class="form-control" name="JOBDESC" id="JOBDESC"></textarea>
+                                                    </div>
+                                                    <div class="form-group ml-3">
+                                                        <label class="title control-label">Skill</label>
+                                                        <textarea class="form-control" name="SKILL_NAME" id="SKILL_NAME"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-12 col">
+                                                    <div class="form-group">
+                                                        <label class="title control-label">Start Date</label>
+                                                        <input type="date" class="form-control" id="START_DATE" name="START_DATE" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="title control-label">End Date</label>
+                                                        <input type="date" class="form-control" id="END_DATE" name="END_DATE" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="title control-label">Salary</label>
+                                                        <input type="text" class="form-control" id="CURRENT_SALARY" name="CURRENT_SALARY" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="title control-label">Project</label>
+                                                        <textarea class="form-control" name="PROJECT" id="PROJECT"></textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="title control-label">Benefit</label>
+                                                        <textarea class="form-control" name="BENEFIT" id="BENEFIT"></textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="submit" class="btn btn-success float-right mb-2" value="Add Experience" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!-- End Navigation Job Experienced -->
                     <!-- For Navigation Selecion History -->

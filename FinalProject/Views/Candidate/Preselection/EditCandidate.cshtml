@@ -17,12 +17,19 @@
                 <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-skill" role="tab" aria-controls="nav-contact" aria-selected="false">Skill</a>
             </div>
         </nav>
-        <form method="post" action="~/candidate/preselection/create/candidate/process" enctype="multipart/form-data">
+        <form method="post" action="~/candidate/preselection/edit/candidate/process" enctype="multipart/form-data">
             <div class="tab-content" id="nav-tabContent">
-
+                <input type="hidden" name="ID" value="@Model.ID" />
                 <div class="tab-pane fade show active" id="nav-personal_information" role="tabpanel" aria-labelledby="nav-home-tab">
                     <div class="row">
                         <div class="col-sm">
+
+                            <div class="form-group">
+                                <label for="CandidateName">ID</label>
+                                @Html.TextBoxFor(m => m.CANDIDATE_ID, new { @class = "form-control", @id = "CandidateId" })
+                            </div>
+
+
                             <div class="form-group">
                                 <label for="CandidateName">Full Name</label>
                                 @Html.TextBoxFor(m => m.CANDIDATE_NAME, new { @class = "form-control", @id = "CandidateName" })
@@ -40,12 +47,12 @@
 
                             <div class="form-group">
                                 <label for="CANDIDATE_PLACE_BIRTH">Place Of Birth</label>
-                                @Html.TextBoxFor(m => m.CANDIDATE_PLACE_BIRTH, new { @class = "form-control", @id = "CANDIDATE_PLACE_BIRTH" })
+                                @Html.TextBoxFor(m => m.CANDIDATE_PLACE_BIRTH, new { @class = "form-control", @id = "CANDIDATE_PLACE_BIRTH"})
                             </div>
 
                             <div class="form-group">
                                 <label for="CANDIDATE_PLACE_BIRTH">BIRTH DATE</label>
-                                <input type="date" class="form-control" id="CANDIDATE_BIRTH_DATE" name="CANDIDATE_BIRTH_DATE" />
+                                @Html.TextBoxFor(m => m.CANDIDATE_BIRTH_DATE, new { @class = "form-control", @id = "CANDIDATE_BIRTH_DATE",@type = "date"})
                             </div>
 
                             <div class="form-group">
@@ -53,7 +60,7 @@
                                 <select class="form-control" id="RELIGION_ID" name="RELIGION_ID">
                                     @foreach (var d in Manage_ReligionDTO.GetData())
                                     {
-                                        <option value="@d.RELIGION_ID">@d.RELIGION_NAME</option>
+                                        <option value="@d.RELIGION_ID" @{ string r = ""; if (d.RELIGION_ID == Model.RELIGION_ID) { r = "selected"; } } @r >@d.RELIGION_NAME</option>
                                     }
                                 </select>
                             </div>
@@ -144,17 +151,18 @@
                                 <select class="form-control" id="MARITAL_STATUS_ID" name="MARITAL_STATUS_ID">
                                     @foreach (var d in Manage_MaritalStatusDTO.GetData())
                                     {
-                                        <option value="@d.MARITALSTATUS_ID">@d.MARITALSTATUS_NAME</option>
+                                        <option value="@d.MARITALSTATUS_ID" @if (Model.MARITAL_STATUS_ID == d.MARITALSTATUS_ID) { @("selected") } >@d.MARITALSTATUS_NAME</option>
                                     }
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                <label for="POSITION">Religion</label>
+                                <label for="POSITION">Position</label>
                                 <select class="form-control" id="POSITION" name="POSITION">
                                     @foreach (var d in Manage_JobPositionDTO.GetData())
                                     {
-                                        <option value="@d.JOBPOSITION_NAME">@d.JOBPOSITION_NAME</option>
+                                        <option value="@d.JOBPOSITION_NAME" @{string res = "";if (Model.POSITION == d.JOBPOSITION_NAME) { res = "selected"; }
+                                            } @res>@d.JOBPOSITION_NAME</option>
                                     }
                                 </select>
                             </div>
@@ -207,7 +215,15 @@
                     </div>
 
                 </div>
-
+                <div class="form-group">
+                    <label for="CANDIDATE_STATE_ID">State</label>
+                    <select class="form-control" id="CANDIDATE_STATE_ID" name="CANDIDATE_STATE_ID">
+                        @foreach (var d in (List<StateCandidateDTO>)ViewBag.DataView["ListState"])
+                        {
+                            <option value="@d.ID" @{string res = ""; if (Model.CANDIDATE_STATE_ID == d.ID){ res = "selected"; }} @res>@d.STATE_NAME</option>
+                        }
+                    </select>
+                </div>
                 @*-------------------------------------Education Information----------------------------------------------------------------------------*@
                 <div class="tab-pane fade" id="nav-education_information" role="tabpanel" aria-labelledby="nav-profile-tab">
 
@@ -278,7 +294,7 @@
                                     <th scope="row">@(no++)</th>
                                     <td>@d.SKILL_NAME</td>
                                     <td>
-                                        <input type="checkbox" class="form-control" value="@d.SKILL_NAME"  name="CANDIDATE_SKILL" @Manage_CandidateDTO.CheckBoxSkill(d.SKILL_NAME,Model.ID)/>
+                                        <input type="checkbox" data-id_candidate="@Model.ID" data-skill_name="@d.SKILL_NAME" class="form-controlcheck-skill check-skill" value="@d.SKILL_NAME" name="CANDIDATE_SKILL[]" @(Manage_CandidateDTO.CheckBoxSkill(Convert.ToString(d.SKILL_NAME), Convert.ToInt16(Model.ID))) />
                                     </td>
                                 </tr>
                             }
@@ -289,5 +305,7 @@
             </div>
         </form>
     </div>
+
+    <script src="~/Content/Assets/Js/candidate/preselection/EditCandidate.js"></script>
 
 }

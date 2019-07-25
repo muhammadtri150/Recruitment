@@ -27,8 +27,8 @@ namespace FinalProject.Controllers
         [Route("candidate/preselection")]
         public ActionResult CandidatePreselection()
         {
-            try
-            {
+            //try
+            //{
                 using (DBEntities db = new DBEntities())
                 {
                     //---------------------------- prepare data candidate for show in view --------------
@@ -87,11 +87,11 @@ namespace FinalProject.Controllers
                     //return view
                     return View("Preselection/Index", ListCandidate);
                 }
-            }
-            catch (Exception)
-            {
-                return Redirect("~/auth/error");
-            }
+            //}
+            //catch (Exception)
+            //{
+            //    return Redirect("~/auth/error");
+            //}
         }
 
         //----------------------------------------------------------- view form add new candidate -----------------------------------------------------------
@@ -148,7 +148,7 @@ namespace FinalProject.Controllers
 
         //-------------------------------------------------- PROCESS ADD NEW CANDIDATE --------------------------------------
         [Route("candidate/preselection/create/candidate/process")]
-        public ActionResult CandidatePreselectionAdd(CandidateDTO DataNewCandidate,  HttpPostedFileBase Pict, HttpPostedFileBase Cv)
+        public ActionResult CandidatePreselectionAdd(CandidateDTO DataNewCandidate,  HttpPostedFileBase Pict = null, HttpPostedFileBase Cv = null)
         {
             try
             {
@@ -198,7 +198,8 @@ namespace FinalProject.Controllers
 
                 ViewBag.DataView = new Dictionary<string, object>()
                 {
-                    {"title","preselection"}
+                    {"title","preselection"},
+                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 2 || d.ID == 10 || d.ID == 1 || d.ID == 11).ToList() }
                 };
 
                 return View("Preselection/EditCandidate", DataCandidate);
@@ -209,12 +210,14 @@ namespace FinalProject.Controllers
             }
         }
 
+
+
         //------------------------------------------ Process Edit Data Candidate -------------------------------------------------
         [Route("candidate/preselection/edit/candidate/process")]
-        public ActionResult CandidateEdit(CandidateDTO Data, HttpPostedFileBase Pict, HttpPostedFileBase Cv)
+        public ActionResult CandidateEdit(CandidateDTO Data, HttpPostedFileBase Pict = null, HttpPostedFileBase Cv = null)
         {
-            try
-            {
+            //try
+            //{
                 if (ModelState.IsValid)
                 {
                     var ProcessEdit = Manage_CandidateDTO.EditCandidate(Data, Pict, Cv);
@@ -236,11 +239,11 @@ namespace FinalProject.Controllers
                 TempData.Add("message", "Candidate failed to Update, please complete form edit");
                 TempData.Add("type", "danger");
                 return Redirect("~/candidate/preselection/read/detailcandidate/" + Data.ID);
-            }
-            catch
-            {
-                return Redirect("~/auth/error");
-            }
+            //}
+            //catch
+            //{
+            //    return Redirect("~/auth/error");
+            //}
         }
 
         //************************************************* JOB EXPERIENCE OF CANDIDATE *****************************************************
@@ -250,8 +253,8 @@ namespace FinalProject.Controllers
         [Route("candidate/preselection/create/jobExp")]
         public ActionResult JobExpAdd(CandidateJobExperienceDTO NewJobExp)
         {
-            try
-            {
+            //try
+            //{
                 if (ModelState.IsValid)
                 {
                     using (DBEntities db = new DBEntities())
@@ -260,66 +263,106 @@ namespace FinalProject.Controllers
 
                         if (ProcessAdd > 0)
                         {
+                            if (TempData.Peek("message") != null)
+                            {
+                                TempData.Remove("message");
+                                TempData.Remove("type");
+                            }
                             TempData.Add("message", "Candidate new job experience added successfully");
                             TempData.Add("type", "success");
                             UserLogingUtils.SaveLoggingUserActivity("add job experience Candidate " + NewJobExp.CANDIDATE_ID + " Job Experience in " + NewJobExp.COMPANY_NAME);
                         }
                         else
                         {
+                            if (TempData.Peek("message") != null)
+                            {
+                                TempData.Remove("message");
+                                TempData.Remove("type");
+                            }
                             TempData.Add("message", "Candidate new job experience failed to add");
                             TempData.Add("type", "warning");
                         }
-                        return Redirect("~/candidate/preselection/create/jobExp");
+                        return Redirect("~/candidate/preselection/read/detailcandidate/" + NewJobExp.CANDIDATE_ID);
                     }
                 }
 
                 TempData.Add("message", "Candidate new job experience failed to add please complete form add");
                 TempData.Add("type", "danger");
                 return Redirect("~/candidate/preselection/read/detailcandidate/" + NewJobExp.CANDIDATE_ID);
-             }
-            catch (Exception)
+            // }
+            //catch (Exception)
+            //{
+            //    return Redirect("~/auth/error");
+            //}
+        }
+
+        //----------------------------------------------------------- view edit job exp ------------------------------------
+        [Route("candidate/preselection/edit/jobExp/{id?}")]
+        public ActionResult JobExp(string id = null)
+        {
+            try
+            {
+                ViewBag.DataView = new Dictionary<string, object>()
+                {
+                    {"title","Preselection"}
+                };
+                int JobExpId = Convert.ToInt16(id);
+                CandidateJobExperienceDTO Data = Manage_CandidateJobExperienceDTO.GetData().FirstOrDefault(d => d.ID == JobExpId);
+                return View("Preselection/EditJobExp",Data);
+            }
+            catch(Exception)
             {
                 return Redirect("~/auth/error");
             }
         }
 
         //----------------------------------------------------------- process edit job exp ---------------------------------
-        [Route("candidate/preselection/edit/jobExp")]
+        [Route("candidate/preselection/edit/jobExp/process")]
         public ActionResult JobExpEdit(CandidateJobExperienceDTO NewJobExp)
         {
-            try
-            {
+            //try
+            //{
                 if (ModelState.IsValid)
                 {
                     using (DBEntities db = new DBEntities())
                     {
-                        var ProcessAdd = Manage_CandidateJobExperienceDTO.EditData(NewJobExp);
+                        var ProcessEdit = Manage_CandidateJobExperienceDTO.EditData(NewJobExp);
 
-                        if (ProcessAdd > 0)
+                        if (ProcessEdit > 0)
                         {
+                            if(TempData.Peek("message") != null)
+                            {
+                                TempData.Remove("message");
+                                TempData.Remove("type");
+                            }
                             TempData.Add("message", "Candidate job experience edited successfully");
                             TempData.Add("type", "success");
                             UserLogingUtils.SaveLoggingUserActivity("edit job experience Candidate " + NewJobExp.CANDIDATE_ID + " Job Experience in " + NewJobExp.COMPANY_NAME);
                         }
                         else
                         {
+                            if (TempData.Peek("message") != null)
+                            {
+                                TempData.Remove("message");
+                                TempData.Remove("type");
+                            }
                             TempData.Add("message", "Candidate job experience failed to edit");
                             TempData.Add("type", "warning");
                         }
-                        return Redirect("~/candidate/preselection/create/jobExp");
+                        return Redirect("~/candidate/preselection/edit/jobExp/"+NewJobExp.ID);
                     }
                 }
 
                 TempData.Add("message", "Candidate job experience failed to edit please complete form edit");
                 TempData.Add("type", "danger");
-                return Redirect("~/candidate/preselection/read/detailcandidate/" + NewJobExp.CANDIDATE_ID);
+                return Redirect("~/candidate/preselection/edit/jobExp/" + NewJobExp.ID);
 
-            }
-            catch (Exception)
-            {
-                return Redirect("~/auth/error");
-            }
-        }
+    //    }
+    //        catch (Exception)
+    //        {
+    //            return Redirect("~/auth/error");
+    //}
+}
 
 
 
@@ -373,9 +416,9 @@ namespace FinalProject.Controllers
                     if (Keyword != "" && (StateId == 0 && Position == "all"))
                     {
                         ListCandidate = ListCandidate.Where(d =>
-                            d.CANDIDATE_EMAIL.Contains(Keyword) ||
-                            d.CANDIDATE_NAME.Contains(Keyword) ||
-                            d.CANDIDATE_PHONE.Contains(Keyword) && 
+                        d.CANDIDATE_EMAIL.Contains(Keyword) ||
+                        d.CANDIDATE_NAME.Contains(Keyword) ||
+                        d.CANDIDATE_PHONE.Contains(Keyword) &&
                             (d.CANDIDATE_STATE == 2 || d.CANDIDATE_STATE == 18)).ToList();
                     }
                     else
@@ -386,7 +429,7 @@ namespace FinalProject.Controllers
                          d.CANDIDATE_STATE == StateId ||
                          d.CANDIDATE_EMAIL.Contains(Keyword) ||
                          d.CANDIDATE_NAME.Contains(Keyword) ||
-                         d.CANDIDATE_PHONE.Contains(Keyword) && 
+                         d.CANDIDATE_PHONE.Contains(Keyword) &&
                          (d.CANDIDATE_STATE == 2 || d.CANDIDATE_STATE == 18)).ToList();
                     }
                 }

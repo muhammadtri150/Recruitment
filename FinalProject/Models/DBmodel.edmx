@@ -118,6 +118,7 @@
           <Property Name="CANDIDATE_SOURCE" Type="varchar" MaxLength="50" />
           <Property Name="CANDIDATE_STATE" Type="int" />
           <Property Name="CANDIDATE_EXPECTED_SALARY" Type="money" />
+          <Property Name="CANDIDATE_INTERVIEW_DATE" Type="datetime" />
           <Property Name="PROCESS_DATE" Type="datetime" />
           <Property Name="NOTES" Type="text" />
         </EntityType>
@@ -1017,6 +1018,7 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <NavigationProperty Name="TB_STATE_CANDIDATE" Relationship="FinalProject_adp3Model.FK__TB_CANDID__CANDI__778AC167" FromRole="TB_CANDIDATE_SELECTION_HISTORY" ToRole="TB_STATE_CANDIDATE" />
           <NavigationProperty Name="TB_USER" Relationship="FinalProject_adp3Model.FK__TB_CANDID__USER___76969D2E" FromRole="TB_CANDIDATE_SELECTION_HISTORY" ToRole="TB_USER" />
           <NavigationProperty Name="TB_CANDIDATE" Relationship="FinalProject_adp3Model.FK__TB_CANDID__CANDI__75A278F5" FromRole="TB_CANDIDATE_SELECTION_HISTORY" ToRole="TB_CANDIDATE" />
+          <Property Name="CANDIDATE_INTERVIEW_DATE" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK__TB_CANDID__CANDI__778AC167">
           <End Type="FinalProject_adp3Model.TB_STATE_CANDIDATE" Role="TB_STATE_CANDIDATE" Multiplicity="0..1" />
@@ -1430,6 +1432,7 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <EntitySetMapping Name="TB_CANDIDATE_SELECTION_HISTORY">
             <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_CANDIDATE_SELECTION_HISTORY">
               <MappingFragment StoreEntitySet="TB_CANDIDATE_SELECTION_HISTORY">
+                <ScalarProperty Name="CANDIDATE_INTERVIEW_DATE" ColumnName="CANDIDATE_INTERVIEW_DATE" />
                 <ScalarProperty Name="NOTES" ColumnName="NOTES" />
                 <ScalarProperty Name="PROCESS_DATE" ColumnName="PROCESS_DATE" />
                 <ScalarProperty Name="CANDIDATE_EXPECTED_SALARY" ColumnName="CANDIDATE_EXPECTED_SALARY" />

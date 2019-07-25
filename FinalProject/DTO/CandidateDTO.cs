@@ -21,7 +21,6 @@ namespace FinalProject.DTO
         [Required]
         public string CANDIDATE_NAME { get; set; }
 
-        [Required]
         public int? CANDIDATE_AGE { get; set; }
         public System.DateTime? CANDIDATE_BIRTH_DATE { get; set; }
         public string CANDIDATE_PLACE_BIRTH { get; set; }
@@ -34,6 +33,9 @@ namespace FinalProject.DTO
         public string CANDIDATE_EMAIL { get; set; }
         public List<string> CANDIDATE_SKILL { get; set; }
         public string SUITABLE_POSITION { get; set; }
+        public int? AGE { get; set; }
+
+        public System.DateTime? CANDIDATE_INTERVIEW_DATE { get; set; }
 
 
         public System.DateTime? AVAILABLE_JOIN { get; set; }
@@ -163,6 +165,7 @@ namespace FinalProject.DTO
                     POSITION = DataNewCandidate.POSITION,
                     EDUCATION_START_DATE = edu_start_date,
                     EDUCATION_END_DATE = edu_end_date,
+                   
                 });
 
                 int res = 0;
@@ -249,8 +252,9 @@ namespace FinalProject.DTO
                 Candidate.CANDIDATE_CURRENT_ADDRESS = Data.CANDIDATE_CURRENT_ADDRESS;
                 Candidate.CANDIDATE_KTP_NUMBER = Data.CANDIDATE_KTP_NUMBER;
                 Candidate.CANDDIATE_NPWP_NUMBER = Data.CANDDIATE_NPWP_NUMBER;
-                Candidate.CANDIDATE_CV = Cv_name;
-                Candidate.CANDIDATE_PHOTO = pict_name;
+
+                if(Cv != null) Candidate.CANDIDATE_CV = Cv_name;
+                if(Pict != null) Candidate.CANDIDATE_PHOTO = pict_name;
                 Candidate.CANDIDATE_LAST_EDUCATON = Data.CANDIDATE_LAST_EDUCATON;
                 Candidate.CANDIDATE_GPA = Data.CANDIDATE_GPA;
                 Candidate.CANDIDATE_MAJOR = Data.CANDIDATE_MAJOR;
@@ -269,10 +273,29 @@ namespace FinalProject.DTO
                 Candidate.POSITION = Data.POSITION;
                 Candidate.EDUCATION_START_DATE = edu_start_date;
                 Candidate.EDUCATION_END_DATE = edu_end_date;
-                
-                if(Candidate.CANDIDATE_STATE_ID != Data.CANDIDATE_STATE_ID) {
+
+                List<string> Skills = db.TB_CANDIDATE_SKILL.Where(d => d.CANDIDATE_ID == Data.ID).Select(d => d.SKILL).ToList();
+                if (Skills.Count > 0)
+                {
+                    foreach (var d in db.TB_CANDIDATE_SKILL.Where(d => d.CANDIDATE_ID == Data.ID).ToList())
+                    {
+                        db.TB_CANDIDATE_SKILL.Remove(d);
+                    }
+                }
+
+                foreach (var d in Data.CANDIDATE_SKILL)
+                {
+                    db.TB_CANDIDATE_SKILL.Add(new TB_CANDIDATE_SKILL {
+                        CANDIDATE_ID = Data.ID,
+                        SKILL = d
+                    });
+                }
+
+
+                if (Candidate.CANDIDATE_STATE_ID != Data.CANDIDATE_STATE_ID) {
                     //insert selection history
                     UserDTO UserLogin = (UserDTO)HttpContext.Current.Session["UserLogin"];
+
                     Manage_CandidateSelectionHistoryDTO.AddData(new CandidateSelectionHistoryDTO
                     {
                         CANDIDATE_ID = Data.ID,
@@ -282,7 +305,8 @@ namespace FinalProject.DTO
                         CANDIDATE_SOURCE = Data.SOURCE,
                         CANDIDATE_EXPECTED_SALARY = Data.EXPECTED_sALARY,
                         CANDIDATE_STATE = Data.CANDIDATE_STATE_ID,
-                        NOTES = Data.NOTES
+                        NOTES = Data.NOTES,
+                        CANDIDATE_INTERVIEW_DATE = Data.CANDIDATE_INTERVIEW_DATE
                     });
                 }
 
@@ -335,21 +359,30 @@ namespace FinalProject.DTO
                     POSITION = ca.POSITION,
                     EDUCATON_START_DATE = ca.EDUCATION_START_DATE,
                     EDUCATON_END_DATE = ca.EDUCATION_END_DATE,
+                    RELIGION = db.TB_RELIGION.FirstOrDefault(d => d.RELIGION_ID == ca.RELIGION_ID).RELIGION_NAME,
+                    GENDER_NAME = db.TB_GENDER.FirstOrDefault(d => d.GENDER_ID == ca.GENDER_ID).GENDER_NAME
                 }).ToList();
                 return ListCandidateDTO;
+            }
+        }
+
+        //getAge
+        public static int GetCandidateAge(int CandidateId)
+        {
+            using(DBEntities db = new DBEntities())
+            {
+                return (int.Parse(DateTime.Now.ToString("yyyy")) - int.Parse(Convert.ToDateTime(db.TB_CANDIDATE.FirstOrDefault(d => d.ID == CandidateId).CANDIDATE_BIRTH_DATE).ToString("yyyy")));
             }
         }
 
         //check skill chekcbox
         public static string CheckBoxSkill(string Skill, int IdCandidate)
         {
-            string result = "";
-
             using(DBEntities db = new DBEntities())
             {
+                string result = "";
                 string skill = Skill.ToString();
-                TB_CANDIDATE_SKILL Candidate_Skill = db.TB_CANDIDATE_SKILL.FirstOrDefault(d => d.CANDIDATE_ID.Equals(IdCandidate) && d.SKILL.Equals(Skill));
-                if (Candidate_Skill != null) result = "checked";
+                if (db.TB_CANDIDATE_SKILL.Where(d => d.SKILL.Equals(skill) && d.CANDIDATE_ID.Equals(IdCandidate) )  != null) result = "checked";
 
                 return result;
             }

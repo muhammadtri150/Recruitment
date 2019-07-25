@@ -34,7 +34,8 @@ namespace FinalProject.DTO
         {
             using(DBEntities db = new DBEntities())
             {
-                List<CandidateJobExperienceDTO> Data = db.TB_CANDIDATE_JOB_EXPERIENCE.Select(j => new CandidateJobExperienceDTO {
+                return db.TB_CANDIDATE_JOB_EXPERIENCE.Select(j => new CandidateJobExperienceDTO {
+                    CANDIDATE_ID = j.CANDIDATE_ID,
                     ID = j.ID,
                     COMPANY_NAME = j.COMPANY_NAME,
                     INDUSTRIES = j.INDUSTRIES,
@@ -46,7 +47,6 @@ namespace FinalProject.DTO
                     BENEFIT = j.BENEFIT,
                     PROJECT = j.PROJCT
                 }).ToList();
-                return Data;
             }
         } 
 
@@ -87,10 +87,9 @@ namespace FinalProject.DTO
                     PROJCT              = NewJobExp.PROJECT,
                     SKILL_NAME          = NewJobExp.SKILL_NAME
                 });
-                
-                if(db.SaveChanges() > 0)
-                {
-                    if(NewJobExp.SKILL_NAME != null || NewJobExp.SKILL_NAME != "" || NewJobExp.BENEFIT != null || NewJobExp.BENEFIT != "")
+
+
+                    if ((NewJobExp.SKILL_NAME != null && NewJobExp.SKILL_NAME != "") || (NewJobExp.BENEFIT != null && NewJobExp.BENEFIT != ""))
                     {
                         TB_CANDIDATE_JOB_EXPERIENCE DataJobExp = db.TB_CANDIDATE_JOB_EXPERIENCE.FirstOrDefault(d =>
                         d.CANDIDATE_ID == NewJobExp.CANDIDATE_ID &&
@@ -98,88 +97,6 @@ namespace FinalProject.DTO
 
                         string[] Skills = NewJobExp.SKILL_NAME.Split(',');
                         string[] Benefits = NewJobExp.BENEFIT.Split(',');
-
-                        if (Skills.Length > 1)
-                        {
-                            foreach (string skill in Skills)
-                            {
-                                db.TB_SKILL_JOB_EXPERIENCE.Add(new TB_SKILL_JOB_EXPERIENCE
-                                {
-                                    ID_JOBEXP = DataJobExp.ID,
-                                    SKILL_NAME = skill
-                                });
-                            }
-                        }
-                        if (Skills.Length == 0)
-                        {
-                            db.TB_SKILL_JOB_EXPERIENCE.Add(new TB_SKILL_JOB_EXPERIENCE
-                            {
-                                ID_JOBEXP = DataJobExp.ID,
-                                SKILL_NAME = DataJobExp.SKILL_NAME
-                            });
-                        }
-                        if(Benefits.Length > 1)
-                        {
-                            foreach (string benefit in Benefits)
-                            {
-                                db.TB_BENEFIT_JOB_EXPERIENCE.Add(new TB_BENEFIT_JOB_EXPERIENCE
-                                {
-                                    JOB_EXP_ID = DataJobExp.ID,
-                                    BENEFIT = benefit
-                                });
-                            }
-                        }
-                        if(Benefits.Length == 0)
-                        {
-                            db.TB_BENEFIT_JOB_EXPERIENCE.Add(new TB_BENEFIT_JOB_EXPERIENCE
-                            {
-                                JOB_EXP_ID = DataJobExp.ID,
-                                BENEFIT = DataJobExp.BENEFIT
-                            });
-                        }
-                    }
-                    if(db.SaveChanges() > 0)
-                    {
-                        return 1;
-                    }
-                    return 0;
-                }
-            }
-            return 1;
-        }
-
-        //edit job experience
-        //for add new job experience of candidate
-        public static int EditData(CandidateJobExperienceDTO Data)
-        {
-            using (DBEntities db = new DBEntities())
-            {
-                db.TB_CANDIDATE_JOB_EXPERIENCE.FirstOrDefault(d => d.ID == Data.ID);
-
-
-
-                if (db.SaveChanges() > 0)
-                {
-                    if (Data.SKILL_NAME != null || Data.SKILL_NAME != "" || Data.BENEFIT != null || Data.BENEFIT != "")
-                    {
-                        TB_CANDIDATE_JOB_EXPERIENCE DataJobExp = db.TB_CANDIDATE_JOB_EXPERIENCE.FirstOrDefault(d =>
-                        d.CANDIDATE_ID == Data.CANDIDATE_ID &&
-                        d.COMPANY_NAME == Data.COMPANY_NAME);
-
-                        string[] Skills = Data.SKILL_NAME.Split(',');
-                        string[] Benefits = Data.BENEFIT.Split(',');
-
-                        foreach(var d in db.TB_BENEFIT_JOB_EXPERIENCE.Where(d => Benefits.Contains(d.BENEFIT)))
-                        {
-                            db.TB_BENEFIT_JOB_EXPERIENCE.Remove(d);
-                        }
-                        
-                        foreach(var d in db.TB_SKILL_JOB_EXPERIENCE.Where(d => Skills.Contains(d.SKILL_NAME)))
-                        {
-                            db.TB_SKILL_JOB_EXPERIENCE.Remove(d);
-                        }
-
-                        db.SaveChanges();
 
                         if (Skills.Length > 1)
                         {
@@ -220,14 +137,36 @@ namespace FinalProject.DTO
                             });
                         }
                     }
-                    if (db.SaveChanges() > 0)
-                    {
-                        return 1;
-                    }
-                    return 0;
-                }
+                return db.SaveChanges();
             }
-            return 1;
+            
+        }
+
+        //edit job experience
+        //for add new job experience of candidate
+        public static int EditData(CandidateJobExperienceDTO Data)
+        {
+            using (DBEntities db = new DBEntities())
+            {
+                int result = 0;
+                TB_CANDIDATE_JOB_EXPERIENCE DataJob = db.TB_CANDIDATE_JOB_EXPERIENCE.FirstOrDefault(d => d.ID == Data.ID);
+                if(DataJob != null)
+                {
+                    DataJob.INDUSTRIES = Data.INDUSTRIES;
+                    DataJob.CANDIDATE_POSITION = Data.CANDIDATE_POSITION;
+                    DataJob.START_DATE = Data.START_DATE;
+                    DataJob.END_DATE = Data.END_DATE;
+                    DataJob.CURRENT_SALARY = Data.CURRENT_SALARY;
+                    DataJob.JOBDESC = Data.JOBDESC;
+                    DataJob.BENEFIT = Data.BENEFIT;
+                    DataJob.COMPANY_NAME = Data.COMPANY_NAME;
+                    DataJob.PROJCT = Data.PROJECT;
+                    DataJob.SKILL_NAME = Data.SKILL_NAME;
+                    result = db.SaveChanges();
+                }
+
+                return result;
+            }
         }
 
     }
