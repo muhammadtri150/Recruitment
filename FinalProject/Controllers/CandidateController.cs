@@ -27,8 +27,8 @@ namespace FinalProject.Controllers
         [Route("candidate/preselection")]
         public ActionResult CandidatePreselection()
         {
-            //try
-            //{
+            try
+            {
                 using (DBEntities db = new DBEntities())
                 {
                     //---------------------------- prepare data candidate for show in view --------------
@@ -87,11 +87,11 @@ namespace FinalProject.Controllers
                     //return view
                     return View("Preselection/Index", ListCandidate);
                 }
-            //}
-            //catch (Exception)
-            //{
-            //    return Redirect("~/auth/error");
-            //}
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
         }
 
         //----------------------------------------------------------- view form add new candidate -----------------------------------------------------------
@@ -216,8 +216,8 @@ namespace FinalProject.Controllers
         [Route("candidate/preselection/edit/candidate/process")]
         public ActionResult CandidateEdit(CandidateDTO Data, HttpPostedFileBase Pict = null, HttpPostedFileBase Cv = null)
         {
-            //try
-            //{
+            try
+            {
                 if (ModelState.IsValid)
                 {
                     var ProcessEdit = Manage_CandidateDTO.EditCandidate(Data, Pict, Cv);
@@ -239,12 +239,12 @@ namespace FinalProject.Controllers
                 TempData.Add("message", "Candidate failed to Update, please complete form edit");
                 TempData.Add("type", "danger");
                 return Redirect("~/candidate/preselection/read/detailcandidate/" + Data.ID);
-            //}
-            //catch
-            //{
-            //    return Redirect("~/auth/error");
-            //}
         }
+            catch
+            {
+                return Redirect("~/auth/error");
+    }
+}
 
         //************************************************* JOB EXPERIENCE OF CANDIDATE *****************************************************
 
@@ -253,8 +253,8 @@ namespace FinalProject.Controllers
         [Route("candidate/preselection/create/jobExp")]
         public ActionResult JobExpAdd(CandidateJobExperienceDTO NewJobExp)
         {
-            //try
-            //{
+            try
+            {
                 if (ModelState.IsValid)
                 {
                     using (DBEntities db = new DBEntities())
@@ -289,12 +289,12 @@ namespace FinalProject.Controllers
                 TempData.Add("message", "Candidate new job experience failed to add please complete form add");
                 TempData.Add("type", "danger");
                 return Redirect("~/candidate/preselection/read/detailcandidate/" + NewJobExp.CANDIDATE_ID);
-            // }
-            //catch (Exception)
-            //{
-            //    return Redirect("~/auth/error");
-            //}
         }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+    }
+}
 
         //----------------------------------------------------------- view edit job exp ------------------------------------
         [Route("candidate/preselection/edit/jobExp/{id?}")]
