@@ -602,7 +602,7 @@ namespace FinalProject.Controllers
                     {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 8 ||  d.ID == 19).ToList() }
                 };
 
-                return View("Call/EditCandidateCall", DataCandidate);
+                return View("Call/EditCandidateCalled", DataCandidate);
             }
             catch
             {
@@ -666,7 +666,7 @@ namespace FinalProject.Controllers
                 //prepare vew bag
                 //---------------------------- prepare data viewbag --------------------
                 ViewBag.DataView = new Dictionary<string, object>{
-                    {"title","Call"},
+                    {"title","Interview"},
                     {"ListPosition",Manage_JobPositionDTO.GetData()},
                     {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 15 || d.ID == 16 || d.ID == 17)}
                     };
@@ -711,7 +711,7 @@ namespace FinalProject.Controllers
                 }
                 //============================ end process searchng ============================
 
-                return View("Call/Called", ListCandidate);
+                return View("Interview/Interview", ListCandidate);
 
             }
             catch (Exception)

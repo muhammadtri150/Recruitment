@@ -2142,9 +2142,12 @@
     <Content Include="Views\Candidate\Preselection\DetailCandidate.cshtml" />
     <Content Include="Views\Candidate\Preselection\EditJobExp.cshtml" />
     <Content Include="Views\Candidate\Call\Called.cshtml" />
+    <Content Include="Views\Candidate\Call\EditCandidateCall.cshtml" />
+    <Content Include="Views\Candidate\Call\EditCandidateCalled.cshtml" />
     <Content Include="Views\Candidate\Interview\Interview.cshtml" />
     <Content Include="Views\Candidate\Interview\Interviewed.cshtml" />
-    <Content Include="Views\Candidate\Call\EditCandidate.cshtml" />
+    <Content Include="Views\Candidate\Interview\EditCandidateInterview.cshtml" />
+    <Content Include="Views\Candidate\Interview\EditCandidateInterviewed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
