@@ -9,6 +9,9 @@
 
 @section content{
 
+
+@Html.ValidationSummary()
+
     <div class="container">
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -40,19 +43,19 @@
                                 <select class="form-control" id="GENDER" name="GENDER_ID">
                                     @foreach (var d in Manage_GenderDTO.GetData())
                                     {
-                                        <option value="@d.GENDER_ID" @if (Model.GENDER_ID == d.GENDER_ID) { @("selected");}>@d.GENDER_NAME</option>
+                                        <option value="@d.GENDER_ID" @if (Model.GENDER_ID == d.GENDER_ID) { @("selected") ; }>@d.GENDER_NAME</option>
                                     }
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="CANDIDATE_PLACE_BIRTH">Place Of Birth</label>
-                                @Html.TextBoxFor(m => m.CANDIDATE_PLACE_BIRTH, new { @class = "form-control", @id = "CANDIDATE_PLACE_BIRTH"})
+                                @Html.TextBoxFor(m => m.CANDIDATE_PLACE_BIRTH, new { @class = "form-control", @id = "CANDIDATE_PLACE_BIRTH" })
                             </div>
 
                             <div class="form-group">
                                 <label for="CANDIDATE_PLACE_BIRTH">BIRTH DATE</label>
-                                <input type="datetime" value="@Convert.ToDateTime(Model.CANDIDATE_BIRTH_DATE).ToString("yyyy-MM-dd")" name="CANDIDATE_BIRTH_DATE" class="form-control"/>
+                                <input type="datetime" value="@Convert.ToDateTime(Model.CANDIDATE_BIRTH_DATE).ToString("yyyy-MM-dd")" name="CANDIDATE_BIRTH_DATE" class="form-control" />
                             </div>
 
                             <div class="form-group">
@@ -60,7 +63,7 @@
                                 <select class="form-control" id="RELIGION_ID" name="RELIGION_ID">
                                     @foreach (var d in Manage_ReligionDTO.GetData())
                                     {
-                                        <option value="@d.RELIGION_ID" @{ string r = ""; if (d.RELIGION_ID == Model.RELIGION_ID) { r = "selected"; } } @r >@d.RELIGION_NAME</option>
+                                        <option value="@d.RELIGION_ID" @{ string r = ""; if (d.RELIGION_ID == Model.RELIGION_ID) { r = "selected"; } } @r>@d.RELIGION_NAME</option>
                                     }
                                 </select>
                             </div>
@@ -151,7 +154,7 @@
                                 <select class="form-control" id="MARITAL_STATUS_ID" name="MARITAL_STATUS_ID">
                                     @foreach (var d in Manage_MaritalStatusDTO.GetData())
                                     {
-                                        <option value="@d.MARITALSTATUS_ID" @if (Model.MARITAL_STATUS_ID == d.MARITALSTATUS_ID) { @("selected") } >@d.MARITALSTATUS_NAME</option>
+                                        <option value="@d.MARITALSTATUS_ID" @if (Model.MARITAL_STATUS_ID == d.MARITALSTATUS_ID) { @("selected") }>@d.MARITALSTATUS_NAME</option>
                                     }
                                 </select>
                             </div>
@@ -161,9 +164,10 @@
                                 <select class="form-control" id="POSITION" name="POSITION">
                                     @foreach (var d in Manage_JobPositionDTO.GetData())
                                     {
-                                        <option value="@d.JOBPOSITION_NAME" @{string res = "";if (Model.POSITION == d.JOBPOSITION_NAME) { res = "selected"; }
-                                            } @res>@d.JOBPOSITION_NAME</option>
-                                    }
+                                        <option value="@d.JOBPOSITION_NAME" @{string res = ""; if (Model.POSITION == d.JOBPOSITION_NAME) { res = "selected"; } } @res>
+                                            @d.JOBPOSITION_NAME
+                                    </option>
+                                }
                                 </select>
                             </div>
 
@@ -220,7 +224,7 @@
                     <select class="form-control" id="CANDIDATE_STATE_ID" name="CANDIDATE_STATE_ID">
                         @foreach (var d in (List<StateCandidateDTO>)ViewBag.DataView["ListState"])
                         {
-                            <option value="@d.ID" @{string res = ""; if (Model.CANDIDATE_STATE_ID == d.ID){ res = "selected"; }} @res>@d.STATE_NAME</option>
+                            <option value="@d.ID" @{string res = ""; if (Model.CANDIDATE_STATE_ID == d.ID) { res = "selected"; }} @res>@d.STATE_NAME</option>
                         }
                     </select>
                 </div>
@@ -294,7 +298,7 @@
                                     <th scope="row">@(no++)</th>
                                     <td>@d.SKILL_NAME</td>
                                     <td>
-                                        <input type="checkbox" data-id_candidate="@Model.ID" data-skill_name="@d.SKILL_NAME" class="form-controlcheck-skill check-skill" value="@d.SKILL_NAME" name="CANDIDATE_SKILL[]" @Manage_CandidateDTO.CheckBoxSkill(d.SKILL_NAME,Model.ID) />
+                                        <input type="checkbox" data-id_candidate="@Model.ID" data-skill_name="@d.SKILL_NAME" class="form-controlcheck-skill check-skill" value="@d.SKILL_NAME" name="CANDIDATE_SKILL[]" @Manage_CandidateDTO.CheckBoxSkill(d.SKILL_NAME, Model.ID) />
                                     </td>
                                 </tr>
                             }

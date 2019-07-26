@@ -8,8 +8,10 @@
 
 @*###################################### In Index view is showing data from tb_candidate ########################################*@
 @section content{
-<div class="container">
+    
+    <div class="container">
 
+    @Html.ValidationSummary()
     <!-- Alert -->
     @if (TempData.Peek("message") != null)
     {

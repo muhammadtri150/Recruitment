@@ -172,16 +172,18 @@ namespace FinalProject.DTO
                 if (db.SaveChanges() > 0)
                 {
                     //insert skill
-                    foreach (string skill in DataNewCandidate.CANDIDATE_SKILL)
+                   if(DataNewCandidate.CANDIDATE_SKILL != null)
                     {
-                        db.TB_CANDIDATE_SKILL.Add(new TB_CANDIDATE_SKILL
+                        foreach (string skill in DataNewCandidate.CANDIDATE_SKILL)
                         {
-                            CANDIDATE_ID = db.TB_CANDIDATE.FirstOrDefault(c => c.CANDIDATE_ID == Candidate_ID).ID,
-                            SKILL = skill
-                        });
+                            db.TB_CANDIDATE_SKILL.Add(new TB_CANDIDATE_SKILL
+                            {
+                                CANDIDATE_ID = db.TB_CANDIDATE.FirstOrDefault(c => c.CANDIDATE_ID == Candidate_ID).ID,
+                                SKILL = skill
+                            });
+                            db.SaveChanges();
+                        }
                     }
-                    if (db.SaveChanges() > 0)
-                    {
                         //insert selection history
                         UserDTO UserLogin = (UserDTO)HttpContext.Current.Session["UserLogin"];
                         Manage_CandidateSelectionHistoryDTO.AddData(new CandidateSelectionHistoryDTO
@@ -195,8 +197,8 @@ namespace FinalProject.DTO
                             CANDIDATE_STATE = 1,
                             NOTES = DataNewCandidate.NOTES
                         });
-                        res = db.SaveChanges();
-                    }
+                    db.SaveChanges();
+                    res = 1;
                 }
                 return new List<object>() { { res }, {Candidate_ID} };
             }

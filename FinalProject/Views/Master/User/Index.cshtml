@@ -8,6 +8,9 @@
 
 @section content{
 
+ 
+        @Html.ValidationSummary()
+
     <div class="container">
         <!-- Button trigger modal add user-->
         <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#AddUser">
@@ -36,24 +39,24 @@
             <tbody>
                 @foreach (var User in Model)
                 {
-                <tr>
-                    <td>@User.FULL_NAME</td>
-                    <td>@User.USERNAME</td>
-                    <td>@User.PASSWORD.Substring(0, 10)</td>
-                    <td>@User.ROLE_NAME</td>
-                    <td>
-                        <button type="button" class="btn btn-edit" data-toggle="modal" data-target="#EditUser"
-                                data-user_id="@User.USER_ID"
-                                data-user_full_name="@User.FULL_NAME"
-                                data-user_name="@User.USERNAME"
-                                data-user_role_id="@User.ROLE_ID"
-                                data-user_role_name="@User.ROLE_NAME"
-                                data-user_password="@User.PASSWORD">
-                            <i class="fas fa-pencil-alt m-3"></i>
-                        </button>
-                        <a onclick="return confirm('Are you sure to delete this user ?')" href="~/master/usermanagement/delete/@User.USER_ID"><i class="fas fa-trash-alt"></i></a>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>@User.FULL_NAME</td>
+                        <td>@User.USERNAME</td>
+                        <td>@User.PASSWORD.Substring(0, 10)</td>
+                        <td>@User.ROLE_NAME</td>
+                        <td>
+                            <button type="button" class="btn btn-edit" data-toggle="modal" data-target="#EditUser"
+                                    data-user_id="@User.USER_ID"
+                                    data-user_full_name="@User.FULL_NAME"
+                                    data-user_name="@User.USERNAME"
+                                    data-user_role_id="@User.ROLE_ID"
+                                    data-user_role_name="@User.ROLE_NAME"
+                                    data-user_password="@User.PASSWORD">
+                                <i class="fas fa-pencil-alt m-3"></i>
+                            </button>
+                            <a onclick="return confirm('Are you sure to delete this user ?')" href="~/master/usermanagement/delete/@User.USER_ID"><i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>

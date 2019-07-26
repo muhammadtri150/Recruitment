@@ -150,8 +150,8 @@ namespace FinalProject.Controllers
         [Route("candidate/preselection/create/candidate/process")]
         public ActionResult CandidatePreselectionAdd(CandidateDTO DataNewCandidate,  HttpPostedFileBase Pict = null, HttpPostedFileBase Cv = null)
         {
-            try
-            {
+            //try
+            //{
                 if (ModelState.IsValid)
                 {
                     //process add will return list object, [0] is return from db.saveCahnge() and [1] return candidate_id (CA******)
@@ -176,11 +176,11 @@ namespace FinalProject.Controllers
                 TempData.Add("type", "danger");
             
                 return Redirect("~/candidate/preselection");
-            }
-            catch (Exception)
-            {
-                return Redirect("~/auth/error");
-            }
+            //}
+            //catch (Exception)
+            //{
+            //    return Redirect("~/auth/error");
+            //}
         }
 
         //------------------------------------------ VIEW EDIT CANDIDATE ---------------------------------------------------

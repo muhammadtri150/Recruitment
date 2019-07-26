@@ -6,6 +6,8 @@
 
 }
 @section content{
+    
+    @Html.ValidationSummary()
 
     <div class="container">
         <!-- Button trigger modal add client-->
@@ -33,21 +35,21 @@
             <tbody>
                 @foreach (var job in Model)
                 {
-                <tr>
-                    <td>@job.JOBPOSITION_ID</td>
-                    <td>@job.JOBPOSITION_NAME</td>
-                    <td>@job.JOBPOSITION_NOTE</td>
-                    <td>
-                        <button type="button" class="btn btn-edit" data-toggle="modal" data-target="#EditJob"
-                                data-jobposition_id ="@job.JOBPOSITION_ID"
-                                data-jobposition_name="@job.JOBPOSITION_NAME"
-                                data-jobposition_note="@job.JOBPOSITION_NOTE">
-                            <i class="fas fa-pencil-alt m-3"></i>
-                        </button>
+                    <tr>
+                        <td>@job.JOBPOSITION_ID</td>
+                        <td>@job.JOBPOSITION_NAME</td>
+                        <td>@job.JOBPOSITION_NOTE</td>
+                        <td>
+                            <button type="button" class="btn btn-edit" data-toggle="modal" data-target="#EditJob"
+                                    data-jobposition_id="@job.JOBPOSITION_ID"
+                                    data-jobposition_name="@job.JOBPOSITION_NAME"
+                                    data-jobposition_note="@job.JOBPOSITION_NOTE">
+                                <i class="fas fa-pencil-alt m-3"></i>
+                            </button>
 
-                        <a onclick="return confirm('Are you sure to delete this Job Position ?')" href="~/master/jobpositionmanagement/delete/@job.JOBPOSITION_ID"><i class="fas fa-trash-alt"></i></a>
-                    </td>
-                </tr>
+                            <a onclick="return confirm('Are you sure to delete this Job Position ?')" href="~/master/jobpositionmanagement/delete/@job.JOBPOSITION_ID"><i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>

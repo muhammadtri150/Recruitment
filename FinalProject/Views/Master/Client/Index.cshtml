@@ -6,7 +6,7 @@
 
 }
 @section content{
-
+        @Html.ValidationSummary()
     <div class="container">
         <!-- Button trigger modal add client-->
         <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#AddClient">
@@ -36,24 +36,24 @@
             <tbody>
                 @foreach (var client in Model)
                 {
-                <tr>
-                    <td>@client.CLIENT_NAME</td>
-                    <td>@client.CLIENT_ADDRESS</td>
-                    <td>@client.CLIENT_OTHERADDRESS</td>
-                    <td>@client.CLIENT_INDUSTRIES</td>
-                    <td>
-                        <button type="button" class="btn btn-edit" data-toggle="modal" data-target="#EditClient"
-                                data-client_id="@client.ID"
-                                data-client_name="@client.CLIENT_NAME"
-                                data-client_address="@client.CLIENT_ADDRESS"
-                                data-client_other_address="@client.CLIENT_OTHERADDRESS"
-                                data-client_industries="@client.CLIENT_INDUSTRIES">
-                            <i class="fas fa-pencil-alt m-3"></i>
-                        </button>
+                    <tr>
+                        <td>@client.CLIENT_NAME</td>
+                        <td>@client.CLIENT_ADDRESS</td>
+                        <td>@client.CLIENT_OTHERADDRESS</td>
+                        <td>@client.CLIENT_INDUSTRIES</td>
+                        <td>
+                            <button type="button" class="btn btn-edit" data-toggle="modal" data-target="#EditClient"
+                                    data-client_id="@client.ID"
+                                    data-client_name="@client.CLIENT_NAME"
+                                    data-client_address="@client.CLIENT_ADDRESS"
+                                    data-client_other_address="@client.CLIENT_OTHERADDRESS"
+                                    data-client_industries="@client.CLIENT_INDUSTRIES">
+                                <i class="fas fa-pencil-alt m-3"></i>
+                            </button>
 
-                        <a onclick="return confirm('Are you sure to delete this client ?')" href="~/master/client/delete/@client.ID"><i class="fas fa-trash-alt"></i></a>
-                    </td>
-                </tr>
+                            <a onclick="return confirm('Are you sure to delete this client ?')" href="~/master/client/delete/@client.ID"><i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
@@ -110,7 +110,7 @@
                 </div>
                 <div class="modal-body">
                     <form action="~/master/client/edit" method="post">
-                        <input type="hidden" name="ID" id="EditId"/>
+                        <input type="hidden" name="ID" id="EditId" />
                         <div class="form-group">
                             <label for="name">Client Name</label>
                             <input type="text" class="form-control" id="EditName" name="CLIENT_NAME">

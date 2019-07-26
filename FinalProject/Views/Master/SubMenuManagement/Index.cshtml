@@ -3,6 +3,9 @@
     @ViewBag.DataView["title"]
 }
 @section content{
+
+        @Html.ValidationSummary()
+
     <div class="container">
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#AddSubMenu">
@@ -36,13 +39,14 @@
                         <td>@SubMenu.URL</td>
                         <td>@SubMenu.TITLE_MENU</td>
                         <td>
-                            <button type="button" class="btn btn-edit" data-toggle="modal" data-target="#EditSubMenu" 
-                                    data-id="@SubMenu.SUB_MENU_ID" 
+                            <button type="button" class="btn btn-edit" data-toggle="modal" data-target="#EditSubMenu"
+                                    data-id="@SubMenu.SUB_MENU_ID"
                                     data-title="@SubMenu.TITLE_MENU"
                                     data-menu_id="@SubMenu.MENU_ID"
                                     data-url="@SubMenu.URL"
                                     data-logo="@SubMenu.LOGO_SUBMENU">
-                            <i class="fas fa-pencil-alt m-3"></i></button>
+                                <i class="fas fa-pencil-alt m-3"></i>
+                            </button>
                             <a href="~/master/submenumanagement/delete/@SubMenu.SUB_MENU_ID" onclick="return confirm('Are you sure you want to delete this Sub Menu?');"><i class="fas fa-trash-alt"></i></a>
                         </td>
                     </tr>

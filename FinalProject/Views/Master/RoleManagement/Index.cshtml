@@ -7,6 +7,8 @@
 }
 
 @section content{
+    
+    @Html.ValidationSummary()
 
     <div class="container">
         <!-- Button trigger modal add user-->
@@ -31,26 +33,26 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach(var Role in Model)
+                @foreach (var Role in Model)
                 {
-                <tr>
-                    <td>@Role.ROLE_NAME</td>
-                    <td>
-                    <td>
-                        @*################################################## edit access menu ###############################################*@
-                        <a href="~/master/rolemanagement/accessmenu/@Role.ROLE_ID"><i class="fas fa-key"></i></a>
-                        @*################################################## edit role ###############################################*@
-                        <button type="button" class="btn btn-edit" data-toggle="modal" data-target="#EditRole" data-role_id="@Role.ROLE_ID" data-role_name="@Role.ROLE_NAME">
-                            <i class="fas fa-pencil-alt m-3"></i>
-                        </button>
-                        @*################################################## delete Role ###############################################*@
-                        <a onclick="return confirm('Are you sure to delete this role ?')" href="~/master/rolemanagement/delete/@Role.ROLE_ID"><i class="fas fa-trash-alt"></i></a>
+                    <tr>
+                        <td>@Role.ROLE_NAME</td>
+                        <td>
+                        <td>
+                            @*################################################## edit access menu ###############################################*@
+                            <a href="~/master/rolemanagement/accessmenu/@Role.ROLE_ID"><i class="fas fa-key"></i></a>
+                            @*################################################## edit role ###############################################*@
+                            <button type="button" class="btn btn-edit" data-toggle="modal" data-target="#EditRole" data-role_id="@Role.ROLE_ID" data-role_name="@Role.ROLE_NAME">
+                                <i class="fas fa-pencil-alt m-3"></i>
+                            </button>
+                            @*################################################## delete Role ###############################################*@
+                            <a onclick="return confirm('Are you sure to delete this role ?')" href="~/master/rolemanagement/delete/@Role.ROLE_ID"><i class="fas fa-trash-alt"></i></a>
 
-                    </td>
-                    </td>
-                </tr>
+                        </td>
+                        </td>
+                    </tr>
                 }
-                </tbody>
+            </tbody>
         </table>
     </div>
 
