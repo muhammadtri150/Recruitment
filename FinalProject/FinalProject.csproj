@@ -2134,7 +2134,7 @@
     <Content Include="Views\Master\MenuManagement\Index.cshtml" />
     <Content Include="Views\Candidate\_ViewStart.cshtml" />
     <Content Include="Views\Candidate\Preselection\Index.cshtml" />
-    <Content Include="Views\Candidate\Call\Index.cshtml" />
+    <Content Include="Views\Candidate\Call\Call.cshtml" />
     <Content Include="Views\Candidate\Delivery\Index.cshtml" />
     <Content Include="Views\Candidate\Interview\Index.cshtml" />
     <Content Include="Views\Candidate\Sales\Index.cshtml" />
@@ -2142,6 +2142,7 @@
     <Content Include="Views\Candidate\Preselection\EditCandidate.cshtml" />
     <Content Include="Views\Candidate\Preselection\DetailCandidate.cshtml" />
     <Content Include="Views\Candidate\Preselection\EditJobExp.cshtml" />
+    <Content Include="Views\Candidate\Call\Called.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

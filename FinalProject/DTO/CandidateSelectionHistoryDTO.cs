@@ -76,10 +76,10 @@ namespace FinalProject.DTO
                     {
                         ID = sh.ID,
                         CANDIDATE_ID = sh.CANDIDATE_ID,
-                        CANDIDATE_APPLIED_POSITION = sh.CANDIDATE_APPLIED_POSITION,
+                        CANDIDATE_APPLIED_POSITION = db.TB_CANDIDATE.FirstOrDefault(d => d.ID == sh.CANDIDATE_ID).POSITION,
                         CANDIDATE_SUITABLE_POSITION = sh.CANDIDATE_SUITABLE_POSITION,
-                        CANDIDATE_SOURCE = sh.CANDIDATE_SOURCE,
-                        CANDIDATE_EXPECTED_SALARY = sh.CANDIDATE_EXPECTED_SALARY,
+                        CANDIDATE_SOURCE = db.TB_CANDIDATE.FirstOrDefault(d => d.ID == sh.CANDIDATE_ID).SOURCE,
+                        CANDIDATE_EXPECTED_SALARY = db.TB_CANDIDATE.FirstOrDefault(d => d.ID == sh.CANDIDATE_ID).EXPECTED_SALARY,
                         PROCESS_DATE = sh.PROCESS_DATE,
                         NOTES = sh.NOTES,
                         CANDIDATE_STATE = sh.CANDIDATE_STATE,

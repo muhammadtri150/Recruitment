@@ -33,7 +33,7 @@ namespace FinalProject.Filters
                 string Menu = Url[1];
                 string SubMenu = Url[2];
                 string Action = "read";
-                if (Url.Length == 4) Action = Url[3];
+                if (Url.Length >= 4 ) Action = Url[3];
 
                 //prepare data
                 using(DBEntities db = new DBEntities())

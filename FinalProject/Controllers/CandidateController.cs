@@ -374,9 +374,9 @@ namespace FinalProject.Controllers
 
 
 
-        //################################################# CANDIDATE CALL #################################################
+        //################################################# CANDIDATE CALL ###############################################################
 
-        //------------------------------------------------- View for candidate call ----------------------------------------
+        //------------------------------------------------- View for candidate call -----------------------------------------------------
         [Route("candidate/call")]
         public ActionResult CandidateCall()
         {
@@ -437,7 +437,7 @@ namespace FinalProject.Controllers
 
 
 
-                return View("Call/Index", ListCandidate);
+                return View("Call/Call", ListCandidate);
             }
             catch (Exception)
             {
@@ -446,6 +446,104 @@ namespace FinalProject.Controllers
         }
 
 
+        //------------------------------------------------- View for candidate !!! CALLED !!! ---------------------------------------------
+        [Route("candidate/call/read/called")]
+        public ActionResult CandidateCalled()
+        {
+            try
+            {
+                //---------------------------- prepare data candidate for show in view --------------
+                //note : data candidate from class Manage_CandidateSelectionHistoryDTO method GetDataSelectionHistory
+                //note : data in this view especialy for candidate where state_id is 2(call) or 18(called) (state in step call)
+                List<CandidateSelectionHistoryDTO> ListCandidate = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().Where(d =>
+            d.CANDIDATE_STATE == 8).ToList();
+            //prepare vew bag
+            //---------------------------- prepare data viewbag --------------------
+            ViewBag.DataView = new Dictionary<string, object>{
+                    {"title","Call"},
+                    {"ListPosition",Manage_JobPositionDTO.GetData()},
+                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 8)}
+                    };
+
+            //============================ process searchng ============================
+            if (Request["filter"] != null)
+            {
+                string Position = Request["POSITION"];
+                int StateId = Convert.ToInt16(Request["CANDIDATE_STATE"]);
+                string Keyword = Request["Keyword"];
+
+                if (StateId != 0 && (Position == "all" && Keyword == ""))
+                {
+                    ListCandidate = ListCandidate.Where(d => d.CANDIDATE_STATE == StateId).ToList();
+                }
+                if (Position != "all" && (StateId == 0 && Keyword == ""))
+                {
+                    ListCandidate = ListCandidate.Where(d =>
+                    d.CANDIDATE_APPLIED_POSITION == Position ||
+                    d.CANDIDATE_SUITABLE_POSITION == Position &&
+                    (d.CANDIDATE_STATE == 2 || d.CANDIDATE_STATE == 8)).ToList();
+                }
+                if (Keyword != "" && (StateId == 0 && Position == "all"))
+                {
+                    ListCandidate = ListCandidate.Where(d =>
+                    d.CANDIDATE_EMAIL.Contains(Keyword) ||
+                    d.CANDIDATE_NAME.Contains(Keyword) ||
+                    d.CANDIDATE_PHONE.Contains(Keyword) &&
+                        (d.CANDIDATE_STATE == 2 || d.CANDIDATE_STATE == 8)).ToList();
+                }
+                else
+                {
+                    ListCandidate = ListCandidate.Where(d =>
+                     d.CANDIDATE_APPLIED_POSITION == Position ||
+                     d.CANDIDATE_SUITABLE_POSITION == Position ||
+                     d.CANDIDATE_STATE == StateId ||
+                     d.CANDIDATE_EMAIL.Contains(Keyword) ||
+                     d.CANDIDATE_NAME.Contains(Keyword) ||
+                     d.CANDIDATE_PHONE.Contains(Keyword) &&
+                     (d.CANDIDATE_STATE == 2 || d.CANDIDATE_STATE == 18)).ToList();
+                }
+            }
+            //============================ end process searchng ============================
+
+            return View("Call/Called", ListCandidate);
+
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+
+        //-------------------------------------------------------- process next call to called -----------------------------------
+        [Route("candidate/call/create/next/{id?}")]
+        public ActionResult CallNext(string id = null)
+        {
+            try
+            {
+                if (id == null) return Redirect("~/candidate/call");
+
+                UserDTO DataPic = (UserDTO)Session["UserLogin"];
+                int IdSelectHistory = Convert.ToInt16(id);
+                using (DBEntities db = new DBEntities())
+                {
+                    var DataSelect = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().FirstOrDefault(d => d.ID == IdSelectHistory);
+                    if (DataSelect == null) return Redirect("~/candidate/call");
+
+                    db.TB_CANDIDATE_SELECTION_HISTORY.FirstOrDefault(d => d.ID == DataSelect.ID).CANDIDATE_STATE = 8;
+
+                    db.TB_CANDIDATE.FirstOrDefault(d => d.ID == DataSelect.CANDIDATE_ID).CANDIDATE_STATE_ID = 8;
+
+                    db.SaveChanges();
+
+                    return Redirect("~/candidate/call/read/called");
+                }
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
 
 
 

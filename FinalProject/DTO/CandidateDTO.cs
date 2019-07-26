@@ -260,7 +260,7 @@ namespace FinalProject.DTO
                 Candidate.CANDIDATE_GPA = Data.CANDIDATE_GPA;
                 Candidate.CANDIDATE_MAJOR = Data.CANDIDATE_MAJOR;
                 Candidate.CANDIDATE_DEGREE = Data.CANDIDATE_DEGREE;
-                Candidate.CANDIDATE_STATE_ID = 1;
+                Candidate.CANDIDATE_STATE_ID = Data.CANDIDATE_STATE_ID;
                 Candidate.SOURCE = Data.SOURCE;
                 Candidate.SOURCING_DATE = DateTime.Now;
                 Candidate.ZIP_CODE = Data.ZIP_CODE;
@@ -386,5 +386,26 @@ namespace FinalProject.DTO
                 
             }
         }
+
+        ////change state 
+        //public static int ChangeState(int CandidateId, int StateId) 
+        //{
+        //    using(DBEntities db = new DBEntities())
+        //    {
+        //        TB_CANDIDATE Candidate = db.TB_CANDIDATE.FirstOrDefault(d => d.ID == CandidateId);
+        //        Candidate.CANDIDATE_STATE_ID = StateId;
+
+        //        UserDTO DataPic = (UserDTO)HttpContext.Current.Session["UserLogin"];
+        //        db.TB_CANDIDATE_SELECTION_HISTORY.Add(new TB_CANDIDATE_SELECTION_HISTORY
+        //        {
+        //            CANDIDATE_ID = CandidateId,
+        //            PIC_ID = DataPic.USER_ID,
+        //            CANDIDATE_STATE = StateId,
+        //            NOTES = "Next From Call to called"
+        //        });
+
+        //        return db.SaveChanges();
+        //    }
+        //}
     }
 }
