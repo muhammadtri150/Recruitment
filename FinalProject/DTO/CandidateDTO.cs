@@ -236,6 +236,28 @@ namespace FinalProject.DTO
                 var edu_start_date = Convert.ToDateTime(Data.EDUCATON_START_DATE);
                 var edu_end_date = Convert.ToDateTime(Data.EDUCATON_END_DATE);
 
+                //add selection history
+                if (Candidate.CANDIDATE_STATE_ID != Data.CANDIDATE_STATE_ID)
+                {
+                    //insert selection history
+                    UserDTO UserLogin = (UserDTO)HttpContext.Current.Session["UserLogin"];
+
+                    db.TB_CANDIDATE_SELECTION_HISTORY.Add(new TB_CANDIDATE_SELECTION_HISTORY
+                    {
+
+                        CANDIDATE_ID = Data.ID,
+                        PIC_ID = UserLogin.USER_ID,
+                        CANDIDATE_APPLIED_POSITION = Data.POSITION,
+                        CANDIDATE_SUITABLE_POSITION = Data.SUITABLE_POSITION,
+                        CANDIDATE_SOURCE = Data.SOURCE,
+                        CANDIDATE_EXPECTED_SALARY = Data.EXPECTED_sALARY,
+                        CANDIDATE_STATE = Data.CANDIDATE_STATE_ID,
+                        NOTES = Data.NOTES,
+                        CANDIDATE_INTERVIEW_DATE = Data.CANDIDATE_INTERVIEW_DATE
+                    });
+                    db.SaveChanges();
+                }
+
                 //process update data
                 Candidate.CANDIDATE_NAME = Data.CANDIDATE_NAME;
                 Candidate.CANDIDATE_AGE = Data.CANDIDATE_AGE;
@@ -289,25 +311,6 @@ namespace FinalProject.DTO
                     db.TB_CANDIDATE_SKILL.Add(new TB_CANDIDATE_SKILL {
                         CANDIDATE_ID = Data.ID,
                         SKILL = d
-                    });
-                }
-
-
-                if (Candidate.CANDIDATE_STATE_ID != Data.CANDIDATE_STATE_ID) {
-                    //insert selection history
-                    UserDTO UserLogin = (UserDTO)HttpContext.Current.Session["UserLogin"];
-
-                    Manage_CandidateSelectionHistoryDTO.AddData(new CandidateSelectionHistoryDTO
-                    {
-                        CANDIDATE_ID = Data.ID,
-                        PIC_ID = UserLogin.USER_ID,
-                        CANDIDATE_APPLIED_POSITION = Data.POSITION,
-                        CANDIDATE_SUITABLE_POSITION = Data.SUITABLE_POSITION,
-                        CANDIDATE_SOURCE = Data.SOURCE,
-                        CANDIDATE_EXPECTED_SALARY = Data.EXPECTED_sALARY,
-                        CANDIDATE_STATE = Data.CANDIDATE_STATE_ID,
-                        NOTES = Data.NOTES,
-                        CANDIDATE_INTERVIEW_DATE = Data.CANDIDATE_INTERVIEW_DATE
                     });
                 }
 
