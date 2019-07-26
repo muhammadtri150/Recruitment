@@ -18,7 +18,6 @@ namespace FinalProject.DTO
         public int ID { get; set; }
         public string CANDIDATE_ID { get; set; }
 
-        [Required]
         public string CANDIDATE_NAME { get; set; }
 
         public int? CANDIDATE_AGE { get; set; }
@@ -380,11 +379,9 @@ namespace FinalProject.DTO
         {
             using(DBEntities db = new DBEntities())
             {
-                string result = "";
-                string skill = Skill.ToString();
-                if (db.TB_CANDIDATE_SKILL.Where(d => d.SKILL.Equals(skill) && d.CANDIDATE_ID.Equals(IdCandidate) )  != null) result = "checked";
-
-                return result;
+                var data = db.TB_CANDIDATE_SKILL.FirstOrDefault(d => d.SKILL.Equals(Skill) && d.CANDIDATE_ID.Equals(IdCandidate));
+                return data != null ? "checked" : null; 
+                
             }
         }
     }

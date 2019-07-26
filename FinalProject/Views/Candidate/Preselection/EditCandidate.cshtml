@@ -40,7 +40,7 @@
                                 <select class="form-control" id="GENDER" name="GENDER_ID">
                                     @foreach (var d in Manage_GenderDTO.GetData())
                                     {
-                                        <option value="@d.GENDER_ID">@d.GENDER_NAME</option>
+                                        <option value="@d.GENDER_ID" @if (Model.GENDER_ID == d.GENDER_ID) { @("selected");}>@d.GENDER_NAME</option>
                                     }
                                 </select>
                             </div>
@@ -52,7 +52,7 @@
 
                             <div class="form-group">
                                 <label for="CANDIDATE_PLACE_BIRTH">BIRTH DATE</label>
-                                @Html.TextBoxFor(m => m.CANDIDATE_BIRTH_DATE, new { @class = "form-control", @id = "CANDIDATE_BIRTH_DATE",@type = "date"})
+                                <input type="datetime" value="@Convert.ToDateTime(Model.CANDIDATE_BIRTH_DATE).ToString("yyyy-MM-dd")" name="CANDIDATE_BIRTH_DATE" class="form-control"/>
                             </div>
 
                             <div class="form-group">
@@ -294,7 +294,7 @@
                                     <th scope="row">@(no++)</th>
                                     <td>@d.SKILL_NAME</td>
                                     <td>
-                                        <input type="checkbox" data-id_candidate="@Model.ID" data-skill_name="@d.SKILL_NAME" class="form-controlcheck-skill check-skill" value="@d.SKILL_NAME" name="CANDIDATE_SKILL[]" @(Manage_CandidateDTO.CheckBoxSkill(Convert.ToString(d.SKILL_NAME), Convert.ToInt16(Model.ID))) />
+                                        <input type="checkbox" data-id_candidate="@Model.ID" data-skill_name="@d.SKILL_NAME" class="form-controlcheck-skill check-skill" value="@d.SKILL_NAME" name="CANDIDATE_SKILL[]" @Manage_CandidateDTO.CheckBoxSkill(d.SKILL_NAME,Model.ID) />
                                     </td>
                                 </tr>
                             }

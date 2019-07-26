@@ -46,15 +46,15 @@
             <div class="col-lg-6 col-md-6 col-sm-12 col">
                 <div class="form-group">
                     <label class="title control-label">Start Date</label>
-                    <input type="date" value="@Model.START_DATE" class="form-control" name="START_DATE" />
+                    <input type="datetime" value="@Convert.ToDateTime(Model.START_DATE).ToString("dd-mm-yyyy")" class="form-control" name="START_DATE" />
                 </div>
                 <div class="form-group">
                     <label class="title control-label">End Date</label>
-                    <input type="date" value="@Model.END_DATE" class="form-control" name="END_DATE" />
+                    <input type="datetime" value="@Convert.ToDateTime(Model.END_DATE).ToString("dd-mm-yyyy")" class="form-control" name="END_DATE" />
                 </div>
                 <div class="form-group">
                     <label class="title control-label">Salary</label>
-                    <input type="number" value="@Model.CURRENT_SALARY" class="form-control" name="CURRENT_SALARY" />
+                    <input type="text" value="@Model.CURRENT_SALARY" class="form-control" name="CURRENT_SALARY" />
                 </div>
                 <div class="form-group">
                     <label class="title control-label">Project</label>

@@ -94,7 +94,7 @@ namespace FinalProject.Controllers
             }
         }
 
-        //----------------------------------------------------------- view form add new candidate -----------------------------------------------------------
+        //----------------------------------------------------------- view form add new candidate -----------------------------------------
         [Route("candidate/preselection/create/candidate")]
         public ActionResult CandidatePreselectionAdd()
         {
@@ -115,7 +115,7 @@ namespace FinalProject.Controllers
             }
         }
 
-        //---------------------------------------------------------- View Detail candidate  ----------------------------------------
+        //---------------------------------------------------------- View Detail candidate ------------------------------------------------
         [Route("candidate/preselection/read/detailcandidate/{id?}")]
         public ActionResult DetailCandidate(string id = null)
         {
@@ -216,8 +216,8 @@ namespace FinalProject.Controllers
         [Route("candidate/preselection/edit/candidate/process")]
         public ActionResult CandidateEdit(CandidateDTO Data, HttpPostedFileBase Pict = null, HttpPostedFileBase Cv = null)
         {
-            try
-            {
+            //try
+            //{
                 if (ModelState.IsValid)
                 {
                     var ProcessEdit = Manage_CandidateDTO.EditCandidate(Data, Pict, Cv);
@@ -234,16 +234,16 @@ namespace FinalProject.Controllers
                         TempData.Add("type", "warning");
                     }
 
-                    return Redirect("~/candidate/preselection/read/detailcandidate/" + Data.ID);
+                    return Redirect("~/candidate/preselection");
                 }
                 TempData.Add("message", "Candidate failed to Update, please complete form edit");
                 TempData.Add("type", "danger");
-                return Redirect("~/candidate/preselection/read/detailcandidate/" + Data.ID);
-        }
-            catch
-            {
-                return Redirect("~/auth/error");
-    }
+                return Redirect("~/candidate/preselection");
+    //    }
+    //        catch
+    //        {
+    //            return Redirect("~/auth/error");
+    //}
 }
 
         //************************************************* JOB EXPERIENCE OF CANDIDATE *****************************************************
