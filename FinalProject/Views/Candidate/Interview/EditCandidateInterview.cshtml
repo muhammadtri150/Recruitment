@@ -20,7 +20,7 @@
                 <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-skill" role="tab" aria-controls="nav-contact" aria-selected="false">Skill</a>
             </div>
         </nav>
-        <form method="post" action="~/candidate/call/update/next/process" enctype="multipart/form-data">
+        <form method="post" action="~/candidate/interview/update/next/process" enctype="multipart/form-data">
             <div class="tab-content" id="nav-tabContent">
                 <input type="hidden" name="ID" value="@Model.ID" />
                 <div class="tab-pane fade show active" id="nav-personal_information" role="tabpanel" aria-labelledby="nav-home-tab">
@@ -166,8 +166,8 @@
                                     {
                                         <option value="@d.JOBPOSITION_NAME" @{string res = ""; if (Model.POSITION == d.JOBPOSITION_NAME) { res = "selected"; } } @res>
                                             @d.JOBPOSITION_NAME
-                                    </option>
-                                }
+                                        </option>
+                                    }
                                 </select>
                             </div>
 
@@ -204,6 +204,13 @@
                                 <div class="form-group">
                                     <label for="EXPECTED_sALARY">Excpected Salary</label>
                                     @Html.TextBoxFor(m => m.EXPECTED_sALARY, new { @class = "form-control", @id = "EXPECTED_sALARY" })
+                                </div>
+                            </div>
+
+                            <div class="col-sm">
+                                <div class="form-group">
+                                    <label for="SUITABLE_POSITION">Suitable Position </label>
+                                    @Html.TextBoxFor(m => m.SUITABLE_POSITION, new { @class = "form-control", @id = "SUITABLE_POSITION" })
                                 </div>
                             </div>
 

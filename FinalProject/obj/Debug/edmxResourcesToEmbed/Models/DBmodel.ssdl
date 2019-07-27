@@ -69,6 +69,7 @@
     <Property Name="SOURCE" Type="varchar" MaxLength="50" />
     <Property Name="SOURCING_DATE" Type="date" />
     <Property Name="POSITION" Type="varchar" MaxLength="50" />
+    <Property Name="SUITABLE_POSITION" Type="varchar" MaxLength="50" />
     <Property Name="EXPECTED_SALARY" Type="money" />
     <Property Name="NOTES" Type="text" />
     <Property Name="RECOMENDATION" Type="varchar" MaxLength="50" />

@@ -59,6 +59,7 @@ namespace FinalProject.Models
         public string NOTES { get; set; }
         public string RECOMENDATION { get; set; }
         public Nullable<System.DateTime> AVAILABLE_JOIN { get; set; }
+        public string SUITABLE_POSITION { get; set; }
     
         public virtual TB_STATE_CANDIDATE TB_STATE_CANDIDATE { get; set; }
         public virtual TB_PROVINCE TB_PROVINCE { get; set; }

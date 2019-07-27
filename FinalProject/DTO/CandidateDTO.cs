@@ -253,6 +253,7 @@ namespace FinalProject.DTO
                         CANDIDATE_EXPECTED_SALARY = Data.EXPECTED_sALARY,
                         CANDIDATE_STATE = Data.CANDIDATE_STATE_ID,
                         NOTES = Data.NOTES,
+                        PROCESS_DATE = DateTime.Now,
                         CANDIDATE_INTERVIEW_DATE = Data.CANDIDATE_INTERVIEW_DATE
                     });
                     db.SaveChanges();
@@ -294,6 +295,7 @@ namespace FinalProject.DTO
                 Candidate.EXPECTED_SALARY = Data.EXPECTED_sALARY;
                 Candidate.NOTES = Data.NOTES;
                 Candidate.POSITION = Data.POSITION;
+                Candidate.SUITABLE_POSITION = Data.SUITABLE_POSITION;
                 Candidate.EDUCATION_START_DATE = edu_start_date;
                 Candidate.EDUCATION_END_DATE = edu_end_date;
 
@@ -364,7 +366,8 @@ namespace FinalProject.DTO
                     EDUCATON_START_DATE = ca.EDUCATION_START_DATE,
                     EDUCATON_END_DATE = ca.EDUCATION_END_DATE,
                     RELIGION = db.TB_RELIGION.FirstOrDefault(d => d.RELIGION_ID == ca.RELIGION_ID).RELIGION_NAME,
-                    GENDER_NAME = db.TB_GENDER.FirstOrDefault(d => d.GENDER_ID == ca.GENDER_ID).GENDER_NAME
+                    GENDER_NAME = db.TB_GENDER.FirstOrDefault(d => d.GENDER_ID == ca.GENDER_ID).GENDER_NAME,
+                    SUITABLE_POSITION = ca.SUITABLE_POSITION
                 }).ToList();
                 return ListCandidateDTO;
             }

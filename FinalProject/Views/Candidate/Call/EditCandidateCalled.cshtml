@@ -166,8 +166,8 @@
                                     {
                                         <option value="@d.JOBPOSITION_NAME" @{string res = ""; if (Model.POSITION == d.JOBPOSITION_NAME) { res = "selected"; } } @res>
                                             @d.JOBPOSITION_NAME
-                                    </option>
-                                }
+                                        </option>
+                                    }
                                 </select>
                             </div>
 
@@ -207,6 +207,18 @@
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <label for="AVAILABLE_JOIN">Interview Date</label>
+                                <input type="datetime" value="@Convert.ToDateTime(Model.CANDIDATE_INTERVIEW_DATE).ToString("yyyy-MM-dd")" class="form-control" id="CANDIDATE_INTERVIEW_DATE" name="CANDIDATE_INTERVIEW_DATE" />
+                            </div>
+
+                            <div class="col-sm">
+                                <div class="form-group">
+                                    <label for="SUITABLE_POSITION">Suitable Position </label>
+                                    @Html.TextBoxFor(m => m.SUITABLE_POSITION, new { @class = "form-control", @id = "SUITABLE_POSITION" })
+                                </div>
+                            </div>
+
                             <div class="col-sm">
                                 <div class="form-group">
                                     <label for="NOTES">NOTES</label>
@@ -217,17 +229,18 @@
 
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="CANDIDATE_STATE_ID">State</label>
+                        <select class="form-control" id="CANDIDATE_STATE_ID" name="CANDIDATE_STATE_ID">
+                            @foreach (var d in (List<StateCandidateDTO>)ViewBag.DataView["ListState"])
+                            {
+                                <option value="@d.ID" @{string res = ""; if (Model.CANDIDATE_STATE_ID == d.ID) { res = "selected"; }} @res>@d.STATE_NAME</option>
+                            }
+                        </select>
+                    </div>
 
                 </div>
-                <div class="form-group">
-                    <label for="CANDIDATE_STATE_ID">State</label>
-                    <select class="form-control" id="CANDIDATE_STATE_ID" name="CANDIDATE_STATE_ID">
-                        @foreach (var d in (List<StateCandidateDTO>)ViewBag.DataView["ListState"])
-                        {
-                            <option value="@d.ID" @{string res = ""; if (Model.CANDIDATE_STATE_ID == d.ID) { res = "selected"; }} @res>@d.STATE_NAME</option>
-                        }
-                    </select>
-                </div>
+
                 @*-------------------------------------Education Information----------------------------------------------------------------------------*@
                 <div class="tab-pane fade" id="nav-education_information" role="tabpanel" aria-labelledby="nav-profile-tab">
 

@@ -223,6 +223,7 @@
     <EntitySetMapping Name="TB_CANDIDATE">
       <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_CANDIDATE">
         <MappingFragment StoreEntitySet="TB_CANDIDATE">
+          <ScalarProperty Name="SUITABLE_POSITION" ColumnName="SUITABLE_POSITION" />
           <ScalarProperty Name="AVAILABLE_JOIN" ColumnName="AVAILABLE_JOIN" />
           <ScalarProperty Name="RECOMENDATION" ColumnName="RECOMENDATION" />
           <ScalarProperty Name="NOTES" ColumnName="NOTES" />

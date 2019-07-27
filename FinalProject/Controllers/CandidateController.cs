@@ -446,73 +446,7 @@ namespace FinalProject.Controllers
         }
 
 
-        //------------------------------------------------- View for candidate !!! CALLED !!! ---------------------------------------------
-        [Route("candidate/call/read/called")]
-        public ActionResult CandidateCalled()
-        {
-            try
-            {
-                //---------------------------- prepare data candidate for show in view --------------
-                //note : data candidate from class Manage_CandidateSelectionHistoryDTO method GetDataSelectionHistory
-                //note : data in this view especialy for candidate where state_id is 2(call) or 18(called) (state in step call)
-                List<CandidateSelectionHistoryDTO> ListCandidate = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().Where(d =>
-            d.CANDIDATE_STATE == 8 || d.CANDIDATE_STATE == 15 || d.CANDIDATE_STATE == 16 || d.CANDIDATE_STATE == 17).ToList();
-            //prepare vew bag
-            //---------------------------- prepare data viewbag --------------------
-            ViewBag.DataView = new Dictionary<string, object>{
-                    {"title","Call"},
-                    {"ListPosition",Manage_JobPositionDTO.GetData()},
-                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 8)}
-                    };
-
-            //============================ process searchng ============================
-            if (Request["filter"] != null)
-            {
-                string Position = Request["POSITION"];
-                int StateId = Convert.ToInt16(Request["CANDIDATE_STATE"]);
-                string Keyword = Request["Keyword"];
-
-                if (StateId != 0 && (Position == "all" && Keyword == ""))
-                {
-                    ListCandidate = ListCandidate.Where(d => d.CANDIDATE_STATE == StateId).ToList();
-                }
-                if (Position != "all" && (StateId == 0 && Keyword == ""))
-                {
-                    ListCandidate = ListCandidate.Where(d =>
-                    d.CANDIDATE_APPLIED_POSITION == Position ||
-                    d.CANDIDATE_SUITABLE_POSITION == Position &&
-                    (d.CANDIDATE_STATE == 2 || d.CANDIDATE_STATE == 8)).ToList();
-                }
-                if (Keyword != "" && (StateId == 0 && Position == "all"))
-                {
-                    ListCandidate = ListCandidate.Where(d =>
-                    d.CANDIDATE_EMAIL.Contains(Keyword) ||
-                    d.CANDIDATE_NAME.Contains(Keyword) ||
-                    d.CANDIDATE_PHONE.Contains(Keyword) &&
-                        (d.CANDIDATE_STATE == 2 || d.CANDIDATE_STATE == 8)).ToList();
-                }
-                else
-                {
-                    ListCandidate = ListCandidate.Where(d =>
-                     d.CANDIDATE_APPLIED_POSITION == Position ||
-                     d.CANDIDATE_SUITABLE_POSITION == Position ||
-                     d.CANDIDATE_STATE == StateId ||
-                     d.CANDIDATE_EMAIL.Contains(Keyword) ||
-                     d.CANDIDATE_NAME.Contains(Keyword) ||
-                     d.CANDIDATE_PHONE.Contains(Keyword) &&
-                     (d.CANDIDATE_STATE == 2 || d.CANDIDATE_STATE == 18)).ToList();
-                }
-            }
-            //============================ end process searchng ============================
-
-            return View("Call/Called", ListCandidate);
-
-            }
-            catch (Exception)
-            {
-                return Redirect("~/auth/error");
-            }
-        }
+        
 
         //---------------------------------------------------------- View next call to called ----------------------------------------
         [Route("candidate/call/update/next/{id?}")]
@@ -583,92 +517,23 @@ namespace FinalProject.Controllers
             }
         }
 
-        //---------------------------------------------------------- View next called to Interview ----------------------------------------
-        [Route("candidate/call/update/called/next/{id?}")]
-        public ActionResult CalledNext(string id = null)
-        {
-            try
-            {
-                if (id == null) return Redirect("~/candidate/call");
-
-                int CandidateId = Convert.ToInt16(id);
-                CandidateDTO DataCandidate = Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == CandidateId);
-
-                if (DataCandidate == null) return Redirect("~/candidate/preselection");
-
-                ViewBag.DataView = new Dictionary<string, object>()
-                {
-                    {"title","Call"},
-                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 8 ||  d.ID == 19).ToList() }
-                };
-
-                return View("Call/EditCandidateCalled", DataCandidate);
-            }
-            catch
-            {
-                return Redirect("~/auth/error");
-            }
-        }
-
-        //------------------------------------------ Process called next to interview -------------------------------------------------
-        [Route("candidate/call/update/called/next/process")]
-        public ActionResult CandidateCalledNext(CandidateDTO Data, HttpPostedFileBase Pict = null, HttpPostedFileBase Cv = null)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    var ProcessEdit = Manage_CandidateDTO.EditCandidate(Data, Pict, Cv);
-
-                    if (ProcessEdit > 0)
-                    {
-                        TempData.Add("message", "Candidate Update successfully");
-                        TempData.Add("type", "success");
-                        UserLogingUtils.SaveLoggingUserActivity("Edit Candidate" + Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID));
-                    }
-                    else
-                    {
-                        TempData.Add("message", "Candidate failed to Update");
-                        TempData.Add("type", "warning");
-                    }
-
-                    return Redirect("~/candidate/call/read/called");
-                }
-                TempData.Add("message", "Candidate failed to Update, please complete form edit");
-                TempData.Add("type", "danger");
-                return Redirect("~/candidate/call");
-            }
-            catch
-            {
-                return Redirect("~/auth/error");
-            }
-        }
-
-
-
-
-
-
-
-
-        //------------------------------------------------------------ candidate interview -----------------------------------------
-
-        [Route("candidate/interview")]
-        public ActionResult CandidateInterview()
+        //------------------------------------------------- View for candidate !!! CALLED !!! ---------------------------------------------
+        [Route("candidate/call/read/called")]
+        public ActionResult CandidateCalled()
         {
             try
             {
                 //---------------------------- prepare data candidate for show in view --------------
                 //note : data candidate from class Manage_CandidateSelectionHistoryDTO method GetDataSelectionHistory
-                //note : data in this view especialy for candidate where state_id is 19(interview process)
+                //note : data in this view especialy for candidate where state_id is 2(call) or 18(called) (state in step call)
                 List<CandidateSelectionHistoryDTO> ListCandidate = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().Where(d =>
-            d.CANDIDATE_STATE == 19).ToList();
+            d.CANDIDATE_STATE == 8 || d.CANDIDATE_STATE == 15 || d.CANDIDATE_STATE == 16 || d.CANDIDATE_STATE == 17).ToList();
                 //prepare vew bag
                 //---------------------------- prepare data viewbag --------------------
                 ViewBag.DataView = new Dictionary<string, object>{
-                    {"title","Interview"},
+                    {"title","Call"},
                     {"ListPosition",Manage_JobPositionDTO.GetData()},
-                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 15 || d.ID == 16 || d.ID == 17)}
+                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 8)}
                     };
 
                 //============================ process searchng ============================
@@ -711,6 +576,144 @@ namespace FinalProject.Controllers
                 }
                 //============================ end process searchng ============================
 
+                return View("Call/Called", ListCandidate);
+
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+        //---------------------------------------------------------- View next called to Interview ----------------------------------------
+        [Route("candidate/call/update/called/next/{id?}")]
+        public ActionResult CalledNext(string id = null)
+        {
+            try
+            {
+                if (id == null) return Redirect("~/candidate/call");
+
+                int CandidateId = Convert.ToInt16(id);
+                CandidateDTO DataCandidate = Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == CandidateId);
+                DataCandidate.CANDIDATE_INTERVIEW_DATE = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().FirstOrDefault(d => d.CANDIDATE_STATE == 8 && d.CANDIDATE_ID == CandidateId).CANDIDATE_INTERVIEW_DATE;
+                if (DataCandidate == null) return Redirect("~/candidate/preselection");
+
+                ViewBag.DataView = new Dictionary<string, object>()
+                {
+                    {"title","Call"},
+                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 8 ||  d.ID == 19).ToList() }
+                };
+
+                return View("Call/EditCandidateCalled", DataCandidate);
+            }
+            catch
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+        //------------------------------------------ Process called next to interview -------------------------------------------------
+        [Route("candidate/call/update/called/next/process")]
+        public ActionResult CandidateCalledNext(CandidateDTO Data, HttpPostedFileBase Pict = null, HttpPostedFileBase Cv = null)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    Data.CANDIDATE_INTERVIEW_DATE = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().FirstOrDefault(d => d.CANDIDATE_STATE == 8 && d.CANDIDATE_ID == Data.ID).CANDIDATE_INTERVIEW_DATE;
+                    var ProcessEdit = Manage_CandidateDTO.EditCandidate(Data, Pict, Cv);
+
+                    if (ProcessEdit > 0)
+                    {
+                        TempData.Add("message", "Candidate Update successfully");
+                        TempData.Add("type", "success");
+                        UserLogingUtils.SaveLoggingUserActivity("Edit Candidate" + Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID));
+                    }
+                    else
+                    {
+                        TempData.Add("message", "Candidate failed to Update");
+                        TempData.Add("type", "warning");
+                    }
+
+                    return Redirect("~/candidate/call/interview");
+                }
+                TempData.Add("message", "Candidate failed to Update, please complete form edit");
+                TempData.Add("type", "danger");
+                return Redirect("~/candidate/call");
+            }
+            catch
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+
+
+
+
+
+
+
+        //------------------------------------------------------------ candidate interview -----------------------------------------
+
+        [Route("candidate/interview")]
+        public ActionResult CandidateInterview()
+        {
+            try
+            {
+                //---------------------------- prepare data candidate for show in view --------------
+                //note : data candidate from class Manage_CandidateSelectionHistoryDTO method GetDataSelectionHistory
+                //note : data in this view especialy for candidate where state_id is 19(interview process)
+                List<CandidateSelectionHistoryDTO> ListCandidate = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().Where(d =>
+            d.CANDIDATE_STATE == 19).ToList();
+                //prepare vew bag
+                //---------------------------- prepare data viewbag --------------------
+                ViewBag.DataView = new Dictionary<string, object>{
+                    {"title","Interview"},
+                    {"ListPosition",Manage_JobPositionDTO.GetData()},
+                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 15 || d.ID == 16 || d.ID == 17 || d.ID == 19)}
+                    };
+
+                //============================ process searchng ============================
+                if (Request["filter"] != null)
+                {
+                    string Position = Request["POSITION"];
+                    int StateId = Convert.ToInt16(Request["CANDIDATE_STATE"]);
+                    string Keyword = Request["Keyword"];
+
+                    if (StateId != 0 && (Position == "all" && Keyword == ""))
+                    {
+                        ListCandidate = ListCandidate.Where(d => d.CANDIDATE_STATE == StateId).ToList();
+                    }
+                    if (Position != "all" && (StateId == 0 && Keyword == ""))
+                    {
+                        ListCandidate = ListCandidate.Where(d =>
+                        d.CANDIDATE_APPLIED_POSITION == Position ||
+                        d.CANDIDATE_SUITABLE_POSITION == Position &&
+                        (d.ID == 19)).ToList();
+                    }
+                    if (Keyword != "" && (StateId == 0 && Position == "all"))
+                    {
+                        ListCandidate = ListCandidate.Where(d =>
+                        d.CANDIDATE_EMAIL.Contains(Keyword) ||
+                        d.CANDIDATE_NAME.Contains(Keyword) ||
+                        d.CANDIDATE_PHONE.Contains(Keyword) &&
+                       (d.ID == 19)).ToList();
+                    }
+                    else
+                    {
+                        ListCandidate = ListCandidate.Where(d =>
+                         d.CANDIDATE_APPLIED_POSITION == Position ||
+                         d.CANDIDATE_SUITABLE_POSITION == Position ||
+                         d.CANDIDATE_STATE == StateId ||
+                         d.CANDIDATE_EMAIL.Contains(Keyword) ||
+                         d.CANDIDATE_NAME.Contains(Keyword) ||
+                         d.CANDIDATE_PHONE.Contains(Keyword) &&
+                         (d.ID == 19)).ToList();
+                    }
+                }
+                //============================ end process searchng ============================
+
                 return View("Interview/Interview", ListCandidate);
 
             }
@@ -719,6 +722,386 @@ namespace FinalProject.Controllers
                 return Redirect("~/auth/error");
             }
         }
+
+        //---------------------------------------------------------- View edit interview to interviewed ----------------------------------------
+        [Route("candidate/interview/update/next/{id?}")]
+        public ActionResult InterviewNext(string id = null)
+        {
+            try
+            {
+                if (id == null) return Redirect("~/candidate/call");
+
+                int CandidateId = Convert.ToInt16(id);
+                CandidateDTO DataCandidate = Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == CandidateId);
+
+                if (DataCandidate == null) return Redirect("~/candidate/preselection");
+
+                ViewBag.DataView = new Dictionary<string, object>()
+                {
+                    {"title","Interview"},
+                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 15 || d.ID == 16 || d.ID == 17 || d.ID == 19).ToList()}
+                };
+
+                return View("Interview/EditCandidateInterview", DataCandidate);
+            }
+            catch
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+        //------------------------------------------ Process interview next to interviewed -------------------------------------------------
+        [Route("candidate/interview/update/next/process")]
+        public ActionResult CandidateInterviewNext(CandidateDTO Data, HttpPostedFileBase Pict = null, HttpPostedFileBase Cv = null)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var ProcessEdit = Manage_CandidateDTO.EditCandidate(Data, Pict, Cv);
+
+                    //process removing state call
+
+                    if (ProcessEdit > 0)
+                    {
+                        TempData.Add("message", "Candidate Update successfully");
+                        TempData.Add("type", "success");
+                        UserLogingUtils.SaveLoggingUserActivity("Edit Candidate" + Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID));
+                        using (DBEntities db = new DBEntities())
+                        {
+                            var SelectHis = db.TB_CANDIDATE_SELECTION_HISTORY.FirstOrDefault(d => d.CANDIDATE_STATE == 19 && d.CANDIDATE_ID == Data.ID);
+                            db.TB_CANDIDATE_SELECTION_HISTORY.Remove(SelectHis);
+                            db.SaveChanges();
+                        }
+                    }
+                    else
+                    {
+                        TempData.Add("message", "Candidate failed to Update");
+                        TempData.Add("type", "warning");
+                    }
+
+                    return Redirect("~/candidate/interview/read/interviewed");
+                }
+                TempData.Add("message", "Candidate failed to Update, please complete form edit");
+                TempData.Add("type", "danger");
+                return Redirect("~/candidate/interviewed");
+            }
+            catch
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+
+        //------------------------------------------------------------ view candidate interviewed -----------------------------------------
+
+        [Route("candidate/interview/read/interviewed")]
+        public ActionResult CandidateInterviewed()
+        {
+            try
+            {
+                //---------------------------- prepare data candidate for show in view --------------
+                //note : data candidate from class Manage_CandidateSelectionHistoryDTO method GetDataSelectionHistory
+                //note : data in this view especialy for candidate where state_id is 15(hold), 16(pass), 17(drop)
+                List<CandidateSelectionHistoryDTO> ListCandidate = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().Where(d =>
+            d.CANDIDATE_STATE == 6 || d.CANDIDATE_STATE == 14 || d.CANDIDATE_STATE == 16).ToList();
+                //prepare vew bag
+                //---------------------------- prepare data viewbag --------------------
+                ViewBag.DataView = new Dictionary<string, object>{
+                    {"title","Interview"},
+                    {"ListPosition",Manage_JobPositionDTO.GetData()},
+                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 6 || d.ID == 14 || d.ID == 16)}
+                    };
+
+                //============================ process searchng ============================
+                if (Request["filter"] != null)
+                {
+                    string Position = Request["POSITION"];
+                    int StateId = Convert.ToInt16(Request["CANDIDATE_STATE"]);
+                    string Keyword = Request["Keyword"];
+
+                    if (StateId != 0 && (Position == "all" && Keyword == ""))
+                    {
+                        ListCandidate = ListCandidate.Where(d => d.CANDIDATE_STATE == StateId).ToList();
+                    }
+                    if (Position != "all" && (StateId == 0 && Keyword == ""))
+                    {
+                        ListCandidate = ListCandidate.Where(d =>
+                        d.CANDIDATE_APPLIED_POSITION == Position ||
+                        d.CANDIDATE_SUITABLE_POSITION == Position &&
+                        (d.ID == 6 || d.ID == 14 || d.ID == 16)).ToList();
+                    }
+                    if (Keyword != "" && (StateId == 0 && Position == "all"))
+                    {
+                        ListCandidate = ListCandidate.Where(d =>
+                        d.CANDIDATE_EMAIL.Contains(Keyword) ||
+                        d.CANDIDATE_NAME.Contains(Keyword) ||
+                        d.CANDIDATE_PHONE.Contains(Keyword) &&
+                       (d.ID == 6 || d.ID == 14 || d.ID == 16)).ToList();
+                    }
+                    else
+                    {
+                        ListCandidate = ListCandidate.Where(d =>
+                         d.CANDIDATE_APPLIED_POSITION == Position ||
+                         d.CANDIDATE_SUITABLE_POSITION == Position ||
+                         d.CANDIDATE_STATE == StateId ||
+                         d.CANDIDATE_EMAIL.Contains(Keyword) ||
+                         d.CANDIDATE_NAME.Contains(Keyword) ||
+                         d.CANDIDATE_PHONE.Contains(Keyword) &&
+                         (d.ID == 6 || d.ID == 14 || d.ID == 16)).ToList();
+                    }
+                }
+                //============================ end process searchng ============================
+
+                return View("Interview/Interviewed", ListCandidate);
+
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+
+        //---------------------------------------------------------- View edit interviewed to delivery ----------------------------------------
+        [Route("candidate/interview/update/next/{id?}")]
+        public ActionResult InterviewedNext(string id = null)
+        {
+            try
+            {
+                if (id == null) return Redirect("~/candidate/call");
+
+                int CandidateId = Convert.ToInt16(id);
+                CandidateDTO DataCandidate = Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == CandidateId);
+
+                if (DataCandidate == null) return Redirect("~/candidate/preselection");
+
+                ViewBag.DataView = new Dictionary<string, object>()
+                {
+                    {"title","Interview"},
+                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 6 || d.ID == 14 || d.ID == 16).ToList()}
+                };
+
+                return View("Interview/EditCandidateInterviewed", DataCandidate);
+            }
+            catch
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+        //------------------------------------------ Process interviewed next to delivery -------------------------------------------------
+        [Route("candidate/interview/update/next/process")]
+        public ActionResult CandidateInterviewedNext(CandidateDTO Data, HttpPostedFileBase Pict = null, HttpPostedFileBase Cv = null)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var ProcessEdit = Manage_CandidateDTO.EditCandidate(Data, Pict, Cv);
+
+                    //process removing state call
+
+                    if (ProcessEdit > 0)
+                    {
+                        TempData.Add("message", "Candidate Update successfully");
+                        TempData.Add("type", "success");
+                        UserLogingUtils.SaveLoggingUserActivity("Edit Candidate" + Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID));
+                    }
+                    else
+                    {
+                        TempData.Add("message", "Candidate failed to Update");
+                        TempData.Add("type", "warning");
+                    }
+
+                    return Redirect("~/candidate/delivery");
+                }
+                TempData.Add("message", "Candidate failed to Update, please complete form edit");
+                TempData.Add("type", "danger");
+                return Redirect("~/candidate/interviewed");
+            }
+            catch
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+
+
+
+
+
+
+        //**********************************************************  Delivery   *******************************************************
+
+
+        //---------------------------------------------------------- view for delivery -------------------------------------------------
+        [Route("candidate/interview/read/interviewed")]
+        public ActionResult CandidateDelivery()
+        {
+            try
+            {
+                //---------------------------- prepare data candidate for show in view --------------
+                //note : data candidate from class Manage_CandidateSelectionHistoryDTO method GetDataSelectionHistory
+                //note : data in this view especialy for candidate where state_id is 15(hold), 16(pass), 17(drop)
+                List<CandidateSelectionHistoryDTO> ListCandidate = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().Where(d =>
+                d.CANDIDATE_STATE == 16).ToList();
+                //prepare vew bag
+                //---------------------------- prepare data viewbag --------------------
+                ViewBag.DataView = new Dictionary<string, object>{
+                    {"title","Interview"},
+                    {"ListPosition",Manage_JobPositionDTO.GetData()},
+                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 6 || d.ID == 14 || d.ID == 16)}
+                    };
+
+                //============================ process searchng ============================
+                if (Request["filter"] != null)
+                {
+                    string Position = Request["POSITION"];
+                    int StateId = Convert.ToInt16(Request["CANDIDATE_STATE"]);
+                    string Keyword = Request["Keyword"];
+
+                    if (StateId != 0 && (Position == "all" && Keyword == ""))
+                    {
+                        ListCandidate = ListCandidate.Where(d => d.CANDIDATE_STATE == StateId).ToList();
+                    }
+                    if (Position != "all" && (StateId == 0 && Keyword == ""))
+                    {
+                        ListCandidate = ListCandidate.Where(d =>
+                        d.CANDIDATE_APPLIED_POSITION == Position ||
+                        d.CANDIDATE_SUITABLE_POSITION == Position &&
+                        (d.ID == 6 || d.ID == 14 || d.ID == 16)).ToList();
+                    }
+                    if (Keyword != "" && (StateId == 0 && Position == "all"))
+                    {
+                        ListCandidate = ListCandidate.Where(d =>
+                        d.CANDIDATE_EMAIL.Contains(Keyword) ||
+                        d.CANDIDATE_NAME.Contains(Keyword) ||
+                        d.CANDIDATE_PHONE.Contains(Keyword) &&
+                       (d.ID == 6 || d.ID == 14 || d.ID == 16)).ToList();
+                    }
+                    else
+                    {
+                        ListCandidate = ListCandidate.Where(d =>
+                         d.CANDIDATE_APPLIED_POSITION == Position ||
+                         d.CANDIDATE_SUITABLE_POSITION == Position ||
+                         d.CANDIDATE_STATE == StateId ||
+                         d.CANDIDATE_EMAIL.Contains(Keyword) ||
+                         d.CANDIDATE_NAME.Contains(Keyword) ||
+                         d.CANDIDATE_PHONE.Contains(Keyword) &&
+                         (d.ID == 6 || d.ID == 14 || d.ID == 16)).ToList();
+                    }
+                }
+                //============================ end process searchng ============================
+
+                return View("Interview/Interviewed", ListCandidate);
+
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+
+        //---------------------------------------------------------- View edit interviewed to delivery ----------------------------------------
+        [Route("candidate/interview/update/next/{id?}")]
+        public ActionResult InterviewedNext(string id = null)
+        {
+            try
+            {
+                if (id == null) return Redirect("~/candidate/call");
+
+                int CandidateId = Convert.ToInt16(id);
+                CandidateDTO DataCandidate = Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == CandidateId);
+
+                if (DataCandidate == null) return Redirect("~/candidate/preselection");
+
+                ViewBag.DataView = new Dictionary<string, object>()
+                {
+                    {"title","Interview"},
+                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 6 || d.ID == 14 || d.ID == 16).ToList()}
+                };
+
+                return View("Interview/EditCandidateInterviewed", DataCandidate);
+            }
+            catch
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+        //------------------------------------------ Process interviewed next to delivery -------------------------------------------------
+        [Route("candidate/interview/update/next/process")]
+        public ActionResult CandidateInterviewedNext(CandidateDTO Data, HttpPostedFileBase Pict = null, HttpPostedFileBase Cv = null)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var ProcessEdit = Manage_CandidateDTO.EditCandidate(Data, Pict, Cv);
+
+                    //process removing state call
+
+                    if (ProcessEdit > 0)
+                    {
+                        TempData.Add("message", "Candidate Update successfully");
+                        TempData.Add("type", "success");
+                        UserLogingUtils.SaveLoggingUserActivity("Edit Candidate" + Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID));
+                    }
+                    else
+                    {
+                        TempData.Add("message", "Candidate failed to Update");
+                        TempData.Add("type", "warning");
+                    }
+
+                    return Redirect("~/candidate/delivery");
+                }
+                TempData.Add("message", "Candidate failed to Update, please complete form edit");
+                TempData.Add("type", "danger");
+                return Redirect("~/candidate/interviewed");
+            }
+            catch
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         //------------------------------------------------------------ candidate delivery -----------------------------------------

@@ -58,8 +58,16 @@ namespace FinalProject.Filters
                     //prepare dat sub menu base on url segment 3 (index 2)
                     TB_SUBMENU DataSubMenu = db.TB_SUBMENU.FirstOrDefault(sm => sm.TITLE_SUBMENU == SubMenu);
 
+                    
+
                     //check existing data sub menu
-                    if (DataSubMenu == null) throw new Exception();
+                    if (DataSubMenu == null) {
+                        //for add ad edti job exp
+                        if (Url.Length >= 5)
+                        {
+                            if (Url[4] != "jobExp") throw new Exception();
+                        }
+                    }
 
                     //prepare data Action Candidate base of url segment 4 (index 3)
                     TB_ACTION_CANDIDATE DataActionCandidate = db.TB_ACTION_CANDIDATE.FirstOrDefault(ac => ac.ACTION_NAME == Action);

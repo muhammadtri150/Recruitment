@@ -166,8 +166,8 @@
                                     {
                                         <option value="@d.JOBPOSITION_NAME" @{string res = ""; if (Model.POSITION == d.JOBPOSITION_NAME) { res = "selected"; } } @res>
                                             @d.JOBPOSITION_NAME
-                                    </option>
-                                }
+                                        </option>
+                                    }
                                 </select>
                             </div>
 
@@ -204,6 +204,18 @@
                                 <div class="form-group">
                                     <label for="EXPECTED_sALARY">Excpected Salary</label>
                                     @Html.TextBoxFor(m => m.EXPECTED_sALARY, new { @class = "form-control", @id = "EXPECTED_sALARY" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="AVAILABLE_JOIN">Interview Date</label>
+                                <input type="date" class="form-control" id="CANDIDATE_INTERVIEW_DATE" name="CANDIDATE_INTERVIEW_DATE" />
+                            </div>
+
+                            <div class="col-sm">
+                                <div class="form-group">
+                                    <label for="SUITABLE_POSITION">Suitable Position </label>
+                                    @Html.TextBoxFor(m => m.SUITABLE_POSITION, new { @class = "form-control", @id = "SUITABLE_POSITION" })
                                 </div>
                             </div>
 

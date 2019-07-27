@@ -74,6 +74,7 @@
           <Property Name="SOURCE" Type="varchar" MaxLength="50" />
           <Property Name="SOURCING_DATE" Type="date" />
           <Property Name="POSITION" Type="varchar" MaxLength="50" />
+          <Property Name="SUITABLE_POSITION" Type="varchar" MaxLength="50" />
           <Property Name="EXPECTED_SALARY" Type="money" />
           <Property Name="NOTES" Type="text" />
           <Property Name="RECOMENDATION" Type="varchar" MaxLength="50" />
@@ -1093,6 +1094,7 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <NavigationProperty Name="TB_GENDER" Relationship="FinalProject_adp3Model.FK__TB_CANDID__GENDE__6FE99F9F" FromRole="TB_CANDIDATE" ToRole="TB_GENDER" />
           <NavigationProperty Name="TB_MARITALSTATUS" Relationship="FinalProject_adp3Model.FK__TB_CANDID__MARIT__6EF57B66" FromRole="TB_CANDIDATE" ToRole="TB_MARITALSTATUS" />
           <NavigationProperty Name="TB_RELIGION" Relationship="FinalProject_adp3Model.FK__TB_CANDID__RELIG__70DDC3D8" FromRole="TB_CANDIDATE" ToRole="TB_RELIGION" />
+          <Property Name="SUITABLE_POSITION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK__TB_CANDID__CANDI__71D1E811">
           <End Type="FinalProject_adp3Model.TB_STATE_CANDIDATE" Role="TB_STATE_CANDIDATE" Multiplicity="0..1" />
@@ -1449,6 +1451,7 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <EntitySetMapping Name="TB_CANDIDATE">
             <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_CANDIDATE">
               <MappingFragment StoreEntitySet="TB_CANDIDATE">
+                <ScalarProperty Name="SUITABLE_POSITION" ColumnName="SUITABLE_POSITION" />
                 <ScalarProperty Name="AVAILABLE_JOIN" ColumnName="AVAILABLE_JOIN" />
                 <ScalarProperty Name="RECOMENDATION" ColumnName="RECOMENDATION" />
                 <ScalarProperty Name="NOTES" ColumnName="NOTES" />

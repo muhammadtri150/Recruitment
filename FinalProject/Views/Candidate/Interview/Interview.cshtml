@@ -60,15 +60,15 @@
     <div class="container">
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" align="center" id="nav-home-tab" data-toggle="tab" href="#nav-call" role="tab" aria-controls="nav-home" aria-selected="true">List Candidate</a>
-                <a class="nav-brand nav-link" align="center" id="nav-profile-tab" href="~/candidate/call/read/called" role="tab" aria-selected="false">List Called Candidate</a>
+                <a class="nav-item nav-link active" align="center" id="nav-home-tab" data-toggle="tab" href="#nav-call" role="tab" aria-controls="nav-home" aria-selected="true">Interview</a>
+                <a class="nav-brand nav-link" align="center" id="nav-profile-tab" href="~/candidate/interview/read/interviewed" role="tab" aria-selected="false">Interviewed</a>
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade show active col mt-3" id="nav-call" role="tabpanel" aria-labelledby="nav-home-tab">
                 <div class="container">
                     <!-- Search form -->
-    <form class="form-inline md-form form-sm mt-4" action="~/candidate/call" id="FormFilter" method="post">
+    <form class="form-inline md-form form-sm mt-4" action="~/candidate/interview" id="FormFilter" method="post">
         <input class="form-control form-control-sm mr-3 w-50" type="text" placeholder="Search" aria-label="Search" value="" name="Keyword">
         <i class="fas fa-search mr-3" aria-hidden="true"></i>
         <select class="form-control form-control-sm mr-3 float-right" name="POSITION" id="ListPosition">
@@ -98,6 +98,7 @@
                                 <th scope="col">Email</th>
                                 <th scope="col">Preselection PIC</th>
                                 <th scope="col">Sourcing Date</th>
+                                <th scope="col">Interview Date</th>
                                 <th scope="col">State</th>
                                 <th scope="col">Preselection Notes</th>
                                 <th scope="col"></th>
@@ -116,13 +117,14 @@
                                 <td>@candidate.CANDIDATE_EMAIL</td>
                                 <td>@candidate.PIC_FULL_NAME</td>
                                 <td>@candidate.CANDIDATE_SOURCING_DATE</td>
+                                <td>@candidate.CANDIDATE_INTERVIEW_DATE</td>
                                 <td>@candidate.CANDIDATE_STATE_NAME</td>
                                 <td>@candidate.NOTES</td>
                                 <td>
                                     <a class="btn btn-success" href="~/candidate/preselection/read/detailcandidate/@candidate.CANDIDATE_ID">Details</a>
                                 </td>
                                 <td>
-                                    <a href="~/candidate/call/update/next/@candidate.CANDIDATE_ID" class="btn btn-primary input-sm">Next</a>
+                                    <a href="~/candidate/interview/update/next/@candidate.CANDIDATE_ID" class="btn btn-primary input-sm">Next</a>
                                 </td>
                             </tr>
                             }

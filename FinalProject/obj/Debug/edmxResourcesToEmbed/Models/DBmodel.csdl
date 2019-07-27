@@ -491,6 +491,7 @@
     <NavigationProperty Name="TB_GENDER" Relationship="FinalProject_adp3Model.FK__TB_CANDID__GENDE__6FE99F9F" FromRole="TB_CANDIDATE" ToRole="TB_GENDER" />
     <NavigationProperty Name="TB_MARITALSTATUS" Relationship="FinalProject_adp3Model.FK__TB_CANDID__MARIT__6EF57B66" FromRole="TB_CANDIDATE" ToRole="TB_MARITALSTATUS" />
     <NavigationProperty Name="TB_RELIGION" Relationship="FinalProject_adp3Model.FK__TB_CANDID__RELIG__70DDC3D8" FromRole="TB_CANDIDATE" ToRole="TB_RELIGION" />
+    <Property Name="SUITABLE_POSITION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
   <Association Name="FK__TB_CANDID__CANDI__71D1E811">
     <End Type="FinalProject_adp3Model.TB_STATE_CANDIDATE" Role="TB_STATE_CANDIDATE" Multiplicity="0..1" />
