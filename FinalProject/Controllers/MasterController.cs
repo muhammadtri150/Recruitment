@@ -26,7 +26,7 @@ namespace FinalProject.Controllers
                 {
                     {"title","User"}
                 };
-                return View("Index");
+                return Redirect("dashboard");
             }
             catch
             {

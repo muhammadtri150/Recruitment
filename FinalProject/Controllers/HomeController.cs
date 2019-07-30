@@ -18,15 +18,8 @@ namespace FinalProject.Controllers
         {
             try
             {
-                UserDTO UserLogin = (UserDTO)Session["UserLogin"];
-                if (UserLogin.ROLE_ID == 2)
-                {
-                    return Redirect("~/master");
-                }
-                else
-                {
-                    return Redirect("~/user");
-                }
+                    return Redirect("~/dashboard");
+                
             }
             catch (Exception)
             {

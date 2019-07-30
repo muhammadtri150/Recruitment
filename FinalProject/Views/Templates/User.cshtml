@@ -1,8 +1,7 @@
-﻿@using FinalProject.Utils
+﻿﻿@using FinalProject.Utils
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,46 +25,52 @@
     <div id="wrapper">
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
             @*############################################################## Menu ##################################################*@
-
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
                 <div class="sidebar-brand-icon">
-                    <img src="~/Content/Assets/Images/Logo/logo ACE.png" class="img-thumbnail thumbnail" />
+                    <img src="~/Content/Assets/Images/Logo/logo ACE.png" class="img-thumbnail thumbnail img" />
+                    <style>
+
+                        .img {
+                            width: 55%;
+                        }
+                    </style>
                 </div>
             </a>
-
             <!-- Divider -->
             <hr class="sidebar-divider">
+
             <!-- Heading -->
+            <li class="nav-item">
+                <a class="nav-link pd-0" href="~/dashboard"><i class="fas fa-fw fa-tachometer-alt"></i>Dashboard</a>
+            </li>
 
-            @foreach (var Menu in (new MenuUtils().GetMenus()))
+            @foreach (var menu in (new MenuUtils().GetMenus()))
             {
-                <div class="sidebar-heading">
-                    <i class="@Menu.LOGO_MENU"></i>    @Menu.TITLE_MENU
-                </div>
-                <!-- Sub Menu  -->
-                foreach (var SubMenu in (new MenuUtils().GetSubmenu(Menu)))
-                {
-                    <!-- check position sub menu -->
-                    string title = ViewBag.DataView["title"];
-                    title = title.ToLower();
 
-                    <li class="nav-item @(SubMenu.TITLE_SUBMENU.ToLower() == title  ? "active":"") ">
-                        <!-- for add class active -->
-                        <a class="nav-link pd-0" href="~/@SubMenu.URL">
-                            <i class="@SubMenu.LOGO_SUBMENU"></i>
-                            @SubMenu.TITLE_SUBMENU
-                        </a>
-                    </li>
-                }
-                <!-- Divider -->
-                <hr class="sidebar-divider mt-3">
+                <li class="nav-item">
+                    <a class="nav-link collapsed " href="#" data-toggle="collapse" data-target="#@menu.TITLE_MENU" aria-expanded="true" aria-controls="@menu.TITLE_MENU">
+                        <i class="@menu.LOGO_MENU"></i>
+                        <span>@menu.TITLE_MENU.ToUpper()</span>
+                    </a>
+                    <div id="@menu.TITLE_MENU" class="collapse" aria-labelledby="@menu.TITLE_MENU" data-parent="#accordionSidebar">
+                        <div class="bg-primary py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">@menu.TITLE_MENU Components:</h6>
+                            @foreach (var submenu in (new MenuUtils().GetSubmenu(menu)))
+                            {
+                                <a class="collapse-item @submenu.LOGO_SUBMENU" href="~/@submenu.URL"> @submenu.TITLE_SUBMENU</a>
+                            }
+                        </div>
+                    </div>
+                </li>
+
+
             }
 
-            @*############################################################## End Menu ##################################################*@
 
+
+            @*############################################################## End Menu ##################################################*@
             <!-- Nav Item  -->
             <li class="nav-item">
                 <a class="nav-link" href="~/auth/logout">
@@ -73,15 +78,12 @@
                     <span>Logout</span>
                 </a>
             </li>
-
             <!-- Divider -->
             <hr class="sidebar-divider">
-
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
-
         </ul>
         <!-- End of Sidebar -->
         <!-- Content Wrapper -->
@@ -95,7 +97,6 @@
                         <i class="fa fa-bars"></i>
                     </button>
                     <!-- Topbar Search -->
-
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
@@ -104,14 +105,10 @@
                                 <i class="fas fa-search fa-fw"></i>
                             </a>
                             <!-- Dropdown - Messages -->
-
-                        <!-- Nav Item - Alerts -->
-                       
+                            <!-- Nav Item - Alerts -->
                             <!-- Dropdown - Alerts -->
-                            
-                        <!-- Nav Item - Messages -->
-                            
-                        <!-- Nav Item - User Information -->
+                            <!-- Nav Item - Messages -->
+                            <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">@UserLogingUtils.GetDataUserLogin().USERNAME</span>
@@ -142,9 +139,7 @@
                 </nav>
                 <!-- End of Topbar -->
                 <!-- Start of content -->
-
                 @RenderSection("content", required: false)
-
                 <!-- End of content -->
                 <!-- Footer -->
                 <footer class="sticky-footer bg-white">
@@ -193,7 +188,6 @@
         <!-- Page level custom scripts -->
         <script src="/Content/Vendor/sbadmin2/js/demo/chart-area-demo.js"></script>
         <script src="/Content/Vendor/sbadmin2/js/demo/chart-pie-demo.js"></script>
-
         <!-- bootstrap additional JavaScript -->
         <script src="~/Content/Vendor/bootstrap/js/jquery.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

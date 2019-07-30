@@ -35,20 +35,26 @@ namespace FinalProject.Filters
                         TB_ROLE UserRole = db.TB_ROLE.FirstOrDefault(r => r.ROLE_ID == UserLogin.ROLE_ID);
                         string[] url = filterContext.HttpContext.Request.RawUrl.ToString().Split('/');
                         string Title_Menu = url[1];
-
-                        if (Title_Menu == "" || Title_Menu == null)
+                        if(Title_Menu.ToLower() == "dashboard")
                         {
-                            Context.Response.Redirect("~");
+                            Context.Response.Redirect("~/dashboard");
                         }
-
-                        TB_MENU Tb_Menu = db.TB_MENU.FirstOrDefault(m => m.TITLE_MENU == Title_Menu);
-
-                        TB_ACCESS_MENU Access_Menu = db.TB_ACCESS_MENU.FirstOrDefault(am => (am.MENU_ID == Tb_Menu.MENU_ID && am.ROLE_ID == UserRole.ROLE_ID));
-                        //cheking access based role user and tb_access_menu
-
-                        if (Access_Menu == null)
+                        else
                         {
-                            throw new Exception();
+                            if (Title_Menu == "" || Title_Menu == null)
+                            {
+                                Context.Response.Redirect("~");
+                            }
+
+                            TB_MENU Tb_Menu = db.TB_MENU.FirstOrDefault(m => m.TITLE_MENU == Title_Menu);
+
+                            TB_ACCESS_MENU Access_Menu = db.TB_ACCESS_MENU.FirstOrDefault(am => (am.MENU_ID == Tb_Menu.MENU_ID && am.ROLE_ID == UserRole.ROLE_ID));
+                            //cheking access based role user and tb_access_menu
+
+                            if (Access_Menu == null)
+                            {
+                                throw new Exception();
+                            }
                         }
                     };
                     Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(UserLogin.USERNAME), null);

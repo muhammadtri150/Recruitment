@@ -105,7 +105,7 @@ namespace FinalProject.Controllers
                                             FULL_NAME = user.FULL_NAME
                                         };
                                         Session.Add("UserLogin", userDTO);
-                                        return Redirect("~/user");
+                                        return Redirect("~/dashboard");
                                     }
                                 }
                             }

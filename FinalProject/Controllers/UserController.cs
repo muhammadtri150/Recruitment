@@ -10,19 +10,25 @@ using FinalProject.Filters;
 namespace FinalProject.Controllers
 {
     [AllowAnonymous]
-    [AuthFilter]
     public class UserController : Controller
     {
-        [Route("user")]
+        [Route("dashboard")]
         public ActionResult Index()
         {
             try
             {
-                ViewBag.DataView = new Dictionary<string, string>()
+                if (Session["UserLogin"] == null)
                 {
-                    {"title","User"}
-                };
-                return View("Index");
+                   return Redirect("~auth/login");
+                }
+                else
+                {
+                  ViewBag.DataView = new Dictionary<string, string>()
+                  {
+                     {"title","Dashboard"}
+                  };
+                  return View("Index");
+                }
             }
             catch
             {
