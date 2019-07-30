@@ -74,6 +74,7 @@
     <Property Name="NOTES" Type="text" />
     <Property Name="RECOMENDATION" Type="varchar" MaxLength="50" />
     <Property Name="AVAILABLE_JOIN" Type="date" />
+    <Property Name="CANDIDATE_INTERVIEW_DATE" Type="date" />
   </EntityType>
   <EntityType Name="TB_CANDIDATE_EDUCATION_HISTORY">
     <Key>
@@ -123,7 +124,7 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="CANDIDATE_ID" Type="int" />
+    <Property Name="CANDIDATE_ID" Type="int" Nullable="false" />
     <Property Name="SKILL" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="TB_CITY">
@@ -160,9 +161,10 @@
     <Property Name="CLIENT_ID" Type="int" />
     <Property Name="START_DATE" Type="date" />
     <Property Name="LAST_UPDATE" Type="date" />
-    <Property Name="TOTA_DAY" Type="date" />
+    <Property Name="TOTA_DAY" Type="int" />
     <Property Name="CLIENT_STATE" Type="varchar" MaxLength="50" />
     <Property Name="NOTE" Type="text" />
+    <Property Name="AVALIABLE_JOIN" Type="date" />
   </EntityType>
   <EntityType Name="TB_GENDER">
     <Key>

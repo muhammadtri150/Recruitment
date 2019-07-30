@@ -220,20 +220,17 @@
                                     @Html.TextAreaFor(m => m.NOTES, new { @class = "form-control", @id = "NOTES" })
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
-
-                </div>
-                <div class="form-group">
-                    <label for="CANDIDATE_STATE_ID">State</label>
-                    <select class="form-control" id="CANDIDATE_STATE_ID" name="CANDIDATE_STATE_ID">
-                        @foreach (var d in (List<StateCandidateDTO>)ViewBag.DataView["ListState"])
-                        {
-                            <option value="@d.ID" @{string res = ""; if (Model.CANDIDATE_STATE_ID == d.ID) { res = "selected"; }} @res>@d.STATE_NAME</option>
-                        }
-                    </select>
+                    <div class="form-group">
+                        <label for="CANDIDATE_STATE_ID">State</label>
+                        <select class="form-control" id="CANDIDATE_STATE_ID" name="CANDIDATE_STATE_ID">
+                            @foreach (var d in (List<StateCandidateDTO>)ViewBag.DataView["ListState"])
+                            {
+                                <option value="@d.ID" @{string res = ""; if (Model.CANDIDATE_STATE_ID == d.ID) { res = "selected"; }} @res>@d.STATE_NAME</option>
+                            }
+                        </select>
+                    </div>
                 </div>
                 @*-------------------------------------Education Information----------------------------------------------------------------------------*@
                 <div class="tab-pane fade" id="nav-education_information" role="tabpanel" aria-labelledby="nav-profile-tab">
@@ -316,7 +313,4 @@
             </div>
         </form>
     </div>
-
-    <script src="~/Content/Assets/Js/candidate/preselection/EditCandidate.js"></script>
-
 }

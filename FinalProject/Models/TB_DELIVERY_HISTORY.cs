@@ -25,8 +25,9 @@ namespace FinalProject.Models
         public Nullable<int> CLIENT_ID { get; set; }
         public Nullable<System.DateTime> START_DATE { get; set; }
         public Nullable<System.DateTime> LAST_UPDATE { get; set; }
-        public Nullable<System.DateTime> TOTA_DAY { get; set; }
+        public Nullable<int> TOTA_DAY { get; set; }
         public string CLIENT_STATE { get; set; }
         public string NOTE { get; set; }
+        public Nullable<System.DateTime> AVALIABLE_JOIN { get; set; }
     }
 }

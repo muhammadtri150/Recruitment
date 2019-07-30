@@ -93,5 +93,27 @@ namespace FinalProject.Utils
                 return res;
             }
         }
+
+    //---------------------------------------------------------------- check access button action user ----------------------------------------------
+        public static string CheckButtonAcc(int ActionId,int SubMenuId)
+        {
+            string res = "visible";
+
+            //get data user login
+            UserDTO UserLogin = (UserDTO)HttpContext.Current.Session["UserLogin"];
+
+            //get data from tb acess action candidate
+            using(DBEntities db = new DBEntities())
+            {
+                var Acc = db.TB_USER_ACCESS_MENU_CANDIDATE.FirstOrDefault(d => d.ROLE_ID == UserLogin.ROLE_ID && d.ACTION_CANDIDATE_ID == ActionId && d.SUB_MENU_CANDIDATE_ID == SubMenuId);
+                if(Acc == null)
+                {
+                    res = "invisible";
+                }
+            }
+
+            return res;
+
+        }
     }
 }

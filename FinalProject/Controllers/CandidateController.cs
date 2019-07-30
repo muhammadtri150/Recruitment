@@ -119,8 +119,8 @@ namespace FinalProject.Controllers
         [Route("candidate/preselection/read/detailcandidate/{id?}")]
         public ActionResult DetailCandidate(string id = null)
         {
-            try
-            {
+            //try
+            //{
                 using (DBEntities db = new DBEntities())
                 {
                     if (id == null) return Redirect("~/candidate/preselection");
@@ -139,11 +139,11 @@ namespace FinalProject.Controllers
                     return View("Preselection/DetailCandidate", DataDetail);
                 }
 
-            }
-            catch (Exception)
-            {
-                return Redirect("~/auth/error");
-            }
+            //}
+            //catch (Exception)
+            //{
+            //    return Redirect("~/auth/error");
+            //}
         }
 
         //-------------------------------------------------- PROCESS ADD NEW CANDIDATE --------------------------------------
@@ -172,10 +172,10 @@ namespace FinalProject.Controllers
                     return Redirect("~/candidate/preselection");
                 }
 
-                TempData.Add("message", "New Candidate failed to add, please complete form add");
-                TempData.Add("type", "danger");
-            
-                return Redirect("~/candidate/preselection");
+                ViewBag.DataView = new Dictionary<string, object>(){
+                    {"title","Preselection"}
+                    };
+                return View("Preselection/AddCandidate");
             }
             catch (Exception)
             {
@@ -236,9 +236,14 @@ namespace FinalProject.Controllers
 
                     return Redirect("~/candidate/preselection");
                 }
-                TempData.Add("message", "Candidate failed to Update, please complete form edit");
-                TempData.Add("type", "danger");
-                return Redirect("~/candidate/preselection");
+                CandidateDTO DataCandidate = Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID);
+                ViewBag.DataView = new Dictionary<string, object>()
+                {
+                    {"title","preselection"},
+                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 2 || d.ID == 10 || d.ID == 1 || d.ID == 11).ToList() }
+                };
+
+                return View("Preselection/EditCandidate", DataCandidate);
             }
             catch
             {
@@ -353,9 +358,12 @@ namespace FinalProject.Controllers
                     }
                 }
 
-                TempData.Add("message", "Candidate job experience failed to edit please complete form edit");
-                TempData.Add("type", "danger");
-                return Redirect("~/candidate/preselection/edit/jobExp/" + NewJobExp.ID);
+                ViewBag.DataView = new Dictionary<string, object>()
+                {
+                    {"title","Preselection"}
+                };
+                CandidateJobExperienceDTO Data = Manage_CandidateJobExperienceDTO.GetData().FirstOrDefault(d => d.ID == NewJobExp.ID);
+                return View("Preselection/EditJobExp", Data);
 
             }
             catch (Exception)
@@ -434,9 +442,7 @@ namespace FinalProject.Controllers
                     }
                 }
                 //============================ end process searchng ============================
-
-
-
+                
                 return View("Call/Call", ListCandidate);
             }
             catch (Exception)
@@ -507,9 +513,15 @@ namespace FinalProject.Controllers
 
                     return Redirect("~/candidate/call/read/called");
                 }
-                TempData.Add("message", "Candidate failed to Update, please complete form edit");
-                TempData.Add("type", "danger");
-                return Redirect("~/candidate/call");
+
+                CandidateDTO DataCandidate = Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID);
+
+                ViewBag.DataView = new Dictionary<string, object>()
+                {
+                    {"title","Call"},
+                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 8 ||  d.ID == 2).ToList() }
+                };
+                return View("Call/EditCandidateCall", DataCandidate);
             }
             catch
             {
@@ -527,7 +539,7 @@ namespace FinalProject.Controllers
                 //note : data candidate from class Manage_CandidateSelectionHistoryDTO method GetDataSelectionHistory
                 //note : data in this view especialy for candidate where state_id is 2(call) or 18(called) (state in step call)
                 List<CandidateSelectionHistoryDTO> ListCandidate = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().Where(d =>
-            d.CANDIDATE_STATE == 8 || d.CANDIDATE_STATE == 15 || d.CANDIDATE_STATE == 16 || d.CANDIDATE_STATE == 17).ToList();
+            d.CANDIDATE_STATE == 8 || d.CANDIDATE_STATE == 15  || d.CANDIDATE_STATE == 17).ToList();
                 //prepare vew bag
                 //---------------------------- prepare data viewbag --------------------
                 ViewBag.DataView = new Dictionary<string, object>{
@@ -616,8 +628,8 @@ namespace FinalProject.Controllers
         [Route("candidate/call/update/called/next/process")]
         public ActionResult CandidateCalledNext(CandidateDTO Data, HttpPostedFileBase Pict = null, HttpPostedFileBase Cv = null)
         {
-            try
-            {
+            //try
+            //{
                 if (ModelState.IsValid)
                 {
                     Data.CANDIDATE_INTERVIEW_DATE = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().FirstOrDefault(d => d.CANDIDATE_STATE == 8 && d.CANDIDATE_ID == Data.ID).CANDIDATE_INTERVIEW_DATE;
@@ -635,16 +647,23 @@ namespace FinalProject.Controllers
                         TempData.Add("type", "warning");
                     }
 
-                    return Redirect("~/candidate/call/interview");
+                    return Redirect("~/candidate/interview");
                 }
-                TempData.Add("message", "Candidate failed to Update, please complete form edit");
-                TempData.Add("type", "danger");
-                return Redirect("~/candidate/call");
-            }
-            catch
-            {
-                return Redirect("~/auth/error");
-            }
+            CandidateDTO DataCandidate = Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID);
+            DataCandidate.CANDIDATE_INTERVIEW_DATE = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().FirstOrDefault(d => d.CANDIDATE_STATE == 8 && d.CANDIDATE_ID == Data.ID).CANDIDATE_INTERVIEW_DATE;
+
+            ViewBag.DataView = new Dictionary<string, object>()
+                {
+                    {"title","Call"},
+                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 8 ||  d.ID == 19).ToList() }
+                };
+
+            return View("Call/EditCandidateCalled", DataCandidate);
+            //}
+            //catch
+            //{
+            //    return Redirect("~/auth/error");
+            //}
         }
 
 
@@ -652,9 +671,9 @@ namespace FinalProject.Controllers
 
 
 
+        //************************************************************ Candidate INTERVIEW ************************************************************
 
-
-        //------------------------------------------------------------ candidate interview -----------------------------------------
+        //------------------------------------------------------------ candidate interview -----------------------------------------------------------
 
         [Route("candidate/interview")]
         public ActionResult CandidateInterview()
@@ -671,7 +690,7 @@ namespace FinalProject.Controllers
                 ViewBag.DataView = new Dictionary<string, object>{
                     {"title","Interview"},
                     {"ListPosition",Manage_JobPositionDTO.GetData()},
-                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 15 || d.ID == 16 || d.ID == 17 || d.ID == 19)}
+                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 19)}
                     };
 
                 //============================ process searchng ============================
@@ -754,10 +773,11 @@ namespace FinalProject.Controllers
         [Route("candidate/interview/update/next/process")]
         public ActionResult CandidateInterviewNext(CandidateDTO Data, HttpPostedFileBase Pict = null, HttpPostedFileBase Cv = null)
         {
-            try
-            {
-                if (ModelState.IsValid)
+            //try
+            //{
+            if (ModelState.IsValid)
                 {
+                    
                     var ProcessEdit = Manage_CandidateDTO.EditCandidate(Data, Pict, Cv);
 
                     //process removing state call
@@ -782,14 +802,20 @@ namespace FinalProject.Controllers
 
                     return Redirect("~/candidate/interview/read/interviewed");
                 }
-                TempData.Add("message", "Candidate failed to Update, please complete form edit");
-                TempData.Add("type", "danger");
-                return Redirect("~/candidate/interviewed");
-            }
-            catch
-            {
-                return Redirect("~/auth/error");
-            }
+                ViewBag.DataView = new Dictionary<string, object>()
+                {
+                    {"title","interview"},
+                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 15 || d.ID == 16 || d.ID == 17 || d.ID == 19).ToList()}
+                };
+                CandidateDTO DataCandidate = Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID);
+                //TempData.Add("message", "Candidate failed to Update, please complete form edit");
+                //TempData.Add("type", "danger");
+                return View("Interview/EditCandidateInterview", DataCandidate);
+            //}
+            //catch
+            //{
+            //    return Redirect("~/auth/error");
+            //}
         }
 
 
@@ -804,13 +830,13 @@ namespace FinalProject.Controllers
                 //note : data candidate from class Manage_CandidateSelectionHistoryDTO method GetDataSelectionHistory
                 //note : data in this view especialy for candidate where state_id is 15(hold), 16(pass), 17(drop)
                 List<CandidateSelectionHistoryDTO> ListCandidate = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().Where(d =>
-            d.CANDIDATE_STATE == 6 || d.CANDIDATE_STATE == 14 || d.CANDIDATE_STATE == 16).ToList();
+            d.CANDIDATE_STATE == 15 || d.CANDIDATE_STATE == 16 || d.CANDIDATE_STATE == 17).ToList();
                 //prepare vew bag
                 //---------------------------- prepare data viewbag --------------------
                 ViewBag.DataView = new Dictionary<string, object>{
                     {"title","Interview"},
                     {"ListPosition",Manage_JobPositionDTO.GetData()},
-                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 6 || d.ID == 14 || d.ID == 16)}
+                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 15 || d.ID == 16 || d.ID == 17)}
                     };
 
                 //============================ process searchng ============================
@@ -829,7 +855,7 @@ namespace FinalProject.Controllers
                         ListCandidate = ListCandidate.Where(d =>
                         d.CANDIDATE_APPLIED_POSITION == Position ||
                         d.CANDIDATE_SUITABLE_POSITION == Position &&
-                        (d.ID == 6 || d.ID == 14 || d.ID == 16)).ToList();
+                        (d.ID == 15 || d.ID == 17 || d.ID == 16)).ToList();
                     }
                     if (Keyword != "" && (StateId == 0 && Position == "all"))
                     {
@@ -837,7 +863,7 @@ namespace FinalProject.Controllers
                         d.CANDIDATE_EMAIL.Contains(Keyword) ||
                         d.CANDIDATE_NAME.Contains(Keyword) ||
                         d.CANDIDATE_PHONE.Contains(Keyword) &&
-                       (d.ID == 6 || d.ID == 14 || d.ID == 16)).ToList();
+                       (d.ID == 15 || d.ID == 17 || d.ID == 16)).ToList();
                     }
                     else
                     {
@@ -848,7 +874,7 @@ namespace FinalProject.Controllers
                          d.CANDIDATE_EMAIL.Contains(Keyword) ||
                          d.CANDIDATE_NAME.Contains(Keyword) ||
                          d.CANDIDATE_PHONE.Contains(Keyword) &&
-                         (d.ID == 6 || d.ID == 14 || d.ID == 16)).ToList();
+                         (d.ID == 15 || d.ID == 17 || d.ID == 16)).ToList();
                     }
                 }
                 //============================ end process searchng ============================
@@ -863,8 +889,8 @@ namespace FinalProject.Controllers
         }
 
 
-        //---------------------------------------------------------- View edit interviewed to delivery ----------------------------------------
-        [Route("candidate/interview/update/next/{id?}")]
+        //---------------------------------------------------------- View edit interviewed  ----------------------------------------
+        [Route("candidate/interview/update/interviewed/next/{id?}")]
         public ActionResult InterviewedNext(string id = null)
         {
             try
@@ -879,7 +905,7 @@ namespace FinalProject.Controllers
                 ViewBag.DataView = new Dictionary<string, object>()
                 {
                     {"title","Interview"},
-                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 6 || d.ID == 14 || d.ID == 16).ToList()}
+                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 15 || d.ID == 16 || d.ID == 17 || d.ID == 19).ToList()}
                 };
 
                 return View("Interview/EditCandidateInterviewed", DataCandidate);
@@ -890,17 +916,21 @@ namespace FinalProject.Controllers
             }
         }
 
-        //------------------------------------------ Process interviewed next to delivery -------------------------------------------------
-        [Route("candidate/interview/update/next/process")]
+        //------------------------------------------ Process interviewed edit -------------------------------------------------
+        [Route("candidate/interview/update/interviewed/next/process")]
         public ActionResult CandidateInterviewedNext(CandidateDTO Data, HttpPostedFileBase Pict = null, HttpPostedFileBase Cv = null)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var ProcessEdit = Manage_CandidateDTO.EditCandidate(Data, Pict, Cv);
-
-                    //process removing state call
+                    int ProcessEdit = 0;
+                    using (DBEntities db = new DBEntities())
+                    {
+                        db.TB_CANDIDATE.FirstOrDefault(d => d.ID == Data.ID).CANDIDATE_STATE_ID = Data.CANDIDATE_STATE_ID;
+                        db.TB_CANDIDATE_SELECTION_HISTORY.FirstOrDefault(d => d.CANDIDATE_ID == Data.ID && (d.CANDIDATE_STATE == 15 || d.CANDIDATE_STATE == 16 || d.CANDIDATE_STATE == 17)).CANDIDATE_STATE = Data.CANDIDATE_STATE_ID;
+                        ProcessEdit = db.SaveChanges();
+                    }
 
                     if (ProcessEdit > 0)
                     {
@@ -936,7 +966,7 @@ namespace FinalProject.Controllers
 
 
         //---------------------------------------------------------- view for delivery -------------------------------------------------
-        [Route("candidate/interview/read/interviewed")]
+        [Route("candidate/delivery")]
         public ActionResult CandidateDelivery()
         {
             try
@@ -951,7 +981,6 @@ namespace FinalProject.Controllers
                 ViewBag.DataView = new Dictionary<string, object>{
                     {"title","Interview"},
                     {"ListPosition",Manage_JobPositionDTO.GetData()},
-                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 6 || d.ID == 14 || d.ID == 16)}
                     };
 
                 //============================ process searchng ============================
@@ -970,7 +999,7 @@ namespace FinalProject.Controllers
                         ListCandidate = ListCandidate.Where(d =>
                         d.CANDIDATE_APPLIED_POSITION == Position ||
                         d.CANDIDATE_SUITABLE_POSITION == Position &&
-                        (d.ID == 6 || d.ID == 14 || d.ID == 16)).ToList();
+                        (d.ID == 16)).ToList();
                     }
                     if (Keyword != "" && (StateId == 0 && Position == "all"))
                     {
@@ -978,7 +1007,7 @@ namespace FinalProject.Controllers
                         d.CANDIDATE_EMAIL.Contains(Keyword) ||
                         d.CANDIDATE_NAME.Contains(Keyword) ||
                         d.CANDIDATE_PHONE.Contains(Keyword) &&
-                       (d.ID == 6 || d.ID == 14 || d.ID == 16)).ToList();
+                       (d.ID == 16)).ToList();
                     }
                     else
                     {
@@ -989,12 +1018,15 @@ namespace FinalProject.Controllers
                          d.CANDIDATE_EMAIL.Contains(Keyword) ||
                          d.CANDIDATE_NAME.Contains(Keyword) ||
                          d.CANDIDATE_PHONE.Contains(Keyword) &&
-                         (d.ID == 6 || d.ID == 14 || d.ID == 16)).ToList();
+                         (d.ID == 16)).ToList();
                     }
                 }
                 //============================ end process searchng ============================
-
-                return View("Interview/Interviewed", ListCandidate);
+                ViewBag.DataView = new Dictionary<string, object>()
+                {
+                    {"title","Delivery" }
+                };
+                return View("Delivery/Delivery", ListCandidate);
 
             }
             catch (Exception)
@@ -1003,125 +1035,182 @@ namespace FinalProject.Controllers
             }
         }
 
-
-        //---------------------------------------------------------- View edit interviewed to delivery ----------------------------------------
-        [Route("candidate/interview/update/next/{id?}")]
-        public ActionResult InterviewedNext(string id = null)
+        //-------------------------------------------- process delivery next -------------------------------------------------------
+        [Route("candidate/delivery/create/next")]
+        public ActionResult DeliveryNext(DeliveryHistoryDTO data)
         {
-            try
-            {
-                if (id == null) return Redirect("~/candidate/call");
-
-                int CandidateId = Convert.ToInt16(id);
-                CandidateDTO DataCandidate = Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == CandidateId);
-
-                if (DataCandidate == null) return Redirect("~/candidate/preselection");
-
-                ViewBag.DataView = new Dictionary<string, object>()
+            //try
+            //{
+               using(DBEntities db = new DBEntities())
                 {
-                    {"title","Interview"},
-                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 6 || d.ID == 14 || d.ID == 16).ToList()}
-                };
+                    var Candidate = db.TB_CANDIDATE.FirstOrDefault(c => c.ID == data.CANDIDATE_ID);
+                    Candidate.CANDIDATE_STATE_ID = 6;
+                    db.SaveChanges();
+                    //process add selection history
+                    //preparedata pic
+                    UserDTO DataPic = (UserDTO)Session["UserLogin"];
+                    var ProcessAddSelectionHistory = Manage_CandidateSelectionHistoryDTO.AddData(new CandidateSelectionHistoryDTO
+                    {
+                        CANDIDATE_ID = data.CANDIDATE_ID,
+                        PIC_ID = DataPic.USER_ID,
+                        CANDIDATE_APPLIED_POSITION = Candidate.POSITION,
+                        CANDIDATE_SUITABLE_POSITION = Candidate.SUITABLE_POSITION,
+                        CANDIDATE_SOURCE = Candidate.SOURCE,
+                        CANDIDATE_STATE = 6,
+                        CANDIDATE_EXPECTED_SALARY = Candidate.EXPECTED_SALARY,
+                        PROCESS_DATE = DateTime.Now,
+                        NOTES = data.NOTE,
+                        CANDIDATE_INTERVIEW_DATE = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().FirstOrDefault(d => d.CANDIDATE_ID == data.CANDIDATE_ID && d.CANDIDATE_STATE == 8).CANDIDATE_INTERVIEW_DATE
+                    });
 
-                return View("Interview/EditCandidateInterviewed", DataCandidate);
-            }
-            catch
-            {
-                return Redirect("~/auth/error");
-            }
+                    var ProcessAddDelivery = Manage_DeliveryHistoryDTO.AddData(new DeliveryHistoryDTO
+                    {
+                        DELIVERY_ID = data.DELIVERY_ID,
+                        CANDIDATE_ID =  data.CANDIDATE_ID,
+                        CLIENT_ID = data.CLIENT_ID,
+                        LAST_PIC = DataPic.USER_ID,
+                        CANDIDATE_STATE = 6,
+                        PROCESS_DATE = DateTime.Now,
+                        NOTE = data.NOTE,
+                        CANDIDATE_POSITION = Candidate.SUITABLE_POSITION
+                    });
+
+                    return Redirect("~/candidate/delivery/read/suggest");
+                }
+            //}
+            //catch (Exception)
+            //{
+            //    return Redirect("~/auth/error");
+            //}
         }
 
-        //------------------------------------------ Process interviewed next to delivery -------------------------------------------------
-        [Route("candidate/interview/update/next/process")]
-        public ActionResult CandidateInterviewedNext(CandidateDTO Data, HttpPostedFileBase Pict = null, HttpPostedFileBase Cv = null)
+        //=========================================================== SUGGEST CANDIDATE ==========================================================
+
+        [Route("candidate/delivery/read/suggest")]
+        public ActionResult SuggestCandidate()
         {
             try
             {
-                if (ModelState.IsValid)
+                //---------------------------- prepare data candidate for show in view --------------
+                //note : data candidate from class Manage_CandidateSelectionHistoryDTO method GetDataSelectionHistory
+                //note : data in this view especialy for candidate where state_id is 14(offering or 6(sent to client))
+                List<CandidateSelectionHistoryDTO> ListCandidate = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().Where(d =>
+                d.CANDIDATE_STATE == 6 || d.CANDIDATE_STATE == 14).ToList();
+                //prepare vew bag
+                //---------------------------- prepare data viewbag --------------------
+                ViewBag.DataView = new Dictionary<string, object>{
+                    {"title","Delivery"},
+                    {"ListPosition",Manage_JobPositionDTO.GetData()},
+                    };
+
+                //============================ process searchng ============================
+                if (Request["filter"] != null)
                 {
-                    var ProcessEdit = Manage_CandidateDTO.EditCandidate(Data, Pict, Cv);
+                    string Position = Request["POSITION"];
+                    int StateId = Convert.ToInt16(Request["CANDIDATE_STATE"]);
+                    string Keyword = Request["Keyword"];
 
-                    //process removing state call
-
-                    if (ProcessEdit > 0)
+                    if (StateId != 0 && (Position == "all" && Keyword == ""))
                     {
-                        TempData.Add("message", "Candidate Update successfully");
-                        TempData.Add("type", "success");
-                        UserLogingUtils.SaveLoggingUserActivity("Edit Candidate" + Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID));
+                        ListCandidate = ListCandidate.Where(d => d.CANDIDATE_STATE == StateId).ToList();
+                    }
+                    if (Position != "all" && (StateId == 0 && Keyword == ""))
+                    {
+                        ListCandidate = ListCandidate.Where(d =>
+                        d.CANDIDATE_APPLIED_POSITION == Position ||
+                        d.CANDIDATE_SUITABLE_POSITION == Position &&
+                        (d.ID == 6 || d.ID == 14)).ToList();
+                    }
+                    if (Keyword != "" && (StateId == 0 && Position == "all"))
+                    {
+                        ListCandidate = ListCandidate.Where(d =>
+                        d.CANDIDATE_EMAIL.Contains(Keyword) ||
+                        d.CANDIDATE_NAME.Contains(Keyword) ||
+                        d.CANDIDATE_PHONE.Contains(Keyword) &&
+                       (d.ID == 6 || d.ID == 14)).ToList();
                     }
                     else
                     {
-                        TempData.Add("message", "Candidate failed to Update");
-                        TempData.Add("type", "warning");
+                        ListCandidate = ListCandidate.Where(d =>
+                         d.CANDIDATE_APPLIED_POSITION == Position ||
+                         d.CANDIDATE_SUITABLE_POSITION == Position ||
+                         d.CANDIDATE_STATE == StateId ||
+                         d.CANDIDATE_EMAIL.Contains(Keyword) ||
+                         d.CANDIDATE_NAME.Contains(Keyword) ||
+                         d.CANDIDATE_PHONE.Contains(Keyword) &&
+                         (d.ID == 6 || d.ID == 14)).ToList();
                     }
-
-                    return Redirect("~/candidate/delivery");
                 }
-                TempData.Add("message", "Candidate failed to Update, please complete form edit");
-                TempData.Add("type", "danger");
-                return Redirect("~/candidate/interviewed");
-            }
-            catch
-            {
-                return Redirect("~/auth/error");
-            }
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //------------------------------------------------------------ candidate delivery -----------------------------------------
-
-        [Route("candidate/delivery")]
-        public ActionResult CandidateDelivery()
-        {
-            try
-            {
-                ViewBag.DataView = new Dictionary<string, object>()
-                {
-                    {"title","Candidate - Delivery"}
-                };
-                return View("Delivery/Index");
+                //============================ end process searchng ============================
+                return View("Delivery/Suggested", ListCandidate);
             }
             catch (Exception)
             {
                 return Redirect("~/auth/error");
             }
         }
+
+        //------------------------------------- candidate delivery update ---------------------------------------------------
+        [Route("candidate/delivery/update/suggest")]
+        public ActionResult SuggestUpdate(DeliveryHistoryDTO Data)
+        {
+            try
+            {
+                using(DBEntities db = new DBEntities())
+                {
+                    int CandidateId = Convert.ToInt16(Data.CANDIDATE_ID);
+                    db.TB_CANDIDATE.FirstOrDefault(ca => ca.ID == CandidateId).CANDIDATE_STATE_ID = Data.CANDIDATE_STATE;
+
+                    var Delivery = db.TB_DELIVERY_HISTORY.FirstOrDefault(d => d.DELIVERY_ID == Data.DELIVERY_ID);
+                    Delivery.CLIENT_ID = Data.CLIENT_ID;
+                    Delivery.CANDIDATE_STATE = Data.CANDIDATE_STATE;
+
+                    db.TB_CANDIDATE_SELECTION_HISTORY.FirstOrDefault(s => s.ID == Data.SELECTION_ID).CANDIDATE_STATE = Data.CANDIDATE_STATE;
+
+                    db.SaveChanges();
+                }
+                return Redirect("~/candidate/delivery/read/suggest");
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     }

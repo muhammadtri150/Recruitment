@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<FinalProject.DTO.CandidateSelectionHistoryDTO>
+@using FinalProject.Utils
 @using FinalProject.DTO
 @section title{
 
@@ -76,7 +77,8 @@
                     <td>@data.CANDIDATE_STATE_NAME</td>
                     <td>@data.NOTES</td>
                     <td>
-                        <a class="" href="~/candidate/preselection/update/candidate/@data.CANDIDATE_ID"><i class="fas fa-edit"></i></a>
+                        
+                        <a class="@MenuUtils.CheckButtonAcc(2,11)" href="~/candidate/preselection/update/candidate/@data.CANDIDATE_ID"><i class="fas fa-edit"></i></a>
                         <a class="ml-3" href="~/candidate/preselection/read/detailcandidate/@data.CANDIDATE_ID"><i class="fas fa-search-plus"></i></a>
                     </td>
                 </tr>

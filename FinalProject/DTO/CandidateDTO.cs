@@ -33,7 +33,6 @@ namespace FinalProject.DTO
         public List<string> CANDIDATE_SKILL { get; set; }
         public string SUITABLE_POSITION { get; set; }
         public int? AGE { get; set; }
-
         public System.DateTime? CANDIDATE_INTERVIEW_DATE { get; set; }
 
 
@@ -87,6 +86,10 @@ namespace FinalProject.DTO
         public int? CANDIDATE_STATE_ID { get; set; }
         public string CANDIDATE_STATE_NAME { get; set; }
 
+        public List<CandidateJobExperienceDTO> DataJobExp { get; set; }
+
+
+        public string DELIVERY_ID { get; set; }
     }
 
     public class Manage_CandidateDTO
@@ -164,7 +167,7 @@ namespace FinalProject.DTO
                     POSITION = DataNewCandidate.POSITION,
                     EDUCATION_START_DATE = edu_start_date,
                     EDUCATION_END_DATE = edu_end_date,
-                   
+                    CANDIDATE_INTERVIEW_DATE = DataNewCandidate.CANDIDATE_INTERVIEW_DATE
                 });
 
                 int res = 0;
@@ -298,6 +301,7 @@ namespace FinalProject.DTO
                 Candidate.SUITABLE_POSITION = Data.SUITABLE_POSITION;
                 Candidate.EDUCATION_START_DATE = edu_start_date;
                 Candidate.EDUCATION_END_DATE = edu_end_date;
+                Candidate.CANDIDATE_INTERVIEW_DATE = Data.CANDIDATE_INTERVIEW_DATE;
 
                 List<string> Skills = db.TB_CANDIDATE_SKILL.Where(d => d.CANDIDATE_ID == Data.ID).Select(d => d.SKILL).ToList();
                 if (Skills.Count > 0)
@@ -367,13 +371,20 @@ namespace FinalProject.DTO
                     EDUCATON_END_DATE = ca.EDUCATION_END_DATE,
                     RELIGION = db.TB_RELIGION.FirstOrDefault(d => d.RELIGION_ID == ca.RELIGION_ID).RELIGION_NAME,
                     GENDER_NAME = db.TB_GENDER.FirstOrDefault(d => d.GENDER_ID == ca.GENDER_ID).GENDER_NAME,
-                    SUITABLE_POSITION = ca.SUITABLE_POSITION
+                    SUITABLE_POSITION = ca.SUITABLE_POSITION,
+                    CANDIDATE_INTERVIEW_DATE = ca.CANDIDATE_INTERVIEW_DATE
                 }).ToList();
                 return ListCandidateDTO;
             }
         }
 
-        //getAge
+        //------------------------------------------------ get job experience
+       public static List<CandidateJobExperienceDTO> GetJobExp(int CandidateId)
+        {
+            return Manage_CandidateJobExperienceDTO.GetData().Where(d => d.CANDIDATE_ID == CandidateId).ToList();
+        }
+
+        //----------------------------------------------- getAge ---------------------------------------------
         public static int GetCandidateAge(int CandidateId)
         {
             using(DBEntities db = new DBEntities())
@@ -382,7 +393,7 @@ namespace FinalProject.DTO
             }
         }
 
-        //check skill chekcbox
+        //--------------------------------------------- check skill chekcbox -------------------------------------
         public static string CheckBoxSkill(string Skill, int IdCandidate)
         {
             using(DBEntities db = new DBEntities())
@@ -393,25 +404,15 @@ namespace FinalProject.DTO
             }
         }
 
-        ////change state 
-        //public static int ChangeState(int CandidateId, int StateId) 
-        //{
-        //    using(DBEntities db = new DBEntities())
-        //    {
-        //        TB_CANDIDATE Candidate = db.TB_CANDIDATE.FirstOrDefault(d => d.ID == CandidateId);
-        //        Candidate.CANDIDATE_STATE_ID = StateId;
+        //------------------------------------------------------ get skill --------------------------------------------------
+        public static string GetSkill(int CandidateId)
+        {
+            using(DBEntities db = new DBEntities())
+            {
+                string skill = String.Join(",", db.TB_CANDIDATE_SKILL.Where(d => d.CANDIDATE_ID == CandidateId).Select(d => d.SKILL).ToArray());
 
-        //        UserDTO DataPic = (UserDTO)HttpContext.Current.Session["UserLogin"];
-        //        db.TB_CANDIDATE_SELECTION_HISTORY.Add(new TB_CANDIDATE_SELECTION_HISTORY
-        //        {
-        //            CANDIDATE_ID = CandidateId,
-        //            PIC_ID = DataPic.USER_ID,
-        //            CANDIDATE_STATE = StateId,
-        //            NOTES = "Next From Call to called"
-        //        });
-
-        //        return db.SaveChanges();
-        //    }
-        //}
+                return skill;
+            }
+        }
     }
 }

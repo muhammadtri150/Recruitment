@@ -48,7 +48,6 @@ namespace FinalProject.Filters
                     TB_ACCESS_MENU DataAccessMenu = db.TB_ACCESS_MENU.FirstOrDefault(acc =>
                                                         acc.MENU_ID == DataMenu.MENU_ID &&
                                                         acc.ROLE_ID == DataUserLogin.ROLE_ID
-
                                                         );
 
                     //check data access menu is there or not 

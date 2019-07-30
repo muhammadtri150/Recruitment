@@ -317,9 +317,9 @@
                                         <td>@DelivHistory.CANDIDATE_POSITION</td>
                                         <td>@DelivHistory.SOURCE</td>
                                         <td>@DelivHistory.CANDIDATE_STATE</td>
-                                        <td>@DelivHistory.LAST_PIC</td>
+                                        <td>@Manage_DeliveryHistoryDTO.GetDataPic(Convert.ToInt32(DelivHistory.LAST_PIC)).FULL_NAME</td>
                                         <td>@DelivHistory.PROCESS_DATE</td>
-                                        <td>@DelivHistory.CLIENT_STATE</td>
+                                        <td>@Manage_DeliveryHistoryDTO.GetDataClient(Convert.ToInt16(DelivHistory.CLIENT_ID)).CLIENT_NAME</td>
                                         <td>
                                             <!-- Button trigger modal -->
                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#example">

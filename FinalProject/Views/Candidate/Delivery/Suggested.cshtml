@@ -1,5 +1,6 @@
 ﻿﻿@model IEnumerable<FinalProject.DTO.CandidateSelectionHistoryDTO>
 @using FinalProject.Utils
+@using FinalProject.DTO
 @section title{
     @ViewBag.DataView["title"]
 }
@@ -16,6 +17,7 @@
         </div>
     }
 
+    <!-- Modal Detail -->
     <div class="modal fade" id="Modaldetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -60,15 +62,15 @@
     <div class="container">
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link " align="center" id="nav-home-tab" href="~/candidate/call" role="tab" aria-controls="nav-home" aria-selected="true">List Candidate</a>
-                <a class="nav-brand nav-link active" align="center" id="nav-profile-tab" href="~/candidate/call/called" role="tab" aria-selected="false">List Called Candidate</a>
+                <a class="nav-item nav-link" align="center" id="nav-home-tab" href="~/candidate/delivery" role="tab" aria-controls="nav-home" aria-selected="true">List Candidate Delivery</a>
+                <a class="nav-brand nav-link active" align="center" id="nav-profile-tab" href="~/candidate/delivery/read/suggest" role="tab" aria-selected="false">List Suggest Candidate</a>
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade show active col mt-3" id="nav-call" role="tabpanel" aria-labelledby="nav-home-tab">
                 <div class="container">
                     <!-- Search form -->
-                    <form class="form-inline md-form form-sm mt-4" action="~/candidate/call/called" id="FormFilter" method="post">
+                    <form class="form-inline md-form form-sm mt-4" action="~/candidate/delivery/read/suggest" id="FormFilter" method="post">
                         <input class="form-control form-control-sm mr-3 w-50" type="text" placeholder="Search" aria-label="Search" value="" name="Keyword">
                         <i class="fas fa-search mr-3" aria-hidden="true"></i>
                         <select class="form-control form-control-sm mr-3 float-right" name="POSITION" id="ListPosition">
@@ -76,13 +78,6 @@
                             @foreach (var pos in ViewBag.DataView["ListPosition"])
                             {
                                 <option value="@pos.JOBPOSITION_NAME">@pos.JOBPOSITION_NAME</option>
-                            }
-                        </select>
-                        <select class="form-control form-control-sm mr-3 float-right" name="CANDIDATE_STATE" id="ListState">
-                            <option value="0">All</option>
-                            @foreach (var st in ViewBag.DataView["ListState"])
-                            {
-                                <option value="@st.ID">@st.STATE_NAME</option>
                             }
                         </select>
                         <input type="submit" class="btn btn-primary mr-3 float-right" value="Filter" name="filter" />
@@ -96,71 +91,13 @@
                                 <th scope="col">Source</th>
                                 <th scope="col">Number Phone</th>
                                 <th scope="col">Email</th>
-                                <th scope="col">Preselection PIC</th>
-                                <th scope="col">Sourcing Date</th>
+                                <th scope="col">Delivery PIC</th>
+                                <th scope="col">State</th>
+                                <th scope="col">Interview Date</th>
                                 <th scope="col">State</th>
                                 <th scope="col">Preselection Notes</th>
                                 <th scope="col"></th>
                                 <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var candidate in Model)
-                            {
-                            <tr>
-                                <td>@candidate.CANDIDATE_NAME</td>
-                                <td>@candidate.CANDIDATE_APPLIED_POSITION</td>
-                                <td>@candidate.CANDIDATE_SUITABLE_POSITION</td>
-                                <td>@candidate.CANDIDATE_SOURCE</td>
-                                <td>@candidate.CANDIDATE_PHONE</td>
-                                <td>@candidate.CANDIDATE_EMAIL</td>
-                                <td>@candidate.PIC_FULL_NAME</td>
-                                <td>@candidate.CANDIDATE_SOURCING_DATE</td>
-                                <td>@candidate.CANDIDATE_STATE_NAME</td>
-                                <td>@candidate.NOTES</td>
-                                <td>
-                                    <a class="btn btn-success" href="~/candidate/preselection/read/detailcandidate/@candidate.CANDIDATE_ID">Details</a>
-                                    <a href="~/candidate/call/update/called/next/@candidate.CANDIDATE_ID" class="btn btn-info input-sm @MenuUtils.CheckButtonAcc(2,14)">Next</a>
-                                </td>
-                            </tr>
-                            }
-                        </tbody>
-                    </table>
-                    <input type="button" class="btn btn-primary mb-3" name="" value="<<" />
-                    <input type="button" class="btn btn-primary ml-3 mb-3" name="" value="<" />
-                    <input type="button" class="btn btn-primary ml-3 mb-3" name="" value=">" />
-                    <input type="button" class="btn btn-primary ml-3 mb-3" name="" value=">>" />
-                </div>
-            </div>
-            <div class="tab-pane fade show" id="nav-called" role="tabpanel" aria-labelledby="nav-home-tab">
-                <div class="container">
-                    <!-- Search form -->
-                    <form class="form-inline md-form form-sm mt-4" action="~/AddCandidate" method="post">
-                        <input class="form-control form-control-sm mr-3 w-50" type="text" placeholder="Search"
-                               aria-label="Search">
-                        <i class="fas fa-search mr-3" aria-hidden="true"></i>
-                        <select class="form-control form-control-sm mr-3 float-right">
-                            <option>.Net Developer</option>
-                            <option>Java Developer</option>
-                        </select>
-                        <select class="form-control form-control-sm mr-3 float-right">
-                            <option>Process</option>
-                            <option>Not Proccess</option>
-                        </select>
-                        <input type="button" class="btn btn-primary mr-3 float-right" value="Filter" />
-                    </form>
-                    <table class="table table-striped mt-4">
-                        <thead>
-                            <tr>
-                                <th scope="col">Nama</th>
-                                <th scope="col">Potition</th>
-                                <th scope="col">Source</th>
-                                <th scope="col">Number</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Caller PIC</th>
-                                <th scope="col">State</th>
-                                <th scope="col">Preselection Notes</th>
-                                <th scope="col" colspan="2">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -168,28 +105,88 @@
                             {
                                 <tr>
                                     <td>@candidate.CANDIDATE_NAME</td>
+                                    <td>@candidate.CANDIDATE_APPLIED_POSITION</td>
                                     <td>@candidate.CANDIDATE_SUITABLE_POSITION</td>
                                     <td>@candidate.CANDIDATE_SOURCE</td>
                                     <td>@candidate.CANDIDATE_PHONE</td>
                                     <td>@candidate.CANDIDATE_EMAIL</td>
-                                    <td>@candidate.PIC_FULL_NAME</td>
+                                    <td>@Manage_UserDTO.GetDataUser().FirstOrDefault(usr => usr.USER_ID == Manage_DeliveryHistoryDTO.GetData().OrderByDescending(de => de.START_DATE).FirstOrDefault(de => de.CANDIDATE_ID == candidate.CANDIDATE_ID).LAST_PIC).FULL_NAME</td>
+                                    <td>@candidate.CANDIDATE_STATE_NAME</td>
+                                    <td>@candidate.CANDIDATE_INTERVIEW_DATE</td>
                                     <td>@candidate.CANDIDATE_STATE_NAME</td>
                                     <td>@candidate.NOTES</td>
                                     <td>
-                                        <button type="button" class="btn btn-warning  input-sm" data-toggle="modal" data-target="#Modaldetails">Details</button>
-                                        <a href="~/candidate/call/edit" class="btn btn-info input-sm">Edit</a>
+                                        <a class="btn btn-success" href="~/candidate/preselection/read/detailcandidate/@candidate.CANDIDATE_ID">Details</a>
+
+                                        <button type="button" class="btn btn-primary btn_edit @MenuUtils.CheckButtonAcc(2,17)" data-toggle="modal" data-target="#ModalEdit"
+                                                data-selection_id="@candidate.ID"
+                                                data-candidate_id="@candidate.CANDIDATE_ID"
+                                                data-client_id="@Manage_DeliveryHistoryDTO.GetData().OrderByDescending(d => d.START_DATE).FirstOrDefault(d => d.CANDIDATE_ID == candidate.CANDIDATE_ID).CLIENT_ID"
+                                                data-state_id="@candidate.CANDIDATE_STATE"
+                                                data-delivery_id="@Manage_DeliveryHistoryDTO.GetData().OrderByDescending(d => d.START_DATE).FirstOrDefault(d => d.CANDIDATE_ID == candidate.CANDIDATE_ID).DELIVERY_ID"
+                                                data-id="@Manage_DeliveryHistoryDTO.GetData().OrderByDescending(d => d.START_DATE).FirstOrDefault(d => d.CANDIDATE_ID == candidate.CANDIDATE_ID).CANDIDATE_ID"
+                                                >
+                                            Edit
+                                        </button>
                                     </td>
                                 </tr>
                             }
                         </tbody>
                     </table>
-
                     <input type="button" class="btn btn-primary mb-3" name="" value="<<" />
                     <input type="button" class="btn btn-primary ml-3 mb-3" name="" value="<" />
                     <input type="button" class="btn btn-primary ml-3 mb-3" name="" value=">" />
                     <input type="button" class="btn btn-primary ml-3 mb-3" name="" value=">>" />
                 </div>
             </div>
+         </div>
+
+        <!-- Modal Next -->
+        <div class="modal fade" id="ModalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="~/candidate/delivery/update/suggest" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="CANDIDATE_ID" id="CANDIDATE_ID" />
+                            <input type="hidden" name="SELECTION_ID" id="SELECTION_ID" />
+                            <div class="form-group">
+                                <label for="CANDIDATE_STATE">State</label>
+                                <select class="form-control" id="CANDIDATE_STATE" name="CANDIDATE_STATE">
+                                    @foreach (var client in Manage_StateCandidateDTO.GetData().Where(d => new List<int>() { 6, 14 }.Contains(d.ID)))
+                                    {
+                                        <option class="states" value="@client.ID">@client.STATE_NAME</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect1">Client Company</label>
+                                <select class="form-control" id="CLIENT_ID" name="CLIENT_ID">
+                                    @foreach (var client in Manage_ClientDTO.GetData())
+                                    {
+                                        <option class="clients" value="@client.ID">@client.CLIENT_NAME</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="DeliveryId">Id Delivery</label>
+                                <input type="text" class="form-control" id="DELIVERY_ID" value="" name="DELIVERY_ID">
+                            </div>
+                            <button type="submit" name="send" class="btn btn-success">Next</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-}
+
+        <script src="~/Content/Assets/Js/candidate/delivery/suggest.js"></script>
+
+    }

@@ -1,4 +1,6 @@
 ﻿﻿@model IEnumerable<FinalProject.DTO.CandidateSelectionHistoryDTO>
+@using FinalProject.Utils
+@using FinalProject.DTO;
 @section title{
     @ViewBag.DataView["title"]
 }
@@ -106,83 +108,25 @@
                         <tbody>
                             @foreach (var candidate in Model)
                             {
-                            <tr>
-                                <td>@candidate.CANDIDATE_NAME</td>
-                                <td>@candidate.CANDIDATE_APPLIED_POSITION</td>
-                                <td>@candidate.CANDIDATE_SUITABLE_POSITION</td>
-                                <td>@candidate.CANDIDATE_SOURCE</td>
-                                <td>@candidate.CANDIDATE_PHONE</td>
-                                <td>@candidate.CANDIDATE_EMAIL</td>
-                                <td>@candidate.PIC_FULL_NAME</td>
-                                <td>@candidate.CANDIDATE_SOURCING_DATE</td>
-                                <td>@candidate.CANDIDATE_STATE_NAME</td>
-                                <td>@candidate.NOTES</td>
-                                <td>
-                                    <a class="btn btn-success" href="~/candidate/preselection/read/detailcandidate/@candidate.CANDIDATE_ID">Details</a>
-                                    <a href="~/candidate/interview/update/interviewed/next/@candidate.CANDIDATE_ID" class="btn btn-info input-sm">Next</a>
-                                </td>
-                            </tr>
-                            }
-                        </tbody>
-                    </table>
-                    <input type="button" class="btn btn-primary mb-3" name="" value="<<" />
-                    <input type="button" class="btn btn-primary ml-3 mb-3" name="" value="<" />
-                    <input type="button" class="btn btn-primary ml-3 mb-3" name="" value=">" />
-                    <input type="button" class="btn btn-primary ml-3 mb-3" name="" value=">>" />
-                </div>
-            </div>
-            <div class="tab-pane fade show" id="nav-called" role="tabpanel" aria-labelledby="nav-home-tab">
-                <div class="container">
-                    <!-- Search form -->
-                    <form class="form-inline md-form form-sm mt-4" action="~/AddCandidate" method="post">
-                        <input class="form-control form-control-sm mr-3 w-50" type="text" placeholder="Search"
-                               aria-label="Search">
-                        <i class="fas fa-search mr-3" aria-hidden="true"></i>
-                        <select class="form-control form-control-sm mr-3 float-right">
-                            <option>.Net Developer</option>
-                            <option>Java Developer</option>
-                        </select>
-                        <select class="form-control form-control-sm mr-3 float-right">
-                            <option>Process</option>
-                            <option>Not Proccess</option>
-                        </select>
-                        <input type="button" class="btn btn-primary mr-3 float-right" value="Filter" />
-                    </form>
-                    <table class="table table-striped mt-4">
-                        <thead>
-                            <tr>
-                                <th scope="col">Nama</th>
-                                <th scope="col">Potition</th>
-                                <th scope="col">Source</th>
-                                <th scope="col">Number</th>
-                                <th scope="col">Email</th>
-                                <th scope="col">Caller PIC</th>
-                                <th scope="col">State</th>
-                                <th scope="col">Preselection Notes</th>
-                                <th scope="col" colspan="2">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var candidate in Model)
-                            {
                                 <tr>
                                     <td>@candidate.CANDIDATE_NAME</td>
+                                    <td>@candidate.CANDIDATE_APPLIED_POSITION</td>
                                     <td>@candidate.CANDIDATE_SUITABLE_POSITION</td>
                                     <td>@candidate.CANDIDATE_SOURCE</td>
                                     <td>@candidate.CANDIDATE_PHONE</td>
                                     <td>@candidate.CANDIDATE_EMAIL</td>
                                     <td>@candidate.PIC_FULL_NAME</td>
+                                    <td>@candidate.CANDIDATE_SOURCING_DATE</td>
                                     <td>@candidate.CANDIDATE_STATE_NAME</td>
                                     <td>@candidate.NOTES</td>
                                     <td>
-                                        <button type="button" class="btn btn-warning  input-sm" data-toggle="modal" data-target="#Modaldetails">Details</button>
-                                        <a href="~/candidate/call/edit" class="btn btn-info input-sm">Edit</a>
+                                        <a href="~/candidate/preselection/read/detailcandidate/@candidate.CANDIDATE_ID" class="btn btn-success input-sm">Details</a>
+                                        <a href="~/candidate/interview/update/interviewed/next/@candidate.CANDIDATE_ID" class="btn btn-info input-sm @MenuUtils.CheckButtonAcc(2,15)">Next</a>
                                     </td>
                                 </tr>
                             }
                         </tbody>
                     </table>
-
                     <input type="button" class="btn btn-primary mb-3" name="" value="<<" />
                     <input type="button" class="btn btn-primary ml-3 mb-3" name="" value="<" />
                     <input type="button" class="btn btn-primary ml-3 mb-3" name="" value=">" />
@@ -190,5 +134,5 @@
                 </div>
             </div>
         </div>
-    </div>
-}
+        <script src="~/Content/Assets/Js/candidate/interview/detail.js"></script>
+    }

@@ -134,6 +134,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Content Include="Content\Assets\Js\candidate\delivery\Delivery.js" />
+    <Content Include="Content\Assets\Js\candidate\delivery\suggest.js" />
+    <Content Include="Content\Assets\Js\candidate\interview\detail.js" />
     <Content Include="Content\Assets\Js\candidate\preselection\EditCandidate.js" />
     <Compile Include="Controllers\MasterController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
@@ -2135,7 +2138,6 @@
     <Content Include="Views\Candidate\_ViewStart.cshtml" />
     <Content Include="Views\Candidate\Preselection\Index.cshtml" />
     <Content Include="Views\Candidate\Call\Call.cshtml" />
-    <Content Include="Views\Candidate\Delivery\Index.cshtml" />
     <Content Include="Views\Candidate\Sales\Index.cshtml" />
     <Content Include="Views\Candidate\Preselection\AddCandidate.cshtml" />
     <Content Include="Views\Candidate\Preselection\EditCandidate.cshtml" />
@@ -2148,6 +2150,8 @@
     <Content Include="Views\Candidate\Interview\Interviewed.cshtml" />
     <Content Include="Views\Candidate\Interview\EditCandidateInterview.cshtml" />
     <Content Include="Views\Candidate\Interview\EditCandidateInterviewed.cshtml" />
+    <Content Include="Views\Candidate\Delivery\Delivery.cshtml" />
+    <Content Include="Views\Candidate\Delivery\Suggested.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
