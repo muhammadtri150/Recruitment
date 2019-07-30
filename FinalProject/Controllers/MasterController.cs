@@ -1461,8 +1461,7 @@ namespace FinalProject.Controllers
         [Route("master/menumanagement/delete/{id?}")]
         public ActionResult MenuDelete(string id = null)
         {
-            try
-            {
+            try  { 
                 if (id == null)
                 {
                     return Redirect("~/master/menumanagement");
@@ -1479,7 +1478,7 @@ namespace FinalProject.Controllers
 
                         if (Tb_Menu == null)
                         {
-                            return Redirect("~/master/submenumanagement");
+                            return Redirect("~/master/menumanagement");
                         }
 
                         else
@@ -1488,7 +1487,7 @@ namespace FinalProject.Controllers
 
                             if (db.SaveChanges() > 0)
                             {
-                                TempData.Add("message", "New Sub menu DELETE successfully");
+                                TempData.Add("message", "menu DELETE successfully");
                                 TempData.Add("type", "success");
                                 UserLogingUtils.SaveLoggingUserActivity("delete Menu " + MenuId);
                             }
@@ -1501,7 +1500,7 @@ namespace FinalProject.Controllers
                         }
                     }
                 }
-                return Redirect("~/master/submenumanagement");
+                return Redirect("~/master/menumanagement");
             }
             catch (Exception)
             {
