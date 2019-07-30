@@ -9,8 +9,8 @@
             type: "post",
             data: { ROLE_ID: RoleId, MENU_ID: MenuId },
             success: function (d) {
-                document.location.href = "http://localhost:64197/master/rolemanagement/accessmenu/" + RoleId;
-                $("#ModalAccessCandidate").triggerHandler("click");
+                //document.location.href = "http://localhost:64197/master/rolemanagement/accessmenu/" + RoleId;
+                //$("#ModalAccessCandidate").triggerHandler("click");
             }
         });
     });
@@ -30,7 +30,7 @@
                 ACTION_CANDIDATE_ID: ActionId
             },
             success: function (d) {
-                document.location.href = "http://localhost:64197/master/rolemanagement/accessmenu/" + RoleId;
+                //document.location.href = "http://localhost:64197/master/rolemanagement/accessmenu/" + RoleId;
             }
         });
     });

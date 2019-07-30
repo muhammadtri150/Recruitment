@@ -289,6 +289,17 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
     <Property Name="SUB_MENU_CANDIDATE_ID" Type="int" />
     <Property Name="ACTION_CANDIDATE_ID" Type="int" />
   </EntityType>
+  <EntityType Name="TB_ZIPCODE">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="kelurahan" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="kecamatan" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="kabupaten" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="provinsi" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="kodepos" Type="varchar" MaxLength="5" Nullable="false" />
+  </EntityType>
   <Association Name="FK__TB_CANDID__CANDI__71D1E811">
     <End Role="TB_STATE_CANDIDATE" Type="Self.TB_STATE_CANDIDATE" Multiplicity="0..1" />
     <End Role="TB_CANDIDATE" Type="Self.TB_CANDIDATE" Multiplicity="*" />
@@ -520,6 +531,7 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
     <EntitySet Name="TB_SUBMENU" EntityType="Self.TB_SUBMENU" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_USER" EntityType="Self.TB_USER" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_USER_ACCESS_MENU_CANDIDATE" EntityType="Self.TB_USER_ACCESS_MENU_CANDIDATE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TB_ZIPCODE" EntityType="Self.TB_ZIPCODE" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_PREFIX" EntityType="Self.TB_PREFIX" store:Type="Tables" store:Schema="dbo">
       <DefiningQuery>SELECT 
     [TB_PREFIX].[ID] AS [ID], 

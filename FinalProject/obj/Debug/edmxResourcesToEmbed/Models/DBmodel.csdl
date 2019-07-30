@@ -189,6 +189,7 @@
     <EntitySet Name="TB_SKILL_JOB_EXPERIENCE" EntityType="FinalProject_adp3Model.TB_SKILL_JOB_EXPERIENCE" />
     <EntitySet Name="TB_BENEFIT_JOB_EXPERIENCE" EntityType="FinalProject_adp3Model.TB_BENEFIT_JOB_EXPERIENCE" />
     <EntitySet Name="TB_DELIVERY_HISTORY" EntityType="FinalProject_adp3Model.TB_DELIVERY_HISTORY" />
+    <EntitySet Name="TB_ZIPCODE" EntityType="FinalProject_adp3Model.TB_ZIPCODE" />
   </EntityContainer>
   <Association Name="FK_TB_ACCESS_MENU_TB_ACCESS_MENU">
     <End Type="FinalProject_adp3Model.TB_ACCESS_MENU" Role="TB_ACCESS_MENU" Multiplicity="1" />
@@ -621,5 +622,16 @@
     <Property Name="CLIENT_STATE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="NOTE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="AVALIABLE_JOIN" Type="DateTime" Precision="0" />
+  </EntityType>
+  <EntityType Name="TB_ZIPCODE">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="kelurahan" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="kecamatan" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="kabupaten" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="provinsi" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="kodepos" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
   </EntityType>
 </Schema>

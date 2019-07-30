@@ -314,5 +314,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="TB_ZIPCODE">
+      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_ZIPCODE">
+        <MappingFragment StoreEntitySet="TB_ZIPCODE">
+          <ScalarProperty Name="kodepos" ColumnName="kodepos" />
+          <ScalarProperty Name="provinsi" ColumnName="provinsi" />
+          <ScalarProperty Name="kabupaten" ColumnName="kabupaten" />
+          <ScalarProperty Name="kecamatan" ColumnName="kecamatan" />
+          <ScalarProperty Name="kelurahan" ColumnName="kelurahan" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

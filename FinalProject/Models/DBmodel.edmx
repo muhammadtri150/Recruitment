@@ -294,6 +294,17 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <Property Name="SUB_MENU_CANDIDATE_ID" Type="int" />
           <Property Name="ACTION_CANDIDATE_ID" Type="int" />
         </EntityType>
+        <EntityType Name="TB_ZIPCODE">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="kelurahan" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="kecamatan" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="kabupaten" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="provinsi" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="kodepos" Type="varchar" MaxLength="5" Nullable="false" />
+        </EntityType>
         <Association Name="FK__TB_CANDID__CANDI__71D1E811">
           <End Role="TB_STATE_CANDIDATE" Type="Self.TB_STATE_CANDIDATE" Multiplicity="0..1" />
           <End Role="TB_CANDIDATE" Type="Self.TB_CANDIDATE" Multiplicity="*" />
@@ -525,6 +536,7 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <EntitySet Name="TB_SUBMENU" EntityType="Self.TB_SUBMENU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_USER" EntityType="Self.TB_USER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_USER_ACCESS_MENU_CANDIDATE" EntityType="Self.TB_USER_ACCESS_MENU_CANDIDATE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_ZIPCODE" EntityType="Self.TB_ZIPCODE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_PREFIX" EntityType="Self.TB_PREFIX" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [TB_PREFIX].[ID] AS [ID], 
@@ -794,6 +806,7 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <EntitySet Name="TB_SKILL_JOB_EXPERIENCE" EntityType="FinalProject_adp3Model.TB_SKILL_JOB_EXPERIENCE" />
           <EntitySet Name="TB_BENEFIT_JOB_EXPERIENCE" EntityType="FinalProject_adp3Model.TB_BENEFIT_JOB_EXPERIENCE" />
           <EntitySet Name="TB_DELIVERY_HISTORY" EntityType="FinalProject_adp3Model.TB_DELIVERY_HISTORY" />
+          <EntitySet Name="TB_ZIPCODE" EntityType="FinalProject_adp3Model.TB_ZIPCODE" />
           </EntityContainer>
         <Association Name="FK_TB_ACCESS_MENU_TB_ACCESS_MENU">
           <End Type="FinalProject_adp3Model.TB_ACCESS_MENU" Role="TB_ACCESS_MENU" Multiplicity="1" />
@@ -1227,6 +1240,17 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <Property Name="NOTE" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="AVALIABLE_JOIN" Type="DateTime" Precision="0" />
         </EntityType>
+        <EntityType Name="TB_ZIPCODE">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="kelurahan" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="kecamatan" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="kabupaten" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="provinsi" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="kodepos" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1543,6 +1567,18 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
                 <ScalarProperty Name="CANDIDATE_ID" ColumnName="CANDIDATE_ID" />
                 <ScalarProperty Name="DELIVERY_ID" ColumnName="DELIVERY_ID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_ZIPCODE">
+            <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_ZIPCODE">
+              <MappingFragment StoreEntitySet="TB_ZIPCODE">
+                <ScalarProperty Name="kodepos" ColumnName="kodepos" />
+                <ScalarProperty Name="provinsi" ColumnName="provinsi" />
+                <ScalarProperty Name="kabupaten" ColumnName="kabupaten" />
+                <ScalarProperty Name="kecamatan" ColumnName="kecamatan" />
+                <ScalarProperty Name="kelurahan" ColumnName="kelurahan" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

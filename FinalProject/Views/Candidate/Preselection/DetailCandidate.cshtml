@@ -72,7 +72,7 @@
                                 <tr>
                                     <td>@Manage_CandidateDTO.GetCandidateAge(Model.DataCandidate.ID)</td>
                                     <td>@Model.DataCandidate.RELIGION</td>
-                                    <td>@Model.DataCandidate.CANDIDATE_CURRENT_ADDRESS</td>
+                                    <td>@Manage_ZipCodeDTO.GetData(Model.DataCandidate.ZIP_CODE).kabupaten</td>
                                     <td>@Model.DataCandidate.CANDIDATE_LAST_EDUCATON</td>
                                     <td>@Model.DataCandidate.CANDIDATE_KTP_NUMBER</td>
                                 </tr>
