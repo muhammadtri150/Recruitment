@@ -99,5 +99,27 @@ namespace FinalProject.DTO
             }
         }
 
+        public static int EditData(CandidateSelectionHistoryDTO Data)
+        {
+            using(DBEntities db = new DBEntities())
+            {
+                //prepare data pic
+                UserDTO DataPIC = (UserDTO)HttpContext.Current.Session["UserLogin"]; 
+
+                var DataSelectHistory = db.TB_CANDIDATE_SELECTION_HISTORY.FirstOrDefault(sh => sh.CANDIDATE_ID == Data.CANDIDATE_ID && sh.CANDIDATE_STATE == Data.CANDIDATE_STATE);
+
+                DataSelectHistory.PIC_ID = DataPIC.USER_ID;
+                DataSelectHistory.CANDIDATE_STATE = Data.CANDIDATE_STATE;
+                DataSelectHistory.NOTES = Data.NOTES;
+                DataSelectHistory.PROCESS_DATE = DateTime.Now;
+                DataSelectHistory.CANDIDATE_EXPECTED_SALARY = Data.CANDIDATE_EXPECTED_SALARY;
+                DataSelectHistory.CANDIDATE_INTERVIEW_DATE = Data.CANDIDATE_INTERVIEW_DATE;
+                DataSelectHistory.CANDIDATE_APPLIED_POSITION = Data.CANDIDATE_APPLIED_POSITION;
+                DataSelectHistory.CANDIDATE_SUITABLE_POSITION = Data.CANDIDATE_SUITABLE_POSITION;
+                DataSelectHistory.CANDIDATE_SOURCE = Data.CANDIDATE_SOURCE;
+                return db.SaveChanges();
+            }
+        }
+
     }
 }

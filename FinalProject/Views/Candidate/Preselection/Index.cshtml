@@ -73,7 +73,7 @@
                     <td>@data.CANDIDATE_PHONE</td>
                     <td>@data.CANDIDATE_EMAIL</td>
                     <td>@data.PIC_FULL_NAME</td>
-                    <td>@data.CANDIDATE_SOURCING_DATE</td>
+                    <td>@Convert.ToDateTime(data.CANDIDATE_SOURCING_DATE).ToString("dd/MM/yyyy")</td>
                     <td>@data.CANDIDATE_STATE_NAME</td>
                     <td>@data.NOTES</td>
                     <td>

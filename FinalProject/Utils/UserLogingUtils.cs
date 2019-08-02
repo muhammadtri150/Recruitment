@@ -52,5 +52,13 @@ namespace FinalProject.Utils
         {
             return (UserDTO)HttpContext.Current.Session["UserLogin"];
         }
+
+        public static List<TB_LOG_USER_ACTIVITY> GetLogUser()
+        {
+            using(DBEntities db = new DBEntities())
+            {
+                return db.TB_LOG_USER_ACTIVITY.ToList();
+            }
+        } 
     }
 }

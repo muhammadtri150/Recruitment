@@ -261,9 +261,26 @@ namespace FinalProject.Controllers
                     }
                     return Redirect("~/master/client");
                 }
-                TempData.Add("message", "Please complete the form add");
-                TempData.Add("type", "danger");
-                return Redirect("~/master/client");
+                using (DBEntities db = new DBEntities())
+                {
+                    // prepare data clients for view
+                    List<ClientDTO> ListClient = db.TB_CLIENT.Select(c => new ClientDTO
+                    {
+                        ID = c.ID,
+                        CLIENT_ID = c.CLIENT_ID,
+                        CLIENT_NAME = c.CLIENT_NAME,
+                        CLIENT_ADDRESS = c.CLIENT_ADDRESS,
+                        CLIENT_OTHERADDRESS = c.CLIENT_OTHERADDRESS,
+                        CLIENT_INDUSTRIES = c.CLIENT_INDUSTRIES,
+                    }).ToList();
+                    //set data to show in view
+                    ViewBag.DataView = new Dictionary<string, string>()
+                    {
+                        {"title","Client" }
+                    };
+
+                    return View("Client/Index", ListClient);
+                }
             }
             catch (Exception)
             {
@@ -303,9 +320,26 @@ namespace FinalProject.Controllers
                         }
                         return Redirect("~/master/client");
                     }
-                    TempData.Add("message","Please Complete the form edit");
-                    TempData.Add("type", "danger");
-                    return Redirect("~/master/client");
+                    using (DBEntities db2 = new DBEntities())
+                    {
+                        // prepare data clients for view
+                        List<ClientDTO> ListClient = db2.TB_CLIENT.Select(c => new ClientDTO
+                        {
+                            ID = c.ID,
+                            CLIENT_ID = c.CLIENT_ID,
+                            CLIENT_NAME = c.CLIENT_NAME,
+                            CLIENT_ADDRESS = c.CLIENT_ADDRESS,
+                            CLIENT_OTHERADDRESS = c.CLIENT_OTHERADDRESS,
+                            CLIENT_INDUSTRIES = c.CLIENT_INDUSTRIES,
+                        }).ToList();
+                        //set data to show in view
+                        ViewBag.DataView = new Dictionary<string, string>()
+                    {
+                        {"title","Client" }
+                    };
+
+                        return View("Client/Index", ListClient);
+                    }
                 }
             }
             catch (Exception)
@@ -448,9 +482,31 @@ namespace FinalProject.Controllers
                     }
                     return Redirect("~/master/usermanagement");
                 }
-                TempData.Add("message", "Please Complete the form add User");
-                TempData.Add("type", "danger");
-                return Redirect("~/master/usermanagement");
+                using (DBEntities db = new DBEntities())
+                {
+                    //prepare data user dto for view
+
+                    List<UserDTO> ListUser = db.TB_USER.Select(u =>
+                        new UserDTO
+                        {
+                            USER_ID = u.USER_ID,
+                            FULL_NAME = u.FULL_NAME,
+                            USERNAME = u.USERNAME,
+                            PASSWORD = u.PASSWORD,
+                            ROLE_ID = u.ROLE_ID,
+                            ROLE_NAME = db.TB_ROLE.FirstOrDefault(r => r.ROLE_ID == u.ROLE_ID).ROLE_NAME
+                        }
+                    ).ToList();
+
+                    //return view and send with list users
+                    ViewBag.DataView = new Dictionary<string, object>()
+                    {
+                        {"title","User Management"},
+                        {"ListRole",db.TB_ROLE.Select(r => new RoleDTO{ ROLE_NAME = r.ROLE_NAME, ROLE_ID = r.ROLE_ID}).ToList() }
+
+                    };
+                    return View("User/Index", ListUser);
+                }
             }
             catch (Exception)
             {
@@ -494,9 +550,31 @@ namespace FinalProject.Controllers
                         }
                         return Redirect("~/master/usermanagement");
                     }
-                    TempData.Add("message", "Please Complete the form edit");
-                    TempData.Add("type", "danger");
-                    return Redirect("~/master/usermanagement");
+                    using (DBEntities db2 = new DBEntities())
+                    {
+                        //prepare data user dto for view
+
+                        List<UserDTO> ListUser = db.TB_USER.Select(u =>
+                            new UserDTO
+                            {
+                                USER_ID = u.USER_ID,
+                                FULL_NAME = u.FULL_NAME,
+                                USERNAME = u.USERNAME,
+                                PASSWORD = u.PASSWORD,
+                                ROLE_ID = u.ROLE_ID,
+                                ROLE_NAME = db2.TB_ROLE.FirstOrDefault(r => r.ROLE_ID == u.ROLE_ID).ROLE_NAME
+                            }
+                        ).ToList();
+
+                        //return view and send with list users
+                        ViewBag.DataView = new Dictionary<string, object>()
+                    {
+                        {"title","User Management"},
+                        {"ListRole",db.TB_ROLE.Select(r => new RoleDTO{ ROLE_NAME = r.ROLE_NAME, ROLE_ID = r.ROLE_ID}).ToList() }
+
+                    };
+                        return View("User/Index", ListUser);
+                    }
                 }
             }
             catch (Exception)

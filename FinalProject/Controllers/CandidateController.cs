@@ -485,25 +485,63 @@ namespace FinalProject.Controllers
         [Route("candidate/call/update/next/process")]
         public ActionResult CandidateCallNext(CandidateDTO Data, HttpPostedFileBase Pict = null, HttpPostedFileBase Cv = null)
         {
-            try
-            {
+            //try
+            //{
                 if (ModelState.IsValid)
                 {
-                    var ProcessEdit = Manage_CandidateDTO.EditCandidate(Data, Pict, Cv);
+                    int ProcessEdit;
 
-                    //process removing state call
+                    var state = Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(c => c.ID == Data.ID).CANDIDATE_STATE_ID;
+                    if (state != Data.CANDIDATE_STATE_ID)
+                    {
+                        using (DBEntities db = new DBEntities())
+                        {
+                            var SelectHis = db.TB_CANDIDATE_SELECTION_HISTORY.FirstOrDefault(d => d.CANDIDATE_STATE == 2 && d.CANDIDATE_ID == Data.ID);
+                            //process removing state call
+                            db.TB_CANDIDATE_SELECTION_HISTORY.Remove(SelectHis);
+                            db.SaveChanges();
+
+                        }
+                        ProcessEdit = Manage_CandidateDTO.EditCandidate(Data, Pict, Cv);
+
+                        if (ProcessEdit > 0)
+                        {
+                            TempData.Add("message", "Candidate Update successfully");
+                            TempData.Add("type", "success");
+                            UserLogingUtils.SaveLoggingUserActivity("Edit Candidate" + Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID));
+                            //check state candidate before updated
+
+                        }
+                        else
+                        {
+                            TempData.Add("message", "Candidate failed to Update");
+                            TempData.Add("type", "warning");
+                        }
+
+                        return Redirect("~/candidate/call/read/called");
+                    }
+
+                    ProcessEdit = Manage_CandidateDTO.EditCandidate(Data, Pict, Cv);
+
+                    Manage_CandidateSelectionHistoryDTO.EditData(new CandidateSelectionHistoryDTO
+                    {
+                        CANDIDATE_ID = Data.ID,
+                        CANDIDATE_STATE = Data.CANDIDATE_STATE_ID,
+                        NOTES = Data.NOTES,
+                        CANDIDATE_SOURCE = Data.SOURCE,
+                        CANDIDATE_INTERVIEW_DATE = Data.CANDIDATE_INTERVIEW_DATE,
+                        CANDIDATE_APPLIED_POSITION = Data.POSITION,
+                        CANDIDATE_SUITABLE_POSITION = Data.SUITABLE_POSITION,
+                        CANDIDATE_EXPECTED_SALARY = Data.EXPECTED_sALARY
+                    });
 
                     if (ProcessEdit > 0)
                     {
                         TempData.Add("message", "Candidate Update successfully");
                         TempData.Add("type", "success");
                         UserLogingUtils.SaveLoggingUserActivity("Edit Candidate" + Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID));
-                        using (DBEntities db = new DBEntities())
-                        {
-                            var SelectHis = db.TB_CANDIDATE_SELECTION_HISTORY.FirstOrDefault(d => d.CANDIDATE_STATE == 2 && d.CANDIDATE_ID == Data.ID);
-                            db.TB_CANDIDATE_SELECTION_HISTORY.Remove(SelectHis);
-                            db.SaveChanges();
-                        }
+                        //check state candidate before updated
+
                     }
                     else
                     {
@@ -511,7 +549,7 @@ namespace FinalProject.Controllers
                         TempData.Add("type", "warning");
                     }
 
-                    return Redirect("~/candidate/call/read/called");
+                    return Redirect("~/candidate/call");
                 }
 
                 CandidateDTO DataCandidate = Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID);
@@ -522,11 +560,11 @@ namespace FinalProject.Controllers
                     {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 8 ||  d.ID == 2).ToList() }
                 };
                 return View("Call/EditCandidateCall", DataCandidate);
-            }
-            catch
-            {
-                return Redirect("~/auth/error");
-            }
+            //}
+            //catch
+            //{
+            //    return Redirect("~/auth/error");
+            //}
         }
 
         //------------------------------------------------- View for candidate !!! CALLED !!! ---------------------------------------------
@@ -539,7 +577,7 @@ namespace FinalProject.Controllers
                 //note : data candidate from class Manage_CandidateSelectionHistoryDTO method GetDataSelectionHistory
                 //note : data in this view especialy for candidate where state_id is 2(call) or 18(called) (state in step call)
                 List<CandidateSelectionHistoryDTO> ListCandidate = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().Where(d =>
-            d.CANDIDATE_STATE == 8 || d.CANDIDATE_STATE == 15  || d.CANDIDATE_STATE == 17).ToList();
+            d.CANDIDATE_STATE == 8 || d.CANDIDATE_STATE == 17).ToList();
                 //prepare vew bag
                 //---------------------------- prepare data viewbag --------------------
                 ViewBag.DataView = new Dictionary<string, object>{
@@ -777,22 +815,29 @@ namespace FinalProject.Controllers
             //{
             if (ModelState.IsValid)
                 {
-                    
-                    var ProcessEdit = Manage_CandidateDTO.EditCandidate(Data, Pict, Cv);
 
-                    //process removing state call
+                int ProcessEdit;
+
+                var state = Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(c => c.ID == Data.ID).CANDIDATE_STATE_ID;
+                if (state != Data.CANDIDATE_STATE_ID)
+                {
+                    using (DBEntities db = new DBEntities())
+                    {
+                        var SelectHis = db.TB_CANDIDATE_SELECTION_HISTORY.FirstOrDefault(d => d.CANDIDATE_STATE == 19 && d.CANDIDATE_ID == Data.ID);
+                        //process removing state call
+                        db.TB_CANDIDATE_SELECTION_HISTORY.Remove(SelectHis);
+                        db.SaveChanges();
+
+                    }
+                    ProcessEdit = Manage_CandidateDTO.EditCandidate(Data, Pict, Cv);
 
                     if (ProcessEdit > 0)
                     {
                         TempData.Add("message", "Candidate Update successfully");
                         TempData.Add("type", "success");
                         UserLogingUtils.SaveLoggingUserActivity("Edit Candidate" + Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID));
-                        using (DBEntities db = new DBEntities())
-                        {
-                            var SelectHis = db.TB_CANDIDATE_SELECTION_HISTORY.FirstOrDefault(d => d.CANDIDATE_STATE == 19 && d.CANDIDATE_ID == Data.ID);
-                            db.TB_CANDIDATE_SELECTION_HISTORY.Remove(SelectHis);
-                            db.SaveChanges();
-                        }
+                        //check state candidate before updated
+
                     }
                     else
                     {
@@ -800,8 +845,48 @@ namespace FinalProject.Controllers
                         TempData.Add("type", "warning");
                     }
 
-                    return Redirect("~/candidate/interview/read/interviewed");
+                    return Redirect("~/candidate/interview");
                 }
+
+                ProcessEdit = Manage_CandidateDTO.EditCandidate(Data, Pict, Cv);
+
+                Manage_CandidateSelectionHistoryDTO.EditData(new CandidateSelectionHistoryDTO
+                {
+                    CANDIDATE_ID = Data.ID,
+                    CANDIDATE_STATE = Data.CANDIDATE_STATE_ID,
+                    NOTES = Data.NOTES,
+                    CANDIDATE_SOURCE = Data.SOURCE,
+                    CANDIDATE_INTERVIEW_DATE = Data.CANDIDATE_INTERVIEW_DATE,
+                    CANDIDATE_APPLIED_POSITION = Data.POSITION,
+                    CANDIDATE_SUITABLE_POSITION = Data.SUITABLE_POSITION,
+                    CANDIDATE_EXPECTED_SALARY = Data.EXPECTED_sALARY
+                });
+
+                //process removing state call
+
+                if (ProcessEdit > 0)
+                    {
+                        TempData.Add("message", "Candidate Update successfully");
+                        TempData.Add("type", "success");
+                        UserLogingUtils.SaveLoggingUserActivity("Edit Candidate" + Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID));
+                        if (Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(c => c.ID == Data.ID).CANDIDATE_STATE_ID != Data.CANDIDATE_STATE_ID)
+                        {
+                            using (DBEntities db = new DBEntities())
+                            {
+                                var SelectHis = db.TB_CANDIDATE_SELECTION_HISTORY.FirstOrDefault(d => d.CANDIDATE_STATE == 2 && d.CANDIDATE_ID == Data.ID);
+                                db.TB_CANDIDATE_SELECTION_HISTORY.Remove(SelectHis);
+                                db.SaveChanges();
+                            }
+                            return Redirect("~/candidate/interview/read/interviewed");
+                        }
+                    }
+                    else
+                    {
+                        TempData.Add("message", "Candidate failed to Update");
+                        TempData.Add("type", "warning");
+                    }
+                    return Redirect("~/candidate/interview");
+                    }
                 ViewBag.DataView = new Dictionary<string, object>()
                 {
                     {"title","interview"},
@@ -944,7 +1029,7 @@ namespace FinalProject.Controllers
                         TempData.Add("type", "warning");
                     }
 
-                    return Redirect("~/candidate/delivery");
+                    return Redirect("~/candidate/interview");
                 }
                 TempData.Add("message", "Candidate failed to Update, please complete form edit");
                 TempData.Add("type", "danger");
@@ -1167,7 +1252,11 @@ namespace FinalProject.Controllers
 
                     db.TB_CANDIDATE_SELECTION_HISTORY.FirstOrDefault(s => s.ID == Data.SELECTION_ID).CANDIDATE_STATE = Data.CANDIDATE_STATE;
 
-                    db.SaveChanges();
+                    if(db.SaveChanges() > 0)
+                    {
+                        UserLogingUtils.SaveLoggingUserActivity("edit suggest state of candidate id " + Data.CANDIDATE_ID);
+                    }
+
                 }
                 return Redirect("~/candidate/delivery/read/suggest");
             }

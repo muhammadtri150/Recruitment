@@ -19,7 +19,7 @@ namespace FinalProject.Controllers
             {
                 if (Session["UserLogin"] == null)
                 {
-                   return Redirect("~auth/login");
+                   return Redirect("~/auth/login");
                 }
                 else
                 {

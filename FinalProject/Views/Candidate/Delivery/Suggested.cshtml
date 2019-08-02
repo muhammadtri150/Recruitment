@@ -89,13 +89,16 @@
                                 <th scope="col">Applied Potition</th>
                                 <th scope="col">Suitable Potition</th>
                                 <th scope="col">Source</th>
-                                <th scope="col">Number Phone</th>
+                                <th scope="col">Id Delivery</th>
+                                <th scope="col">Client Name</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Delivery PIC</th>
                                 <th scope="col">State</th>
                                 <th scope="col">Interview Date</th>
                                 <th scope="col">State</th>
-                                <th scope="col">Preselection Notes</th>
+                                <th scope="col">Last Edit By</th>
+                                <th scope="col"> Notes</th>
+                                <th scope="col">Last Edited Date</th>
                                 <th scope="col"></th>
                                 <th scope="col"></th>
                             </tr>
@@ -103,33 +106,35 @@
                         <tbody>
                             @foreach (var candidate in Model)
                             {
-                                <tr>
-                                    <td>@candidate.CANDIDATE_NAME</td>
-                                    <td>@candidate.CANDIDATE_APPLIED_POSITION</td>
-                                    <td>@candidate.CANDIDATE_SUITABLE_POSITION</td>
-                                    <td>@candidate.CANDIDATE_SOURCE</td>
-                                    <td>@candidate.CANDIDATE_PHONE</td>
-                                    <td>@candidate.CANDIDATE_EMAIL</td>
-                                    <td>@Manage_UserDTO.GetDataUser().FirstOrDefault(usr => usr.USER_ID == Manage_DeliveryHistoryDTO.GetData().OrderByDescending(de => de.START_DATE).FirstOrDefault(de => de.CANDIDATE_ID == candidate.CANDIDATE_ID).LAST_PIC).FULL_NAME</td>
-                                    <td>@candidate.CANDIDATE_STATE_NAME</td>
-                                    <td>@candidate.CANDIDATE_INTERVIEW_DATE</td>
-                                    <td>@candidate.CANDIDATE_STATE_NAME</td>
-                                    <td>@candidate.NOTES</td>
-                                    <td>
-                                        <a class="btn btn-success" href="~/candidate/preselection/read/detailcandidate/@candidate.CANDIDATE_ID">Details</a>
+                            <tr>
+                                <td>@candidate.CANDIDATE_NAME</td>
+                                <td>@candidate.CANDIDATE_APPLIED_POSITION</td>
+                                <td>@candidate.CANDIDATE_SUITABLE_POSITION</td>
+                                <td>@candidate.CANDIDATE_SOURCE</td>
+                                <td>@Manage_DeliveryHistoryDTO.GetData().OrderByDescending(de => de.PROCESS_DATE).FirstOrDefault(de => de.CANDIDATE_ID == candidate.CANDIDATE_ID).DELIVERY_ID</td>
+                                <td>@Manage_ClientDTO.GetData().FirstOrDefault(cl => cl.ID == Manage_DeliveryHistoryDTO.GetData().OrderByDescending(de => de.PROCESS_DATE).FirstOrDefault(de => de.CANDIDATE_ID == candidate.CANDIDATE_ID).CLIENT_ID).CLIENT_NAME</td>
+                                <td>@candidate.CANDIDATE_EMAIL</td>
+                                <td>@Manage_UserDTO.GetDataUser().FirstOrDefault(usr => usr.USER_ID == Manage_DeliveryHistoryDTO.GetData().OrderByDescending(de => de.START_DATE).FirstOrDefault(de => de.CANDIDATE_ID == candidate.CANDIDATE_ID).LAST_PIC).FULL_NAME</td>
+                                <td>@candidate.CANDIDATE_STATE_NAME</td>
+                                <td>@Convert.ToDateTime(candidate.CANDIDATE_INTERVIEW_DATE).ToString("dd/MM/yyyy")</td>
+                                <td>@candidate.CANDIDATE_STATE_NAME</td>
+                                <td>@Manage_UserDTO.GetDataUser().FirstOrDefault(usr => usr.USER_ID == UserLogingUtils.GetLogUser().OrderByDescending(log => log.Time).FirstOrDefault(log => log.Notes.Contains("edit suggest state of candidate id 5")).USER_ID).FULL_NAME</td>
+                                <td>@candidate.NOTES</td>
+                                <td>@Convert.ToDateTime(UserLogingUtils.GetLogUser().FirstOrDefault(log => log.Notes == "edit suggest state of candidate id " + candidate.CANDIDATE_ID).Time).ToString("dd/MM/yyyy")</td>
+                                <td>
+                                    <a class="btn btn-success" href="~/candidate/preselection/read/detailcandidate/@candidate.CANDIDATE_ID">Details</a>
 
-                                        <button type="button" class="btn btn-primary btn_edit @MenuUtils.CheckButtonAcc(2,17)" data-toggle="modal" data-target="#ModalEdit"
-                                                data-selection_id="@candidate.ID"
-                                                data-candidate_id="@candidate.CANDIDATE_ID"
-                                                data-client_id="@Manage_DeliveryHistoryDTO.GetData().OrderByDescending(d => d.START_DATE).FirstOrDefault(d => d.CANDIDATE_ID == candidate.CANDIDATE_ID).CLIENT_ID"
-                                                data-state_id="@candidate.CANDIDATE_STATE"
-                                                data-delivery_id="@Manage_DeliveryHistoryDTO.GetData().OrderByDescending(d => d.START_DATE).FirstOrDefault(d => d.CANDIDATE_ID == candidate.CANDIDATE_ID).DELIVERY_ID"
-                                                data-id="@Manage_DeliveryHistoryDTO.GetData().OrderByDescending(d => d.START_DATE).FirstOrDefault(d => d.CANDIDATE_ID == candidate.CANDIDATE_ID).CANDIDATE_ID"
-                                                >
-                                            Edit
-                                        </button>
-                                    </td>
-                                </tr>
+                                    <button type="button" class="btn btn-primary btn_edit @MenuUtils.CheckButtonAcc(2,17)" data-toggle="modal" data-target="#ModalEdit"
+                                            data-selection_id="@candidate.ID"
+                                            data-candidate_id="@candidate.CANDIDATE_ID"
+                                            data-client_id="@Manage_DeliveryHistoryDTO.GetData().OrderByDescending(d => d.START_DATE).FirstOrDefault(d => d.CANDIDATE_ID == candidate.CANDIDATE_ID).CLIENT_ID"
+                                            data-state_id="@candidate.CANDIDATE_STATE"
+                                            data-delivery_id="@Manage_DeliveryHistoryDTO.GetData().OrderByDescending(d => d.START_DATE).FirstOrDefault(d => d.CANDIDATE_ID == candidate.CANDIDATE_ID).DELIVERY_ID"
+                                            data-id="@Manage_DeliveryHistoryDTO.GetData().OrderByDescending(d => d.START_DATE).FirstOrDefault(d => d.CANDIDATE_ID == candidate.CANDIDATE_ID).CANDIDATE_ID">
+                                        Edit
+                                    </button>
+                                </td>
+                            </tr>
                             }
                         </tbody>
                     </table>

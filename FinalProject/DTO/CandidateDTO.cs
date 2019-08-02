@@ -355,7 +355,7 @@ namespace FinalProject.DTO
                     CANDIDATE_GPA = ca.CANDIDATE_GPA,
                     CANDIDATE_MAJOR = ca.CANDIDATE_MAJOR,
                     CANDIDATE_DEGREE = ca.CANDIDATE_DEGREE,
-                    CANDIDATE_STATE_ID = 1,
+                    CANDIDATE_STATE_ID = ca.CANDIDATE_STATE_ID,
                     SOURCE = ca.SOURCE,
                     SOURCING_DATE = ca.SOURCING_DATE,
                     ZIP_CODE = ca.ZIP_CODE,

@@ -61,7 +61,7 @@
     <div class="container">
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" align="center" id="nav-home-tab" data-toggle="tab" href="#nav-call" role="tab" aria-controls="nav-home" aria-selected="true">Interview</a>
+                <a class="nav-item nav-link active" align="center" id="nav-home-tab" data-toggle="tab" href="~/candidate/interview" role="tab" aria-controls="nav-home" aria-selected="true">Interview</a>
                 <a class="nav-brand nav-link" align="center" id="nav-profile-tab" href="~/candidate/interview/read/interviewed" role="tab" aria-selected="false">Interviewed</a>
             </div>
         </nav>
@@ -117,8 +117,8 @@
                                 <td>@candidate.CANDIDATE_PHONE</td>
                                 <td>@candidate.CANDIDATE_EMAIL</td>
                                 <td>@candidate.PIC_FULL_NAME</td>
-                                <td>@candidate.CANDIDATE_SOURCING_DATE</td>
-                                <td>@candidate.CANDIDATE_INTERVIEW_DATE</td>
+                                <td>@Convert.ToDateTime(candidate.CANDIDATE_SOURCING_DATE).ToString("dd/MM/yyyy")</td>
+                                <td>@Convert.ToDateTime(candidate.CANDIDATE_INTERVIEW_DATE).ToString("dd/MM/yyyy")</td>
                                 <td>@candidate.CANDIDATE_STATE_NAME</td>
                                 <td>@candidate.NOTES</td>
                                 <td>
