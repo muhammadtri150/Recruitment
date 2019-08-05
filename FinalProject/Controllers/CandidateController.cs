@@ -685,7 +685,7 @@ namespace FinalProject.Controllers
                         TempData.Add("type", "warning");
                     }
 
-                    return Redirect("~/candidate/interview");
+                    return Redirect("~/candidate/call/read/called");
                 }
             CandidateDTO DataCandidate = Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID);
             DataCandidate.CANDIDATE_INTERVIEW_DATE = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().FirstOrDefault(d => d.CANDIDATE_STATE == 8 && d.CANDIDATE_ID == Data.ID).CANDIDATE_INTERVIEW_DATE;
@@ -1029,7 +1029,7 @@ namespace FinalProject.Controllers
                         TempData.Add("type", "warning");
                     }
 
-                    return Redirect("~/candidate/interview");
+                    return Redirect("~/candidate/interview/read/interviewed");
                 }
                 TempData.Add("message", "Candidate failed to Update, please complete form edit");
                 TempData.Add("type", "danger");
