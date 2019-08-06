@@ -18,9 +18,9 @@ namespace FinalProject.Models
         public int ROLE_ID { get; set; }
         public int MENU_ID { get; set; }
     
-        public virtual TB_MENU TB_MENU { get; set; }
         public virtual TB_ACCESS_MENU TB_ACCESS_MENU1 { get; set; }
         public virtual TB_ACCESS_MENU TB_ACCESS_MENU2 { get; set; }
         public virtual TB_ROLE TB_ROLE { get; set; }
+        public virtual TB_MENU TB_MENU { get; set; }
     }
 }

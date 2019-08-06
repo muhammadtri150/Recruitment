@@ -17,19 +17,19 @@ namespace FinalProject.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TB_ROLE()
         {
-            this.TB_USER = new HashSet<TB_USER>();
             this.TB_ACCESS_MENU = new HashSet<TB_ACCESS_MENU>();
             this.TB_USER_ACCESS_MENU_CANDIDATE = new HashSet<TB_USER_ACCESS_MENU_CANDIDATE>();
+            this.TB_USER = new HashSet<TB_USER>();
         }
     
         public int ROLE_ID { get; set; }
         public string ROLE_NAME { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TB_USER> TB_USER { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_ACCESS_MENU> TB_ACCESS_MENU { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_USER_ACCESS_MENU_CANDIDATE> TB_USER_ACCESS_MENU_CANDIDATE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_USER> TB_USER { get; set; }
     }
 }

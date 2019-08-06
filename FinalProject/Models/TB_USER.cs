@@ -18,6 +18,7 @@ namespace FinalProject.Models
         public TB_USER()
         {
             this.TB_CANDIDATE_SELECTION_HISTORY = new HashSet<TB_CANDIDATE_SELECTION_HISTORY>();
+            this.TB_SELECTION_HISTORY = new HashSet<TB_SELECTION_HISTORY>();
         }
     
         public int USER_ID { get; set; }
@@ -27,8 +28,10 @@ namespace FinalProject.Models
         public string EMAIL { get; set; }
         public string FULL_NAME { get; set; }
     
-        public virtual TB_ROLE TB_ROLE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_CANDIDATE_SELECTION_HISTORY> TB_CANDIDATE_SELECTION_HISTORY { get; set; }
+        public virtual TB_ROLE TB_ROLE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TB_SELECTION_HISTORY> TB_SELECTION_HISTORY { get; set; }
     }
 }

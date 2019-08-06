@@ -21,8 +21,8 @@
             </div>
         }
         <div class="row">
-            <div class="col-3">
-                <div class="container">
+            <div class="">
+                <div class="">
                     <div class="panel">
                         <div class="panel panel-heading mb-3">
                             <img class="panel-img-top rounded mx-auto d-block" src="~/Data/DataCandidate/Pict/@Model.DataCandidate.CANDIDATE_PHOTO" width="200" height="200">
@@ -33,7 +33,7 @@
                     </div>
                     <div class="panel panel-primary mt-5">
                         <div class="panel-heading fixed bg-primary text-light text-center">Expected</div>
-                        <div class="panel-body text-center">@Model.DataCandidate.EXPECTED_sALARY</div>
+                        <div class="panel-body text-center">@String.Format("{0:0.#}", Model.DataCandidate.EXPECTED_sALARY)</div>
                     </div>
                     <div class="panel panel-primary mt-5">
                         <div class="panel-heading fixed bg-primary text-light text-center">Uploaded CV</div>
@@ -54,12 +54,21 @@
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-personal" role="tabpanel" aria-labelledby="nav-personal-tab">
-                        <button onclick="window.location.href = 'edit';" type="button" class="btn btn-primary float-right mt-2 mb-2">
-                            Edit BOSQ
-                        </button>
-
-                        <table class="table table-striped">
+                        @for (int i = 0; i < 1; i++)
+                        {
+                            <a href="~/candidate/preselection/update/candidate/@Model.DataSelectionHistory[i].CANDIDATE_ID" class="btn btn-primary float-right mt-2 mb-2">
+                                Edit
+                            </a>
+                        }
+                        <table class="table table-dark table-bordered table-sm" cellspacing="0">
                             <thead>
+                                <tr>
+                                    <td colspan="9" align="center">Profile Candidate</td>
+                                </tr>
+                            </thead>
+                        </table>
+                        <table class="table table-striped table-bordered table-sm" cellspacing="0">
+                            <thead class="table-primary">
                                 <tr>
                                     <td> Age </td>
                                     <td> Religion </td>
@@ -72,11 +81,10 @@
                                 <tr>
                                     <td>@Manage_CandidateDTO.GetCandidateAge(Model.DataCandidate.ID)</td>
                                     <td>@Model.DataCandidate.RELIGION</td>
-                                    <td>@Manage_ZipCodeDTO.GetData(Model.DataCandidate.ZIP_CODE).kabupaten</td>
+                                    <td>@Model.DataCandidate.CANDIDATE_CURRENT_ADDRESS</td>
                                     <td>@Model.DataCandidate.CANDIDATE_LAST_EDUCATON</td>
                                     <td>@Model.DataCandidate.CANDIDATE_KTP_NUMBER</td>
                                 </tr>
-
                             </tbody>
                             <thead>
                                 <tr>
@@ -89,11 +97,11 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDIDATE_PLACE_BIRTH)</td>
-                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDIDATE_ETNIC)</td>
-                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDIDATE_PROVINCE_NAME)</td>
-                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDIDATE_MAJOR)</td>
-                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDDIATE_NPWP_NUMBER)</td>
+                                    <td>@Model.DataCandidate.CANDIDATE_PLACE_BIRTH</td>
+                                    <td>@Model.DataCandidate.CANDIDATE_ETNIC</td>
+                                    <td>@Model.DataCandidate.CANDIDATE_PROVINCE_NAME</td>
+                                    <td>@Model.DataCandidate.CANDIDATE_MAJOR</td>
+                                    <td>@Model.DataCandidate.CANDDIATE_NPWP_NUMBER</td>
                                 </tr>
                             </tbody>
                             <thead>
@@ -105,24 +113,22 @@
                                 </tr>
                             <tbody>
                                 <tr>
-                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDIDATE_BIRTH_DATE)</td>
-                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDIDATE_HOMENUMBER)</td>
-                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDIDATE_CURRENT_ADDRESS)</td>
-                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDIDATE_DEGREE)</td>
+                                    <td>@Html.Encode(string.Format("{0:dd/MM/yyyy}", Model.DataCandidate.CANDIDATE_BIRTH_DATE))</td>
+                                    <td>@Model.DataCandidate.CANDIDATE_HOMENUMBER</td>
+                                    <td>@Model.DataCandidate.CANDIDATE_CURRENT_ADDRESS</td>
+                                    <td>@Model.DataCandidate.CANDIDATE_DEGREE</td>
                                 </tr>
                             </tbody>
                             <thead>
                                 <tr>
                                     <td> Gender </td>
                                     <td> Email </td>
-
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.GENDER_NAME)</td>
-                                    <td>@Html.DisplayNameFor(m => m.DataCandidate.CANDIDATE_EMAIL)</td>
-
+                                    <td>@Model.DataCandidate.GENDER_NAME</td>
+                                    <td>@Model.DataCandidate.CANDIDATE_EMAIL</td>
 
                                 </tr>
                             </tbody>
@@ -131,21 +137,25 @@
 
                     <!-- For Navigation Job Experienced -->
                     <div class="tab-pane fade" id="nav-job" role="tabpanel" aria-labelledby="nav-job-tab">
-
                         <!-- Button trigger modal Add Job Exp -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AddJobExp">
+                        <button type="button" class="btn btn-primary float-right mt-3 mb-3" data-toggle="modal" data-target="#AddJobExp">
                             Add Job Experience
                         </button>
-
-                        <table class="table table-striped">
+                        <table class="table table-dark table-bordered table-sm" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <td colspan="9" align="center">Job Experience</td>
+                                </tr>
+                            </thead>
+                        </table>
+                        <table class="table table-striped table-bordered table-sm">
                             <thead>
                                 <tr>
                                     <td> Position </td>
                                     <td> Company </td>
                                     <td> Period </td>
                                     <td> Last Salary </td>
-                                    <td></td>
-                                    <td></td>
+                                    <td colspan="2"></td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -154,17 +164,16 @@
                                     <tr>
                                         <td>@JobExp.CANDIDATE_POSITION</td>
                                         <td>@JobExp.COMPANY_NAME</td>
-                                        <td>@JobExp.START_DATE - @JobExp.END_DATE</td>
-                                        <td>@JobExp.CURRENT_SALARY</td>
+                                        <td>@Html.Encode(string.Format("{0:dd/MM/yyyy}", JobExp.START_DATE)) - @Html.Encode(string.Format("{0:dd/MM/yyyy}", JobExp.END_DATE))</td>
+                                        <td>@String.Format("{0:0.#}", JobExp.CURRENT_SALARY)
+                                        <td>
                                         <td>
                                             <a href="~/candidate/preselection/update/jobExp/@JobExp.ID" class="btn btn-warning">Edit</a>
                                         </td>
-                                        <td>
                                     </tr>
                                 }
                             </tbody>
                         </table>
-
 
                         <!-- Modal Add Job Exp -->
                         <div class="modal fade" id="AddJobExp" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
@@ -177,7 +186,6 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-
                                         <form method="post" action="~/candidate/preselection/create/jobExp">
                                             <input type="hidden" value="@Model.DataCandidate.ID" name="CANDIDATE_ID" />
                                             <div class="form-row">
@@ -185,32 +193,39 @@
                                                     <div class="form-group ml-3">
                                                         <label class="title control-label">Company Name</label>
                                                         <input type="text" class="form-control" id="COMPANY_NAME" name="COMPANY_NAME" />
+                                                        @Html.ValidationMessage("COMPANY_NAME", "Please Insert Company Name", new { @class = "text-danger" })
                                                     </div>
                                                     <div class="form-group ml-3">
                                                         <label class="title control-label">Industry</label>
                                                         <input type="text" class="form-control" id="INDUSTRIES" name="INDUSTRIES" />
+                                                        @Html.ValidationMessage("INDUSTRIES", "Please Insert Industry", new { @class = "text-danger" })
                                                     </div>
                                                     <div class="form-group ml-3">
-                                                        <label class="title control-label">Potition</label>
+                                                        <label class="title control-label">Position</label>
                                                         <input type="text" class="form-control" id="CANDIDATE_POSITION" name="CANDIDATE_POSITION" />
+                                                        @Html.ValidationMessage("CANDIDATE_POSITION", "Please Insert Position", new { @class = "text-danger" })
                                                     </div>
                                                     <div class="form-group ml-3">
                                                         <label class="title control-label">Job Desc</label>
                                                         <textarea class="form-control" name="JOBDESC" id="JOBDESC"></textarea>
+                                                        @Html.ValidationMessage("JOBDESC", "Please Insert Job Desc", new { @class = "text-danger" })
                                                     </div>
                                                     <div class="form-group ml-3">
                                                         <label class="title control-label">Skill</label>
                                                         <textarea class="form-control" name="SKILL_NAME" id="SKILL_NAME"></textarea>
+                                                        @Html.ValidationMessage("SKILL_NAME", "Please Insert Skill", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-sm-12 col">
                                                     <div class="form-group">
                                                         <label class="title control-label">Start Date</label>
                                                         <input type="date" class="form-control" id="START_DATE" name="START_DATE" />
+                                                        @Html.ValidationMessage("START_DATE", "Please Insert Date", new { @class = "text-danger" })
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="title control-label">End Date</label>
                                                         <input type="date" class="form-control" id="END_DATE" name="END_DATE" />
+                                                        @Html.ValidationMessage("END_DATE", "Please Insert Date", new { @class = "text-danger" })
                                                     </div>
                                                     <div class="form-group">
                                                         <label class="title control-label">Salary</label>
@@ -230,7 +245,6 @@
                                                 </div>
                                             </div>
                                         </form>
-
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -244,14 +258,14 @@
                     <!-- For Navigation Selecion History -->
 
                     <div class="tab-pane fade" id="nav-selection" role="tabpanel" aria-labelledby="nav-selection-tab">
-                        <table class="table table-dark">
+                        <table class="table table-dark table-bordered table-sm mt-2" cellspacing="0">
                             <thead>
                                 <tr>
                                     <td colspan="9" align="center">Selection History</td>
                                 </tr>
                             </thead>
                         </table>
-                        <table class="table table-striped">
+                        <table class="table table-striped table-bordered table-sm" cellspacing="0">
                             <thead>
                                 <tr>
                                     <td>ID Candidate</td>
@@ -274,9 +288,9 @@
                                         <td>@SelectHistory.CANDIDATE_SUITABLE_POSITION</td>
                                         <td>@SelectHistory.CANDIDATE_SOURCE</td>
                                         <td>@SelectHistory.CANDIDATE_STATE_NAME</td>
-                                        <td>@SelectHistory.CANDIDATE_EXPECTED_SALARY</td>
+                                        <td>@String.Format("{0:0.#}", SelectHistory.CANDIDATE_EXPECTED_SALARY)</td>
                                         <td>@SelectHistory.PIC_FULL_NAME</td>
-                                        <td>@SelectHistory.PROCESS_DATE</td>
+                                        <td>@Html.Encode(string.Format("{0:dd/MM/yyyy}", SelectHistory.CANDIDATE_SOURCING_DATE))</td>
                                         <td>@SelectHistory.NOTES</td>
                                     </tr>
                                 }
@@ -287,14 +301,14 @@
                     <!-- End Navigation Selecion History -->
                     <!-- For Navigation Delivery History -->
                     <div class="tab-pane fade" id="nav-delivery" role="tabpanel" aria-labelledby="nav-delivery-tab">
-                        <table class="table table-dark">
+                        <table class="table table-dark table-bordered table-sm mt-2" cellspacing="0">
                             <thead>
                                 <tr>
                                     <td colspan="9" align="center">Delivery History</td>
                                 </tr>
                             </thead>
                         </table>
-                        <table class="table table-striped">
+                        <table class="table table-striped table-bordered table-sm" cellspacing="0">
                             <thead>
                                 <tr>
                                     <td>ID Candidate</td>
@@ -342,7 +356,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <table class="table">
+                                        <table class="table table-striped table-bordered table-sm" cellspacing="0">
                                             <thead class="thead-dark">
                                                 <tr>
                                                     <th scope="col" colspan="6" align="center">Process Date</th>

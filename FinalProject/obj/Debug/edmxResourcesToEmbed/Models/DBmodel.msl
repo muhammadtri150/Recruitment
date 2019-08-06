@@ -1,8 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="FinalProject_adp3ModelStoreContainer" CdmEntityContainer="DBEntities">
+  <EntityContainerMapping StorageEntityContainer="DBModelStoreContainer" CdmEntityContainer="DBEntities">
+    <EntitySetMapping Name="JOB_PORTAL">
+      <EntityTypeMapping TypeName="DBModel.JOB_PORTAL">
+        <MappingFragment StoreEntitySet="JOB_PORTAL">
+          <ScalarProperty Name="JOB_ID" ColumnName="JOB_ID" />
+          <ScalarProperty Name="JOBPORTAL_NAME" ColumnName="JOBPORTAL_NAME" />
+          <ScalarProperty Name="JOBPORTAL_ADDED" ColumnName="JOBPORTAL_ADDED" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="TB_ACCESS_MENU">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_ACCESS_MENU">
+      <EntityTypeMapping TypeName="DBModel.TB_ACCESS_MENU">
         <MappingFragment StoreEntitySet="TB_ACCESS_MENU">
           <ScalarProperty Name="ACCESS_MENU_ID" ColumnName="ACCESS_MENU_ID" />
           <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
@@ -10,36 +19,287 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="TB_ACTION_CANDIDATE">
+      <EntityTypeMapping TypeName="DBModel.TB_ACTION_CANDIDATE">
+        <MappingFragment StoreEntitySet="TB_ACTION_CANDIDATE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ACTION_NAME" ColumnName="ACTION_NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_BENEFIT_JOB_EXPERIENCE">
+      <EntityTypeMapping TypeName="DBModel.TB_BENEFIT_JOB_EXPERIENCE">
+        <MappingFragment StoreEntitySet="TB_BENEFIT_JOB_EXPERIENCE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="JOB_EXP_ID" ColumnName="JOB_EXP_ID" />
+          <ScalarProperty Name="BENEFIT" ColumnName="BENEFIT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_CANDIDATE">
+      <EntityTypeMapping TypeName="DBModel.TB_CANDIDATE">
+        <MappingFragment StoreEntitySet="TB_CANDIDATE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CANDIDATE_ID" ColumnName="CANDIDATE_ID" />
+          <ScalarProperty Name="CANDIDATE_NAME" ColumnName="CANDIDATE_NAME" />
+          <ScalarProperty Name="CANDIDATE_AGE" ColumnName="CANDIDATE_AGE" />
+          <ScalarProperty Name="CANDIDATE_BIRTH_DATE" ColumnName="CANDIDATE_BIRTH_DATE" />
+          <ScalarProperty Name="CANDIDATE_PLACE_BIRTH" ColumnName="CANDIDATE_PLACE_BIRTH" />
+          <ScalarProperty Name="MARITAL_STATUS_ID" ColumnName="MARITAL_STATUS_ID" />
+          <ScalarProperty Name="GENDER_ID" ColumnName="GENDER_ID" />
+          <ScalarProperty Name="RELIGION_ID" ColumnName="RELIGION_ID" />
+          <ScalarProperty Name="CANDIDATE_ETNIC" ColumnName="CANDIDATE_ETNIC" />
+          <ScalarProperty Name="ZIP_CODE" ColumnName="ZIP_CODE" />
+          <ScalarProperty Name="PARENT_ADDRESS" ColumnName="PARENT_ADDRESS" />
+          <ScalarProperty Name="RESIDENT_CARD_NUMBER" ColumnName="RESIDENT_CARD_NUMBER" />
+          <ScalarProperty Name="TELEPHONE_NUMBER" ColumnName="TELEPHONE_NUMBER" />
+          <ScalarProperty Name="CANDIDATE_HOMENUMBER" ColumnName="CANDIDATE_HOMENUMBER" />
+          <ScalarProperty Name="CANDIDATE_PHONENUMBER" ColumnName="CANDIDATE_PHONENUMBER" />
+          <ScalarProperty Name="CANDIDATE_EMAIL" ColumnName="CANDIDATE_EMAIL" />
+          <ScalarProperty Name="CANDIDATE_CITY" ColumnName="CANDIDATE_CITY" />
+          <ScalarProperty Name="CANDIDATE_PROVINCE" ColumnName="CANDIDATE_PROVINCE" />
+          <ScalarProperty Name="CANDIDATE_CURRENT_ADDRESS" ColumnName="CANDIDATE_CURRENT_ADDRESS" />
+          <ScalarProperty Name="CANDIDATE_KTP_NUMBER" ColumnName="CANDIDATE_KTP_NUMBER" />
+          <ScalarProperty Name="CANDDIATE_NPWP_NUMBER" ColumnName="CANDDIATE_NPWP_NUMBER" />
+          <ScalarProperty Name="CANDIDATE_CV" ColumnName="CANDIDATE_CV" />
+          <ScalarProperty Name="CANDIDATE_PHOTO" ColumnName="CANDIDATE_PHOTO" />
+          <ScalarProperty Name="EDUCATION_START_DATE" ColumnName="EDUCATION_START_DATE" />
+          <ScalarProperty Name="EDUCATION_END_DATE" ColumnName="EDUCATION_END_DATE" />
+          <ScalarProperty Name="CANDIDATE_LAST_EDUCATON" ColumnName="CANDIDATE_LAST_EDUCATON" />
+          <ScalarProperty Name="CANDIDATE_GPA" ColumnName="CANDIDATE_GPA" />
+          <ScalarProperty Name="CANDIDATE_MAJOR" ColumnName="CANDIDATE_MAJOR" />
+          <ScalarProperty Name="CANDIDATE_DEGREE" ColumnName="CANDIDATE_DEGREE" />
+          <ScalarProperty Name="CANDIDATE_STATE_ID" ColumnName="CANDIDATE_STATE_ID" />
+          <ScalarProperty Name="SOURCE" ColumnName="SOURCE" />
+          <ScalarProperty Name="SOURCING_DATE" ColumnName="SOURCING_DATE" />
+          <ScalarProperty Name="POSITION" ColumnName="POSITION" />
+          <ScalarProperty Name="SUITABLE_POSITION" ColumnName="SUITABLE_POSITION" />
+          <ScalarProperty Name="EXPECTED_SALARY" ColumnName="EXPECTED_SALARY" />
+          <ScalarProperty Name="NOTES" ColumnName="NOTES" />
+          <ScalarProperty Name="RECOMENDATION" ColumnName="RECOMENDATION" />
+          <ScalarProperty Name="AVAILABLE_JOIN" ColumnName="AVAILABLE_JOIN" />
+          <ScalarProperty Name="CANDIDATE_INTERVIEW_DATE" ColumnName="CANDIDATE_INTERVIEW_DATE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_CANDIDATE_EDUCATION_HISTORY">
+      <EntityTypeMapping TypeName="DBModel.TB_CANDIDATE_EDUCATION_HISTORY">
+        <MappingFragment StoreEntitySet="TB_CANDIDATE_EDUCATION_HISTORY">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CANDIDATE_SCHOOL_NAME" ColumnName="CANDIDATE_SCHOOL_NAME" />
+          <ScalarProperty Name="CANDIDATE_SCHOOL_MAJOR" ColumnName="CANDIDATE_SCHOOL_MAJOR" />
+          <ScalarProperty Name="CANDIDATE_SCHOOL_DEGREE" ColumnName="CANDIDATE_SCHOOL_DEGREE" />
+          <ScalarProperty Name="CANDIDATE_SCHOOL_GPA" ColumnName="CANDIDATE_SCHOOL_GPA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_CANDIDATE_JOB_EXPERIENCE">
+      <EntityTypeMapping TypeName="DBModel.TB_CANDIDATE_JOB_EXPERIENCE">
+        <MappingFragment StoreEntitySet="TB_CANDIDATE_JOB_EXPERIENCE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CANDIDATE_ID" ColumnName="CANDIDATE_ID" />
+          <ScalarProperty Name="INDUSTRIES" ColumnName="INDUSTRIES" />
+          <ScalarProperty Name="CANDIDATE_POSITION" ColumnName="CANDIDATE_POSITION" />
+          <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
+          <ScalarProperty Name="END_DATE" ColumnName="END_DATE" />
+          <ScalarProperty Name="CURRENT_SALARY" ColumnName="CURRENT_SALARY" />
+          <ScalarProperty Name="SKILL_NAME" ColumnName="SKILL_NAME" />
+          <ScalarProperty Name="JOBDESC" ColumnName="JOBDESC" />
+          <ScalarProperty Name="BENEFIT" ColumnName="BENEFIT" />
+          <ScalarProperty Name="COMPANY_NAME" ColumnName="COMPANY_NAME" />
+          <ScalarProperty Name="PROJCT" ColumnName="PROJCT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_CANDIDATE_SELECTION_HISTORY">
+      <EntityTypeMapping TypeName="DBModel.TB_CANDIDATE_SELECTION_HISTORY">
+        <MappingFragment StoreEntitySet="TB_CANDIDATE_SELECTION_HISTORY">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CANDIDATE_ID" ColumnName="CANDIDATE_ID" />
+          <ScalarProperty Name="PIC_ID" ColumnName="PIC_ID" />
+          <ScalarProperty Name="CANDIDATE_APPLIED_POSITION" ColumnName="CANDIDATE_APPLIED_POSITION" />
+          <ScalarProperty Name="CANDIDATE_SUITABLE_POSITION" ColumnName="CANDIDATE_SUITABLE_POSITION" />
+          <ScalarProperty Name="CANDIDATE_SOURCE" ColumnName="CANDIDATE_SOURCE" />
+          <ScalarProperty Name="CANDIDATE_STATE" ColumnName="CANDIDATE_STATE" />
+          <ScalarProperty Name="CANDIDATE_EXPECTED_SALARY" ColumnName="CANDIDATE_EXPECTED_SALARY" />
+          <ScalarProperty Name="CANDIDATE_INTERVIEW_DATE" ColumnName="CANDIDATE_INTERVIEW_DATE" />
+          <ScalarProperty Name="PROCESS_DATE" ColumnName="PROCESS_DATE" />
+          <ScalarProperty Name="NOTES" ColumnName="NOTES" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_CANDIDATE_SKILL">
+      <EntityTypeMapping TypeName="DBModel.TB_CANDIDATE_SKILL">
+        <MappingFragment StoreEntitySet="TB_CANDIDATE_SKILL">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CANDIDATE_ID" ColumnName="CANDIDATE_ID" />
+          <ScalarProperty Name="SKILL" ColumnName="SKILL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_CITY">
+      <EntityTypeMapping TypeName="DBModel.TB_CITY">
+        <MappingFragment StoreEntitySet="TB_CITY">
+          <ScalarProperty Name="CITY_ID" ColumnName="CITY_ID" />
+          <ScalarProperty Name="CITY_NAME" ColumnName="CITY_NAME" />
+          <ScalarProperty Name="PROVINCE_ID" ColumnName="PROVINCE_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_CLIENT">
+      <EntityTypeMapping TypeName="DBModel.TB_CLIENT">
+        <MappingFragment StoreEntitySet="TB_CLIENT">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CLIENT_ID" ColumnName="CLIENT_ID" />
+          <ScalarProperty Name="CLIENT_NAME" ColumnName="CLIENT_NAME" />
+          <ScalarProperty Name="CLIENT_ADDRESS" ColumnName="CLIENT_ADDRESS" />
+          <ScalarProperty Name="CLIENT_OTHERADDRESS" ColumnName="CLIENT_OTHERADDRESS" />
+          <ScalarProperty Name="CLIENT_INDUSTRIES" ColumnName="CLIENT_INDUSTRIES" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_DELIVERY_HISTORY">
+      <EntityTypeMapping TypeName="DBModel.TB_DELIVERY_HISTORY">
+        <MappingFragment StoreEntitySet="TB_DELIVERY_HISTORY">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DELIVERY_ID" ColumnName="DELIVERY_ID" />
+          <ScalarProperty Name="CANDIDATE_ID" ColumnName="CANDIDATE_ID" />
+          <ScalarProperty Name="CANDIDATE_POSITION" ColumnName="CANDIDATE_POSITION" />
+          <ScalarProperty Name="SOURCE" ColumnName="SOURCE" />
+          <ScalarProperty Name="CANDIDATE_STATE" ColumnName="CANDIDATE_STATE" />
+          <ScalarProperty Name="LAST_PIC" ColumnName="LAST_PIC" />
+          <ScalarProperty Name="PROCESS_DATE" ColumnName="PROCESS_DATE" />
+          <ScalarProperty Name="CLIENT_ID" ColumnName="CLIENT_ID" />
+          <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
+          <ScalarProperty Name="LAST_UPDATE" ColumnName="LAST_UPDATE" />
+          <ScalarProperty Name="TOTA_DAY" ColumnName="TOTA_DAY" />
+          <ScalarProperty Name="CLIENT_STATE" ColumnName="CLIENT_STATE" />
+          <ScalarProperty Name="NOTE" ColumnName="NOTE" />
+          <ScalarProperty Name="AVALIABLE_JOIN" ColumnName="AVALIABLE_JOIN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_GENDER">
+      <EntityTypeMapping TypeName="DBModel.TB_GENDER">
+        <MappingFragment StoreEntitySet="TB_GENDER">
+          <ScalarProperty Name="GENDER_ID" ColumnName="GENDER_ID" />
+          <ScalarProperty Name="GENDER_NAME" ColumnName="GENDER_NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_JOB_POSITION">
+      <EntityTypeMapping TypeName="DBModel.TB_JOB_POSITION">
+        <MappingFragment StoreEntitySet="TB_JOB_POSITION">
+          <ScalarProperty Name="JOBPOSITION_ID" ColumnName="JOBPOSITION_ID" />
+          <ScalarProperty Name="JOBPOSITION_NAME" ColumnName="JOBPOSITION_NAME" />
+          <ScalarProperty Name="JOBPOSITION_NOTE" ColumnName="JOBPOSITION_NOTE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_LOG_USER_ACTIVITY">
+      <EntityTypeMapping TypeName="DBModel.TB_LOG_USER_ACTIVITY">
+        <MappingFragment StoreEntitySet="TB_LOG_USER_ACTIVITY">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_MARITALSTATUS">
+      <EntityTypeMapping TypeName="DBModel.TB_MARITALSTATUS">
+        <MappingFragment StoreEntitySet="TB_MARITALSTATUS">
+          <ScalarProperty Name="MARITALSTATUS_ID" ColumnName="MARITALSTATUS_ID" />
+          <ScalarProperty Name="MARITALSTATUS_NAME" ColumnName="MARITALSTATUS_NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="TB_MENU">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_MENU">
+      <EntityTypeMapping TypeName="DBModel.TB_MENU">
         <MappingFragment StoreEntitySet="TB_MENU">
-          <ScalarProperty Name="LOGO_MENU" ColumnName="LOGO_MENU" />
           <ScalarProperty Name="MENU_ID" ColumnName="MENU_ID" />
           <ScalarProperty Name="TITLE_MENU" ColumnName="TITLE_MENU" />
+          <ScalarProperty Name="LOGO_MENU" ColumnName="LOGO_MENU" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_PROVINCE">
+      <EntityTypeMapping TypeName="DBModel.TB_PROVINCE">
+        <MappingFragment StoreEntitySet="TB_PROVINCE">
+          <ScalarProperty Name="PROVINCE_ID" ColumnName="PROVINCE_ID" />
+          <ScalarProperty Name="PROVINCE_NAME" ColumnName="PROVINCE_NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_RELIGION">
+      <EntityTypeMapping TypeName="DBModel.TB_RELIGION">
+        <MappingFragment StoreEntitySet="TB_RELIGION">
+          <ScalarProperty Name="RELIGION_ID" ColumnName="RELIGION_ID" />
+          <ScalarProperty Name="RELIGION_NAME" ColumnName="RELIGION_NAME" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="TB_ROLE">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_ROLE">
+      <EntityTypeMapping TypeName="DBModel.TB_ROLE">
         <MappingFragment StoreEntitySet="TB_ROLE">
           <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
           <ScalarProperty Name="ROLE_NAME" ColumnName="ROLE_NAME" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="TB_SELECTION_HISTORY">
+      <EntityTypeMapping TypeName="DBModel.TB_SELECTION_HISTORY">
+        <MappingFragment StoreEntitySet="TB_SELECTION_HISTORY">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PIC_ID" ColumnName="PIC_ID" />
+          <ScalarProperty Name="CANDIDATE_ID" ColumnName="CANDIDATE_ID" />
+          <ScalarProperty Name="STATE_ID" ColumnName="STATE_ID" />
+          <ScalarProperty Name="CANDIDATE_APPLIED_POSITION" ColumnName="CANDIDATE_APPLIED_POSITION" />
+          <ScalarProperty Name="CANDIDATE_SUITABLE_POSITION" ColumnName="CANDIDATE_SUITABLE_POSITION" />
+          <ScalarProperty Name="CANDIDATE_SOURCE" ColumnName="CANDIDATE_SOURCE" />
+          <ScalarProperty Name="CANDIDATE_EXPECTED_SALARY" ColumnName="CANDIDATE_EXPECTED_SALARY" />
+          <ScalarProperty Name="NOTES" ColumnName="NOTES" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_SKILL">
+      <EntityTypeMapping TypeName="DBModel.TB_SKILL">
+        <MappingFragment StoreEntitySet="TB_SKILL">
+          <ScalarProperty Name="SKILL_ID" ColumnName="SKILL_ID" />
+          <ScalarProperty Name="SKILL_NAME" ColumnName="SKILL_NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_SKILL_JOB_EXPERIENCE">
+      <EntityTypeMapping TypeName="DBModel.TB_SKILL_JOB_EXPERIENCE">
+        <MappingFragment StoreEntitySet="TB_SKILL_JOB_EXPERIENCE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ID_JOBEXP" ColumnName="ID_JOBEXP" />
+          <ScalarProperty Name="SKILL_NAME" ColumnName="SKILL_NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_STATE_CANDIDATE">
+      <EntityTypeMapping TypeName="DBModel.TB_STATE_CANDIDATE">
+        <MappingFragment StoreEntitySet="TB_STATE_CANDIDATE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="STATE_NAME" ColumnName="STATE_NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="TB_SUBMENU">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_SUBMENU">
+      <EntityTypeMapping TypeName="DBModel.TB_SUBMENU">
         <MappingFragment StoreEntitySet="TB_SUBMENU">
-          <ScalarProperty Name="URL" ColumnName="URL" />
-          <ScalarProperty Name="LOGO_SUBMENU" ColumnName="LOGO_SUBMENU" />
           <ScalarProperty Name="MENU_ID" ColumnName="MENU_ID" />
           <ScalarProperty Name="SUB_MENU_ID" ColumnName="SUB_MENU_ID" />
           <ScalarProperty Name="TITLE_SUBMENU" ColumnName="TITLE_SUBMENU" />
+          <ScalarProperty Name="LOGO_SUBMENU" ColumnName="LOGO_SUBMENU" />
+          <ScalarProperty Name="URL" ColumnName="URL" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="TB_USER">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_USER">
+      <EntityTypeMapping TypeName="DBModel.TB_USER">
         <MappingFragment StoreEntitySet="TB_USER">
           <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
           <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
@@ -50,279 +310,34 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="JOB_PORTAL">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.JOB_PORTAL">
-        <MappingFragment StoreEntitySet="JOB_PORTAL">
-          <ScalarProperty Name="JOBPORTAL_ADDED" ColumnName="JOBPORTAL_ADDED" />
-          <ScalarProperty Name="JOBPORTAL_NAME" ColumnName="JOBPORTAL_NAME" />
-          <ScalarProperty Name="JOB_ID" ColumnName="JOB_ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TB_CLIENT">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_CLIENT">
-        <MappingFragment StoreEntitySet="TB_CLIENT">
-          <ScalarProperty Name="CLIENT_INDUSTRIES" ColumnName="CLIENT_INDUSTRIES" />
-          <ScalarProperty Name="CLIENT_OTHERADDRESS" ColumnName="CLIENT_OTHERADDRESS" />
-          <ScalarProperty Name="CLIENT_ADDRESS" ColumnName="CLIENT_ADDRESS" />
-          <ScalarProperty Name="CLIENT_NAME" ColumnName="CLIENT_NAME" />
-          <ScalarProperty Name="CLIENT_ID" ColumnName="CLIENT_ID" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TB_SKILL">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_SKILL">
-        <MappingFragment StoreEntitySet="TB_SKILL">
-          <ScalarProperty Name="SKILL_NAME" ColumnName="SKILL_NAME" />
-          <ScalarProperty Name="SKILL_ID" ColumnName="SKILL_ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TB_PREFIX">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_PREFIX">
-        <MappingFragment StoreEntitySet="TB_PREFIX">
-          <ScalarProperty Name="DATA_NAME" ColumnName="DATA_NAME" />
-          <ScalarProperty Name="PREFIX" ColumnName="PREFIX" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TB_JOB_POSITION">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_JOB_POSITION">
-        <MappingFragment StoreEntitySet="TB_JOB_POSITION">
-          <ScalarProperty Name="JOBPOSITION_NOTE" ColumnName="JOBPOSITION_NOTE" />
-          <ScalarProperty Name="JOBPOSITION_NAME" ColumnName="JOBPOSITION_NAME" />
-          <ScalarProperty Name="JOBPOSITION_ID" ColumnName="JOBPOSITION_ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TB_LOG_USER_ACTIVITY">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_LOG_USER_ACTIVITY">
-        <MappingFragment StoreEntitySet="TB_LOG_USER_ACTIVITY">
-          <ScalarProperty Name="Time" ColumnName="Time" />
-          <ScalarProperty Name="Notes" ColumnName="Notes" />
-          <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TB_ACTION_CANDIDATE">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_ACTION_CANDIDATE">
-        <MappingFragment StoreEntitySet="TB_ACTION_CANDIDATE">
-          <ScalarProperty Name="ACTION_NAME" ColumnName="ACTION_NAME" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TB_GENDER">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_GENDER">
-        <MappingFragment StoreEntitySet="TB_GENDER">
-          <ScalarProperty Name="GENDER_NAME" ColumnName="GENDER_NAME" />
-          <ScalarProperty Name="GENDER_ID" ColumnName="GENDER_ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TB_MARITALSTATUS">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_MARITALSTATUS">
-        <MappingFragment StoreEntitySet="TB_MARITALSTATUS">
-          <ScalarProperty Name="MARITALSTATUS_NAME" ColumnName="MARITALSTATUS_NAME" />
-          <ScalarProperty Name="MARITALSTATUS_ID" ColumnName="MARITALSTATUS_ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TB_RELIGION">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_RELIGION">
-        <MappingFragment StoreEntitySet="TB_RELIGION">
-          <ScalarProperty Name="RELIGION_NAME" ColumnName="RELIGION_NAME" />
-          <ScalarProperty Name="RELIGION_ID" ColumnName="RELIGION_ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TB_STATE_CANDIDATE">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_STATE_CANDIDATE">
-        <MappingFragment StoreEntitySet="TB_STATE_CANDIDATE">
-          <ScalarProperty Name="STATE_NAME" ColumnName="STATE_NAME" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="TB_USER_ACCESS_MENU_CANDIDATE">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_USER_ACCESS_MENU_CANDIDATE">
+      <EntityTypeMapping TypeName="DBModel.TB_USER_ACCESS_MENU_CANDIDATE">
         <MappingFragment StoreEntitySet="TB_USER_ACCESS_MENU_CANDIDATE">
-          <ScalarProperty Name="ACTION_CANDIDATE_ID" ColumnName="ACTION_CANDIDATE_ID" />
-          <ScalarProperty Name="SUB_MENU_CANDIDATE_ID" ColumnName="SUB_MENU_CANDIDATE_ID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TB_CANDIDATE_EDUCATION_HISTORY">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_CANDIDATE_EDUCATION_HISTORY">
-        <MappingFragment StoreEntitySet="TB_CANDIDATE_EDUCATION_HISTORY">
-          <ScalarProperty Name="CANDIDATE_SCHOOL_GPA" ColumnName="CANDIDATE_SCHOOL_GPA" />
-          <ScalarProperty Name="CANDIDATE_SCHOOL_DEGREE" ColumnName="CANDIDATE_SCHOOL_DEGREE" />
-          <ScalarProperty Name="CANDIDATE_SCHOOL_MAJOR" ColumnName="CANDIDATE_SCHOOL_MAJOR" />
-          <ScalarProperty Name="CANDIDATE_SCHOOL_NAME" ColumnName="CANDIDATE_SCHOOL_NAME" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TB_CITY">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_CITY">
-        <MappingFragment StoreEntitySet="TB_CITY">
-          <ScalarProperty Name="PROVINCE_ID" ColumnName="PROVINCE_ID" />
-          <ScalarProperty Name="CITY_NAME" ColumnName="CITY_NAME" />
-          <ScalarProperty Name="CITY_ID" ColumnName="CITY_ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TB_PROVINCE">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_PROVINCE">
-        <MappingFragment StoreEntitySet="TB_PROVINCE">
-          <ScalarProperty Name="PROVINCE_NAME" ColumnName="PROVINCE_NAME" />
-          <ScalarProperty Name="PROVINCE_ID" ColumnName="PROVINCE_ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TB_CANDIDATE_JOB_EXPERIENCE">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_CANDIDATE_JOB_EXPERIENCE">
-        <MappingFragment StoreEntitySet="TB_CANDIDATE_JOB_EXPERIENCE">
-          <ScalarProperty Name="PROJCT" ColumnName="PROJCT" />
-          <ScalarProperty Name="COMPANY_NAME" ColumnName="COMPANY_NAME" />
-          <ScalarProperty Name="BENEFIT" ColumnName="BENEFIT" />
-          <ScalarProperty Name="JOBDESC" ColumnName="JOBDESC" />
-          <ScalarProperty Name="SKILL_NAME" ColumnName="SKILL_NAME" />
-          <ScalarProperty Name="CURRENT_SALARY" ColumnName="CURRENT_SALARY" />
-          <ScalarProperty Name="END_DATE" ColumnName="END_DATE" />
-          <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
-          <ScalarProperty Name="CANDIDATE_POSITION" ColumnName="CANDIDATE_POSITION" />
-          <ScalarProperty Name="INDUSTRIES" ColumnName="INDUSTRIES" />
-          <ScalarProperty Name="CANDIDATE_ID" ColumnName="CANDIDATE_ID" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TB_CANDIDATE_SELECTION_HISTORY">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_CANDIDATE_SELECTION_HISTORY">
-        <MappingFragment StoreEntitySet="TB_CANDIDATE_SELECTION_HISTORY">
-          <ScalarProperty Name="CANDIDATE_INTERVIEW_DATE" ColumnName="CANDIDATE_INTERVIEW_DATE" />
-          <ScalarProperty Name="NOTES" ColumnName="NOTES" />
-          <ScalarProperty Name="PROCESS_DATE" ColumnName="PROCESS_DATE" />
-          <ScalarProperty Name="CANDIDATE_EXPECTED_SALARY" ColumnName="CANDIDATE_EXPECTED_SALARY" />
-          <ScalarProperty Name="CANDIDATE_STATE" ColumnName="CANDIDATE_STATE" />
-          <ScalarProperty Name="CANDIDATE_SOURCE" ColumnName="CANDIDATE_SOURCE" />
-          <ScalarProperty Name="CANDIDATE_SUITABLE_POSITION" ColumnName="CANDIDATE_SUITABLE_POSITION" />
-          <ScalarProperty Name="CANDIDATE_APPLIED_POSITION" ColumnName="CANDIDATE_APPLIED_POSITION" />
-          <ScalarProperty Name="PIC_ID" ColumnName="PIC_ID" />
-          <ScalarProperty Name="CANDIDATE_ID" ColumnName="CANDIDATE_ID" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TB_CANDIDATE">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_CANDIDATE">
-        <MappingFragment StoreEntitySet="TB_CANDIDATE">
-          <ScalarProperty Name="CANDIDATE_INTERVIEW_DATE" ColumnName="CANDIDATE_INTERVIEW_DATE" />
-          <ScalarProperty Name="SUITABLE_POSITION" ColumnName="SUITABLE_POSITION" />
-          <ScalarProperty Name="AVAILABLE_JOIN" ColumnName="AVAILABLE_JOIN" />
-          <ScalarProperty Name="RECOMENDATION" ColumnName="RECOMENDATION" />
-          <ScalarProperty Name="NOTES" ColumnName="NOTES" />
-          <ScalarProperty Name="EXPECTED_SALARY" ColumnName="EXPECTED_SALARY" />
-          <ScalarProperty Name="POSITION" ColumnName="POSITION" />
-          <ScalarProperty Name="SOURCING_DATE" ColumnName="SOURCING_DATE" />
-          <ScalarProperty Name="SOURCE" ColumnName="SOURCE" />
-          <ScalarProperty Name="CANDIDATE_STATE_ID" ColumnName="CANDIDATE_STATE_ID" />
-          <ScalarProperty Name="CANDIDATE_DEGREE" ColumnName="CANDIDATE_DEGREE" />
-          <ScalarProperty Name="CANDIDATE_MAJOR" ColumnName="CANDIDATE_MAJOR" />
-          <ScalarProperty Name="CANDIDATE_GPA" ColumnName="CANDIDATE_GPA" />
-          <ScalarProperty Name="CANDIDATE_LAST_EDUCATON" ColumnName="CANDIDATE_LAST_EDUCATON" />
-          <ScalarProperty Name="EDUCATION_END_DATE" ColumnName="EDUCATION_END_DATE" />
-          <ScalarProperty Name="EDUCATION_START_DATE" ColumnName="EDUCATION_START_DATE" />
-          <ScalarProperty Name="CANDIDATE_PHOTO" ColumnName="CANDIDATE_PHOTO" />
-          <ScalarProperty Name="CANDIDATE_CV" ColumnName="CANDIDATE_CV" />
-          <ScalarProperty Name="CANDDIATE_NPWP_NUMBER" ColumnName="CANDDIATE_NPWP_NUMBER" />
-          <ScalarProperty Name="CANDIDATE_KTP_NUMBER" ColumnName="CANDIDATE_KTP_NUMBER" />
-          <ScalarProperty Name="CANDIDATE_CURRENT_ADDRESS" ColumnName="CANDIDATE_CURRENT_ADDRESS" />
-          <ScalarProperty Name="CANDIDATE_PROVINCE" ColumnName="CANDIDATE_PROVINCE" />
-          <ScalarProperty Name="CANDIDATE_CITY" ColumnName="CANDIDATE_CITY" />
-          <ScalarProperty Name="CANDIDATE_EMAIL" ColumnName="CANDIDATE_EMAIL" />
-          <ScalarProperty Name="CANDIDATE_PHONENUMBER" ColumnName="CANDIDATE_PHONENUMBER" />
-          <ScalarProperty Name="CANDIDATE_HOMENUMBER" ColumnName="CANDIDATE_HOMENUMBER" />
-          <ScalarProperty Name="TELEPHONE_NUMBER" ColumnName="TELEPHONE_NUMBER" />
-          <ScalarProperty Name="RESIDENT_CARD_NUMBER" ColumnName="RESIDENT_CARD_NUMBER" />
-          <ScalarProperty Name="PARENT_ADDRESS" ColumnName="PARENT_ADDRESS" />
-          <ScalarProperty Name="ZIP_CODE" ColumnName="ZIP_CODE" />
-          <ScalarProperty Name="CANDIDATE_ETNIC" ColumnName="CANDIDATE_ETNIC" />
-          <ScalarProperty Name="RELIGION_ID" ColumnName="RELIGION_ID" />
-          <ScalarProperty Name="GENDER_ID" ColumnName="GENDER_ID" />
-          <ScalarProperty Name="MARITAL_STATUS_ID" ColumnName="MARITAL_STATUS_ID" />
-          <ScalarProperty Name="CANDIDATE_PLACE_BIRTH" ColumnName="CANDIDATE_PLACE_BIRTH" />
-          <ScalarProperty Name="CANDIDATE_BIRTH_DATE" ColumnName="CANDIDATE_BIRTH_DATE" />
-          <ScalarProperty Name="CANDIDATE_AGE" ColumnName="CANDIDATE_AGE" />
-          <ScalarProperty Name="CANDIDATE_NAME" ColumnName="CANDIDATE_NAME" />
-          <ScalarProperty Name="CANDIDATE_ID" ColumnName="CANDIDATE_ID" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TB_CANDIDATE_SKILL">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_CANDIDATE_SKILL">
-        <MappingFragment StoreEntitySet="TB_CANDIDATE_SKILL">
-          <ScalarProperty Name="SKILL" ColumnName="SKILL" />
-          <ScalarProperty Name="CANDIDATE_ID" ColumnName="CANDIDATE_ID" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TB_SKILL_JOB_EXPERIENCE">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_SKILL_JOB_EXPERIENCE">
-        <MappingFragment StoreEntitySet="TB_SKILL_JOB_EXPERIENCE">
-          <ScalarProperty Name="SKILL_NAME" ColumnName="SKILL_NAME" />
-          <ScalarProperty Name="ID_JOBEXP" ColumnName="ID_JOBEXP" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TB_BENEFIT_JOB_EXPERIENCE">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_BENEFIT_JOB_EXPERIENCE">
-        <MappingFragment StoreEntitySet="TB_BENEFIT_JOB_EXPERIENCE">
-          <ScalarProperty Name="BENEFIT" ColumnName="BENEFIT" />
-          <ScalarProperty Name="JOB_EXP_ID" ColumnName="JOB_EXP_ID" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TB_DELIVERY_HISTORY">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_DELIVERY_HISTORY">
-        <MappingFragment StoreEntitySet="TB_DELIVERY_HISTORY">
-          <ScalarProperty Name="AVALIABLE_JOIN" ColumnName="AVALIABLE_JOIN" />
-          <ScalarProperty Name="NOTE" ColumnName="NOTE" />
-          <ScalarProperty Name="CLIENT_STATE" ColumnName="CLIENT_STATE" />
-          <ScalarProperty Name="TOTA_DAY" ColumnName="TOTA_DAY" />
-          <ScalarProperty Name="LAST_UPDATE" ColumnName="LAST_UPDATE" />
-          <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
-          <ScalarProperty Name="CLIENT_ID" ColumnName="CLIENT_ID" />
-          <ScalarProperty Name="PROCESS_DATE" ColumnName="PROCESS_DATE" />
-          <ScalarProperty Name="LAST_PIC" ColumnName="LAST_PIC" />
-          <ScalarProperty Name="CANDIDATE_STATE" ColumnName="CANDIDATE_STATE" />
-          <ScalarProperty Name="SOURCE" ColumnName="SOURCE" />
-          <ScalarProperty Name="CANDIDATE_POSITION" ColumnName="CANDIDATE_POSITION" />
-          <ScalarProperty Name="CANDIDATE_ID" ColumnName="CANDIDATE_ID" />
-          <ScalarProperty Name="DELIVERY_ID" ColumnName="DELIVERY_ID" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="SUB_MENU_CANDIDATE_ID" ColumnName="SUB_MENU_CANDIDATE_ID" />
+          <ScalarProperty Name="ACTION_CANDIDATE_ID" ColumnName="ACTION_CANDIDATE_ID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="TB_ZIPCODE">
-      <EntityTypeMapping TypeName="FinalProject_adp3Model.TB_ZIPCODE">
+      <EntityTypeMapping TypeName="DBModel.TB_ZIPCODE">
         <MappingFragment StoreEntitySet="TB_ZIPCODE">
-          <ScalarProperty Name="kodepos" ColumnName="kodepos" />
-          <ScalarProperty Name="provinsi" ColumnName="provinsi" />
-          <ScalarProperty Name="kabupaten" ColumnName="kabupaten" />
-          <ScalarProperty Name="kecamatan" ColumnName="kecamatan" />
-          <ScalarProperty Name="kelurahan" ColumnName="kelurahan" />
           <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="kelurahan" ColumnName="kelurahan" />
+          <ScalarProperty Name="kecamatan" ColumnName="kecamatan" />
+          <ScalarProperty Name="kabupaten" ColumnName="kabupaten" />
+          <ScalarProperty Name="provinsi" ColumnName="provinsi" />
+          <ScalarProperty Name="kodepos" ColumnName="kodepos" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_PREFIX">
+      <EntityTypeMapping TypeName="DBModel.TB_PREFIX">
+        <MappingFragment StoreEntitySet="TB_PREFIX">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PREFIX" ColumnName="PREFIX" />
+          <ScalarProperty Name="DATA_NAME" ColumnName="DATA_NAME" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

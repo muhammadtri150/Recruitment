@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<FinalProject.DTO.MenuDTO>
-
+@using FinalProject.Utils
 @section title{
 
     @ViewBag.DataView["title"]
@@ -7,8 +7,10 @@
 }
 
 @section content{
-    
+
     @Html.ValidationSummary()
+    <h2><center>Master      |      Menu Management</center></h2>
+    <hr class="bg-blue" />
 
     <div class="container">
         <!-- Button trigger modal -->

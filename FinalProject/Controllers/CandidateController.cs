@@ -14,6 +14,7 @@ namespace FinalProject.Controllers
     [UserAccessCandidateFilter]
     public class CandidateController : Controller
     {
+        DBEntities db = new DBEntities();
         [Route("candidate")]
         public ActionResult Index()
         {
@@ -24,25 +25,25 @@ namespace FinalProject.Controllers
         //********************************************************** Manage Data Candidate **********************************************************
 
         //------------------------------------------------------- for view candidate preselection -----------------------------------------------
-        [Route("candidate/preselection")]
-        public ActionResult CandidatePreselection()
+        [Route("candidate/preselection/read/{i?}")]
+        public ActionResult CandidatePreselection(string i = null)
         {
             try
             {
-                using (DBEntities db = new DBEntities())
-                {
-                    //---------------------------- prepare data candidate for show in view --------------
-                    //note : data candidate from class Manage_CandidateSelectionHistoryDTO method GetDataSelectionHistory
-                    //not  : data in this view especialy for candidate where state_id is 1,10 or 11 (state in step preselection)
+                //---------------------------- prepare data candidate for show in view --------------
+                //note : data candidate from class Manage_CandidateSelectionHistoryDTO method GetDataSelectionHistory
+                //not  : data in this view especialy for candidate where state_id is 1,10 or 11 (state in step preselection)
+
+                //formula pagination
+                int perPage = 5;
+                    float DataCount = db.TB_CANDIDATE_SELECTION_HISTORY.Where(sh => sh.CANDIDATE_STATE == 1).ToList().Count();
+                    int PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
+                    int idx = (i == null ? 0 : (perPage * int.Parse(i) - perPage));
                     List<CandidateSelectionHistoryDTO> ListCandidate = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().Where(d =>
-                    d.CANDIDATE_STATE == 1 || d.CANDIDATE_STATE == 10 || d.CANDIDATE_STATE == 11).ToList();
+                    d.CANDIDATE_STATE == 1 || d.CANDIDATE_STATE == 10 || d.CANDIDATE_STATE == 11).Skip(idx).Take(5).ToList();
 
                     //---------------------------- prepare data viewbag --------------------
-                    ViewBag.DataView = new Dictionary<string, object>{
-                    {"title","Preselection"},
-                    {"ListPosition",Manage_JobPositionDTO.GetData()},
-                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 1 || d.ID == 10 || d.ID == 11)}
-                    };
+
 
                     //============================ process searchng ============================
                     if (Request["filter"] != null)
@@ -53,23 +54,30 @@ namespace FinalProject.Controllers
 
                         if (StateId != 0 && (Position == "all" && Keyword == ""))
                         {
-                            ListCandidate = ListCandidate.Where(d => d.CANDIDATE_STATE == StateId).ToList();
-                        }
+                            ListCandidate = ListCandidate.Where(d => d.CANDIDATE_STATE == StateId).Skip(idx).Take(5).ToList();
+                            DataCount = ListCandidate.Count();
+                    PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
+
+                }
                         if (Position != "all" && (StateId == 0 && Keyword == ""))
                         {
                             ListCandidate = ListCandidate.Where(d =>
                             d.CANDIDATE_APPLIED_POSITION == Position ||
                             d.CANDIDATE_SUITABLE_POSITION == Position &&
-                            (d.CANDIDATE_STATE == 1 || d.CANDIDATE_STATE == 10 || d.CANDIDATE_STATE == 11)).ToList();
-                        }
+                            (d.CANDIDATE_STATE == 1 || d.CANDIDATE_STATE == 10 || d.CANDIDATE_STATE == 11)).Skip(idx).Take(5).ToList();
+                            DataCount = ListCandidate.Count();
+                    PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
+                }
                         if (Keyword != "" && (StateId == 0 && Position == "all"))
                         {
                             ListCandidate = ListCandidate.Where(d =>
                                 d.CANDIDATE_EMAIL.Contains(Keyword) ||
                                 d.CANDIDATE_NAME.Contains(Keyword) ||
                                 d.CANDIDATE_PHONE.Contains(Keyword) &&
-                                (d.CANDIDATE_STATE == 1 || d.CANDIDATE_STATE == 10 || d.CANDIDATE_STATE == 11)).ToList();
-                        }
+                                (d.CANDIDATE_STATE == 1 || d.CANDIDATE_STATE == 10 || d.CANDIDATE_STATE == 11)).Skip(idx).Take(5).ToList();
+                                DataCount = ListCandidate.Count();
+                    PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
+                }
                         else
                         {
                             ListCandidate = ListCandidate.Where(d =>
@@ -79,14 +87,20 @@ namespace FinalProject.Controllers
                              d.CANDIDATE_EMAIL.Contains(Keyword) ||
                              d.CANDIDATE_NAME.Contains(Keyword) ||
                              d.CANDIDATE_PHONE.Contains(Keyword) &&
-                             (d.CANDIDATE_STATE == 1 || d.CANDIDATE_STATE == 10 || d.CANDIDATE_STATE == 11)).ToList();
-                        }
-                    }
-                    //============================ end process searchng ============================
-
-                    //return view
-                    return View("Preselection/Index", ListCandidate);
+                             (d.CANDIDATE_STATE == 1 || d.CANDIDATE_STATE == 10 || d.CANDIDATE_STATE == 11)).Skip(idx).Take(5).ToList();
+                            DataCount = ListCandidate.Count();
+                    PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
                 }
+                    }
+            //============================ end process searchng ============================
+            ViewBag.DataView = new Dictionary<string, object>{
+                    {"title","Preselection"},
+                    {"ListPosition",Manage_JobPositionDTO.GetData()},
+                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 1 || d.ID == 10 || d.ID == 11)},
+                    {"PageCount",PageCount}
+                    };
+            //return view
+            return View("Preselection/Index", ListCandidate);
             }
             catch (Exception)
             {
@@ -169,7 +183,7 @@ namespace FinalProject.Controllers
                         TempData.Add("message", "New Candidate failed to add");
                         TempData.Add("type", "warning");
                     }
-                    return Redirect("~/candidate/preselection");
+                    return Redirect("~/candidate/preselection/read");
                 }
 
                 ViewBag.DataView = new Dictionary<string, object>(){
@@ -234,7 +248,7 @@ namespace FinalProject.Controllers
                         TempData.Add("type", "warning");
                     }
 
-                    return Redirect("~/candidate/preselection");
+                    return Redirect("~/candidate/preselection/read/1");
                 }
                 CandidateDTO DataCandidate = Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID);
                 ViewBag.DataView = new Dictionary<string, object>()
@@ -385,22 +399,29 @@ namespace FinalProject.Controllers
         //################################################# CANDIDATE CALL ###############################################################
 
         //------------------------------------------------- View for candidate call -----------------------------------------------------
-        [Route("candidate/call")]
-        public ActionResult CandidateCall()
+        [Route("candidate/call/read/{i?}")]
+        public ActionResult CandidateCall(string i = null )
         {
             try
             {
                 //---------------------------- prepare data candidate for show in view --------------
                 //note : data candidate from class Manage_CandidateSelectionHistoryDTO method GetDataSelectionHistory
                 //note : data in this view especialy for candidate where state_id is 2(call) or 18(called) (state in step call)
+              
+                int perPage = 5;
+                float DataCount = db.TB_CANDIDATE_SELECTION_HISTORY.Where(sh => sh.CANDIDATE_STATE == 3).ToList().Count();
+                int PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
+                int idx = (i == null ? 0 : (perPage * int.Parse(i) - perPage));
                 List<CandidateSelectionHistoryDTO> ListCandidate = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().Where(d =>
-                d.CANDIDATE_STATE == 2 || d.CANDIDATE_STATE == 18).ToList();
+                d.CANDIDATE_STATE == 2 || d.CANDIDATE_STATE == 18).Skip(idx).Take(5).ToList();
+
                 //prepare vew bag
                 //---------------------------- prepare data viewbag --------------------
                 ViewBag.DataView = new Dictionary<string, object>{
                     {"title","Call"},
                     {"ListPosition",Manage_JobPositionDTO.GetData()},
-                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 2 || d.ID == 18)}
+                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 2 || d.ID == 18)},
+                    {"PageCount",PageCount}
                     };
 
                 //============================ process searchng ============================
@@ -413,6 +434,8 @@ namespace FinalProject.Controllers
                     if (StateId != 0 && (Position == "all" && Keyword == ""))
                     {
                         ListCandidate = ListCandidate.Where(d => d.CANDIDATE_STATE == StateId).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
                     }
                     if (Position != "all" && (StateId == 0 && Keyword == ""))
                     {
@@ -420,6 +443,8 @@ namespace FinalProject.Controllers
                         d.CANDIDATE_APPLIED_POSITION == Position ||
                         d.CANDIDATE_SUITABLE_POSITION == Position &&
                         (d.CANDIDATE_STATE == 2 || d.CANDIDATE_STATE == 18)).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
                     }
                     if (Keyword != "" && (StateId == 0 && Position == "all"))
                     {
@@ -428,6 +453,8 @@ namespace FinalProject.Controllers
                         d.CANDIDATE_NAME.Contains(Keyword) ||
                         d.CANDIDATE_PHONE.Contains(Keyword) &&
                             (d.CANDIDATE_STATE == 2 || d.CANDIDATE_STATE == 18)).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
                     }
                     else
                     {
@@ -439,6 +466,8 @@ namespace FinalProject.Controllers
                          d.CANDIDATE_NAME.Contains(Keyword) ||
                          d.CANDIDATE_PHONE.Contains(Keyword) &&
                          (d.CANDIDATE_STATE == 2 || d.CANDIDATE_STATE == 18)).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
                     }
                 }
                 //============================ end process searchng ============================
@@ -568,22 +597,29 @@ namespace FinalProject.Controllers
         }
 
         //------------------------------------------------- View for candidate !!! CALLED !!! ---------------------------------------------
-        [Route("candidate/call/read/called")]
-        public ActionResult CandidateCalled()
+        [Route("candidate/call/read/called/{i?}")]
+        public ActionResult CandidateCalled(string i = null)
         {
             try
             {
                 //---------------------------- prepare data candidate for show in view --------------
                 //note : data candidate from class Manage_CandidateSelectionHistoryDTO method GetDataSelectionHistory
                 //note : data in this view especialy for candidate where state_id is 2(call) or 18(called) (state in step call)
+                
+                int perPage = 5;
+                float DataCount = db.TB_CANDIDATE_SELECTION_HISTORY.Where(sh => sh.CANDIDATE_STATE == 3).ToList().Count();
+                int PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
+                int idx = (i == null ? 0 : (perPage * int.Parse(i) - perPage));
                 List<CandidateSelectionHistoryDTO> ListCandidate = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().Where(d =>
-            d.CANDIDATE_STATE == 8 || d.CANDIDATE_STATE == 17).ToList();
+                d.CANDIDATE_STATE == 8 || d.CANDIDATE_STATE == 15 || d.CANDIDATE_STATE == 17).Skip(idx).Take(5).ToList();
+
                 //prepare vew bag
                 //---------------------------- prepare data viewbag --------------------
                 ViewBag.DataView = new Dictionary<string, object>{
                     {"title","Call"},
                     {"ListPosition",Manage_JobPositionDTO.GetData()},
-                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 8)}
+                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 8)},
+                    {"PageCount",PageCount}
                     };
 
                 //============================ process searchng ============================
@@ -596,6 +632,8 @@ namespace FinalProject.Controllers
                     if (StateId != 0 && (Position == "all" && Keyword == ""))
                     {
                         ListCandidate = ListCandidate.Where(d => d.CANDIDATE_STATE == StateId).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
                     }
                     if (Position != "all" && (StateId == 0 && Keyword == ""))
                     {
@@ -603,6 +641,8 @@ namespace FinalProject.Controllers
                         d.CANDIDATE_APPLIED_POSITION == Position ||
                         d.CANDIDATE_SUITABLE_POSITION == Position &&
                         (d.CANDIDATE_STATE == 2 || d.CANDIDATE_STATE == 8)).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
                     }
                     if (Keyword != "" && (StateId == 0 && Position == "all"))
                     {
@@ -611,6 +651,8 @@ namespace FinalProject.Controllers
                         d.CANDIDATE_NAME.Contains(Keyword) ||
                         d.CANDIDATE_PHONE.Contains(Keyword) &&
                             (d.CANDIDATE_STATE == 2 || d.CANDIDATE_STATE == 8)).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
                     }
                     else
                     {
@@ -622,6 +664,8 @@ namespace FinalProject.Controllers
                          d.CANDIDATE_NAME.Contains(Keyword) ||
                          d.CANDIDATE_PHONE.Contains(Keyword) &&
                          (d.CANDIDATE_STATE == 2 || d.CANDIDATE_STATE == 18)).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
                     }
                 }
                 //============================ end process searchng ============================
@@ -713,22 +757,29 @@ namespace FinalProject.Controllers
 
         //------------------------------------------------------------ candidate interview -----------------------------------------------------------
 
-        [Route("candidate/interview")]
-        public ActionResult CandidateInterview()
+        [Route("candidate/interview/read/{i?}")]
+        public ActionResult CandidateInterview(string i = null)
         {
             try
             {
                 //---------------------------- prepare data candidate for show in view --------------
                 //note : data candidate from class Manage_CandidateSelectionHistoryDTO method GetDataSelectionHistory
                 //note : data in this view especialy for candidate where state_id is 19(interview process)
+                
+                int perPage = 5;
+                float DataCount = db.TB_CANDIDATE_SELECTION_HISTORY.Where(sh => sh.CANDIDATE_STATE == 3).ToList().Count();
+                int PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
+                int idx = (i == null ? 0 : (perPage * int.Parse(i) - perPage));
                 List<CandidateSelectionHistoryDTO> ListCandidate = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().Where(d =>
-            d.CANDIDATE_STATE == 19).ToList();
+                d.CANDIDATE_STATE == 19).Skip(idx).Take(5).ToList();
+
                 //prepare vew bag
                 //---------------------------- prepare data viewbag --------------------
                 ViewBag.DataView = new Dictionary<string, object>{
                     {"title","Interview"},
                     {"ListPosition",Manage_JobPositionDTO.GetData()},
-                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 19)}
+                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 19)},
+                    {"PageCount",PageCount}
                     };
 
                 //============================ process searchng ============================
@@ -741,6 +792,8 @@ namespace FinalProject.Controllers
                     if (StateId != 0 && (Position == "all" && Keyword == ""))
                     {
                         ListCandidate = ListCandidate.Where(d => d.CANDIDATE_STATE == StateId).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
                     }
                     if (Position != "all" && (StateId == 0 && Keyword == ""))
                     {
@@ -748,6 +801,8 @@ namespace FinalProject.Controllers
                         d.CANDIDATE_APPLIED_POSITION == Position ||
                         d.CANDIDATE_SUITABLE_POSITION == Position &&
                         (d.ID == 19)).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
                     }
                     if (Keyword != "" && (StateId == 0 && Position == "all"))
                     {
@@ -756,6 +811,8 @@ namespace FinalProject.Controllers
                         d.CANDIDATE_NAME.Contains(Keyword) ||
                         d.CANDIDATE_PHONE.Contains(Keyword) &&
                        (d.ID == 19)).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
                     }
                     else
                     {
@@ -767,6 +824,8 @@ namespace FinalProject.Controllers
                          d.CANDIDATE_NAME.Contains(Keyword) ||
                          d.CANDIDATE_PHONE.Contains(Keyword) &&
                          (d.ID == 19)).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
                     }
                 }
                 //============================ end process searchng ============================
@@ -845,7 +904,7 @@ namespace FinalProject.Controllers
                         TempData.Add("type", "warning");
                     }
 
-                    return Redirect("~/candidate/interview");
+                    return Redirect("~/candidate/interview/read");
                 }
 
                 ProcessEdit = Manage_CandidateDTO.EditCandidate(Data, Pict, Cv);
@@ -885,7 +944,7 @@ namespace FinalProject.Controllers
                         TempData.Add("message", "Candidate failed to Update");
                         TempData.Add("type", "warning");
                     }
-                    return Redirect("~/candidate/interview");
+                    return Redirect("~/candidate/interview/read");
                     }
                 ViewBag.DataView = new Dictionary<string, object>()
                 {
@@ -906,23 +965,29 @@ namespace FinalProject.Controllers
 
         //------------------------------------------------------------ view candidate interviewed -----------------------------------------
 
-        [Route("candidate/interview/read/interviewed")]
-        public ActionResult CandidateInterviewed()
+        [Route("candidate/interview/read/interviewed/{i?}")]
+        public ActionResult CandidateInterviewed(string i = null)
         {
             try
             {
                 //---------------------------- prepare data candidate for show in view --------------
                 //note : data candidate from class Manage_CandidateSelectionHistoryDTO method GetDataSelectionHistory
                 //note : data in this view especialy for candidate where state_id is 15(hold), 16(pass), 17(drop)
+                
+                int perPage = 5;
+                float DataCount = db.TB_CANDIDATE_SELECTION_HISTORY.Where(sh => sh.CANDIDATE_STATE == 3).ToList().Count();
+                int PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
+                int idx = (i == null ? 0 : (perPage * int.Parse(i) - perPage));
                 List<CandidateSelectionHistoryDTO> ListCandidate = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().Where(d =>
-            d.CANDIDATE_STATE == 15 || d.CANDIDATE_STATE == 16 || d.CANDIDATE_STATE == 17).ToList();
+                d.CANDIDATE_STATE == 15 || d.CANDIDATE_STATE == 16 || d.CANDIDATE_STATE == 17).Skip(idx).Take(5).ToList();
                 //prepare vew bag
                 //---------------------------- prepare data viewbag --------------------
                 ViewBag.DataView = new Dictionary<string, object>{
                     {"title","Interview"},
                     {"ListPosition",Manage_JobPositionDTO.GetData()},
-                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 15 || d.ID == 16 || d.ID == 17)}
-                    };
+                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 15 || d.ID == 16 || d.ID == 17)},
+                    {"PageCount",PageCount}
+                };
 
                 //============================ process searchng ============================
                 if (Request["filter"] != null)
@@ -934,6 +999,8 @@ namespace FinalProject.Controllers
                     if (StateId != 0 && (Position == "all" && Keyword == ""))
                     {
                         ListCandidate = ListCandidate.Where(d => d.CANDIDATE_STATE == StateId).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
                     }
                     if (Position != "all" && (StateId == 0 && Keyword == ""))
                     {
@@ -941,6 +1008,8 @@ namespace FinalProject.Controllers
                         d.CANDIDATE_APPLIED_POSITION == Position ||
                         d.CANDIDATE_SUITABLE_POSITION == Position &&
                         (d.ID == 15 || d.ID == 17 || d.ID == 16)).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
                     }
                     if (Keyword != "" && (StateId == 0 && Position == "all"))
                     {
@@ -949,6 +1018,8 @@ namespace FinalProject.Controllers
                         d.CANDIDATE_NAME.Contains(Keyword) ||
                         d.CANDIDATE_PHONE.Contains(Keyword) &&
                        (d.ID == 15 || d.ID == 17 || d.ID == 16)).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
                     }
                     else
                     {
@@ -960,6 +1031,8 @@ namespace FinalProject.Controllers
                          d.CANDIDATE_NAME.Contains(Keyword) ||
                          d.CANDIDATE_PHONE.Contains(Keyword) &&
                          (d.ID == 15 || d.ID == 17 || d.ID == 16)).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
                     }
                 }
                 //============================ end process searchng ============================
@@ -1051,21 +1124,27 @@ namespace FinalProject.Controllers
 
 
         //---------------------------------------------------------- view for delivery -------------------------------------------------
-        [Route("candidate/delivery")]
-        public ActionResult CandidateDelivery()
+        [Route("candidate/delivery/read/{i?}")]
+        public ActionResult CandidateDelivery(string i = null)
         {
             try
             {
                 //---------------------------- prepare data candidate for show in view --------------
                 //note : data candidate from class Manage_CandidateSelectionHistoryDTO method GetDataSelectionHistory
                 //note : data in this view especialy for candidate where state_id is 15(hold), 16(pass), 17(drop)
+                
+                int perPage = 5;
+                float DataCount = db.TB_CANDIDATE_SELECTION_HISTORY.Where(sh => sh.CANDIDATE_STATE == 3).ToList().Count();
+                int PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
+                int idx = (i == null ? 0 : (perPage * int.Parse(i) - perPage));
                 List<CandidateSelectionHistoryDTO> ListCandidate = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().Where(d =>
-                d.CANDIDATE_STATE == 16).ToList();
+                d.CANDIDATE_STATE == 16).Skip(idx).Take(5).ToList();
                 //prepare vew bag
                 //---------------------------- prepare data viewbag --------------------
                 ViewBag.DataView = new Dictionary<string, object>{
                     {"title","Interview"},
                     {"ListPosition",Manage_JobPositionDTO.GetData()},
+                    {"PageCount",PageCount}
                     };
 
                 //============================ process searchng ============================
@@ -1078,6 +1157,8 @@ namespace FinalProject.Controllers
                     if (StateId != 0 && (Position == "all" && Keyword == ""))
                     {
                         ListCandidate = ListCandidate.Where(d => d.CANDIDATE_STATE == StateId).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
                     }
                     if (Position != "all" && (StateId == 0 && Keyword == ""))
                     {
@@ -1085,6 +1166,8 @@ namespace FinalProject.Controllers
                         d.CANDIDATE_APPLIED_POSITION == Position ||
                         d.CANDIDATE_SUITABLE_POSITION == Position &&
                         (d.ID == 16)).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
                     }
                     if (Keyword != "" && (StateId == 0 && Position == "all"))
                     {
@@ -1093,6 +1176,8 @@ namespace FinalProject.Controllers
                         d.CANDIDATE_NAME.Contains(Keyword) ||
                         d.CANDIDATE_PHONE.Contains(Keyword) &&
                        (d.ID == 16)).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
                     }
                     else
                     {
@@ -1104,6 +1189,8 @@ namespace FinalProject.Controllers
                          d.CANDIDATE_NAME.Contains(Keyword) ||
                          d.CANDIDATE_PHONE.Contains(Keyword) &&
                          (d.ID == 16)).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
                     }
                 }
                 //============================ end process searchng ============================
@@ -1171,21 +1258,27 @@ namespace FinalProject.Controllers
 
         //=========================================================== SUGGEST CANDIDATE ==========================================================
 
-        [Route("candidate/delivery/read/suggest")]
-        public ActionResult SuggestCandidate()
+        [Route("candidate/delivery/read/suggest/{i?}")]
+        public ActionResult SuggestCandidate(string i = null)
         {
             try
             {
                 //---------------------------- prepare data candidate for show in view --------------
                 //note : data candidate from class Manage_CandidateSelectionHistoryDTO method GetDataSelectionHistory
                 //note : data in this view especialy for candidate where state_id is 14(offering or 6(sent to client))
+               
+                int perPage = 5;
+                float DataCount = db.TB_CANDIDATE_SELECTION_HISTORY.Where(sh => sh.CANDIDATE_STATE == 3).ToList().Count();
+                int PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
+                int idx = (i == null ? 0 : (perPage * int.Parse(i) - perPage));
                 List<CandidateSelectionHistoryDTO> ListCandidate = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().Where(d =>
-                d.CANDIDATE_STATE == 6 || d.CANDIDATE_STATE == 14).ToList();
+                d.CANDIDATE_STATE == 6 || d.CANDIDATE_STATE == 14).Skip(idx).Take(5).ToList();
                 //prepare vew bag
                 //---------------------------- prepare data viewbag --------------------
                 ViewBag.DataView = new Dictionary<string, object>{
                     {"title","Delivery"},
                     {"ListPosition",Manage_JobPositionDTO.GetData()},
+                    {"PageCount",PageCount}
                     };
 
                 //============================ process searchng ============================
@@ -1198,6 +1291,8 @@ namespace FinalProject.Controllers
                     if (StateId != 0 && (Position == "all" && Keyword == ""))
                     {
                         ListCandidate = ListCandidate.Where(d => d.CANDIDATE_STATE == StateId).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
                     }
                     if (Position != "all" && (StateId == 0 && Keyword == ""))
                     {
@@ -1205,6 +1300,8 @@ namespace FinalProject.Controllers
                         d.CANDIDATE_APPLIED_POSITION == Position ||
                         d.CANDIDATE_SUITABLE_POSITION == Position &&
                         (d.ID == 6 || d.ID == 14)).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
                     }
                     if (Keyword != "" && (StateId == 0 && Position == "all"))
                     {
@@ -1213,6 +1310,8 @@ namespace FinalProject.Controllers
                         d.CANDIDATE_NAME.Contains(Keyword) ||
                         d.CANDIDATE_PHONE.Contains(Keyword) &&
                        (d.ID == 6 || d.ID == 14)).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
                     }
                     else
                     {
@@ -1224,6 +1323,8 @@ namespace FinalProject.Controllers
                          d.CANDIDATE_NAME.Contains(Keyword) ||
                          d.CANDIDATE_PHONE.Contains(Keyword) &&
                          (d.ID == 6 || d.ID == 14)).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / 5));
                     }
                 }
                 //============================ end process searchng ============================

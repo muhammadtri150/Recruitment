@@ -12,10 +12,15 @@ namespace FinalProject.Utils
     public class DataCandidateUtils
     {
 
-        //public static List<CandidateSelectionHistoryDTO> SearchDataSelectionHistory(params int[] state)
-        //{
-            
-        //}
+        //pagination
+        public static int Pagination(int StateId)
+        {
+            using(DBEntities db = new DBEntities())
+            {
+                float count = db.TB_CANDIDATE_SELECTION_HISTORY.Where(sh => sh.CANDIDATE_STATE == StateId).ToList().Count();
+                return Convert.ToInt16(Math.Ceiling(count / 5));
+            }
+        }
 
     }
 }

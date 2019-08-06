@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="FinalProject_adp3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="JOB_PORTAL">
     <Key>
       <PropertyRef Name="JOB_ID" />
@@ -237,6 +237,20 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
     <Property Name="ROLE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ROLE_NAME" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
+  <EntityType Name="TB_SELECTION_HISTORY">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PIC_ID" Type="int" />
+    <Property Name="CANDIDATE_ID" Type="int" />
+    <Property Name="STATE_ID" Type="int" />
+    <Property Name="CANDIDATE_APPLIED_POSITION" Type="varchar" MaxLength="50" />
+    <Property Name="CANDIDATE_SUITABLE_POSITION" Type="varchar" MaxLength="50" />
+    <Property Name="CANDIDATE_SOURCE" Type="varchar" MaxLength="50" />
+    <Property Name="CANDIDATE_EXPECTED_SALARY" Type="money" />
+    <Property Name="NOTES" Type="text" />
+  </EntityType>
   <EntityType Name="TB_SKILL">
     <Key>
       <PropertyRef Name="SKILL_ID" />
@@ -408,6 +422,18 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__TB_SELECT__PIC_I__07C12930">
+    <End Role="TB_USER" Type="Self.TB_USER" Multiplicity="0..1" />
+    <End Role="TB_SELECTION_HISTORY" Type="Self.TB_SELECTION_HISTORY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TB_USER">
+        <PropertyRef Name="USER_ID" />
+      </Principal>
+      <Dependent Role="TB_SELECTION_HISTORY">
+        <PropertyRef Name="PIC_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__TB_USER_A__ACTIO__5812160E">
     <End Role="TB_ACTION_CANDIDATE" Type="Self.TB_ACTION_CANDIDATE" Multiplicity="0..1" />
     <End Role="TB_USER_ACCESS_MENU_CANDIDATE" Type="Self.TB_USER_ACCESS_MENU_CANDIDATE" Multiplicity="*" />
@@ -504,7 +530,7 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="FinalProject_adp3ModelStoreContainer">
+  <EntityContainer Name="DBModelStoreContainer">
     <EntitySet Name="JOB_PORTAL" EntityType="Self.JOB_PORTAL" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_ACCESS_MENU" EntityType="Self.TB_ACCESS_MENU" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_ACTION_CANDIDATE" EntityType="Self.TB_ACTION_CANDIDATE" Schema="dbo" store:Type="Tables" />
@@ -525,6 +551,7 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
     <EntitySet Name="TB_PROVINCE" EntityType="Self.TB_PROVINCE" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_RELIGION" EntityType="Self.TB_RELIGION" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_ROLE" EntityType="Self.TB_ROLE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TB_SELECTION_HISTORY" EntityType="Self.TB_SELECTION_HISTORY" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_SKILL" EntityType="Self.TB_SKILL" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_SKILL_JOB_EXPERIENCE" EntityType="Self.TB_SKILL_JOB_EXPERIENCE" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TB_STATE_CANDIDATE" EntityType="Self.TB_STATE_CANDIDATE" Schema="dbo" store:Type="Tables" />
@@ -574,6 +601,10 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
     <AssociationSet Name="FK__TB_CANDID__USER___76969D2E" Association="Self.FK__TB_CANDID__USER___76969D2E">
       <End Role="TB_USER" EntitySet="TB_USER" />
       <End Role="TB_CANDIDATE_SELECTION_HISTORY" EntitySet="TB_CANDIDATE_SELECTION_HISTORY" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TB_SELECT__PIC_I__07C12930" Association="Self.FK__TB_SELECT__PIC_I__07C12930">
+      <End Role="TB_USER" EntitySet="TB_USER" />
+      <End Role="TB_SELECTION_HISTORY" EntitySet="TB_SELECTION_HISTORY" />
     </AssociationSet>
     <AssociationSet Name="FK__TB_USER_A__ACTIO__5812160E" Association="Self.FK__TB_USER_A__ACTIO__5812160E">
       <End Role="TB_ACTION_CANDIDATE" EntitySet="TB_ACTION_CANDIDATE" />

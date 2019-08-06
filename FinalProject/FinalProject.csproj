@@ -134,6 +134,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Content Include="Content\Assets\Js\candidate\Dashboard\Dashboard.js" />
     <Content Include="Content\Assets\Js\candidate\delivery\Delivery.js" />
     <Content Include="Content\Assets\Js\candidate\delivery\suggest.js" />
     <Content Include="Content\Assets\Js\candidate\interview\detail.js" />
@@ -149,6 +150,7 @@
     <Compile Include="DTO\CandidateJobExperienceDTO.cs" />
     <Compile Include="DTO\CandidateSelectionHistoryDTO.cs" />
     <Compile Include="DTO\ClientDTO.cs" />
+    <Compile Include="DTO\DashboardDTO.cs" />
     <Compile Include="DTO\DeliveryHistoryDTO.cs" />
     <Compile Include="DTO\DetailCandidateDTO.cs" />
     <Compile Include="DTO\GenderDTO.cs" />
@@ -169,104 +171,107 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\DBmodel.Context.cs">
+    <Compile Include="Models\DBModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DBmodel.Context.tt</DependentUpon>
+      <DependentUpon>DBModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DBmodel.cs">
+    <Compile Include="Models\DBModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DBmodel.Designer.cs">
+    <Compile Include="Models\DBModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DBmodel.edmx</DependentUpon>
+      <DependentUpon>DBModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\JOB_PORTAL.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_ACCESS_MENU.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_ACTION_CANDIDATE.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_BENEFIT_JOB_EXPERIENCE.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_CANDIDATE.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_CANDIDATE_EDUCATION_HISTORY.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_CANDIDATE_JOB_EXPERIENCE.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_CANDIDATE_SELECTION_HISTORY.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_CANDIDATE_SKILL.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_CITY.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_CLIENT.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_DELIVERY_HISTORY.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_GENDER.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_JOB_POSITION.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_LOG_USER_ACTIVITY.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_MARITALSTATUS.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_MENU.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_PREFIX.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_PROVINCE.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_RELIGION.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_ROLE.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TB_SELECTION_HISTORY.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_SKILL.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_SKILL_JOB_EXPERIENCE.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_STATE_CANDIDATE.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_SUBMENU.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_USER.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_USER_ACCESS_MENU_CANDIDATE.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_ZIPCODE.cs">
-      <DependentUpon>DBmodel.tt</DependentUpon>
+      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\CandidateController.cs" />
@@ -372,15 +377,15 @@
     <Content Include="Content\Vendor\sbadmin2\vendor\jquery\jquery.slim.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Models\DBmodel.Context.tt">
+    <Content Include="Models\DBModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DBmodel.Context.cs</LastGenOutput>
-      <DependentUpon>DBmodel.edmx</DependentUpon>
+      <DependentUpon>DBModel.edmx</DependentUpon>
+      <LastGenOutput>DBModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\DBmodel.tt">
+    <Content Include="Models\DBModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBmodel.edmx</DependentUpon>
-      <LastGenOutput>DBmodel.cs</LastGenOutput>
+      <DependentUpon>DBModel.edmx</DependentUpon>
+      <LastGenOutput>DBModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -2090,12 +2095,12 @@
     <Content Include="Content\Vendor\sbadmin2\vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <Content Include="Content\Vendor\sbadmin2\vendor\jquery\jquery.min.map" />
     <Content Include="Content\Vendor\sbadmin2\vendor\jquery\jquery.slim.min.map" />
-    <EntityDeploy Include="Models\DBmodel.edmx">
+    <EntityDeploy Include="Models\DBModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DBmodel.Designer.cs</LastGenOutput>
+      <LastGenOutput>DBModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\DBmodel.edmx.diagram">
-      <DependentUpon>DBmodel.edmx</DependentUpon>
+    <Content Include="Models\DBModel.edmx.diagram">
+      <DependentUpon>DBModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

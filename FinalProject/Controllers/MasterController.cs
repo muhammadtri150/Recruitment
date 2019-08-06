@@ -54,7 +54,7 @@ namespace FinalProject.Controllers
                         ).ToList();
                     ViewBag.DataView = new Dictionary<string, string>()
                     {
-                        {"title","Job Portal" }
+                        {"title","Job Portal Management" }
                     };
                     return View("JobPortal/Index", ListJobPortal);
                 }
@@ -210,7 +210,7 @@ namespace FinalProject.Controllers
                     //set data to show in view
                     ViewBag.DataView = new Dictionary<string, string>()
                     {
-                        {"title","Client" }
+                        {"title","Client Management" }
                     };
 
                     return View("Client/Index", ListClient);

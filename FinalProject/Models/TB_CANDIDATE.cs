@@ -55,11 +55,11 @@ namespace FinalProject.Models
         public string SOURCE { get; set; }
         public Nullable<System.DateTime> SOURCING_DATE { get; set; }
         public string POSITION { get; set; }
+        public string SUITABLE_POSITION { get; set; }
         public Nullable<decimal> EXPECTED_SALARY { get; set; }
         public string NOTES { get; set; }
         public string RECOMENDATION { get; set; }
         public Nullable<System.DateTime> AVAILABLE_JOIN { get; set; }
-        public string SUITABLE_POSITION { get; set; }
         public Nullable<System.DateTime> CANDIDATE_INTERVIEW_DATE { get; set; }
     
         public virtual TB_STATE_CANDIDATE TB_STATE_CANDIDATE { get; set; }
