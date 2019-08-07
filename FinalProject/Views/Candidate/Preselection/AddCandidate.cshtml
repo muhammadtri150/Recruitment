@@ -1,4 +1,4 @@
-﻿﻿@model FinalProject.DTO.CandidateDTO
+﻿﻿﻿@model FinalProject.DTO.CandidateDTO
 @using FinalProject.Models
 @section title{
     Candidate - @ViewBag.DataView["title"]
@@ -16,18 +16,18 @@
                 <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-skill" role="tab" aria-controls="nav-contact" aria-selected="false">Skill</a>
             </div>
         </nav>
-        <form method="post" action="~/candidate/preselection/create/candidate/process" enctype="multipart/form-data">
+        <form method="post" action="~/candidate/praselection/create/candidate/process" enctype="multipart/form-data">
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="nav-personal_information" role="tabpanel" aria-labelledby="nav-home-tab">
                     <div class="row">
                         <div class="col-sm">
                             <div class="form-group">
-                                <label for="CandidateName">Full Name</label>
+                                <label for="CandidateName">Full Name<font color="red">*</font></label>
                                 @Html.TextBoxFor(m => m.CANDIDATE_NAME, new { @class = "form-control", @id = "CandidateName" })
                                 @Html.ValidationMessageFor(m => m.CANDIDATE_NAME, null, new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
-                                <label for="CandidateName">Gender</label>
+                                <label for="CandidateName">Gender<font color="red">*</font></label>
                                 <select class="form-control" id="GENDER" name="GENDER_ID">
                                     @foreach (var d in new DBEntities().TB_GENDER)
                                     {
@@ -36,14 +36,24 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="CANDIDATE_PLACE_BIRTH">Place Of Birth</label>
+                                <label for="CANDIDATE_PLACE_BIRTH">Place Of Birth<font color="red">*</font></label>
                                 @Html.TextBoxFor(m => m.CANDIDATE_PLACE_BIRTH, new { @class = "form-control", @id = "CANDIDATE_PLACE_BIRTH" })
                                 @Html.ValidationMessageFor(m => m.CANDIDATE_PLACE_BIRTH, null, new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
-                                <label for="CANDIDATE_PLACE_BIRTH">Birth Date</label>
+                                <label for="CANDIDATE_PLACE_BIRTH">Birth Date<font color="red">*</font></label>
                                 <input type="date" class="form-control" id="CANDIDATE_BIRTH_DATE" name="CANDIDATE_BIRTH_DATE" />
                                 @Html.ValidationMessageFor(m => m.CANDIDATE_BIRTH_DATE, null, new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <label for="CANDIDATE_CITY">City<font color="red">*</font></label>
+                                @Html.TextBoxFor(m => m.CANDIDATE_CITY, new { @class = "form-control", @id = "CANDIDATE_CITY" })
+                                @Html.ValidationMessageFor(m => m.CANDIDATE_CITY, null, new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <label for="CANDIDATE_PROVINCE">Province<font color="red">*</font></label>
+                                @Html.TextBoxFor(m => m.CANDIDATE_PROVINCE, new { @class = "form-control", @id = "CANDIDATE_PROVINCE" })
+                                @Html.ValidationMessageFor(m => m.CANDIDATE_PROVINCE, null, new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
                                 <label for="GENDER_ID">Religion</label>
@@ -57,7 +67,7 @@
                             </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="file_pict">Upload</span>
+                                    <span class="input-group-text" id="file_pict">Upload<font color="red">*</font></span>
                                 </div>
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" id="file_pict" aria-describedby="file_pict" name="Pict" accept="image/*" onchange="loadFile(event)">
@@ -65,14 +75,15 @@
                                 </div>
                             </div>
                             <div>
-                                @Html.ValidationMessageFor(m => m.CANDIDATE_PHOTO, null, new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(m => m.CANDIDATE_PHOTO, "Don't Forget to Insert a Photo", new { @class = "text-danger" })
                                 <img id="output" width="300" />
                             </div>
+
                         </div>
                         @*mid side form*@
                         <div class="col-sm">
                             <div class="form-group">
-                                <label for="CANDIDATE_CURRENT_ADDRESS">Address</label>
+                                <label for="CANDIDATE_CURRENT_ADDRESS">Address<font color="red">*</font></label>
                                 @Html.TextAreaFor(m => m.CANDIDATE_CURRENT_ADDRESS, new { @class = "form-control", @id = "CANDIDATE_CURRENT_ADDRESS" })
                                 @Html.ValidationMessageFor(m => m.CANDIDATE_CURRENT_ADDRESS, null, new { @class = "text-danger" })
                             </div>
@@ -87,22 +98,22 @@
                                 @Html.ValidationMessageFor(m => m.TELEPHONE_NUMBER, null, new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
-                                <label for="CANDIDATE_EMAIL">Email</label>
+                                <label for="CANDIDATE_EMAIL">Email<font color="red">*</font></label>
                                 @Html.TextBoxFor(m => m.CANDIDATE_EMAIL, new { @class = "form-control", @id = "CANDIDATE_EMAIL" })
-                                @Html.ValidationMessageFor(m => m.CANDIDATE_EMAIL, null, new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(m => m.CANDIDATE_EMAIL, "Insert Email With The Correct Type of Email", new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
-                                <label for="CANDIDATE_PHONENUMBER">Phone Number</label>
+                                <label for="CANDIDATE_PHONENUMBER">Phone Number<font color="red">*</font></label>
                                 @Html.TextBoxFor(m => m.CANDIDATE_PHONENUMBER, new { @class = "form-control", @id = "CANDIDATE_PHONENUMBER" })
-                                @Html.ValidationMessageFor(m => m.CANDIDATE_PHONENUMBER, null, new { @class = "text-danger" })
+                                @Html.ValidationMessageFor(m => m.CANDIDATE_PHONENUMBER, "Maximum of number is 14", new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
-                                <label for="RESIDENT_CARD_NUMBER">Resident Card Number</label>
-                                @Html.TextBoxFor(m => m.RESIDENT_CARD_NUMBER, new { @class = "form-control", @id = "RESIDENT_CARD_NUMBER" })
-                                @Html.ValidationMessageFor(m => m.RESIDENT_CARD_NUMBER, null, new { @class = "text-danger" })
+                                <label for="RESIDENT_CARD_NUMBER">KTP Card Number<font color="red">*</font></label>
+                                @Html.TextBoxFor(m => m.CANDIDATE_KTP_NUMBER, new { @class = "form-control", @id = "CANDIDATE_KTP_NUMBER" })
+                                @Html.ValidationMessageFor(m => m.CANDIDATE_KTP_NUMBER, null, new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
-                                <label for="ZIP_CODE">Zip Code</label>
+                                <label for="ZIP_CODE">Zip Code<font color="red">*</font></label>
                                 @Html.TextBoxFor(m => m.ZIP_CODE, new { @class = "form-control", @id = "ZIP_CODE" })
                                 @Html.ValidationMessageFor(m => m.ZIP_CODE, null, new { @class = "text-danger" })
                             </div>
@@ -122,7 +133,7 @@
                         @*Right Side*@
                         <div class="col-sm">
                             <div class="form-group">
-                                <label for="GENDER_ID">Marital Status</label>
+                                <label for="GENDER_ID">Marital Status<font color="red">*</font></label>
                                 <select class="form-control" id="MARITAL_STATUS_ID" name="MARITAL_STATUS_ID">
                                     @foreach (var d in new DBEntities().TB_MARITALSTATUS)
                                     {
@@ -132,7 +143,7 @@
                                 @Html.ValidationMessageFor(m => m.MARITAL_STATUS, null, new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
-                                <label for="POSITION">Position</label>
+                                <label for="POSITION">Position<font color="red">*</font></label>
                                 <select class="form-control" id="POSITION" name="POSITION">
                                     @foreach (var d in new DBEntities().TB_JOB_POSITION)
                                     {
@@ -169,7 +180,7 @@
                                 @Html.ValidationMessageFor(m => m.AVAILABLE_JOIN, null, new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
-                                <label for="EXPECTED_sALARY">Excpected Salary</label>
+                                <label for="EXPECTED_sALARY">Excpected Salary<font color="red">*</font></label>
                                 @Html.TextBoxFor(m => m.EXPECTED_sALARY, new { @class = "form-control", @id = "EXPECTED_sALARY" })
                                 @Html.ValidationMessageFor(m => m.EXPECTED_sALARY, null, new { @class = "text-danger" })
                             </div>
@@ -188,34 +199,34 @@
                         <div class="row">
                             <div class="col-sm">
                                 <div class="form-group">
-                                    <label for="CANDIDATE_LAST_EDUCATON">Universitas/School</label>
+                                    <label for="CANDIDATE_LAST_EDUCATON">Universitas/School<font color="red">*</font></label>
                                     @Html.TextBoxFor(m => m.CANDIDATE_LAST_EDUCATON, new { @class = "form-control", @id = "CANDIDATE_LAST_EDUCATON" })
                                     @Html.ValidationMessageFor(m => m.CANDIDATE_LAST_EDUCATON, null, new { @class = "text-danger" })
                                 </div>
                                 <div class="form-group">
-                                    <label for="CANDIDATE_DEGREE">Degree</label>
+                                    <label for="CANDIDATE_DEGREE">Degree<font color="red">*</font></label>
                                     @Html.TextBoxFor(m => m.CANDIDATE_DEGREE, new { @class = "form-control", @id = "CANDIDATE_DEGREE" })
                                     @Html.ValidationMessageFor(m => m.CANDIDATE_DEGREE, null, new { @class = "text-danger" })
                                 </div>
                                 <div class="form-group">
-                                    <label for="EDUCATION_START_DATE">Start Date</label>
+                                    <label for="EDUCATION_START_DATE">Start Date<font color="red">*</font></label>
                                     @Html.TextBoxFor(m => m.EDUCATON_START_DATE, new { type = "date", @class = "form-control" })
                                     @Html.ValidationMessageFor(m => m.EDUCATON_START_DATE, null, new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="col-sm">
                                 <div class="form-group">
-                                    <label for="CANDIDATE_MAJOR">Major</label>
+                                    <label for="CANDIDATE_MAJOR">Major<font color="red">*</font></label>
                                     @Html.TextBoxFor(m => m.CANDIDATE_MAJOR, new { @class = "form-control", @id = "CANDIDATE_MAJOR" })
                                     @Html.ValidationMessageFor(m => m.CANDIDATE_MAJOR, null, new { @class = "text-danger" })
                                 </div>
                                 <div class="form-group">
-                                    <label for="CANDIDATE_GPA">GPA</label>
+                                    <label for="CANDIDATE_GPA">GPA<font color="red">*</font></label>
                                     @Html.TextBoxFor(m => m.CANDIDATE_GPA, new { @class = "form-control", @id = "CANDIDATE_GPA" })
                                     @Html.ValidationMessageFor(m => m.CANDIDATE_GPA, null, new { @class = "text-danger" })
                                 </div>
                                 <div class="form-group">
-                                    <label for="EDUCATION_END_DATE">End Date</label>
+                                    <label for="EDUCATION_END_DATE">End Date<font color="red">*</font></label>
                                     @Html.TextBoxFor(m => m.EDUCATON_END_DATE, new { type = "date", @class = "form-control" })
                                     @Html.ValidationMessageFor(m => m.EDUCATON_END_DATE, null, new { @class = "text-danger" })
                                 </div>

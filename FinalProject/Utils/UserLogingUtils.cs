@@ -55,10 +55,10 @@ namespace FinalProject.Utils
 
         public static List<TB_LOG_USER_ACTIVITY> GetLogUser()
         {
-            using(DBEntities db = new DBEntities())
+            using (DBEntities db = new DBEntities())
             {
                 return db.TB_LOG_USER_ACTIVITY.ToList();
             }
-        } 
+        }
     }
 }

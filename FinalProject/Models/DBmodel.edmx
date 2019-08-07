@@ -50,15 +50,15 @@
           <Property Name="GENDER_ID" Type="int" />
           <Property Name="RELIGION_ID" Type="int" />
           <Property Name="CANDIDATE_ETNIC" Type="varchar" MaxLength="50" />
-          <Property Name="ZIP_CODE" Type="varchar" MaxLength="10" />
           <Property Name="PARENT_ADDRESS" Type="text" />
           <Property Name="RESIDENT_CARD_NUMBER" Type="varchar" MaxLength="50" />
           <Property Name="TELEPHONE_NUMBER" Type="varchar" MaxLength="50" />
           <Property Name="CANDIDATE_HOMENUMBER" Type="varchar" MaxLength="10" />
           <Property Name="CANDIDATE_PHONENUMBER" Type="varchar" MaxLength="50" />
           <Property Name="CANDIDATE_EMAIL" Type="varchar" MaxLength="50" />
-          <Property Name="CANDIDATE_CITY" Type="int" />
-          <Property Name="CANDIDATE_PROVINCE" Type="int" />
+          <Property Name="CANDIDATE_CITY" Type="varchar" MaxLength="50" />
+          <Property Name="CANDIDATE_PROVINCE" Type="varchar" MaxLength="50" />
+          <Property Name="CANDIDATE_ZIPCODE" Type="int" />
           <Property Name="CANDIDATE_CURRENT_ADDRESS" Type="text" />
           <Property Name="CANDIDATE_KTP_NUMBER" Type="varchar" MaxLength="50" />
           <Property Name="CANDDIATE_NPWP_NUMBER" Type="varchar" MaxLength="50" />
@@ -221,13 +221,6 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <Property Name="PREFIX" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="DATA_NAME" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="TB_PROVINCE">
-          <Key>
-            <PropertyRef Name="PROVINCE_ID" />
-          </Key>
-          <Property Name="PROVINCE_ID" Type="int" Nullable="false" />
-          <Property Name="PROVINCE_NAME" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
         <EntityType Name="TB_RELIGION">
           <Key>
             <PropertyRef Name="RELIGION_ID" />
@@ -308,17 +301,6 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <Property Name="SUB_MENU_CANDIDATE_ID" Type="int" />
           <Property Name="ACTION_CANDIDATE_ID" Type="int" />
         </EntityType>
-        <EntityType Name="TB_ZIPCODE">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" Nullable="false" />
-          <Property Name="kelurahan" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="kecamatan" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="kabupaten" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="provinsi" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="kodepos" Type="varchar" MaxLength="5" Nullable="false" />
-        </EntityType>
         <Association Name="FK__TB_CANDID__CANDI__71D1E811">
           <End Role="TB_STATE_CANDIDATE" Type="Self.TB_STATE_CANDIDATE" Multiplicity="0..1" />
           <End Role="TB_CANDIDATE" Type="Self.TB_CANDIDATE" Multiplicity="*" />
@@ -328,18 +310,6 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
             </Principal>
             <Dependent Role="TB_CANDIDATE">
               <PropertyRef Name="CANDIDATE_STATE_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__TB_CANDID__CANDI__72C60C4A">
-          <End Role="TB_PROVINCE" Type="Self.TB_PROVINCE" Multiplicity="0..1" />
-          <End Role="TB_CANDIDATE" Type="Self.TB_CANDIDATE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_PROVINCE">
-              <PropertyRef Name="PROVINCE_ID" />
-            </Principal>
-            <Dependent Role="TB_CANDIDATE">
-              <PropertyRef Name="CANDIDATE_PROVINCE" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -553,7 +523,6 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <EntitySet Name="TB_LOG_USER_ACTIVITY" EntityType="Self.TB_LOG_USER_ACTIVITY" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_MARITALSTATUS" EntityType="Self.TB_MARITALSTATUS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_MENU" EntityType="Self.TB_MENU" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TB_PROVINCE" EntityType="Self.TB_PROVINCE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_RELIGION" EntityType="Self.TB_RELIGION" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_ROLE" EntityType="Self.TB_ROLE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_SELECTION_HISTORY" EntityType="Self.TB_SELECTION_HISTORY" Schema="dbo" store:Type="Tables" />
@@ -563,7 +532,6 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <EntitySet Name="TB_SUBMENU" EntityType="Self.TB_SUBMENU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_USER" EntityType="Self.TB_USER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_USER_ACCESS_MENU_CANDIDATE" EntityType="Self.TB_USER_ACCESS_MENU_CANDIDATE" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TB_ZIPCODE" EntityType="Self.TB_ZIPCODE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TB_PREFIX" EntityType="Self.TB_PREFIX" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [TB_PREFIX].[ID] AS [ID], 
@@ -573,10 +541,6 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           </EntitySet>
           <AssociationSet Name="FK__TB_CANDID__CANDI__71D1E811" Association="Self.FK__TB_CANDID__CANDI__71D1E811">
             <End Role="TB_STATE_CANDIDATE" EntitySet="TB_STATE_CANDIDATE" />
-            <End Role="TB_CANDIDATE" EntitySet="TB_CANDIDATE" />
-          </AssociationSet>
-          <AssociationSet Name="FK__TB_CANDID__CANDI__72C60C4A" Association="Self.FK__TB_CANDID__CANDI__72C60C4A">
-            <End Role="TB_PROVINCE" EntitySet="TB_PROVINCE" />
             <End Role="TB_CANDIDATE" EntitySet="TB_CANDIDATE" />
           </AssociationSet>
           <AssociationSet Name="FK__TB_CANDID__CANDI__75A278F5" Association="Self.FK__TB_CANDID__CANDI__75A278F5">
@@ -699,15 +663,15 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <Property Name="GENDER_ID" Type="Int32" />
           <Property Name="RELIGION_ID" Type="Int32" />
           <Property Name="CANDIDATE_ETNIC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ZIP_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="PARENT_ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="RESIDENT_CARD_NUMBER" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TELEPHONE_NUMBER" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CANDIDATE_HOMENUMBER" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="CANDIDATE_PHONENUMBER" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CANDIDATE_EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CANDIDATE_CITY" Type="Int32" />
-          <Property Name="CANDIDATE_PROVINCE" Type="Int32" />
+          <Property Name="CANDIDATE_CITY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CANDIDATE_PROVINCE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CANDIDATE_ZIPCODE" Type="Int32" />
           <Property Name="CANDIDATE_CURRENT_ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CANDIDATE_KTP_NUMBER" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CANDDIATE_NPWP_NUMBER" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -730,7 +694,6 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <Property Name="AVAILABLE_JOIN" Type="DateTime" Precision="0" />
           <Property Name="CANDIDATE_INTERVIEW_DATE" Type="DateTime" Precision="0" />
           <NavigationProperty Name="TB_STATE_CANDIDATE" Relationship="Self.FK__TB_CANDID__CANDI__71D1E811" FromRole="TB_CANDIDATE" ToRole="TB_STATE_CANDIDATE" />
-          <NavigationProperty Name="TB_PROVINCE" Relationship="Self.FK__TB_CANDID__CANDI__72C60C4A" FromRole="TB_CANDIDATE" ToRole="TB_PROVINCE" />
           <NavigationProperty Name="TB_CANDIDATE_SELECTION_HISTORY" Relationship="Self.FK__TB_CANDID__CANDI__75A278F5" FromRole="TB_CANDIDATE" ToRole="TB_CANDIDATE_SELECTION_HISTORY" />
           <NavigationProperty Name="TB_CANDIDATE_JOB_EXPERIENCE" Relationship="Self.FK__TB_CANDID__CANDI__7C4F7684" FromRole="TB_CANDIDATE" ToRole="TB_CANDIDATE_JOB_EXPERIENCE" />
           <NavigationProperty Name="TB_GENDER" Relationship="Self.FK__TB_CANDID__GENDE__6FE99F9F" FromRole="TB_CANDIDATE" ToRole="TB_GENDER" />
@@ -874,14 +837,6 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <NavigationProperty Name="TB_ACCESS_MENU" Relationship="Self.FK_TB_ACCESS_MENU_TB_MENU1" FromRole="TB_MENU" ToRole="TB_ACCESS_MENU" />
           <NavigationProperty Name="TB_SUBMENU" Relationship="Self.FK_TB_SUBMENU_TB_MENU" FromRole="TB_MENU" ToRole="TB_SUBMENU" />
         </EntityType>
-        <EntityType Name="TB_PROVINCE">
-          <Key>
-            <PropertyRef Name="PROVINCE_ID" />
-          </Key>
-          <Property Name="PROVINCE_ID" Type="Int32" Nullable="false" />
-          <Property Name="PROVINCE_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="TB_CANDIDATE" Relationship="Self.FK__TB_CANDID__CANDI__72C60C4A" FromRole="TB_PROVINCE" ToRole="TB_CANDIDATE" />
-        </EntityType>
         <EntityType Name="TB_RELIGION">
           <Key>
             <PropertyRef Name="RELIGION_ID" />
@@ -977,17 +932,6 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <NavigationProperty Name="TB_ROLE" Relationship="Self.FK__TB_USER_A__ROLE___5629CD9C" FromRole="TB_USER_ACCESS_MENU_CANDIDATE" ToRole="TB_ROLE" />
           <NavigationProperty Name="TB_SUBMENU" Relationship="Self.FK__TB_USER_A__SUB_M__571DF1D5" FromRole="TB_USER_ACCESS_MENU_CANDIDATE" ToRole="TB_SUBMENU" />
         </EntityType>
-        <EntityType Name="TB_ZIPCODE">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="kelurahan" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="kecamatan" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="kabupaten" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="provinsi" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="kodepos" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-        </EntityType>
         <EntityType Name="TB_PREFIX">
           <Key>
             <PropertyRef Name="PREFIX" />
@@ -1054,18 +998,6 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
             </Principal>
             <Dependent Role="TB_CANDIDATE">
               <PropertyRef Name="CANDIDATE_STATE_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__TB_CANDID__CANDI__72C60C4A">
-          <End Role="TB_PROVINCE" Type="Self.TB_PROVINCE" Multiplicity="0..1" />
-          <End Role="TB_CANDIDATE" Type="Self.TB_CANDIDATE" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="TB_PROVINCE">
-              <PropertyRef Name="PROVINCE_ID" />
-            </Principal>
-            <Dependent Role="TB_CANDIDATE">
-              <PropertyRef Name="CANDIDATE_PROVINCE" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1231,7 +1163,6 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <EntitySet Name="TB_LOG_USER_ACTIVITY" EntityType="Self.TB_LOG_USER_ACTIVITY" />
           <EntitySet Name="TB_MARITALSTATUS" EntityType="Self.TB_MARITALSTATUS" />
           <EntitySet Name="TB_MENU" EntityType="Self.TB_MENU" />
-          <EntitySet Name="TB_PROVINCE" EntityType="Self.TB_PROVINCE" />
           <EntitySet Name="TB_RELIGION" EntityType="Self.TB_RELIGION" />
           <EntitySet Name="TB_ROLE" EntityType="Self.TB_ROLE" />
           <EntitySet Name="TB_SELECTION_HISTORY" EntityType="Self.TB_SELECTION_HISTORY" />
@@ -1241,7 +1172,6 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <EntitySet Name="TB_SUBMENU" EntityType="Self.TB_SUBMENU" />
           <EntitySet Name="TB_USER" EntityType="Self.TB_USER" />
           <EntitySet Name="TB_USER_ACCESS_MENU_CANDIDATE" EntityType="Self.TB_USER_ACCESS_MENU_CANDIDATE" />
-          <EntitySet Name="TB_ZIPCODE" EntityType="Self.TB_ZIPCODE" />
           <EntitySet Name="TB_PREFIX" EntityType="Self.TB_PREFIX" />
           <AssociationSet Name="FK_TB_ACCESS_MENU_TB_ACCESS_MENU" Association="Self.FK_TB_ACCESS_MENU_TB_ACCESS_MENU">
             <End Role="TB_ACCESS_MENU" EntitySet="TB_ACCESS_MENU" />
@@ -1261,10 +1191,6 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           </AssociationSet>
           <AssociationSet Name="FK__TB_CANDID__CANDI__71D1E811" Association="Self.FK__TB_CANDID__CANDI__71D1E811">
             <End Role="TB_STATE_CANDIDATE" EntitySet="TB_STATE_CANDIDATE" />
-            <End Role="TB_CANDIDATE" EntitySet="TB_CANDIDATE" />
-          </AssociationSet>
-          <AssociationSet Name="FK__TB_CANDID__CANDI__72C60C4A" Association="Self.FK__TB_CANDID__CANDI__72C60C4A">
-            <End Role="TB_PROVINCE" EntitySet="TB_PROVINCE" />
             <End Role="TB_CANDIDATE" EntitySet="TB_CANDIDATE" />
           </AssociationSet>
           <AssociationSet Name="FK__TB_CANDID__CANDI__75A278F5" Association="Self.FK__TB_CANDID__CANDI__75A278F5">
@@ -1370,7 +1296,6 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
                 <ScalarProperty Name="GENDER_ID" ColumnName="GENDER_ID" />
                 <ScalarProperty Name="RELIGION_ID" ColumnName="RELIGION_ID" />
                 <ScalarProperty Name="CANDIDATE_ETNIC" ColumnName="CANDIDATE_ETNIC" />
-                <ScalarProperty Name="ZIP_CODE" ColumnName="ZIP_CODE" />
                 <ScalarProperty Name="PARENT_ADDRESS" ColumnName="PARENT_ADDRESS" />
                 <ScalarProperty Name="RESIDENT_CARD_NUMBER" ColumnName="RESIDENT_CARD_NUMBER" />
                 <ScalarProperty Name="TELEPHONE_NUMBER" ColumnName="TELEPHONE_NUMBER" />
@@ -1379,6 +1304,7 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
                 <ScalarProperty Name="CANDIDATE_EMAIL" ColumnName="CANDIDATE_EMAIL" />
                 <ScalarProperty Name="CANDIDATE_CITY" ColumnName="CANDIDATE_CITY" />
                 <ScalarProperty Name="CANDIDATE_PROVINCE" ColumnName="CANDIDATE_PROVINCE" />
+                <ScalarProperty Name="CANDIDATE_ZIPCODE" ColumnName="CANDIDATE_ZIPCODE" />
                 <ScalarProperty Name="CANDIDATE_CURRENT_ADDRESS" ColumnName="CANDIDATE_CURRENT_ADDRESS" />
                 <ScalarProperty Name="CANDIDATE_KTP_NUMBER" ColumnName="CANDIDATE_KTP_NUMBER" />
                 <ScalarProperty Name="CANDDIATE_NPWP_NUMBER" ColumnName="CANDDIATE_NPWP_NUMBER" />
@@ -1544,14 +1470,6 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TB_PROVINCE">
-            <EntityTypeMapping TypeName="DBModel.TB_PROVINCE">
-              <MappingFragment StoreEntitySet="TB_PROVINCE">
-                <ScalarProperty Name="PROVINCE_ID" ColumnName="PROVINCE_ID" />
-                <ScalarProperty Name="PROVINCE_NAME" ColumnName="PROVINCE_NAME" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TB_RELIGION">
             <EntityTypeMapping TypeName="DBModel.TB_RELIGION">
               <MappingFragment StoreEntitySet="TB_RELIGION">
@@ -1638,18 +1556,6 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
                 <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
                 <ScalarProperty Name="SUB_MENU_CANDIDATE_ID" ColumnName="SUB_MENU_CANDIDATE_ID" />
                 <ScalarProperty Name="ACTION_CANDIDATE_ID" ColumnName="ACTION_CANDIDATE_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TB_ZIPCODE">
-            <EntityTypeMapping TypeName="DBModel.TB_ZIPCODE">
-              <MappingFragment StoreEntitySet="TB_ZIPCODE">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="kelurahan" ColumnName="kelurahan" />
-                <ScalarProperty Name="kecamatan" ColumnName="kecamatan" />
-                <ScalarProperty Name="kabupaten" ColumnName="kabupaten" />
-                <ScalarProperty Name="provinsi" ColumnName="provinsi" />
-                <ScalarProperty Name="kodepos" ColumnName="kodepos" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

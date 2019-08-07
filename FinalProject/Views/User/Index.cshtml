@@ -1,24 +1,19 @@
-﻿@using FinalProject.Utils
+﻿﻿@using FinalProject.Utils
 @using FinalProject.DTO
 @{ List<DashboardDTO> topposition = (List<DashboardDTO>)TempData.Peek("topposition");
     List<DashboardDTO> toppositionmonth = (List<DashboardDTO>)TempData.Peek("toppositionmonth");
     List<DashboardDTO> toppositionyear = (List<DashboardDTO>)TempData.Peek("toppositionyear");
 }
-
 @section title{
     @ViewBag.DataView["title"]
-
 }
 @section content{
-
-
-
+    <h2 class="text-center">Dashboard</h2>
     <div class="ml-3 mr-3 mt-3 panel container bg-white">
         <div class="row mb-4">
-            <div id="chartPie" class="col-md-6 col ml-2 mr-2" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+            <div id="chartPie" class="col-md-6 col ml-2 mr-2 w-100 p-3" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
             <div class="col-sm ml-2">
-
-                <table class="table table-hover table-condensed">
+                <table class="table table-hover table-condensed table-sm mt-3">
                     <thead>
                         <tr class="text-center">
                             <td colspan="3">All CV (Most)</td>
@@ -95,11 +90,12 @@
                 </table>
             </div>
         </div>
-        <div id="chartBar" class="ml-3 mr-2 mb-3" style="min-width: 350px; height: 400px; margin: 0 auto"></div>
+        <div id="chartBar" class="ml-3 mr-2 mb-3 table table-responsive " style="min-width: 350px; height: 400px; margin: 0 auto;"></div>
     </div>
+    <script src="http://code.highcharts.com/stock/highstock.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
     <script src="~/Content/Assets/Js/candidate/Dashboard/Dashboard.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
-
 }

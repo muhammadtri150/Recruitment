@@ -14,7 +14,7 @@
                 text: 'Source CV'
             },
             tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.0f}%</b>'
+                pointFormat: '{series.name}: <b>{point.y:.0f}</b>'
             },
             plotOptions: {
                 pie: {
@@ -22,7 +22,7 @@
                     cursor: 'pointer',
                     dataLabels: {
                         enabled: true,
-                        format: '<b>{point.name}</b>: {point.percentage:.0f} %',
+                        format: '<b>{point.name}</b>: {point.y:.0f}</b>',
                         style: {
                             color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
                         }
@@ -66,19 +66,26 @@ $(document).ready(function () {
 
         Highcharts.chart('chartBar', {
             chart: {
-                type: 'column'
+                type: 'column',
+                maintainAspectRatio: false,
             },
             title: {
                 text: 'Total Stock VS Total Called CV'
             },
+            scrollbar: {
+                enabled: true
+            },
             xAxis: {
+                min: 0,
+                max: 2,
                 categories: [
                     'Java',
                     'PHP',
                     'Ruby',
                     'VB.NET'
                 ],
-                crosshair: true
+                crosshair: true,
+
             },
             yAxis: {
                 min: 0,
@@ -97,7 +104,7 @@ $(document).ready(function () {
             plotOptions: {
                 column: {
                     pointPadding: 0.2,
-                    borderWidth: 0
+                    borderWidth: 0,
                 }
             },
             series: [{

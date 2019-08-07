@@ -42,7 +42,6 @@ namespace FinalProject.Models
         public virtual DbSet<TB_LOG_USER_ACTIVITY> TB_LOG_USER_ACTIVITY { get; set; }
         public virtual DbSet<TB_MARITALSTATUS> TB_MARITALSTATUS { get; set; }
         public virtual DbSet<TB_MENU> TB_MENU { get; set; }
-        public virtual DbSet<TB_PROVINCE> TB_PROVINCE { get; set; }
         public virtual DbSet<TB_RELIGION> TB_RELIGION { get; set; }
         public virtual DbSet<TB_ROLE> TB_ROLE { get; set; }
         public virtual DbSet<TB_SELECTION_HISTORY> TB_SELECTION_HISTORY { get; set; }
@@ -52,7 +51,6 @@ namespace FinalProject.Models
         public virtual DbSet<TB_SUBMENU> TB_SUBMENU { get; set; }
         public virtual DbSet<TB_USER> TB_USER { get; set; }
         public virtual DbSet<TB_USER_ACCESS_MENU_CANDIDATE> TB_USER_ACCESS_MENU_CANDIDATE { get; set; }
-        public virtual DbSet<TB_ZIPCODE> TB_ZIPCODE { get; set; }
         public virtual DbSet<TB_PREFIX> TB_PREFIX { get; set; }
     }
 }

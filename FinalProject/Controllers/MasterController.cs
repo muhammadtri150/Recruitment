@@ -54,7 +54,7 @@ namespace FinalProject.Controllers
                         ).ToList();
                     ViewBag.DataView = new Dictionary<string, string>()
                     {
-                        {"title","Job Portal Management" }
+                        {"title","Job Portal" }
                     };
                     return View("JobPortal/Index", ListJobPortal);
                 }
@@ -85,7 +85,7 @@ namespace FinalProject.Controllers
                             TempData.Add("message", "Job Portal added successfully");
                             TempData.Add("type", "success");
 
-                            UserLogingUtils.SaveLoggingUserActivity("add new job portal "+ JobPortalDTO.JOBPORTAL_NAME);
+                            UserLogingUtils.SaveLoggingUserActivity("add new job portal " + JobPortalDTO.JOBPORTAL_NAME);
                         }
                         else
                         {
@@ -188,7 +188,7 @@ namespace FinalProject.Controllers
         }
 
 
-//################################################################### Sub menu Client add, delete,update ##################################################
+        //################################################################### Sub menu Client add, delete,update ##################################################
 
         //---------------------------------------------------------- view of client -------------------------------------------------------------------
         [Route("master/client")]
@@ -199,7 +199,8 @@ namespace FinalProject.Controllers
                 using (DBEntities db = new DBEntities())
                 {
                     // prepare data clients for view
-                    List<ClientDTO> ListClient = db.TB_CLIENT.Select(c => new ClientDTO {
+                    List<ClientDTO> ListClient = db.TB_CLIENT.Select(c => new ClientDTO
+                    {
                         ID = c.ID,
                         CLIENT_ID = c.CLIENT_ID,
                         CLIENT_NAME = c.CLIENT_NAME,
@@ -210,7 +211,7 @@ namespace FinalProject.Controllers
                     //set data to show in view
                     ViewBag.DataView = new Dictionary<string, string>()
                     {
-                        {"title","Client Management" }
+                        {"title","Client" }
                     };
 
                     return View("Client/Index", ListClient);
@@ -250,7 +251,7 @@ namespace FinalProject.Controllers
                         {
                             TempData.Add("message", "New Client added Successfully");
                             TempData.Add("type", "success");
-                            UserLogingUtils.SaveLoggingUserActivity("add new client "+ClientId);
+                            UserLogingUtils.SaveLoggingUserActivity("add new client " + ClientId);
                         }
 
                         else
@@ -296,7 +297,7 @@ namespace FinalProject.Controllers
             {
                 using (DBEntities db = new DBEntities())
                 {
-                    
+
                     if (ModelState.IsValid)
                     {
                         //get data from table clirnt base on data of parameter and
@@ -355,45 +356,45 @@ namespace FinalProject.Controllers
             try
             {
                 using (DBEntities db = new DBEntities())
-            {
-
-                //prosess to insert data 
-                if (id == null)
                 {
-                    return Redirect("~/master/client");
-                }
-                //convert id to int for search client in tble
 
-                int ClientId = Convert.ToInt16(id);
-                TB_CLIENT DataClient = db.TB_CLIENT.FirstOrDefault(c => c.ID == ClientId);
-
-
-                if (DataClient == null)
-                {
-                    return Redirect("~/master/client");
-                }
-
-                //if client is already the remove it
-                else
-                {
-                    db.TB_CLIENT.Remove(DataClient);
-                    //check prosses success or not
-                    if (db.SaveChanges() > 0)
+                    //prosess to insert data 
+                    if (id == null)
                     {
-                        TempData.Add("message", "Job Portal have been deleted");
-                        TempData.Add("type", "success");
-                        UserLogingUtils.SaveLoggingUserActivity("delete client " + DataClient.CLIENT_ID);
-                     }
+                        return Redirect("~/master/client");
+                    }
+                    //convert id to int for search client in tble
 
-                    else
+                    int ClientId = Convert.ToInt16(id);
+                    TB_CLIENT DataClient = db.TB_CLIENT.FirstOrDefault(c => c.ID == ClientId);
+
+
+                    if (DataClient == null)
                     {
-                        TempData.Add("message", "Job Portal failed to deleted");
-                        TempData.Add("type", "danger");
+                        return Redirect("~/master/client");
                     }
 
-                    return Redirect("~/master/client");
+                    //if client is already the remove it
+                    else
+                    {
+                        db.TB_CLIENT.Remove(DataClient);
+                        //check prosses success or not
+                        if (db.SaveChanges() > 0)
+                        {
+                            TempData.Add("message", "Job Portal have been deleted");
+                            TempData.Add("type", "success");
+                            UserLogingUtils.SaveLoggingUserActivity("delete client " + DataClient.CLIENT_ID);
+                        }
+
+                        else
+                        {
+                            TempData.Add("message", "Job Portal failed to deleted");
+                            TempData.Add("type", "danger");
+                        }
+
+                        return Redirect("~/master/client");
+                    }
                 }
-            }
             }
             catch (Exception)
             {
@@ -401,16 +402,16 @@ namespace FinalProject.Controllers
             }
         }
 
-//################################################################### Sub Menu User Management (user) ####################################################
+        //################################################################### Sub Menu User Management (user) ####################################################
 
-       //-------------------------------------------------------------- view for user management sub menu -------------------------------
+        //-------------------------------------------------------------- view for user management sub menu -------------------------------
 
         [Route("master/usermanagement")]
         public ActionResult User()
         {
             try
             {
-                using(DBEntities db = new DBEntities())
+                using (DBEntities db = new DBEntities())
                 {
                     //prepare data user dto for view
 
@@ -429,7 +430,7 @@ namespace FinalProject.Controllers
                     //return view and send with list users
                     ViewBag.DataView = new Dictionary<string, object>()
                     {
-                        {"title","User Management"},
+                        {"title","User"},
                         {"ListRole",db.TB_ROLE.Select(r => new RoleDTO{ ROLE_NAME = r.ROLE_NAME, ROLE_ID = r.ROLE_ID}).ToList() }
 
                     };
@@ -478,7 +479,7 @@ namespace FinalProject.Controllers
                         {
                             TempData.Add("message", "User failed to Added");
                             TempData.Add("type", "danger");
-                        } 
+                        }
                     }
                     return Redirect("~/master/usermanagement");
                 }
@@ -501,7 +502,7 @@ namespace FinalProject.Controllers
                     //return view and send with list users
                     ViewBag.DataView = new Dictionary<string, object>()
                     {
-                        {"title","User Management"},
+                        {"title","User"},
                         {"ListRole",db.TB_ROLE.Select(r => new RoleDTO{ ROLE_NAME = r.ROLE_NAME, ROLE_ID = r.ROLE_ID}).ToList() }
 
                     };
@@ -569,7 +570,7 @@ namespace FinalProject.Controllers
                         //return view and send with list users
                         ViewBag.DataView = new Dictionary<string, object>()
                     {
-                        {"title","User Management"},
+                        {"title","User"},
                         {"ListRole",db.TB_ROLE.Select(r => new RoleDTO{ ROLE_NAME = r.ROLE_NAME, ROLE_ID = r.ROLE_ID}).ToList() }
 
                     };
@@ -635,14 +636,14 @@ namespace FinalProject.Controllers
             }
         }
 
- //################################################################## Job Position Management ######################################################
+        //################################################################## Job Position Management ######################################################
 
         [Route("master/jobpositionmanagement")]
         public ActionResult JobPositionManagement()
         {
             try
             {
-                using(DBEntities db = new DBEntities())
+                using (DBEntities db = new DBEntities())
                 {
                     List<JobPositionDTO> ListJobPosition = db.TB_JOB_POSITION.Select(j => new JobPositionDTO
                     {
@@ -654,10 +655,10 @@ namespace FinalProject.Controllers
                     //prepare data for show at view
                     ViewBag.DataView = new Dictionary<string, object>()
                     {
-                        {"title","Job Position Management"}
+                        {"title","Job Position"}
                     };
 
-                    return View("JobPositionManagement/index",ListJobPosition);
+                    return View("JobPositionManagement/index", ListJobPosition);
                 }
             }
             catch (Exception)
@@ -715,35 +716,35 @@ namespace FinalProject.Controllers
         {
             //try
             //{
-                using (DBEntities db = new DBEntities())
+            using (DBEntities db = new DBEntities())
+            {
+                if (ModelState.IsValid)
                 {
-                    if (ModelState.IsValid)
+                    TB_JOB_POSITION Tb_Job_Position = db.TB_JOB_POSITION.FirstOrDefault(j => j.JOBPOSITION_ID == DataJobPosition.JOBPOSITION_ID);
+
+                    Tb_Job_Position.JOBPOSITION_NAME = DataJobPosition.JOBPOSITION_NAME;
+                    Tb_Job_Position.JOBPOSITION_NOTE = DataJobPosition.JOBPOSITION_NOTE;
+
+                    //check prosses success or not
+                    if (db.SaveChanges() > 0)
                     {
-                        TB_JOB_POSITION Tb_Job_Position = db.TB_JOB_POSITION.FirstOrDefault(j => j.JOBPOSITION_ID == DataJobPosition.JOBPOSITION_ID);
-
-                        Tb_Job_Position.JOBPOSITION_NAME = DataJobPosition.JOBPOSITION_NAME;
-                        Tb_Job_Position.JOBPOSITION_NOTE = DataJobPosition.JOBPOSITION_NOTE;
-
-                        //check prosses success or not
-                        if (db.SaveChanges() > 0)
-                        {
-                            TempData.Add("message", "New Job Position edit successfully");
-                            TempData.Add("type", "success");
-                            UserLogingUtils.SaveLoggingUserActivity("delete user id " + DataJobPosition.JOBPOSITION_NAME);
-                        }
-
-                        else
-                        {
-                            TempData.Add("message", "Job Position failed to edit");
-                            TempData.Add("type", "danger");
-                        }
-
-                        return Redirect("~/master/jobpositionmanagement");
+                        TempData.Add("message", "New Job Position edit successfully");
+                        TempData.Add("type", "success");
+                        UserLogingUtils.SaveLoggingUserActivity("delete user id " + DataJobPosition.JOBPOSITION_NAME);
                     }
-                    TempData.Add("message", "please complete form edit job position");
-                    TempData.Add("type", "danger");
+
+                    else
+                    {
+                        TempData.Add("message", "Job Position failed to edit");
+                        TempData.Add("type", "danger");
+                    }
+
                     return Redirect("~/master/jobpositionmanagement");
                 }
+                TempData.Add("message", "please complete form edit job position");
+                TempData.Add("type", "danger");
+                return Redirect("~/master/jobpositionmanagement");
+            }
             //}
             //catch (Exception)
             //{
@@ -770,7 +771,7 @@ namespace FinalProject.Controllers
                     TB_JOB_POSITION Tb_Job_Position = db.TB_JOB_POSITION.FirstOrDefault(j => j.JOBPOSITION_ID == JobId);
                     db.TB_JOB_POSITION.Remove(Tb_Job_Position);
 
-                        //check prosses success or not
+                    //check prosses success or not
                     if (db.SaveChanges() > 0)
                     {
                         TempData.Add("message", "New Job Position delete successfully");
@@ -784,7 +785,7 @@ namespace FinalProject.Controllers
                         TempData.Add("type", "danger");
                     }
 
-                        return Redirect("~/master/jobpositionmanagement");
+                    return Redirect("~/master/jobpositionmanagement");
                 }
             }
             catch (Exception)
@@ -793,14 +794,14 @@ namespace FinalProject.Controllers
             }
         }
 
- //################################################################ Skill Management #################################################
+        //################################################################ Skill Management #################################################
 
         [Route("master/skillmanagement")]
         public ActionResult Skill()
         {
             try
             {
-                using(DBEntities db = new DBEntities())
+                using (DBEntities db = new DBEntities())
                 {
                     //prepare data skill
                     List<SkillDTO> ListSkill = db.TB_SKILL.Select(s => new SkillDTO
@@ -811,7 +812,7 @@ namespace FinalProject.Controllers
 
                     ViewBag.DataView = new Dictionary<string, object>()
                     {
-                        {"title","Skill Management" }
+                        {"title","Skill" }
                     };
 
                     return View("SkillManagement/Index", ListSkill);
@@ -917,10 +918,10 @@ namespace FinalProject.Controllers
             {
                 using (DBEntities db = new DBEntities())
                 {
-                    if(id == null)
+                    if (id == null)
                     {
                         return Redirect("~/master/skillmanagement");
-                    } 
+                    }
 
                     //Prepare data table skill and then remove directly while instance data skill
                     int SkillId = Convert.ToInt16(id);
@@ -935,19 +936,19 @@ namespace FinalProject.Controllers
 
                     //check prosses success or not
                     if (db.SaveChanges() > 0)
-                     {
-                            TempData.Add("message", "Skill delete successfully");
-                            TempData.Add("type", "success");
-                            UserLogingUtils.SaveLoggingUserActivity("Delete skill id " + SkillId);
-                     }
+                    {
+                        TempData.Add("message", "Skill delete successfully");
+                        TempData.Add("type", "success");
+                        UserLogingUtils.SaveLoggingUserActivity("Delete skill id " + SkillId);
+                    }
 
-                     else
-                     {
-                            TempData.Add("message", "skill failed to delete");
-                            TempData.Add("type", "danger");
-                     }
+                    else
+                    {
+                        TempData.Add("message", "skill failed to delete");
+                        TempData.Add("type", "danger");
+                    }
 
-                     return Redirect("~/master/skillmanagement");
+                    return Redirect("~/master/skillmanagement");
                 }
             }
             catch (Exception)
@@ -963,11 +964,13 @@ namespace FinalProject.Controllers
         {
             try
             {
-               using(DBEntities db = new DBEntities()){
+                using (DBEntities db = new DBEntities())
+                {
 
                     //prepare daa view by access menu DTO, dto and model wil deffrent structure because for show at view
                     //get data from tb menu, tb user and tb access menu
-                    List<MenuDTO> ListMenu = db.TB_MENU.Select(m => new MenuDTO{
+                    List<MenuDTO> ListMenu = db.TB_MENU.Select(m => new MenuDTO
+                    {
                         MENU_ID = m.MENU_ID,
                         TITLE_MENU = m.TITLE_MENU,
                         LOGO_MENU = m.LOGO_MENU
@@ -982,7 +985,7 @@ namespace FinalProject.Controllers
 
                     //add list for view in viewbag for check box
                     ViewBag.DataView = new Dictionary<string, object>() {
-                        {"title","Role Management"},
+                        {"title","Role"},
                         {"ListMenu", ListMenu}
                     };
 
@@ -1106,7 +1109,7 @@ namespace FinalProject.Controllers
                     }
                     //remove role
                     db.TB_ROLE.Remove(db.TB_ROLE.FirstOrDefault(r => r.ROLE_ID == Role_Id));
-                        //check prosses success or not
+                    //check prosses success or not
                     if (db.SaveChanges() > 0)
                     {
                         TempData.Add("message", "Role delete successfully");
@@ -1135,13 +1138,13 @@ namespace FinalProject.Controllers
         {
             try
             {
-                if(id == null)
+                if (id == null)
                 {
                     return Redirect("~/master/rolemanagement/");
                 }
                 else
                 {
-                    using(DBEntities db = new DBEntities())
+                    using (DBEntities db = new DBEntities())
                     {
                         List<MenuDTO> List_Menu = db.TB_MENU.Select(m => new MenuDTO
                         {
@@ -1153,7 +1156,9 @@ namespace FinalProject.Controllers
                         int RoleId = Convert.ToInt16(id);
                         ViewBag.DataView = new Dictionary<string, object>()
                         {
-                            {"title", "Access Menu Management"},
+                            {"title", "Access Menu" +
+                            "" +
+                            ""},
                             {"RoleId",RoleId},
                             //get data sub menu where menu is candidate (menu id candidate = 7)
                             {"SubMenuCandidate", db.TB_SUBMENU.Select(sm => new SubMenuDTO{
@@ -1191,7 +1196,7 @@ namespace FinalProject.Controllers
         {
             try
             {
-                using(DBEntities db = new DBEntities())
+                using (DBEntities db = new DBEntities())
                 {
                     TB_USER_ACCESS_MENU_CANDIDATE TbAccessMenuCandidate =
                         db.TB_USER_ACCESS_MENU_CANDIDATE.FirstOrDefault(d =>
@@ -1199,9 +1204,10 @@ namespace FinalProject.Controllers
                             d.ROLE_ID == Data.ROLE_ID &&
                             d.ACTION_CANDIDATE_ID == Data.ACTION_CANDIDATE_ID);
 
-                    if(TbAccessMenuCandidate == null)
+                    if (TbAccessMenuCandidate == null)
                     {
-                        db.TB_USER_ACCESS_MENU_CANDIDATE.Add(new TB_USER_ACCESS_MENU_CANDIDATE {
+                        db.TB_USER_ACCESS_MENU_CANDIDATE.Add(new TB_USER_ACCESS_MENU_CANDIDATE
+                        {
                             SUB_MENU_CANDIDATE_ID = Data.SUB_MENU_CANDIDATE_ID,
                             ROLE_ID = Data.ROLE_ID,
                             ACTION_CANDIDATE_ID = Data.ACTION_CANDIDATE_ID
@@ -1211,7 +1217,7 @@ namespace FinalProject.Controllers
                     {
                         db.TB_USER_ACCESS_MENU_CANDIDATE.Remove(TbAccessMenuCandidate);
                     }
-                    
+
                     return db.SaveChanges();
                 }
             }
@@ -1227,26 +1233,26 @@ namespace FinalProject.Controllers
         {
             try
             {
-                    using(DBEntities db = new DBEntities())
+                using (DBEntities db = new DBEntities())
+                {
+                    //check availablity of access menu, delete if already and add if not there ok
+                    TB_ACCESS_MENU Tb_Access_Menu = db.TB_ACCESS_MENU.FirstOrDefault(ac =>
+                        ac.MENU_ID == DataAccess.MENU_ID && ac.ROLE_ID == DataAccess.ROLE_ID
+                    );
+
+                    if (Tb_Access_Menu != null)
                     {
-                        //check availablity of access menu, delete if already and add if not there ok
-                        TB_ACCESS_MENU Tb_Access_Menu = db.TB_ACCESS_MENU.FirstOrDefault(ac =>
-                            ac.MENU_ID == DataAccess.MENU_ID && ac.ROLE_ID == DataAccess.ROLE_ID
-                        );
-                        
-                        if(Tb_Access_Menu != null)
-                        {
-                            db.TB_ACCESS_MENU.Remove(Tb_Access_Menu);
-                        }
-                        else
-                        {
-                            // if data is not already that mean insert deata access
-                            db.TB_ACCESS_MENU.Add(new TB_ACCESS_MENU { ROLE_ID = DataAccess.ROLE_ID, MENU_ID = DataAccess.MENU_ID });
-                        }
-                    
-                
-                        return db.SaveChanges();
+                        db.TB_ACCESS_MENU.Remove(Tb_Access_Menu);
                     }
+                    else
+                    {
+                        // if data is not already that mean insert deata access
+                        db.TB_ACCESS_MENU.Add(new TB_ACCESS_MENU { ROLE_ID = DataAccess.ROLE_ID, MENU_ID = DataAccess.MENU_ID });
+                    }
+
+
+                    return db.SaveChanges();
+                }
             }
             catch (Exception)
             {
@@ -1254,7 +1260,7 @@ namespace FinalProject.Controllers
             }
         }
 
- //########################################################## Sub Menu Management ##############################################################
+        //########################################################## Sub Menu Management ##############################################################
         [Route("master/submenumanagement")]
         public ActionResult SubMenu()
         {
@@ -1262,7 +1268,8 @@ namespace FinalProject.Controllers
             {
                 using (DBEntities db = new DBEntities())
                 {
-                    List<SubMenuDTO> ListSubMenu = db.TB_SUBMENU.Select(sm => new SubMenuDTO {
+                    List<SubMenuDTO> ListSubMenu = db.TB_SUBMENU.Select(sm => new SubMenuDTO
+                    {
                         MENU_ID = sm.MENU_ID,
                         TITLE_SUBMENU = sm.TITLE_SUBMENU,
                         LOGO_SUBMENU = sm.LOGO_SUBMENU,
@@ -1270,17 +1277,17 @@ namespace FinalProject.Controllers
                         SUB_MENU_ID = sm.SUB_MENU_ID,
                         TITLE_MENU = db.TB_MENU.FirstOrDefault(menu => menu.MENU_ID == sm.MENU_ID).TITLE_MENU
                     }).ToList();
-                    
+
                     ViewBag.DataView = new Dictionary<string, object>()
                     {
-                        {"title","Submenu Management"},
+                        {"title","Submenu"},
                         {"ListMenu",db.TB_MENU.Select(m => new MenuDTO{  MENU_ID = m.MENU_ID, TITLE_MENU = m.TITLE_MENU }).ToList() }
                     };
 
-                    return View("SubMenuManagement/Index",ListSubMenu);
-                }    
+                    return View("SubMenuManagement/Index", ListSubMenu);
+                }
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return Redirect("~/auth/error");
             }
@@ -1296,10 +1303,11 @@ namespace FinalProject.Controllers
                 ModelState.Remove("SUB_MENU_ID");
                 if (ModelState.IsValid)
                 {
-                   using(DBEntities db = new DBEntities())
+                    using (DBEntities db = new DBEntities())
                     {
                         //----------------------------------- prepare data new sub menu------------------------------
-                        db.TB_SUBMENU.Add(new TB_SUBMENU {
+                        db.TB_SUBMENU.Add(new TB_SUBMENU
+                        {
                             MENU_ID = DataNewSubMenu.MENU_ID,
                             TITLE_SUBMENU = DataNewSubMenu.TITLE_SUBMENU,
                             LOGO_SUBMENU = DataNewSubMenu.LOGO_SUBMENU,
@@ -1379,7 +1387,7 @@ namespace FinalProject.Controllers
         {
             try
             {
-                if(id == null)
+                if (id == null)
                 {
                     return Redirect("~/master/submenumanagement");
                 }
@@ -1393,7 +1401,7 @@ namespace FinalProject.Controllers
                         int SubMenuId = Convert.ToInt16(id);
                         TB_SUBMENU Tb_SubMenu = db.TB_SUBMENU.FirstOrDefault(sm => sm.SUB_MENU_ID == SubMenuId);
 
-                        if(Tb_SubMenu == null)
+                        if (Tb_SubMenu == null)
                         {
                             return Redirect("~/master/submenumanagement");
                         }
@@ -1430,7 +1438,7 @@ namespace FinalProject.Controllers
         {
             try
             {
-                using(DBEntities db = new DBEntities())
+                using (DBEntities db = new DBEntities())
                 {
 
                     List<MenuDTO> ListMenu = db.TB_MENU.Select(m => new MenuDTO
@@ -1442,7 +1450,7 @@ namespace FinalProject.Controllers
 
                     ViewBag.DataView = new Dictionary<string, object>()
                     {
-                        {"title","Menu Management" }
+                        {"title","Menu" }
                     };
 
                     return View("MenuManagement/Index", ListMenu);
@@ -1454,7 +1462,7 @@ namespace FinalProject.Controllers
                 return Redirect("~/auth/error");
             }
         }
-        
+
 
         //---------------------------------------------------- for edit menu -----------------------------------------------------
         [Route("master/menumanagement/edit")]
@@ -1539,7 +1547,8 @@ namespace FinalProject.Controllers
         [Route("master/menumanagement/delete/{id?}")]
         public ActionResult MenuDelete(string id = null)
         {
-            try  { 
+            try
+            {
                 if (id == null)
                 {
                     return Redirect("~/master/menumanagement");

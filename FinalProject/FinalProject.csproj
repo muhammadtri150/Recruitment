@@ -165,7 +165,6 @@
     <Compile Include="DTO\SubMenuDTO.cs" />
     <Compile Include="DTO\UserAccessMenuCandidateDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
-    <Compile Include="DTO\ZipCodeDTO.cs" />
     <Compile Include="Filters\AuthFilter.cs" />
     <Compile Include="Filters\UserAccessCandidateFilter.cs" />
     <Compile Include="Global.asax.cs">
@@ -240,9 +239,6 @@
     <Compile Include="Models\TB_PREFIX.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TB_PROVINCE.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\TB_RELIGION.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
@@ -268,9 +264,6 @@
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TB_USER_ACCESS_MENU_CANDIDATE.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TB_ZIPCODE.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

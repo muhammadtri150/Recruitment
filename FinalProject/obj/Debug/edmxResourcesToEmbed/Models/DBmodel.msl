@@ -49,7 +49,6 @@
           <ScalarProperty Name="GENDER_ID" ColumnName="GENDER_ID" />
           <ScalarProperty Name="RELIGION_ID" ColumnName="RELIGION_ID" />
           <ScalarProperty Name="CANDIDATE_ETNIC" ColumnName="CANDIDATE_ETNIC" />
-          <ScalarProperty Name="ZIP_CODE" ColumnName="ZIP_CODE" />
           <ScalarProperty Name="PARENT_ADDRESS" ColumnName="PARENT_ADDRESS" />
           <ScalarProperty Name="RESIDENT_CARD_NUMBER" ColumnName="RESIDENT_CARD_NUMBER" />
           <ScalarProperty Name="TELEPHONE_NUMBER" ColumnName="TELEPHONE_NUMBER" />
@@ -58,6 +57,7 @@
           <ScalarProperty Name="CANDIDATE_EMAIL" ColumnName="CANDIDATE_EMAIL" />
           <ScalarProperty Name="CANDIDATE_CITY" ColumnName="CANDIDATE_CITY" />
           <ScalarProperty Name="CANDIDATE_PROVINCE" ColumnName="CANDIDATE_PROVINCE" />
+          <ScalarProperty Name="CANDIDATE_ZIPCODE" ColumnName="CANDIDATE_ZIPCODE" />
           <ScalarProperty Name="CANDIDATE_CURRENT_ADDRESS" ColumnName="CANDIDATE_CURRENT_ADDRESS" />
           <ScalarProperty Name="CANDIDATE_KTP_NUMBER" ColumnName="CANDIDATE_KTP_NUMBER" />
           <ScalarProperty Name="CANDDIATE_NPWP_NUMBER" ColumnName="CANDDIATE_NPWP_NUMBER" />
@@ -223,14 +223,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="TB_PROVINCE">
-      <EntityTypeMapping TypeName="DBModel.TB_PROVINCE">
-        <MappingFragment StoreEntitySet="TB_PROVINCE">
-          <ScalarProperty Name="PROVINCE_ID" ColumnName="PROVINCE_ID" />
-          <ScalarProperty Name="PROVINCE_NAME" ColumnName="PROVINCE_NAME" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="TB_RELIGION">
       <EntityTypeMapping TypeName="DBModel.TB_RELIGION">
         <MappingFragment StoreEntitySet="TB_RELIGION">
@@ -317,18 +309,6 @@
           <ScalarProperty Name="ROLE_ID" ColumnName="ROLE_ID" />
           <ScalarProperty Name="SUB_MENU_CANDIDATE_ID" ColumnName="SUB_MENU_CANDIDATE_ID" />
           <ScalarProperty Name="ACTION_CANDIDATE_ID" ColumnName="ACTION_CANDIDATE_ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="TB_ZIPCODE">
-      <EntityTypeMapping TypeName="DBModel.TB_ZIPCODE">
-        <MappingFragment StoreEntitySet="TB_ZIPCODE">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="kelurahan" ColumnName="kelurahan" />
-          <ScalarProperty Name="kecamatan" ColumnName="kecamatan" />
-          <ScalarProperty Name="kabupaten" ColumnName="kabupaten" />
-          <ScalarProperty Name="provinsi" ColumnName="provinsi" />
-          <ScalarProperty Name="kodepos" ColumnName="kodepos" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

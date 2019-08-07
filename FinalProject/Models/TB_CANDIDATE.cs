@@ -31,15 +31,15 @@ namespace FinalProject.Models
         public Nullable<int> GENDER_ID { get; set; }
         public Nullable<int> RELIGION_ID { get; set; }
         public string CANDIDATE_ETNIC { get; set; }
-        public string ZIP_CODE { get; set; }
         public string PARENT_ADDRESS { get; set; }
         public string RESIDENT_CARD_NUMBER { get; set; }
         public string TELEPHONE_NUMBER { get; set; }
         public string CANDIDATE_HOMENUMBER { get; set; }
         public string CANDIDATE_PHONENUMBER { get; set; }
         public string CANDIDATE_EMAIL { get; set; }
-        public Nullable<int> CANDIDATE_CITY { get; set; }
-        public Nullable<int> CANDIDATE_PROVINCE { get; set; }
+        public string CANDIDATE_CITY { get; set; }
+        public string CANDIDATE_PROVINCE { get; set; }
+        public Nullable<int> CANDIDATE_ZIPCODE { get; set; }
         public string CANDIDATE_CURRENT_ADDRESS { get; set; }
         public string CANDIDATE_KTP_NUMBER { get; set; }
         public string CANDDIATE_NPWP_NUMBER { get; set; }
@@ -63,7 +63,6 @@ namespace FinalProject.Models
         public Nullable<System.DateTime> CANDIDATE_INTERVIEW_DATE { get; set; }
     
         public virtual TB_STATE_CANDIDATE TB_STATE_CANDIDATE { get; set; }
-        public virtual TB_PROVINCE TB_PROVINCE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TB_CANDIDATE_SELECTION_HISTORY> TB_CANDIDATE_SELECTION_HISTORY { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

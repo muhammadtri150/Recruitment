@@ -18,18 +18,27 @@ namespace FinalProject.DTO
         public int ID { get; set; }
         public string CANDIDATE_ID { get; set; }
 
+        [Required(ErrorMessage = "Please Insert Candidate Name")]
         public string CANDIDATE_NAME { get; set; }
 
         public int? CANDIDATE_AGE { get; set; }
+
+        [Required(ErrorMessage = "Please Insert Candidate Birth Date")]
         public System.DateTime? CANDIDATE_BIRTH_DATE { get; set; }
+        [Required(ErrorMessage = "Please Insert Candidate Place Birth")]
         public string CANDIDATE_PLACE_BIRTH { get; set; }
         public string CANDIDATE_ETNIC { get; set; }
-        public string CANDIDATE_HOMENUMBER { get; set; }
         public string PARENT_ADDRESS { get; set; }
         public string RESIDENT_CARD_NUMBER { get; set; }
+        [StringLength(14, ErrorMessage = "The Numbers Must Not Exceed 14 and Not Less Than 8 ")] 
         public string TELEPHONE_NUMBER { get; set; }
+        [Required(ErrorMessage = "Please Insert Telephone Number")]
+        [StringLength(14, ErrorMessage = "The Numbers Must Not Exceed 14 and Not Less Than 12 ")]
         public string CANDIDATE_PHONENUMBER { get; set; }
+        [Required(ErrorMessage = "Please Insert Email")]
+        [EmailAddress(ErrorMessage = "Please Insert The Correct Email")]
         public string CANDIDATE_EMAIL { get; set; }
+        [Required(ErrorMessage = "Please Insert Skill")]
         public List<string> CANDIDATE_SKILL { get; set; }
         public string SUITABLE_POSITION { get; set; }
         public int? AGE { get; set; }
@@ -40,11 +49,14 @@ namespace FinalProject.DTO
         public string RECOMENDATION { get; set; }
         public decimal?  EXPECTED_sALARY { get; set; }
         public string  NOTES { get; set; }
+        [Required(ErrorMessage = "Please Insert Position")]
         public string  POSITION { get; set; }
 
 
 
+        [Required(ErrorMessage = "Please Insert Current Address")]
         public string CANDIDATE_CURRENT_ADDRESS { get; set; }
+        [Required(ErrorMessage = "Please Insert ID Card Number")]
         public string CANDIDATE_KTP_NUMBER { get; set; }
         public string CANDDIATE_NPWP_NUMBER { get; set; }
         public string CANDIDATE_CV { get; set; }
@@ -67,19 +79,26 @@ namespace FinalProject.DTO
         public string RELIGION { get; set; }
 
         //data address
-        public int? CANDIDATE_CITY { get; set; }
-        public string CANDIDATE_CITY_NAME { get; set; }
-        public int? CANDIDATE_PROVINCE { get; set; }
-        public string CANDIDATE_PROVINCE_NAME { get; set; }
-        public string ZIP_CODE { get; set; }
+        [Required(ErrorMessage = "Please Insert City of Candidate")]
+        public string CANDIDATE_CITY { get; set; }
+        [Required(ErrorMessage = "Please Insert Province of City of Candidate")]
+        public string CANDIDATE_PROVINCE { get; set; }
+        [Required(ErrorMessage = "Please Insert Zipcode")]
+        public int? ZIP_CODE { get; set; }
 
 
         //data education candidate
+        [Required(ErrorMessage = "Please Insert Last Education of Candidate")]
         public string CANDIDATE_LAST_EDUCATON { get; set; }
+        [Required(ErrorMessage = "Please Insert GPA")]
         public double? CANDIDATE_GPA { get; set; }
+        [Required(ErrorMessage = "Please Insert Major")]
         public string CANDIDATE_MAJOR { get; set; }
+        [Required(ErrorMessage = "Please Insert Degree")]
         public string CANDIDATE_DEGREE { get; set; }
+        [Required(ErrorMessage = "Please Select Start Date")]
         public System.DateTime? EDUCATON_START_DATE { get; set; }
+        [Required(ErrorMessage = "Please Select End Date")]
         public System.DateTime? EDUCATON_END_DATE { get; set; }
 
         //data state
@@ -139,7 +158,6 @@ namespace FinalProject.DTO
                     GENDER_ID = DataNewCandidate.GENDER_ID,
                     RELIGION_ID = DataNewCandidate.RELIGION_ID,
                     CANDIDATE_ETNIC = DataNewCandidate.CANDIDATE_ETNIC,
-                    CANDIDATE_HOMENUMBER = DataNewCandidate.CANDIDATE_HOMENUMBER,
                     CANDIDATE_PHONENUMBER = DataNewCandidate.CANDIDATE_PHONENUMBER,
                     CANDIDATE_EMAIL = DataNewCandidate.CANDIDATE_EMAIL,
                     CANDIDATE_CITY = DataNewCandidate.CANDIDATE_CITY,
@@ -156,7 +174,7 @@ namespace FinalProject.DTO
                     CANDIDATE_STATE_ID = 1,
                     SOURCE = DataNewCandidate.SOURCE,
                     SOURCING_DATE = DateTime.Now,
-                    ZIP_CODE = DataNewCandidate.ZIP_CODE,
+                    CANDIDATE_ZIPCODE = DataNewCandidate.ZIP_CODE,
                     PARENT_ADDRESS = DataNewCandidate.PARENT_ADDRESS,
                     RESIDENT_CARD_NUMBER = DataNewCandidate.RESIDENT_CARD_NUMBER,
                     TELEPHONE_NUMBER = DataNewCandidate.TELEPHONE_NUMBER,
@@ -271,7 +289,6 @@ namespace FinalProject.DTO
                 Candidate.GENDER_ID = Data.GENDER_ID;
                 Candidate.RELIGION_ID = Data.RELIGION_ID;
                 Candidate.CANDIDATE_ETNIC = Data.CANDIDATE_ETNIC;
-                Candidate.CANDIDATE_HOMENUMBER = Data.CANDIDATE_HOMENUMBER;
                 Candidate.CANDIDATE_PHONENUMBER = Data.CANDIDATE_PHONENUMBER;
                 Candidate.CANDIDATE_EMAIL = Data.CANDIDATE_EMAIL;
                 Candidate.CANDIDATE_CITY = Data.CANDIDATE_CITY;
@@ -289,7 +306,7 @@ namespace FinalProject.DTO
                 Candidate.CANDIDATE_STATE_ID = Data.CANDIDATE_STATE_ID;
                 Candidate.SOURCE = Data.SOURCE;
                 Candidate.SOURCING_DATE = DateTime.Now;
-                Candidate.ZIP_CODE = Data.ZIP_CODE;
+                Candidate.CANDIDATE_ZIPCODE = Data.ZIP_CODE;
                 Candidate.PARENT_ADDRESS = Data.PARENT_ADDRESS;
                 Candidate.RESIDENT_CARD_NUMBER = Data.RESIDENT_CARD_NUMBER;
                 Candidate.TELEPHONE_NUMBER = Data.TELEPHONE_NUMBER;
@@ -341,7 +358,6 @@ namespace FinalProject.DTO
                     GENDER_ID = ca.GENDER_ID,
                     RELIGION_ID = ca.RELIGION_ID,
                     CANDIDATE_ETNIC = ca.CANDIDATE_ETNIC,
-                    CANDIDATE_HOMENUMBER = ca.CANDIDATE_HOMENUMBER,
                     CANDIDATE_PHONENUMBER = ca.CANDIDATE_PHONENUMBER,
                     CANDIDATE_EMAIL = ca.CANDIDATE_EMAIL,
                     CANDIDATE_CITY = ca.CANDIDATE_CITY,
@@ -358,7 +374,7 @@ namespace FinalProject.DTO
                     CANDIDATE_STATE_ID = ca.CANDIDATE_STATE_ID,
                     SOURCE = ca.SOURCE,
                     SOURCING_DATE = ca.SOURCING_DATE,
-                    ZIP_CODE = ca.ZIP_CODE,
+                    ZIP_CODE = ca.CANDIDATE_ZIPCODE,
                     PARENT_ADDRESS = ca.PARENT_ADDRESS,
                     RESIDENT_CARD_NUMBER = ca.RESIDENT_CARD_NUMBER,
                     TELEPHONE_NUMBER = ca.TELEPHONE_NUMBER,
