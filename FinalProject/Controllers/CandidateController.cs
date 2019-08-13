@@ -142,9 +142,9 @@ namespace FinalProject.Controllers
         [Route("candidate/praselection/read/detailcandidate/{id?}")]
         public ActionResult DetailCandidate(string id = null)
         {
-            //try
-            //{
-            using (DBEntities db = new DBEntities())
+            try
+            {
+                using (DBEntities db = new DBEntities())
             {
                 if (id == null) return Redirect("~/candidate/praselection");
 
@@ -162,11 +162,11 @@ namespace FinalProject.Controllers
                 return View("Preselection/DetailCandidate", DataDetail);
             }
 
-            //}
-            //catch (Exception)
-            //{
-            //    return Redirect("~/auth/error");
-            //}
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
         }
 
         //-------------------------------------------------- PROCESS ADD NEW CANDIDATE --------------------------------------
@@ -377,7 +377,7 @@ namespace FinalProject.Controllers
                             TempData.Add("message", "Candidate job experience failed to edit");
                             TempData.Add("type", "warning");
                         }
-                        return Redirect("~/candidate/praselection/edit/jobExp/" + NewJobExp.ID);
+                        return Redirect("~/candidate/praselection/read/detailcandidate/" + NewJobExp.CANDIDATE_ID);
                     }
                 }
 
@@ -534,10 +534,10 @@ namespace FinalProject.Controllers
         [Route("candidate/call/update/next/process")]
         public ActionResult CandidateCallNext(CandidateDTO Data, HttpPostedFileBase Pict = null, HttpPostedFileBase Cv = null)
         {
-            //try
-            //{
-            if (ModelState.IsValid)
+            try
             {
+                if (ModelState.IsValid)
+                {
                 int ProcessEdit;
 
                 var state = Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(c => c.ID == Data.ID).CANDIDATE_STATE_ID;
@@ -574,6 +574,7 @@ namespace FinalProject.Controllers
 
                 Manage_CandidateSelectionHistoryDTO.EditData(new CandidateSelectionHistoryDTO
                 {
+                    
                     CANDIDATE_ID = Data.ID,
                     CANDIDATE_STATE = Data.CANDIDATE_STATE_ID,
                     NOTES = Data.NOTES,
@@ -609,11 +610,11 @@ namespace FinalProject.Controllers
                     {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 8 ||  d.ID == 2).ToList() }
                 };
             return View("Call/EditCandidateCall", DataCandidate);
-            //}
-            //catch
-            //{
-            //    return Redirect("~/auth/error");
-            //}
+            }
+            catch
+            {
+                return Redirect("~/auth/error");
+            }
         }
 
         //------------------------------------------------- View for candidate !!! CALLED !!! ---------------------------------------------
@@ -741,12 +742,24 @@ namespace FinalProject.Controllers
         [Route("candidate/call/update/called/next/process")]
         public ActionResult CandidateCalledNext(CandidateDTO Data, HttpPostedFileBase Pict = null, HttpPostedFileBase Cv = null)
         {
-            //try
-            //{
-            if (ModelState.IsValid)
+            try
             {
-                Data.CANDIDATE_INTERVIEW_DATE = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().FirstOrDefault(d => d.CANDIDATE_STATE == 8 && d.CANDIDATE_ID == Data.ID).CANDIDATE_INTERVIEW_DATE;
+                if (ModelState.IsValid)
+            {
                 var ProcessEdit = Manage_CandidateDTO.EditCandidate(Data, Pict, Cv);
+
+                Manage_CandidateSelectionHistoryDTO.EditData(new CandidateSelectionHistoryDTO
+                {
+                    CANDIDATE_ID = Data.ID,
+                    CANDIDATE_STATE = Data.CANDIDATE_STATE_ID,
+                    NOTES = Data.NOTES,
+                    CANDIDATE_SOURCE = Data.SOURCE,
+                    CANDIDATE_INTERVIEW_DATE = Data.CANDIDATE_INTERVIEW_DATE,
+                    CANDIDATE_APPLIED_POSITION = Data.POSITION,
+                    CANDIDATE_SUITABLE_POSITION = Data.SUITABLE_POSITION,
+                    CANDIDATE_EXPECTED_SALARY = Data.EXPECTED_sALARY
+                });
+
 
                 if (ProcessEdit > 0)
                 {
@@ -772,11 +785,11 @@ namespace FinalProject.Controllers
                 };
 
             return View("Call/EditCandidateCalled", DataCandidate);
-            //}
-            //catch
-            //{
-            //    return Redirect("~/auth/error");
-            //}
+            }
+            catch
+            {
+                return Redirect("~/auth/error");
+            }
         }
 
 
@@ -915,9 +928,9 @@ namespace FinalProject.Controllers
         [Route("candidate/interview/update/next/process")]
         public ActionResult CandidateInterviewNext(CandidateDTO Data, HttpPostedFileBase Pict = null, HttpPostedFileBase Cv = null)
         {
-            //try
-            //{
-            if (ModelState.IsValid)
+            try
+            {
+                if (ModelState.IsValid)
             {
 
                 int ProcessEdit;
@@ -970,8 +983,11 @@ namespace FinalProject.Controllers
 
                 if (ProcessEdit > 0)
                 {
-                    TempData.Add("message", "Candidate Update successfully");
-                    TempData.Add("type", "success");
+                    if(TempData["message"] != null) {
+                        TempData.Add("message", "Candidate Update successfully");
+                        TempData.Add("type", "success");
+                    }
+                    
                     UserLogingUtils.SaveLoggingUserActivity("Edit Candidate" + Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID));
                     if (Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(c => c.ID == Data.ID).CANDIDATE_STATE_ID != Data.CANDIDATE_STATE_ID)
                     {
@@ -1000,11 +1016,11 @@ namespace FinalProject.Controllers
             //TempData.Add("message", "Candidate failed to Update, please complete form edit");
             //TempData.Add("type", "danger");
             return View("Interview/EditCandidateInterview", DataCandidate);
-            //}
-            //catch
-            //{
-            //    return Redirect("~/auth/error");
-            //}
+            }
+            catch
+            {
+                return Redirect("~/auth/error");
+            }
         }
 
 
@@ -1286,9 +1302,9 @@ namespace FinalProject.Controllers
         [Route("candidate/delivery/create/next")]
         public ActionResult DeliveryNext(DeliveryHistoryDTO data)
         {
-            // try
-            //{
-            using (DBEntities db = new DBEntities())
+            try
+            {
+                using (DBEntities db = new DBEntities())
             {
                 var Candidate = db.TB_CANDIDATE.FirstOrDefault(c => c.ID == data.CANDIDATE_ID);
                 Candidate.CANDIDATE_STATE_ID = 6;
@@ -1324,11 +1340,11 @@ namespace FinalProject.Controllers
                 UserLogingUtils.SaveLoggingUserActivity("edit suggest state of candidate id " + data.CANDIDATE_ID);
                 return Redirect("~/candidate/delivery/read/suggest");
             }
-            //}
-            //catch (Exception)
-            //{
-            //   return Redirect("~/auth/error");
-            //}
+            }
+            catch (Exception)
+            {
+               return Redirect("~/auth/error");
+            }
         }
 
         //=========================================================== SUGGEST CANDIDATE ==========================================================

@@ -1,0 +1,179 @@
+﻿@model IEnumerable<FinalProject.DTO.UserDTO>
+@using FinalProject.DTO
+@section title{
+
+    @ViewBag.DataView["title"]
+
+}
+
+@section content{
+
+    <h2><center>Master      |      User Management</center></h2>
+    <hr class="bg-blue" />
+
+    @if (!Html.ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-warning alert-dismissible fade show " role="alert">
+            @Html.ValidationSummary()
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+
+
+    <div class="container">
+        <!-- Button trigger modal add user-->
+        <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#AddUser">
+            Add User
+        </button>
+
+        @if (TempData.Peek("message") != null)
+        {
+            <div class="alert alert-@TempData["type"] alert-dismissible fade show " role="alert">
+                @TempData["message"]
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">User Full Name</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">User Password</th>
+                    <th scope="col">User Role</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var User in Model)
+                {
+                    <tr>
+                        <td>@User.FULL_NAME</td>
+                        <td>@User.USERNAME</td>
+                        <td>@User.PASSWORD.Substring(0, 10)</td>
+                        <td>@User.ROLE_NAME</td>
+                        <td>
+                            <button type="button" class="btn btn-edit" data-toggle="modal" data-target="#EditUser"
+                                    data-user_id="@User.USER_ID"
+                                    data-user_full_name="@User.FULL_NAME"
+                                    data-user_name="@User.USERNAME"
+                                    data-user_role_id="@User.ROLE_ID"
+                                    data-user_role_name="@User.ROLE_NAME"
+                                    data-user_password="@User.PASSWORD">
+                                <i class="fas fa-pencil-alt m-3"></i>
+                            </button>
+                            <a onclick="return confirm('Are you sure to delete this user ?')" href="~/master/usermanagement/delete/@User.USER_ID"><i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal add User -->
+    <div class="modal fade" id="AddUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Add New User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="~/master/usermanagement/add" method="post">
+                        <div class="form-group">
+                            <label for="FULL_NAME">User Full Name</label>
+                            <input type="text" class="form-control" id="FULL_NAME" name="FULL_NAME">
+                        </div>
+                        <div class="form-group">
+                            <label for="USERNAME">Username</label>
+                            <input type="text" class="form-control" id="USERNAME " name="USERNAME">
+                        </div>
+                        <div class="form-group">
+                            <label for="PASSWORD ">Password </label>
+                            <input type="password" class="form-control" id="PASSWORD " name="PASSWORD">
+                        </div>
+                        <div class="form-group">
+                            <label for="CONFIRM_PASSWORD ">Confirmation Password</label>
+                            <input type="password" class="form-control" id="CONFIRM_PASSWORD " name="CONFIRM_PASSWORD">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Role</label>
+                            <select class="form-control" id="exampleFormControlSelect1" name="ROLE_ID">
+                                @foreach (var role in ViewBag.DataView["ListRole"])
+                                {
+                                    <option value="@role.ROLE_ID">@role.ROLE_NAME</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Modal edit User -->
+    <div class="modal fade" id="EditUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Edit User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="~/master/usermanagement/edit" method="post">
+                        <input type="hidden" id="EDIT_USER_ID" name="USER_ID" />
+                        <div class="form-group">
+                            <label for="Edit_FULL_NAME">User Full Name</label>
+                            <input type="text" class="form-control" id="Edit_FULL_NAME" name="FULL_NAME">
+                        </div>
+                        <div class="form-group">
+                            <label for="Edit_USERNAME">Username</label>
+                            <input type="text" class="form-control" id="Edit_USERNAME" name="USERNAME">
+                        </div>
+                        <div class="form-group">
+                            <label for="Edit_PASSWORD ">Password </label>
+                            <input type="password" class="form-control" id="Edit_PASSWORD" name="PASSWORD">
+                        </div>
+                        <div class="form-group">
+                            <label for="Edit_CONFIRM_PASSWORD ">Confirmation Password</label>
+                            <input type="password" class="form-control" id="Edit_CONFIRM_PASSWORD" name="CONFIRM_PASSWORD">
+                        </div>
+                        <div class="form-group">
+                            <label for="Edit_ROLE">Role</label>
+                            <select class="form-control" id="Edit_ROLE" name="ROLE_ID">
+                                @foreach (var role in ViewBag.DataView["ListRole"])
+                                {
+                                    <option value="@role.ROLE_ID" class="OptionRole">@role.ROLE_NAME</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/Assets/Js/master/User/EditUser.js"></script>
+}
+
+

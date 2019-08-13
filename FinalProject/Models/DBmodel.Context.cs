@@ -34,7 +34,6 @@ namespace FinalProject.Models
         public virtual DbSet<TB_CANDIDATE_JOB_EXPERIENCE> TB_CANDIDATE_JOB_EXPERIENCE { get; set; }
         public virtual DbSet<TB_CANDIDATE_SELECTION_HISTORY> TB_CANDIDATE_SELECTION_HISTORY { get; set; }
         public virtual DbSet<TB_CANDIDATE_SKILL> TB_CANDIDATE_SKILL { get; set; }
-        public virtual DbSet<TB_CITY> TB_CITY { get; set; }
         public virtual DbSet<TB_CLIENT> TB_CLIENT { get; set; }
         public virtual DbSet<TB_DELIVERY_HISTORY> TB_DELIVERY_HISTORY { get; set; }
         public virtual DbSet<TB_GENDER> TB_GENDER { get; set; }
@@ -44,7 +43,6 @@ namespace FinalProject.Models
         public virtual DbSet<TB_MENU> TB_MENU { get; set; }
         public virtual DbSet<TB_RELIGION> TB_RELIGION { get; set; }
         public virtual DbSet<TB_ROLE> TB_ROLE { get; set; }
-        public virtual DbSet<TB_SELECTION_HISTORY> TB_SELECTION_HISTORY { get; set; }
         public virtual DbSet<TB_SKILL> TB_SKILL { get; set; }
         public virtual DbSet<TB_SKILL_JOB_EXPERIENCE> TB_SKILL_JOB_EXPERIENCE { get; set; }
         public virtual DbSet<TB_STATE_CANDIDATE> TB_STATE_CANDIDATE { get; set; }
