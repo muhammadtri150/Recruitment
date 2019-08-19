@@ -150,7 +150,8 @@
                         <thead class="table-primary">
                             <tr>
                                 <th scope="col">Nama</th>
-                                <th scope="col">Potition</th>
+                                <th scope="col">Applied Position</th>
+                                <th scope="col">Suitable Position</th>
                                 <th>Source</th>
                                 <th>Number</th>
                                 <th>Email</th>
@@ -165,6 +166,7 @@
                             {
                                 <tr>
                                     <td>@candidate.CANDIDATE_NAME</td>
+                                    <td>@candidate.CANDIDATE_APPLIED_POSITION</td>
                                     <td>@candidate.CANDIDATE_SUITABLE_POSITION</td>
                                     <td>@candidate.CANDIDATE_SOURCE</td>
                                     <td>@candidate.CANDIDATE_PHONE</td>
@@ -189,7 +191,7 @@
                         <ul class="pagination">
                             @for (int i = 1; i <= Convert.ToInt16(ViewBag.DataView["PageCount"]); i++)
                             {
-                                if (length <= 7)
+                                if (length <= 8)
                                 {
                                     if (i == 1)
                                     {

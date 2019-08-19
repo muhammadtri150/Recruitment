@@ -15,11 +15,10 @@
     <title>@RenderSection("title", required: false)</title>
     <script src="~/Content/Vendor/bootstrap/js/jquery.js"></script>
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-    <link href="/Content/Vendor/sbadmin2/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="~/Content/Vendor/bootstrap/css/bootstrap.min.css" />
-
+    <link href="~/Content/Vendor/sbadmin2/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <link href="~/Content/Vendor/sbadmin2/vendor/fontawesome-free/css/fontawesome.min.css" rel="stylesheet" />
     <!-- Custom styles for this template-->
     <link href="~/Content/Vendor/sbadmin2/css/sb-admin-2.min.css" rel="stylesheet">
 
@@ -51,7 +50,7 @@
                 titleDashboard = titleDashboard.ToLower();}*@
 
             <li class="nav-item ">
-                <a class="nav-link" href="/dashboard">
+                <a class="nav-link" href="/adp/dashboard">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span>
                 </a>
@@ -168,8 +167,8 @@
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
-                                <div class="dropdown-divider"></div>
                             </div>
+
                         </li>
 
                     </ul>
@@ -255,4 +254,3 @@
 </body>
 
 </html>
-    }

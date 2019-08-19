@@ -93,7 +93,6 @@
                                 <th scope="col">Delivery Date</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Delivery PIC</th>
-                                <th scope="col">Interview Date</th>
                                 <th scope="col">State</th>
                                 <th scope="col">Last Edit By</th>
                                 <th scope="col">Last Edit Date</th>
@@ -114,7 +113,6 @@
                                     <td>@Manage_DeliveryHistoryDTO.GetData().FirstOrDefault(m => m.CANDIDATE_ID == candidate.CANDIDATE_ID).START_DATE</td>
                                     <td>@candidate.CANDIDATE_EMAIL</td>
                                     <td>@Manage_UserDTO.GetDataUser().FirstOrDefault(usr => usr.USER_ID == Manage_DeliveryHistoryDTO.GetData().OrderByDescending(de => de.START_DATE).FirstOrDefault(de => de.CANDIDATE_ID == candidate.CANDIDATE_ID).LAST_PIC).FULL_NAME</td>
-                                    <td>@candidate.CANDIDATE_INTERVIEW_DATE</td>
                                     <td>@candidate.CANDIDATE_STATE_NAME</td>
                                     <td>@Manage_UserDTO.GetDataUser().FirstOrDefault(usr => usr.USER_ID == UserLogingUtils.GetLogUser().OrderByDescending(log => log.Time).FirstOrDefault(log => log.Notes == "edit suggest state of candidate id " + candidate.CANDIDATE_ID).USER_ID).FULL_NAME</td>
                                     <td> @Convert.ToDateTime(UserLogingUtils.GetLogUser().FirstOrDefault(log => log.Notes == "edit suggest state of candidate id " + candidate.CANDIDATE_ID).Time).ToString("dd/MM/yyyy")</td>
@@ -145,7 +143,7 @@
                         <ul class="pagination">
                             @for (int i = 1; i <= Convert.ToInt16(ViewBag.DataView["PageCount"]); i++)
                             {
-                                if (length <= 7)
+                                if (length <= 8)
                                 {
                                     if (i == 1)
                                     {

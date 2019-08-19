@@ -32,9 +32,10 @@ namespace FinalProject.DTO
         // for get entre data of candidate table
         public static List<CandidateJobExperienceDTO> GetData()
         {
-            using(DBEntities db = new DBEntities())
+            using (DBEntities db = new DBEntities())
             {
-                return db.TB_CANDIDATE_JOB_EXPERIENCE.Select(j => new CandidateJobExperienceDTO {
+                return db.TB_CANDIDATE_JOB_EXPERIENCE.Select(j => new CandidateJobExperienceDTO
+                {
                     CANDIDATE_ID = j.CANDIDATE_ID,
                     ID = j.ID,
                     COMPANY_NAME = j.COMPANY_NAME,
@@ -48,12 +49,12 @@ namespace FinalProject.DTO
                     PROJECT = j.PROJCT
                 }).ToList();
             }
-        } 
+        }
 
         //for get benefit in array format, will split the benefit base on ','
         public static List<string> GetBenefit(int id)
         {
-            using(DBEntities db = new DBEntities())
+            using (DBEntities db = new DBEntities())
             {
                 return db.TB_BENEFIT_JOB_EXPERIENCE.Where(d => d.JOB_EXP_ID == id).Select(d => d.BENEFIT).ToList();
             }
@@ -62,84 +63,84 @@ namespace FinalProject.DTO
         //for get benefit in array format, will split the benefit base on ','
         public static List<string> GetSkillName(int id)
         {
-            using(DBEntities db = new DBEntities())
+            using (DBEntities db = new DBEntities())
             {
-                return db.TB_SKILL_JOB_EXPERIENCE.Where(d => d.ID_JOBEXP == id).Select(d => d.SKILL_NAME).ToList(); 
+                return db.TB_SKILL_JOB_EXPERIENCE.Where(d => d.ID_JOBEXP == id).Select(d => d.SKILL_NAME).ToList();
             }
         }
 
         //for add new job experience of candidate
         public static int AddData(CandidateJobExperienceDTO NewJobExp)
         {
-            using(DBEntities db = new DBEntities())
+            using (DBEntities db = new DBEntities())
             {
                 db.TB_CANDIDATE_JOB_EXPERIENCE.Add(new TB_CANDIDATE_JOB_EXPERIENCE
                 {
-                    CANDIDATE_ID        = NewJobExp.CANDIDATE_ID,
-                    INDUSTRIES          = NewJobExp.INDUSTRIES,
-                    CANDIDATE_POSITION  = NewJobExp.CANDIDATE_POSITION,
-                    START_DATE          = NewJobExp.START_DATE,
-                    END_DATE            = NewJobExp.END_DATE,
-                    CURRENT_SALARY      = NewJobExp.CURRENT_SALARY,
-                    JOBDESC             = NewJobExp.JOBDESC,
-                    BENEFIT             = NewJobExp.BENEFIT,
-                    COMPANY_NAME        = NewJobExp.COMPANY_NAME,
-                    PROJCT              = NewJobExp.PROJECT,
-                    SKILL_NAME          = NewJobExp.SKILL_NAME
+                    CANDIDATE_ID = NewJobExp.CANDIDATE_ID,
+                    INDUSTRIES = NewJobExp.INDUSTRIES,
+                    CANDIDATE_POSITION = NewJobExp.CANDIDATE_POSITION,
+                    START_DATE = NewJobExp.START_DATE,
+                    END_DATE = NewJobExp.END_DATE,
+                    CURRENT_SALARY = NewJobExp.CURRENT_SALARY,
+                    JOBDESC = NewJobExp.JOBDESC,
+                    BENEFIT = NewJobExp.BENEFIT,
+                    COMPANY_NAME = NewJobExp.COMPANY_NAME,
+                    PROJCT = NewJobExp.PROJECT,
+                    SKILL_NAME = NewJobExp.SKILL_NAME
                 });
 
 
-                    if ((NewJobExp.SKILL_NAME != null && NewJobExp.SKILL_NAME != "") || (NewJobExp.BENEFIT != null && NewJobExp.BENEFIT != ""))
+                if ((NewJobExp.SKILL_NAME != null && NewJobExp.SKILL_NAME != "") || (NewJobExp.BENEFIT != null && NewJobExp.BENEFIT != ""))
+                {
+                    TB_CANDIDATE_JOB_EXPERIENCE DataJobExp = db.TB_CANDIDATE_JOB_EXPERIENCE.FirstOrDefault(d =>
+                    d.CANDIDATE_ID == NewJobExp.CANDIDATE_ID &&
+                    d.COMPANY_NAME == NewJobExp.COMPANY_NAME);
+
+                    string[] Skills = NewJobExp.SKILL_NAME.Split(',');
+                    string[] Benefits = NewJobExp.BENEFIT.Split(',');
+
+                    if (Skills.Length > 1)
                     {
-                        TB_CANDIDATE_JOB_EXPERIENCE DataJobExp = db.TB_CANDIDATE_JOB_EXPERIENCE.FirstOrDefault(d =>
-                        d.CANDIDATE_ID == NewJobExp.CANDIDATE_ID &&
-                        d.COMPANY_NAME == NewJobExp.COMPANY_NAME);
-
-                        string[] Skills = NewJobExp.SKILL_NAME.Split(',');
-                        string[] Benefits = NewJobExp.BENEFIT.Split(',');
-
-                        if (Skills.Length > 1)
-                        {
-                            foreach (string skill in Skills)
-                            {
-                                db.TB_SKILL_JOB_EXPERIENCE.Add(new TB_SKILL_JOB_EXPERIENCE
-                                {
-                                    ID_JOBEXP = DataJobExp.ID,
-                                    SKILL_NAME = skill
-                                });
-                            }
-                        }
-                        if (Skills.Length == 0)
+                        foreach (string skill in Skills)
                         {
                             db.TB_SKILL_JOB_EXPERIENCE.Add(new TB_SKILL_JOB_EXPERIENCE
                             {
                                 ID_JOBEXP = DataJobExp.ID,
-                                SKILL_NAME = DataJobExp.SKILL_NAME
+                                SKILL_NAME = skill
                             });
                         }
-                        if (Benefits.Length > 1)
+                    }
+                    if (Skills.Length == 0)
+                    {
+                        db.TB_SKILL_JOB_EXPERIENCE.Add(new TB_SKILL_JOB_EXPERIENCE
                         {
-                            foreach (string benefit in Benefits)
-                            {
-                                db.TB_BENEFIT_JOB_EXPERIENCE.Add(new TB_BENEFIT_JOB_EXPERIENCE
-                                {
-                                    JOB_EXP_ID = DataJobExp.ID,
-                                    BENEFIT = benefit
-                                });
-                            }
-                        }
-                        if (Benefits.Length == 0)
+                            ID_JOBEXP = DataJobExp.ID,
+                            SKILL_NAME = DataJobExp.SKILL_NAME
+                        });
+                    }
+                    if (Benefits.Length > 1)
+                    {
+                        foreach (string benefit in Benefits)
                         {
                             db.TB_BENEFIT_JOB_EXPERIENCE.Add(new TB_BENEFIT_JOB_EXPERIENCE
                             {
                                 JOB_EXP_ID = DataJobExp.ID,
-                                BENEFIT = DataJobExp.BENEFIT
+                                BENEFIT = benefit
                             });
                         }
                     }
+                    if (Benefits.Length == 0)
+                    {
+                        db.TB_BENEFIT_JOB_EXPERIENCE.Add(new TB_BENEFIT_JOB_EXPERIENCE
+                        {
+                            JOB_EXP_ID = DataJobExp.ID,
+                            BENEFIT = DataJobExp.BENEFIT
+                        });
+                    }
+                }
                 return db.SaveChanges();
             }
-            
+
         }
 
         //edit job experience
@@ -150,7 +151,7 @@ namespace FinalProject.DTO
             {
                 int result = 0;
                 TB_CANDIDATE_JOB_EXPERIENCE DataJob = db.TB_CANDIDATE_JOB_EXPERIENCE.FirstOrDefault(d => d.ID == Data.ID);
-                if(DataJob != null)
+                if (DataJob != null)
                 {
                     DataJob.INDUSTRIES = Data.INDUSTRIES;
                     DataJob.CANDIDATE_POSITION = Data.CANDIDATE_POSITION;

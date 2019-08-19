@@ -82,3 +82,4 @@ C:\Users\Ace\3D Objects\fp2\FinalProject\obj\Release\FinalProject.csproj.CopyCom
 C:\Users\Ace\3D Objects\fp2\FinalProject\obj\Release\FinalProject.dll
 C:\Users\Ace\3D Objects\fp2\FinalProject\obj\Release\FinalProject.pdb
 C:\Users\Ace\3D Objects\fp2\FinalProject\obj\Release\FinalProject.csprojAssemblyReference.cache
+C:\Users\Ace\3D Objects\fp2\FinalProject\bin\Views\Auth\404.cshtml

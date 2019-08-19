@@ -8,6 +8,7 @@ using FinalProject.DTO;
 using FinalProject.Filters;
 using FinalProject.Utils;
 using FinalProject.Models;
+using System.Configuration;
 
 namespace FinalProject.Controllers
 {
@@ -28,9 +29,9 @@ namespace FinalProject.Controllers
         [Route("candidate/praselection/read/{i?}")]
         public ActionResult CandidatePreselection(string i = null)
         {
-            try
-            {
-                //---------------------------- prepare data candidate for show in view --------------
+            //try
+            //{
+            //    //---------------------------- prepare data candidate for show in view --------------
                 //note : data candidate from class Manage_CandidateSelectionHistoryDTO method GetDataSelectionHistory
                 //not  : data in this view especialy for candidate where state_id is 1,10 or 11 (state in step preselection)
 
@@ -110,11 +111,11 @@ namespace FinalProject.Controllers
                     };
                 //return view
                 return View("Preselection/Index", ListCandidate);
-            }
-            catch (Exception)
-            {
-                return Redirect("~/auth/error");
-            }
+            //}
+            //catch (Exception)
+            //{
+            //    return Redirect("~/auth/error");
+            //}
         }
 
         //----------------------------------------------------------- view form add new candidate -----------------------------------------
@@ -182,15 +183,21 @@ namespace FinalProject.Controllers
 
                     if (Convert.ToInt16(ProcessAdd[0]) > 0)
                     {
+                        if(TempData["message"] == null)
+                        {
                         TempData.Add("message", "New Candidate added successfully");
                         TempData.Add("type", "success");
 
                         UserLogingUtils.SaveLoggingUserActivity("add new Candidate" + Convert.ToString(ProcessAdd[1]));
+                        }
                     }
                     else
                     {
-                        TempData.Add("message", "New Candidate failed to add");
-                        TempData.Add("type", "warning");
+                        if (TempData["message"] == null)
+                        {
+                            TempData.Add("message", "New Candidate failed to add");
+                            TempData.Add("type", "warning");
+                        }
                     }
                     return Redirect("~/candidate/praselection/read");
                 }
@@ -200,9 +207,10 @@ namespace FinalProject.Controllers
                     };
                 return View("Preselection/AddCandidate");
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return Redirect("~/auth/error");
+                string msg = e.Message.Replace('\n', ' ') + e.StackTrace.Replace('\n', ' ');
+                return Redirect("~/auth/error?msg=" + (ConfigurationManager.AppSettings["env"].ToString().Equals("development") ? msg : " "));
             }
         }
 
@@ -247,14 +255,20 @@ namespace FinalProject.Controllers
 
                     if (ProcessEdit > 0)
                     {
+                        if(TempData["message"] == null)
+                        {
                         TempData.Add("message", "Candidate Update successfully");
                         TempData.Add("type", "success");
                         UserLogingUtils.SaveLoggingUserActivity("Edit Candidate" + Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID));
+                        }
                     }
                     else
                     {
+                        if(TempData["message"] == null)
+                        {
                         TempData.Add("message", "Candidate failed to Update");
                         TempData.Add("type", "warning");
+                        }
                     }
 
                     return Redirect("~/candidate/praselection/read");
@@ -268,9 +282,10 @@ namespace FinalProject.Controllers
 
                 return View("Preselection/EditCandidate", DataCandidate);
             }
-            catch
+            catch (Exception e)
             {
-                return Redirect("~/auth/error");
+                string msg = e.Message.Replace('\n', ' ') + e.StackTrace.Replace('\n', ' ');
+                return Redirect("~/auth/error?msg=" + (ConfigurationManager.AppSettings["env"].ToString().Equals("development") ? msg : " "));
             }
         }
 
@@ -318,9 +333,10 @@ namespace FinalProject.Controllers
                 TempData.Add("type", "danger");
                 return Redirect("~/candidate/praselection/read/detailcandidate/" + NewJobExp.CANDIDATE_ID);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return Redirect("~/auth/error");
+                string msg = e.Message.Replace('\n', ' ') + e.StackTrace.Replace('\n', ' ');
+                return Redirect("~/auth/error?msg=" + (ConfigurationManager.AppSettings["env"].ToString().Equals("development") ? msg : " "));
             }
         }
 
@@ -389,9 +405,10 @@ namespace FinalProject.Controllers
                 return View("Preselection/EditJobExp", Data);
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return Redirect("~/auth/error");
+                string msg = e.Message.Replace('\n', ' ') + e.StackTrace.Replace('\n', ' ');
+                return Redirect("~/auth/error?msg=" + (ConfigurationManager.AppSettings["env"].ToString().Equals("development") ? msg : " "));
             }
         }
 
@@ -587,16 +604,21 @@ namespace FinalProject.Controllers
 
                 if (ProcessEdit > 0)
                 {
-                    TempData.Add("message", "Candidate Update successfully");
-                    TempData.Add("type", "success");
-                    UserLogingUtils.SaveLoggingUserActivity("Edit Candidate" + Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID));
-                    //check state candidate before updated
-
+                     if(TempData["message"] == null)
+                     {
+                            TempData.Add("message", "Candidate Update successfully");
+                            TempData.Add("type", "success");
+                            UserLogingUtils.SaveLoggingUserActivity("Edit Candidate" + Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID));
+                            //check state candidat      e before updated
+                     }
                 }
                 else
                 {
-                    TempData.Add("message", "Candidate failed to Update");
-                    TempData.Add("type", "warning");
+                        if (TempData["message"] == null)
+                        {
+                            TempData.Add("message", "Candidate failed to Update");
+                            TempData.Add("type", "warning");
+                        }
                 }
 
                 return Redirect("~/candidate/call/read");
@@ -611,9 +633,10 @@ namespace FinalProject.Controllers
                 };
             return View("Call/EditCandidateCall", DataCandidate);
             }
-            catch
+            catch (Exception e)
             {
-                return Redirect("~/auth/error");
+                string msg = e.Message.Replace('\n', ' ') + e.StackTrace.Replace('\n', ' ');
+                return Redirect("~/auth/error?msg=" + (ConfigurationManager.AppSettings["env"].ToString().Equals("development") ? msg : " "));
             }
         }
 
@@ -763,17 +786,23 @@ namespace FinalProject.Controllers
 
                 if (ProcessEdit > 0)
                 {
-                    TempData.Add("message", "Candidate Update successfully");
-                    TempData.Add("type", "success");
-                    UserLogingUtils.SaveLoggingUserActivity("Edit Candidate" + Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID));
+                        if(TempData["message"] == null)
+                        {
+                            TempData.Add("message", "Candidate Update successfully");
+                            TempData.Add("type", "success");
+                            UserLogingUtils.SaveLoggingUserActivity("Edit Candidate" + Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID));
+                        }
                 }
                 else
                 {
-                    TempData.Add("message", "Candidate failed to Update");
-                    TempData.Add("type", "warning");
+                        if(TempData["message"] == null)
+                        {
+                            TempData.Add("message", "Candidate failed to Update");
+                            TempData.Add("type", "warning");
+                        }
                 }
 
-                return Redirect("~/candidate/call/read/called");
+                    return Redirect("~/candidate/call/read/called");
             }
             CandidateDTO DataCandidate = Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID);
             DataCandidate.CANDIDATE_INTERVIEW_DATE = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().FirstOrDefault(d => d.CANDIDATE_STATE == 8 && d.CANDIDATE_ID == Data.ID).CANDIDATE_INTERVIEW_DATE;
@@ -983,7 +1012,7 @@ namespace FinalProject.Controllers
 
                 if (ProcessEdit > 0)
                 {
-                    if(TempData["message"] != null) {
+                    if(TempData["message"] == null) {
                         TempData.Add("message", "Candidate Update successfully");
                         TempData.Add("type", "success");
                     }
@@ -1304,11 +1333,13 @@ namespace FinalProject.Controllers
         {
             try
             {
+                int ProcessEdit;
                 using (DBEntities db = new DBEntities())
             {
+                    
                 var Candidate = db.TB_CANDIDATE.FirstOrDefault(c => c.ID == data.CANDIDATE_ID);
                 Candidate.CANDIDATE_STATE_ID = 6;
-                db.SaveChanges();
+                ProcessEdit = db.SaveChanges();
                 //process add selection history
                 //preparedata pic
                 UserDTO DataPic = (UserDTO)Session["UserLogin"];
@@ -1337,9 +1368,22 @@ namespace FinalProject.Controllers
                     NOTE = data.NOTE,
                     CANDIDATE_POSITION = Candidate.SUITABLE_POSITION
                 });
-                UserLogingUtils.SaveLoggingUserActivity("edit suggest state of candidate id " + data.CANDIDATE_ID);
+                    if (ProcessEdit > 0)
+                    {
+                        TempData.Add("message", "Candidate Update successfully");
+                        TempData.Add("type", "success");
+                        UserLogingUtils.SaveLoggingUserActivity("edit suggest state of candidate id " + data.CANDIDATE_ID);
+
+                    }
+                    else
+                    {
+                        TempData.Add("message", "Candidate failed to Update");
+                        TempData.Add("type", "warning");
+                    }
+
                 return Redirect("~/candidate/delivery/read/suggest");
             }
+                
             }
             catch (Exception)
             {
@@ -1459,7 +1503,14 @@ namespace FinalProject.Controllers
 
                     if (db.SaveChanges() > 0)
                     {
+                        TempData.Add("message", "Candidate Update successfully");
+                        TempData.Add("type", "success");
                         UserLogingUtils.SaveLoggingUserActivity("edit suggest state of candidate id " + Data.CANDIDATE_ID);
+                    }
+                    else
+                    {
+                        TempData.Add("message", "Candidate failed to Update");
+                        TempData.Add("type", "warning");
                     }
 
                 }

@@ -9,6 +9,7 @@ using FinalProject.Filters;
 using System.Security.Cryptography;
 using System.Text;
 using FinalProject.Utils;
+using System.Configuration;
 
 namespace FinalProject.Controllers
 {
@@ -122,8 +123,12 @@ namespace FinalProject.Controllers
         }
  //--------------------------------------- untuk menampilkan error jika tidak ada access menu :) ----------------------------------------
          [Route("auth/error")]
-         public ActionResult Error()
+         public ActionResult Error(string msg)
         {
+            if (ConfigurationManager.AppSettings["env"].ToString().Equals("development"))
+            {
+                ViewBag.Message = msg;
+            }
             return View("404");
         }
 

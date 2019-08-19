@@ -334,6 +334,7 @@ C:\Users\Ace\Pictures\fp2\FinalProject\obj\Debug\FinalProject.csproj.CoreCompile
 C:\Users\Ace\Pictures\fp2\FinalProject\obj\Debug\FinalProject.csproj.CopyComplete
 C:\Users\Ace\Pictures\fp2\FinalProject\obj\Debug\FinalProject.dll
 C:\Users\Ace\Pictures\fp2\FinalProject\obj\Debug\FinalProject.pdb
+C:\Users\Ace\3D Objects\fp2\FinalProject\bin\Views\Auth\404.cshtml
 C:\Users\Ace\3D Objects\fp2\FinalProject\bin\FinalProject.dll.config
 C:\Users\Ace\3D Objects\fp2\FinalProject\bin\FinalProject.dll
 C:\Users\Ace\3D Objects\fp2\FinalProject\bin\FinalProject.pdb

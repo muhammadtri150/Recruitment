@@ -10,6 +10,7 @@ using FinalProject.Controllers;
 using System.Threading;
 using System.Security;
 using System.Security.Principal;
+using System.Configuration;
 
 namespace FinalProject.Filters
 {
@@ -33,10 +34,16 @@ namespace FinalProject.Filters
                 string Menu = Url[1];
                 string SubMenu = Url[2];
                 string Action = "read";
-                if (Url.Length >= 4 ) Action = Url[3];
+                if (Url.Length >= 5 ) Action = Url[4];
+
+                if (Url.Length >= 5)
+                {
+                    Menu = Url[2];
+                    SubMenu = Url[3];
+                }
 
                 //prepare data
-                using(DBEntities db = new DBEntities())
+                using (DBEntities db = new DBEntities())
                 {
                     //prepare data menu base on url segment 2 (index 1)
                     TB_MENU DataMenu = db.TB_MENU.FirstOrDefault(m => m.TITLE_MENU == Menu);
@@ -51,20 +58,21 @@ namespace FinalProject.Filters
                                                         );
 
                     //check data access menu is there or not 
-                    if(DataAccessMenu == null) throw new Exception();
+                    if (DataAccessMenu == null) throw new Exception();
 
 
                     //prepare dat sub menu base on url segment 3 (index 2)
                     TB_SUBMENU DataSubMenu = db.TB_SUBMENU.FirstOrDefault(sm => sm.TITLE_SUBMENU == SubMenu);
 
-                    
+
 
                     //check existing data sub menu
-                    if (DataSubMenu == null) {
-                        //for add ad edti job exp
-                        if (Url.Length >= 5)
+                    if (DataSubMenu == null)
+                    {
+                        //for add ad edit job exp
+                        if (Url.Length >= 6)
                         {
-                            if (Url[4] != "jobExp") throw new Exception();
+                            if (Url[5] != "jobexp") throw new Exception();
                         }
                     }
 
@@ -86,9 +94,10 @@ namespace FinalProject.Filters
                     if (Access == null) throw new Exception();
                 }
         }
-            catch (Exception)
+            catch (Exception e)
             {
-                Context.Response.Redirect("~/auth/error");
+                string msg = e.Message.Replace('\n', ' ') + e.StackTrace.Replace('\n', ' ');
+                Context.Response.Redirect("~/auth/error?msg=" + (ConfigurationManager.AppSettings["env"].ToString().Equals("development") ? msg : " "));
             }
             base.OnActionExecuting(FilterContext);
         }

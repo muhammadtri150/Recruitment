@@ -6,6 +6,8 @@
 }
 @section content{
     <!-- Alert -->
+    <h2 class="text-center">Candidate | Delivery</h2>
+    <hr class="bg-blue" />
     @if (TempData.Peek("message") != null)
     {
         <div class="alert alert-@TempData["type"] alert-dismissible fade show " role="alert">
@@ -104,7 +106,7 @@
                                     <td>@candidate.CANDIDATE_STATE_NAME</td>
                                     <td>@candidate.NOTES</td>
                                     <td>
-                                        <a class="btn btn-success" href="~/candidate/preselection/read/detailcandidate/@candidate.CANDIDATE_ID">Details</a>
+                                        <a class="btn btn-success" href="~/candidate/praselection/read/detailcandidate/@candidate.CANDIDATE_ID">Details</a>
                                     </td>
                                     <td>
                                         <!-- Button trigger modal -->
@@ -126,7 +128,7 @@
                         <ul class="pagination">
                             @for (int i = 1; i <= Convert.ToInt16(ViewBag.DataView["PageCount"]); i++)
                             {
-                                if (length <= 6)
+                                if (length <= 7)
                                 {
                                     if (i == 1)
                                     {

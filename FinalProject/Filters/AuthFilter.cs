@@ -10,7 +10,7 @@ using FinalProject.Controllers;
 using System.Threading;
 using System.Security;
 using System.Security.Principal;
-
+using System.Configuration;
 
 namespace FinalProject.Filters
 {
@@ -34,7 +34,7 @@ namespace FinalProject.Filters
                         //get tb_role base on role id in session user login
                         TB_ROLE UserRole = db.TB_ROLE.FirstOrDefault(r => r.ROLE_ID == UserLogin.ROLE_ID);
                         string[] url = filterContext.HttpContext.Request.RawUrl.ToString().Split('/');
-                        string Title_Menu = url[1];
+                        string Title_Menu = url[2];
                         if(Title_Menu.ToLower() == "dashboard")
                         {
                             Context.Response.Redirect("~/dashboard");
@@ -60,9 +60,10 @@ namespace FinalProject.Filters
                     Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(UserLogin.USERNAME), null);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                Context.Response.Redirect("~/auth/error");
+                string msg = e.Message.Replace('\n', ' ') + e.StackTrace.Replace('\n', ' ');
+                Context.Response.Redirect("~/auth/error?msg=" + (ConfigurationManager.AppSettings["env"].ToString().Equals("development") ? msg : " "));
             }
             Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity("null"), null);
             base.OnAuthorization(filterContext);
