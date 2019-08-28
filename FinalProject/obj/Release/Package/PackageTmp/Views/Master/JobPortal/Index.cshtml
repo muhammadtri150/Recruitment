@@ -12,7 +12,7 @@
             Add Job Portal
         </button>
 
-        @if (TempData.Peek("message") != null)
+        @if (TempData["message"] != null)
         {
             <div class="alert alert-@TempData["type"] alert-dismissible fade show " role="alert">
                 @TempData["message"]

@@ -116,9 +116,10 @@ namespace FinalProject.Controllers
                 }
                 return Redirect("~/auth/login");
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return Redirect("~/auth/error");
+                string msg = e.Message.Replace('\n', ' ') + e.StackTrace.Replace('\n', ' ');
+                return Redirect("~/auth/error?msg=" + (ConfigurationManager.AppSettings["env"].ToString().Equals("development") ? msg : " "));
             }
         }
  //--------------------------------------- untuk menampilkan error jika tidak ada access menu :) ----------------------------------------

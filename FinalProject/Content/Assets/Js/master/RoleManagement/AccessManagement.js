@@ -5,7 +5,7 @@
         var MenuId = $(this).data("menu_id");
 
         $.ajax({
-            url: "http://localhost:64197/master/rolemanagement/accessmenu/proccess",
+            url: "http://localhost:80/recruitment2/master/rolemanagement/accesscandidateprocess",
             type: "post",
             data: { ROLE_ID: RoleId, MENU_ID: MenuId },
             success: function (d) {
@@ -22,7 +22,7 @@
         var ActionId = $(this).data("action_id");
 
         $.ajax({
-            url: "http://localhost:64197/master/rolemanagement/accesscandidateprocess",
+            url: "http://localhost:80/recruitment2/master/rolemanagement/accesscandidateprocess",
             type: "post",
             data: {
                 ROLE_ID: RoleId,
@@ -30,7 +30,7 @@
                 ACTION_CANDIDATE_ID: ActionId
             },
             success: function (d) {
-                //document.location.href = "http://localhost:64197/master/rolemanagement/accessmenu/" + RoleId;
+                //document.location.href = "http://localhost/master/rolemanagement/accessmenu/" + RoleId;
             }
         });
     });

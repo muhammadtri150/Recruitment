@@ -9,6 +9,7 @@ using FinalProject.Filters;
 using System.Security.Cryptography;
 using System.Text;
 using FinalProject.Utils;
+using System.Configuration;
 
 namespace FinalProject.Controllers
 {
@@ -283,9 +284,10 @@ namespace FinalProject.Controllers
                     return View("Client/Index", ListClient);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return Redirect("~/auth/error");
+                string msg = e.Message.Replace('\n', ' ') + e.StackTrace.Replace('\n', ' ');
+                return Redirect("~/auth/error?msg=" + (ConfigurationManager.AppSettings["env"].ToString().Equals("development") ? msg : " "));
             }
         }
 
@@ -381,14 +383,14 @@ namespace FinalProject.Controllers
                         //check prosses success or not
                         if (db.SaveChanges() > 0)
                         {
-                            TempData.Add("message", "Job Portal have been deleted");
+                            TempData.Add("message", "Client have been deleted");
                             TempData.Add("type", "success");
                             UserLogingUtils.SaveLoggingUserActivity("delete client " + DataClient.CLIENT_ID);
                         }
 
                         else
                         {
-                            TempData.Add("message", "Job Portal failed to deleted");
+                            TempData.Add("message", "Client failed to deleted");
                             TempData.Add("type", "danger");
                         }
 
@@ -509,9 +511,10 @@ namespace FinalProject.Controllers
                     return View("User/Index", ListUser);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return Redirect("~/auth/error");
+                string msg = e.Message.Replace('\n', ' ') + e.StackTrace.Replace('\n', ' ');
+                return Redirect("~/auth/error?msg=" + (ConfigurationManager.AppSettings["env"].ToString().Equals("development") ? msg : " "));
             }
         }
 
@@ -686,15 +689,21 @@ namespace FinalProject.Controllers
                         //check prosses success or not
                         if (db.SaveChanges() > 0)
                         {
+                            if(TempData["message"] == null) { 
                             TempData.Add("message", "New Job Position added successfully");
                             TempData.Add("type", "success");
                             UserLogingUtils.SaveLoggingUserActivity("delete user id " + DataJobPosition.JOBPOSITION_NAME);
+                            }
+
                         }
 
                         else
                         {
-                            TempData.Add("message", "New Job Position failed to added");
-                            TempData.Add("type", "danger");
+                            if (TempData["message"] == null)
+                            {
+                                TempData.Add("message", "New Job Position failed to added");
+                                TempData.Add("type", "danger");
+                            }
                         }
 
                         return Redirect("~/master/jobpositionmanagement");
@@ -704,9 +713,10 @@ namespace FinalProject.Controllers
                     return Redirect("~/master/jobpositionmanagement");
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return Redirect("~/auth/error");
+                string msg = e.Message.Replace('\n', ' ') + e.StackTrace.Replace('\n', ' ');
+                return Redirect("~/auth/error?msg=" + (ConfigurationManager.AppSettings["env"].ToString().Equals("development") ? msg : " "));
             }
         }
 

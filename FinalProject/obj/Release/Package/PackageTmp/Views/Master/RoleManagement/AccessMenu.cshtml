@@ -67,11 +67,14 @@
                                 <th scope="col"></th>
                             </tr>
                         </thead>
+                        @*<i class="@MenuCandidate.LOGO_SUBMENU mr-3"></i>*@
                         <tbody>
                             @foreach (var MenuCandidate in ViewBag.DataView["SubMenuCandidate"])
                             {
                                 <tr>
-                                    <td><i class="@MenuCandidate.LOGO_SUBMENU mr-3"></i> @MenuCandidate.TITLE_SUBMENU</td>
+                                    <td>
+                                        <i class="@MenuCandidate.LOGO_SUBMENU mr-3"></i>@MenuCandidate.TITLE_SUBMENU
+                                    </td>
                                     <td>
                                         <table>
                                             <tr>

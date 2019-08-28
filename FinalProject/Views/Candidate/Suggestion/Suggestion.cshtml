@@ -60,15 +60,15 @@
     <div class="container">
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link" align="center" id="nav-home-tab" href="~/candidate/delivery/read" role="tab" aria-controls="nav-home" aria-selected="true">List Candidate Delivery</a>
-                <a class="nav-brand nav-link active" align="center" id="nav-profile-tab" href="~/candidate/delivery/read/suggest" role="tab" aria-selected="false">List Suggest Candidate</a>
+                
+                <a class="nav-brand nav-link active" align="center" id="nav-profile-tab" href="~/candidate/suggestion/read" role="tab" aria-selected="false">List Suggestion Candidate</a>
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade show active col mt-3" id="nav-call" role="tabpanel" aria-labelledby="nav-home-tab">
                 <div class="">
                     <!-- Search form -->
-                    <form class="form-inline md-form form-sm mt-4" action="~/candidate/delivery/read/suggest" id="FormFilter" method="post">
+                    <form class="form-inline md-form form-sm mt-4" action="~/candidate/suggestion/read" id="FormFilter" method="post">
                         <input class="form-control form-control-sm mr-3 w-50" type="text" placeholder="Search" aria-label="Search" value="" name="Keyword">
                         <i class="fas fa-search mr-3" aria-hidden="true"></i>
                         <input class="form-control form-control-sm mr-3 w-50" type="text" placeholder="Data Per Page" aria-label="Search" value="" name="DataPerPage">
@@ -85,7 +85,7 @@
                         <thead class="table-primary text-center">
                             <tr class="text-center">
                                 <th scope="col">Nama</th>
-                                <th scope="col">Applied Position</th>
+                                <th scope="col">Applied Potition</th>
                                 <th scope="col">Source</th>
                                 <th scope="col">ID Delivery</th>
                                 <th scope="col">Client Name</th>
@@ -103,37 +103,37 @@
                         <tbody>
                             @foreach (var candidate in Model)
                             {
-                                <tr>
-                                    <td>@candidate.CANDIDATE_NAME</td>
-                                    <td>@candidate.CANDIDATE_APPLIED_POSITION</td>
-                                    <td>@candidate.CANDIDATE_SOURCE</td>
-                                    <td>@Manage_DeliveryHistoryDTO.GetData().FirstOrDefault(m => m.CANDIDATE_ID == candidate.CANDIDATE_ID).DELIVERY_ID</td>
-                                    <td>@Manage_ClientDTO.GetData().FirstOrDefault(m => m.ID == Manage_DeliveryHistoryDTO.GetData().FirstOrDefault(p => p.CANDIDATE_ID == candidate.CANDIDATE_ID).CLIENT_ID).CLIENT_NAME</td>
-                                    <td>@candidate.CANDIDATE_PHONE</td>
-                                    <td>@Html.Encode(string.Format("{0:dd/MM/yyyy}",Manage_DeliveryHistoryDTO.GetData().FirstOrDefault(m => m.CANDIDATE_ID == candidate.CANDIDATE_ID).START_DATE))</td>
-                                    <td>@candidate.CANDIDATE_EMAIL</td>
-                                    <td>@Manage_UserDTO.GetDataUser().FirstOrDefault(usr => usr.USER_ID == Manage_DeliveryHistoryDTO.GetData().OrderByDescending(de => de.START_DATE).FirstOrDefault(de => de.CANDIDATE_ID == candidate.CANDIDATE_ID).LAST_PIC).FULL_NAME</td>
-                                    <td>@candidate.CANDIDATE_STATE_NAME</td>
-                                    <td>@Html.Encode(string.Format("{0:dd/MM/yyyy HH:mm}", Manage_UserDTO.GetDataUser().FirstOrDefault(usr => usr.USER_ID == UserLogingUtils.GetLogUser().OrderByDescending(log => log.Time).FirstOrDefault(log => log.Notes == "edit suggest state of candidate id " + candidate.CANDIDATE_ID).USER_ID).FULL_NAME))</td>
-                                    <td> @Convert.ToDateTime(UserLogingUtils.GetLogUser().FirstOrDefault(log => log.Notes == "edit suggest state of candidate id " + candidate.CANDIDATE_ID).Time).ToString("dd/MM/yyyy")</td>
-                                    <td>@candidate.NOTES</td>
-                                    <td>
-                                        <a class="btn btn-success" href="~/candidate/praselection/read/detailcandidate/@candidate.CANDIDATE_ID">Details</a>
+                            <tr>
+                                <td>@candidate.CANDIDATE_NAME</td>
+                                <td>@candidate.CANDIDATE_APPLIED_POSITION</td>
+                                <td>@candidate.CANDIDATE_SOURCE</td>
+                                <td>@Manage_DeliveryHistoryDTO.GetData().FirstOrDefault(m => m.CANDIDATE_ID == candidate.CANDIDATE_ID).DELIVERY_ID</td>
+                                <td>@Manage_ClientDTO.GetData().FirstOrDefault(m => m.ID == Manage_DeliveryHistoryDTO.GetData().FirstOrDefault(p => p.CANDIDATE_ID == candidate.CANDIDATE_ID).CLIENT_ID).CLIENT_NAME</td>
+                                <td>@candidate.CANDIDATE_PHONE</td>
+                                <td>@Html.Encode(string.Format("{0:dd/MM/yyyy}", Manage_DeliveryHistoryDTO.GetData().FirstOrDefault(m => m.CANDIDATE_ID == candidate.CANDIDATE_ID).START_DATE))</td>
+                                <td>@candidate.CANDIDATE_EMAIL</td>
+                                <td>@Manage_UserDTO.GetDataUser().FirstOrDefault(usr => usr.USER_ID == Manage_DeliveryHistoryDTO.GetData().OrderByDescending(de => de.START_DATE).FirstOrDefault(de => de.CANDIDATE_ID == candidate.CANDIDATE_ID).LAST_PIC).FULL_NAME</td>
+                                <td>@candidate.CANDIDATE_STATE_NAME</td>
+                                <td>@Manage_UserDTO.GetDataUser().FirstOrDefault(usr => usr.USER_ID == UserLogingUtils.GetLogUser().OrderByDescending(log => log.Time).FirstOrDefault(log => log.Notes == "edit suggest state of candidate id " + candidate.CANDIDATE_ID).USER_ID).FULL_NAME</td>
+                                <td> @Convert.ToDateTime(UserLogingUtils.GetLogUser().FirstOrDefault(log => log.Notes == "edit suggest state of candidate id " + candidate.CANDIDATE_ID).Time).ToString("dd/MM/yyyy")</td>
+                                <td>@candidate.NOTES</td>
+                                <td>
+                                    <a class="btn btn-success" href="~/candidate/praselection/read/detailcandidate/@candidate.CANDIDATE_ID">Details</a>
 
-                                    </td>
-                                   
-                                    <td>
-                                        <button type="button" class="btn btn-primary btn_edit @MenuUtils.CheckButtonAcc(2, 17)" data-toggle="modal" data-target="#ModalEdit"
-                                                data-selection_id="@candidate.ID"
-                                                data-candidate_id="@candidate.CANDIDATE_ID"
-                                                data-client_id="@Manage_DeliveryHistoryDTO.GetData().OrderByDescending(d => d.START_DATE).FirstOrDefault(d => d.CANDIDATE_ID == candidate.CANDIDATE_ID).CLIENT_ID"
-                                                data-state_id="@candidate.CANDIDATE_STATE"
-                                                data-delivery_id="@Manage_DeliveryHistoryDTO.GetData().OrderByDescending(d => d.START_DATE).FirstOrDefault(d => d.CANDIDATE_ID == candidate.CANDIDATE_ID).DELIVERY_ID"
-                                                data-id="@Manage_DeliveryHistoryDTO.GetData().OrderByDescending(d => d.START_DATE).FirstOrDefault(d => d.CANDIDATE_ID == candidate.CANDIDATE_ID).CANDIDATE_ID">
-                                            Edit
-                                        </button>
-                                    </td>
-                                </tr>
+                                </td>
+
+                                <td>
+                                    <button type="button" class="btn btn-primary btn_edit @MenuUtils.CheckButtonAcc(2, 29)" data-toggle="modal" data-target="#ModalEdit"
+                                            data-selection_id="@candidate.ID"
+                                            data-candidate_id="@candidate.CANDIDATE_ID"
+                                            data-client_id="@Manage_DeliveryHistoryDTO.GetData().OrderByDescending(d => d.START_DATE).FirstOrDefault(d => d.CANDIDATE_ID == candidate.CANDIDATE_ID).CLIENT_ID"
+                                            data-state_id="@candidate.CANDIDATE_STATE"
+                                            data-delivery_id="@Manage_DeliveryHistoryDTO.GetData().OrderByDescending(d => d.START_DATE).FirstOrDefault(d => d.CANDIDATE_ID == candidate.CANDIDATE_ID).DELIVERY_ID"
+                                            data-id="@Manage_DeliveryHistoryDTO.GetData().OrderByDescending(d => d.START_DATE).FirstOrDefault(d => d.CANDIDATE_ID == candidate.CANDIDATE_ID).CANDIDATE_ID">
+                                        Edit
+                                    </button>
+                                </td>
+                            </tr>
                             }
                         </tbody>
                     </table>
@@ -144,28 +144,29 @@
                         <ul class="pagination">
                             @for (int i = 1; i <= Convert.ToInt16(ViewBag.DataView["PageCount"]); i++)
                             {
-                                if (length <= 8)
+                                if (length <= 7)
                                 {
                                     if (i == 1)
                                     {
-                                        <li class="page-item active"><a class="page-link " href="~/candidate/delivery/read/suggest/@i">@i</a></li>
+                                        <li class="page-item active"><a class="page-link " href="~/candidate/suggestion/read/@i">@i</a></li>
                                     }
                                     else
                                     {
-                                        <li class="page-item"><a class="page-link" href="~/candidate/delivery/read/suggest/@i">@i</a></li>
+                                        <li class="page-item"><a class="page-link" href="~/candidate/suggestion/read/@i">@i</a></li>
                                     }
 
 
                                 }
                                 else
                                 {
-                                    if (Convert.ToInt16(Request.Url.ToString().Split('/').Last()) == i)
+                                    if (Convert.ToInt32(Request.Url.ToString().Split('/').Last()) == i)
                                     {
-                                        <li class="page-item active"><a class="page-link" href="~/candidate/delivery/read/suggest/@i">@i</a></li>
+                                        <li class="page-item active"><a class="page-link " href="~/candidate/suggestion/read/@i">@i</a></li>
                                     }
                                     else
                                     {
-                                        <li class="page-item"><a class="page-link" href="~/candidate/delivery/read/suggest/@i">@i</a></li>
+                                        <li class="page-item"><a class="page-link" href="~/candidate/suggestion/read/@i">@i</a></li>
+
                                     }
                                 }
 
@@ -189,18 +190,18 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="~/candidate/delivery/update/suggest" method="post" enctype="multipart/form-data">
+                        <form action="~/candidate/suggestion/update" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="CANDIDATE_ID" id="CANDIDATE_ID" />
                             <input type="hidden" name="SELECTION_ID" id="SELECTION_ID" />
                             <div class="form-group">
                                 <label for="CANDIDATE_STATE">State</label>
                                 <select class="form-control" id="CANDIDATE_STATE" name="CANDIDATE_STATE">
 
-                                        @foreach (var client in Manage_StateCandidateDTO.GetData().Where(d => new List<int>() {6, 14}.Contains(d.ID)))
+                                        @foreach (var client in Manage_StateCandidateDTO.GetData().Where(d => new List<int>() {14, 21}.Contains(d.ID)))
                                         {
                                             <option class="states" value="@client.ID">@client.STATE_NAME</option>
                                         }
-                                    
+
                                 </select>
                             </div>
                             <div class="form-group">

@@ -306,24 +306,24 @@ namespace FinalProject.Controllers
 
                         if (ProcessAdd > 0)
                         {
-                            if (TempData.Peek("message") != null)
+                            if (TempData.Peek("message") == null)
                             {
                                 TempData.Remove("message");
                                 TempData.Remove("type");
-                            }
                             TempData.Add("message", "Candidate new job experience added successfully");
                             TempData.Add("type", "success");
                             UserLogingUtils.SaveLoggingUserActivity("add job experience Candidate " + NewJobExp.CANDIDATE_ID + " Job Experience in " + NewJobExp.COMPANY_NAME);
+                            }
                         }
                         else
                         {
-                            if (TempData.Peek("message") != null)
+                            if (TempData.Peek("message") == null)
                             {
                                 TempData.Remove("message");
                                 TempData.Remove("type");
-                            }
                             TempData.Add("message", "Candidate new job experience failed to add");
                             TempData.Add("type", "warning");
+                            }
                         }
                         return Redirect("~/candidate/praselection/read/detailcandidate/" + NewJobExp.CANDIDATE_ID);
                     }
@@ -374,24 +374,24 @@ namespace FinalProject.Controllers
 
                         if (ProcessEdit > 0)
                         {
-                            if (TempData.Peek("message") != null)
+                            if (TempData.Peek("message") == null)
                             {
                                 TempData.Remove("message");
                                 TempData.Remove("type");
-                            }
                             TempData.Add("message", "Candidate job experience edited successfully");
                             TempData.Add("type", "success");
                             UserLogingUtils.SaveLoggingUserActivity("edit job experience Candidate " + NewJobExp.CANDIDATE_ID + " Job Experience in " + NewJobExp.COMPANY_NAME);
+                            }
                         }
                         else
                         {
-                            if (TempData.Peek("message") != null)
+                            if (TempData.Peek("message") == null)
                             {
                                 TempData.Remove("message");
                                 TempData.Remove("type");
-                            }
                             TempData.Add("message", "Candidate job experience failed to edit");
                             TempData.Add("type", "warning");
+                            }
                         }
                         return Redirect("~/candidate/praselection/read/detailcandidate/" + NewJobExp.CANDIDATE_ID);
                     }
@@ -570,21 +570,27 @@ namespace FinalProject.Controllers
                     }
                     ProcessEdit = Manage_CandidateDTO.EditCandidate(Data, Pict, Cv);
 
-                    if (ProcessEdit > 0)
-                    {
-                        TempData.Add("message", "Candidate Update successfully");
-                        TempData.Add("type", "success");
-                        UserLogingUtils.SaveLoggingUserActivity("Edit Candidate" + Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID));
-                        //check state candidate before updated
+                        if (ProcessEdit > 0)
+                        {
+                            if (TempData["message"] == null)
+                            {
+                                TempData.Add("message", "Candidate Update successfully");
+                                TempData.Add("type", "success");
+                                UserLogingUtils.SaveLoggingUserActivity("Edit Candidate" + Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID));
+                                //check state candidate before updated
+                            }
 
-                    }
-                    else
-                    {
-                        TempData.Add("message", "Candidate failed to Update");
-                        TempData.Add("type", "warning");
-                    }
+                        }
+                        else
+                        {
+                            if (TempData["message"] == null)
+                            {
+                                TempData.Add("message", "Candidate failed to Update");
+                                TempData.Add("type", "warning");
+                            }
+                        }    
 
-                    return Redirect("~/candidate/call/read/called");
+                        return Redirect("~/candidate/call/read/called");
                 }
 
                 ProcessEdit = Manage_CandidateDTO.EditCandidate(Data, Pict, Cv);
@@ -977,21 +983,27 @@ namespace FinalProject.Controllers
                     }
                     ProcessEdit = Manage_CandidateDTO.EditCandidate(Data, Pict, Cv);
 
-                    if (ProcessEdit > 0)
-                    {
-                        TempData.Add("message", "Candidate Update successfully");
-                        TempData.Add("type", "success");
-                        UserLogingUtils.SaveLoggingUserActivity("Edit Candidate" + Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID));
-                        //check state candidate before updated
+                        if (ProcessEdit > 0)
+                        {
+                            if (TempData["message"] == null)
+                            {
+                                TempData.Add("message", "Candidate Update successfully");
+                                TempData.Add("type", "success");
+                                UserLogingUtils.SaveLoggingUserActivity("Edit Candidate" + Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID));
+                                //check state candidate before updated
+                            }
 
-                    }
-                    else
-                    {
-                        TempData.Add("message", "Candidate failed to Update");
-                        TempData.Add("type", "warning");
-                    }
+                        }
+                        else
+                        {
+                            if(TempData["message"] == null)
+                            {
+                            TempData.Add("message", "Candidate failed to Update");
+                            TempData.Add("type", "warning");
+                            }
+                        }
 
-                    return Redirect("~/candidate/interview/read");
+                        return Redirect("~/candidate/interview/read");
                 }
 
                 ProcessEdit = Manage_CandidateDTO.EditCandidate(Data, Pict, Cv);
@@ -1031,8 +1043,11 @@ namespace FinalProject.Controllers
                 }
                 else
                 {
-                    TempData.Add("message", "Candidate failed to Update");
-                    TempData.Add("type", "warning");
+                    if(TempData["message"] == null)
+                    {
+                        TempData.Add("message", "Candidate failed to Update");
+                        TempData.Add("type", "warning");
+                    }
                 }
                 return Redirect("~/candidate/interview/read");
             }
@@ -1194,14 +1209,20 @@ namespace FinalProject.Controllers
 
                     if (ProcessEdit > 0)
                     {
+                        if(TempData["message"] == null)
+                        {
                         TempData.Add("message", "Candidate Update successfully");
                         TempData.Add("type", "success");
                         UserLogingUtils.SaveLoggingUserActivity("Edit Candidate" + Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID));
+                        }
                     }
                     else
                     {
+                        if(TempData["message"] == null)
+                        {
                         TempData.Add("message", "Candidate failed to Update");
                         TempData.Add("type", "warning");
+                        }
                     }
 
                     return Redirect("~/candidate/interview/read/interviewed");
@@ -1212,9 +1233,10 @@ namespace FinalProject.Controllers
 
                 return View("Interview/EditCandidateInterviewed", DataCandidate);
             }
-            catch
+            catch (Exception e)
             {
-                return Redirect("~/auth/error");
+                string msg = e.Message.Replace('\n', ' ') + e.StackTrace.Replace('\n', ' ');
+                return Redirect("~/auth/error?msg=" + (ConfigurationManager.AppSettings["env"].ToString().Equals("development") ? msg : " "));
             }
         }
 
@@ -1370,18 +1392,23 @@ namespace FinalProject.Controllers
                 });
                     if (ProcessEdit > 0)
                     {
+                        if(TempData["message"] == null)
+                        {
                         TempData.Add("message", "Candidate Update successfully");
                         TempData.Add("type", "success");
                         UserLogingUtils.SaveLoggingUserActivity("edit suggest state of candidate id " + data.CANDIDATE_ID);
-
+                        }
                     }
                     else
                     {
+                        if(TempData["message"] == null)
+                        {
                         TempData.Add("message", "Candidate failed to Update");
                         TempData.Add("type", "warning");
+                        }
                     }
 
-                return Redirect("~/candidate/delivery/read/suggest");
+                    return Redirect("~/candidate/delivery/read/suggest");
             }
                 
             }
@@ -1403,11 +1430,11 @@ namespace FinalProject.Controllers
                 //note : data in this view especialy for candidate where state_id is 14(offering or 6(sent to client))
 
                 int perPage = Session["DataPage"] == null ? 5 : Convert.ToInt16(Session["DataPage"]);
-                float DataCount = db.TB_CANDIDATE_SELECTION_HISTORY.Where(sh => sh.CANDIDATE_STATE == 6 || sh.CANDIDATE_STATE == 14 || sh.CANDIDATE_STATE == 21).ToList().Count();
+                float DataCount = db.TB_CANDIDATE_SELECTION_HISTORY.Where(sh => sh.CANDIDATE_STATE == 6 || sh.CANDIDATE_STATE == 14 ).ToList().Count();
                 int PageCount = Convert.ToInt16(Math.Ceiling(DataCount / perPage));
                 int idx = (i == null ? 0 : (perPage * int.Parse(i) - perPage));
                 List<CandidateSelectionHistoryDTO> ListCandidate = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().Where(d =>
-                d.CANDIDATE_STATE == 6 || d.CANDIDATE_STATE == 14 || d.CANDIDATE_STATE == 21).Skip(idx).Take(perPage).ToList();
+                d.CANDIDATE_STATE == 6 || d.CANDIDATE_STATE == 14).Skip(idx).Take(perPage).ToList();
 
 
                 //============================ process searchng ============================
@@ -1430,7 +1457,7 @@ namespace FinalProject.Controllers
                         ListCandidate = ListCandidate.Where(d =>
                         d.CANDIDATE_APPLIED_POSITION == Position ||
                         d.CANDIDATE_SUITABLE_POSITION == Position &&
-                        (d.ID == 6 || d.ID == 14 || d.ID == 21)).ToList();
+                        (d.ID == 6 || d.ID == 14)).ToList();
                         DataCount = ListCandidate.Count();
                         PageCount = Convert.ToInt16(Math.Ceiling(DataCount / perPage));
                     }
@@ -1440,7 +1467,7 @@ namespace FinalProject.Controllers
                         d.CANDIDATE_EMAIL.Contains(Keyword) ||
                         d.CANDIDATE_NAME.Contains(Keyword) ||
                         d.CANDIDATE_PHONE.Contains(Keyword) &&
-                       (d.ID == 6 || d.ID == 14 || d.ID == 21)).ToList();
+                       (d.ID == 6 || d.ID == 14 )).ToList();
                         DataCount = ListCandidate.Count();
                         PageCount = Convert.ToInt16(Math.Ceiling(DataCount / perPage));
                     }
@@ -1448,7 +1475,7 @@ namespace FinalProject.Controllers
                     {
                         perPage = dt;
                         ListCandidate = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().Where(d =>
-                        d.CANDIDATE_STATE == 6 || d.CANDIDATE_STATE == 14 || d.CANDIDATE_STATE == 21).Skip(idx).Take(perPage).ToList();
+                        d.CANDIDATE_STATE == 6 || d.CANDIDATE_STATE == 14 ).Skip(idx).Take(perPage).ToList();
                         PageCount = Convert.ToInt16(Math.Ceiling(DataCount / perPage));
                         Session.Add("DataPage", dt);
 
@@ -1462,7 +1489,7 @@ namespace FinalProject.Controllers
                          d.CANDIDATE_EMAIL.Contains(Keyword) ||
                          d.CANDIDATE_NAME.Contains(Keyword) ||
                          d.CANDIDATE_PHONE.Contains(Keyword) &&
-                         (d.ID == 6 || d.ID == 14 || d.ID == 21)).Skip(idx).Take(perPage).ToList();
+                         (d.ID == 6 || d.ID == 14)).Skip(idx).Take(perPage).ToList();
                         DataCount = ListCandidate.Count();
                         PageCount = Convert.ToInt16(Math.Ceiling(DataCount / perPage));
                     }
@@ -1503,18 +1530,24 @@ namespace FinalProject.Controllers
 
                     if (db.SaveChanges() > 0)
                     {
+                        if(TempData["message"] == null)
+                        {
                         TempData.Add("message", "Candidate Update successfully");
                         TempData.Add("type", "success");
                         UserLogingUtils.SaveLoggingUserActivity("edit suggest state of candidate id " + Data.CANDIDATE_ID);
+                        }
                     }
                     else
                     {
+                        if(TempData["message"] == null)
+                        {
                         TempData.Add("message", "Candidate failed to Update");
                         TempData.Add("type", "warning");
+                        }
                     }
 
                 }
-                return Redirect("~/candidate/delivery/read/suggest");
+                    return Redirect("~/candidate/delivery/read/suggest");
             }
             catch (Exception)
             {
@@ -1523,6 +1556,140 @@ namespace FinalProject.Controllers
         }
 
 
+        //=========================================================== SUGGESTION CANDIDATE ==========================================================
+        [Route("candidate/suggestion/read/{i?}")]
+        public ActionResult SuggestionCandidate(string i = null)
+        {
+            try
+            {
+                //---------------------------- prepare data candidate for show in view --------------
+                //note : data candidate from class Manage_CandidateSelectionHistoryDTO method GetDataSelectionHistory
+                //note : data in this view especialy for candidate where state_id is 14(offering or 6(sent to client))
+
+                int perPage = Session["DataPage"] == null ? 5 : Convert.ToInt16(Session["DataPage"]);
+                float DataCount = db.TB_CANDIDATE_SELECTION_HISTORY.Where(sh => sh.CANDIDATE_STATE == 14 || sh.CANDIDATE_STATE == 21).ToList().Count();
+                int PageCount = Convert.ToInt16(Math.Ceiling(DataCount / perPage));
+                int idx = (i == null ? 0 : (perPage * int.Parse(i) - perPage));
+                List<CandidateSelectionHistoryDTO> ListCandidate = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().Where(d => d.CANDIDATE_STATE == 14 || d.CANDIDATE_STATE == 21).Skip(idx).Take(perPage).ToList();
+
+
+                //============================ process searchng ============================
+                if (Request["filter"] != null)
+                {
+                    string Position = Request["POSITION"];
+                    int StateId = Convert.ToInt16(Request["CANDIDATE_STATE"]);
+                    string Keyword = Request["Keyword"];
+                    string DataPerPage = Request["DataPerPage"];
+                    int dt = DataPerPage == "" ? 5 : Convert.ToInt16(DataPerPage);
+
+                    if (StateId != 0 && (Position == "all" && Keyword == ""))
+                    {
+                        ListCandidate = ListCandidate.Where(d => d.CANDIDATE_STATE == StateId).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / perPage));
+                    }
+                    if (Position != "all" && (StateId == 0 && Keyword == ""))
+                    {
+                        ListCandidate = ListCandidate.Where(d =>
+                        d.CANDIDATE_APPLIED_POSITION == Position ||
+                        d.CANDIDATE_SUITABLE_POSITION == Position &&
+                        ( d.ID == 14 || d.ID == 21)).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / perPage));
+                    }
+                    if (Keyword != "" && (StateId == 0 && Position == "all"))
+                    {
+                        ListCandidate = ListCandidate.Where(d =>
+                        d.CANDIDATE_EMAIL.Contains(Keyword) ||
+                        d.CANDIDATE_NAME.Contains(Keyword) ||
+                        d.CANDIDATE_PHONE.Contains(Keyword) &&
+                       ( d.ID == 14 || d.ID == 21)).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / perPage));
+                    }
+                    if (DataPerPage != "")
+                    {
+                        perPage = dt;
+                        ListCandidate = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().Where(d =>
+                         d.CANDIDATE_STATE == 14 || d.CANDIDATE_STATE == 21).Skip(idx).Take(perPage).ToList();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / perPage));
+                        Session.Add("DataPage", dt);
+
+                    }
+                    else
+                    {
+                        ListCandidate = ListCandidate.Where(d =>
+                         d.CANDIDATE_APPLIED_POSITION == Position ||
+                         d.CANDIDATE_SUITABLE_POSITION == Position ||
+                         d.CANDIDATE_STATE == StateId ||
+                         d.CANDIDATE_EMAIL.Contains(Keyword) ||
+                         d.CANDIDATE_NAME.Contains(Keyword) ||
+                         d.CANDIDATE_PHONE.Contains(Keyword) &&
+                         ( d.ID == 14 || d.ID == 21)).Skip(idx).Take(perPage).ToList();
+                        DataCount = ListCandidate.Count();
+                        PageCount = Convert.ToInt16(Math.Ceiling(DataCount / perPage));
+                    }
+                }
+                //============================ end process searchng ============================
+                //prepare vew bag
+                //---------------------------- prepare data viewbag --------------------
+                ViewBag.DataView = new Dictionary<string, object>{
+                    {"title","Suggestion"},
+                    {"ListPosition",Manage_JobPositionDTO.GetData()},
+                    {"PageCount",PageCount}
+                    };
+
+                return View("Suggestion/Suggestion", ListCandidate);
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
+
+        //------------------------------------- candidate suggestion update ---------------------------------------------------
+        [Route("candidate/suggestion/update")]
+        public ActionResult SuggestionUpdate(DeliveryHistoryDTO Data)
+        {
+            try
+            {
+                using (DBEntities db = new DBEntities())
+                {
+                    int CandidateId = Convert.ToInt16(Data.CANDIDATE_ID);
+                    db.TB_CANDIDATE.FirstOrDefault(ca => ca.ID == CandidateId).CANDIDATE_STATE_ID = Data.CANDIDATE_STATE;
+
+                    var Delivery = db.TB_DELIVERY_HISTORY.FirstOrDefault(d => d.DELIVERY_ID == Data.DELIVERY_ID);
+                    Delivery.CLIENT_ID = Data.CLIENT_ID;
+                    Delivery.CANDIDATE_STATE = Data.CANDIDATE_STATE;
+
+                    db.TB_CANDIDATE_SELECTION_HISTORY.FirstOrDefault(s => s.ID == Data.SELECTION_ID).CANDIDATE_STATE = Data.CANDIDATE_STATE;
+
+                    if (db.SaveChanges() > 0)
+                    {
+                        if(TempData["message"] == null)
+                        {
+                        TempData.Add("message", "Candidate Update successfully");
+                        TempData.Add("type", "success");
+                        UserLogingUtils.SaveLoggingUserActivity("edit suggestion state of candidate id " + Data.CANDIDATE_ID);
+                        }
+                    }
+                    else
+                    {
+                        if(TempData["message"] == null)
+                        {
+                        TempData.Add("message", "Candidate failed to Update");
+                        TempData.Add("type", "warning");
+                        }
+                    }
+
+                }
+                return Redirect("~/candidate/suggestion/read");
+            }
+            catch (Exception)
+            {
+                return Redirect("~/auth/error");
+            }
+        }
 
 
 

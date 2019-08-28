@@ -13,7 +13,7 @@
     <div class="container">
         @Html.ValidationSummary()
         <!-- Alert -->
-        @if (TempData.Peek("message") != null)
+        @if (TempData["message"] != null)
         {
             <div class="alert alert-@TempData["type"] alert-dismissible fade show " role="alert">
                 @TempData["message"]
@@ -23,7 +23,7 @@
             </div>
         }
         <!-- Search form -->
-        <a class="btn btn-primary" href="~/candidate/praselection/create/candidate">Add New Candidate</a>
+        <a class="btn btn-primary @MenuUtils.CheckButtonAcc(1, 11)" href="~/candidate/praselection/create/candidate">Add New Candidate</a>
         <form class="form-inline md-form form-sm mt-4" action="~/candidate/praselection/read" id="FormFilter" method="post">
             <input class="form-control form-control-sm mr-3 w-50" type="text" placeholder="Search" aria-label="Search" value="" name="Keyword"><i class="fas fa-search mr-3" aria-hidden="true"></i>
             <input class="form-control form-control-sm mr-3 w-50" type="text" placeholder="Data Per Page" aria-label="Search" value="" name="DataPerPage">
@@ -45,8 +45,8 @@
             <input type="submit" class="btn btn-primary mr-3 float-right mb-2 mt-1" value="Filter" name="filter" />
         </form>
             <table id="table-id" class="table table-striped table-bordered table-sm table-responsive" cellspacing="0">
-                <thead class="table-primary">
-                    <tr class="">
+                <thead class="table-primary text-center">
+                    <tr class="text-center">
                         <th scope="col">Name</th>
                         <th scope="col">Applied Potition</th>
                         <th scope="col">Suitable Potition</th>
@@ -77,7 +77,7 @@
                             <td>@data.NOTES</td>
                             <td>
 
-                                <a href="~/candidate/praselection/update/candidate/@data.CANDIDATE_ID"><i class="fas fa-edit"></i></a>
+                                <a class="@MenuUtils.CheckButtonAcc(2, 11)" href="~/candidate/praselection/update/candidate/@data.CANDIDATE_ID"><i class="fas fa-edit "></i></a>
                             </td>
                             <td>
                                 <a class="ml-3" href="~/candidate/praselection/read/detailcandidate/@data.CANDIDATE_ID"><i class="fas fa-search-plus"></i></a>

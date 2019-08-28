@@ -41,6 +41,7 @@ namespace FinalProject.DTO
                     COMPANY_NAME = j.COMPANY_NAME,
                     INDUSTRIES = j.INDUSTRIES,
                     CANDIDATE_POSITION = j.CANDIDATE_POSITION,
+                    SKILL_NAME = j.SKILL_NAME,
                     START_DATE = j.START_DATE,
                     END_DATE = j.END_DATE,
                     CURRENT_SALARY = j.CURRENT_SALARY,
