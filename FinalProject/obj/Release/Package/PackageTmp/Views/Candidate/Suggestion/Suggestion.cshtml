@@ -72,11 +72,11 @@
                         <input class="form-control form-control-sm mr-3 w-50" type="text" placeholder="Search" aria-label="Search" value="" name="Keyword">
                         <i class="fas fa-search mr-3" aria-hidden="true"></i>
                         <input class="form-control form-control-sm mr-3 w-50" type="text" placeholder="Data Per Page" aria-label="Search" value="" name="DataPerPage">
-                        <select class="form-control form-control-sm mr-3 float-right" name="POSITION" id="ListPosition">
-                            <option value="all">All</option>
-                            @foreach (var pos in ViewBag.DataView["ListPosition"])
+                        <select class="form-control form-control-sm mr-3 float-right" name="CLIENT" id="ListClient">
+                            <option value="0">All</option>
+                            @foreach (var pos in ViewBag.DataView["ListClient"])
                             {
-                                <option value="@pos.JOBPOSITION_NAME">@pos.JOBPOSITION_NAME</option>
+                                <option value="@pos.ID">@pos.CLIENT_NAME</option>
                             }
                         </select>
                         <input type="submit" class="btn btn-primary mr-3 float-right" value="Filter" name="filter" />
@@ -226,5 +226,7 @@
                 </div>
             </div>
         </div>
+    </div>
         <script src="~/Content/Assets/Js/candidate/delivery/suggest.js"></script>
 }
+

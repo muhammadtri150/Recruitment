@@ -114,6 +114,7 @@
     <EntitySetMapping Name="TB_CANDIDATE_SELECTION_HISTORY">
       <EntityTypeMapping TypeName="DBModel.TB_CANDIDATE_SELECTION_HISTORY">
         <MappingFragment StoreEntitySet="TB_CANDIDATE_SELECTION_HISTORY">
+          <ScalarProperty Name="LAST_UPDATE" ColumnName="LAST_UPDATE" />
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="CANDIDATE_ID" ColumnName="CANDIDATE_ID" />
           <ScalarProperty Name="PIC_ID" ColumnName="PIC_ID" />
@@ -121,6 +122,7 @@
           <ScalarProperty Name="CANDIDATE_SUITABLE_POSITION" ColumnName="CANDIDATE_SUITABLE_POSITION" />
           <ScalarProperty Name="CANDIDATE_SOURCE" ColumnName="CANDIDATE_SOURCE" />
           <ScalarProperty Name="CANDIDATE_STATE" ColumnName="CANDIDATE_STATE" />
+          <ScalarProperty Name="CANDIDATE_CLIENT" ColumnName="CANDIDATE_CLIENT" />
           <ScalarProperty Name="CANDIDATE_EXPECTED_SALARY" ColumnName="CANDIDATE_EXPECTED_SALARY" />
           <ScalarProperty Name="CANDIDATE_INTERVIEW_DATE" ColumnName="CANDIDATE_INTERVIEW_DATE" />
           <ScalarProperty Name="PROCESS_DATE" ColumnName="PROCESS_DATE" />

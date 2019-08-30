@@ -34,13 +34,13 @@ namespace FinalProject.Filters
                 string Menu = Url[1];
                 string SubMenu = Url[2];
                 string Action = "read";
-                if (Url.Length >= 5 ) Action = Url[4];
+                if (Url.Length >= 5 ) Action = Url[3];
 
-                if (Url.Length >= 5)
-                {
-                    Menu = Url[2];
-                    SubMenu = Url[3];
-                }
+                //if (Url.Length >= 5)
+                //{
+                //    Menu = Url[2];
+                //    SubMenu = Url[3];
+                //}
 
                 //prepare data
                 using (DBEntities db = new DBEntities())
@@ -70,9 +70,9 @@ namespace FinalProject.Filters
                     if (DataSubMenu == null)
                     {
                         //for add ad edit job exp
-                        if (Url.Length >= 6)
+                        if (Url.Length >= 5)
                         {
-                            if (Url[5] != "jobexp") throw new Exception();
+                            if (Url[4] != "jobexp") throw new Exception();
                         }
                     }
 

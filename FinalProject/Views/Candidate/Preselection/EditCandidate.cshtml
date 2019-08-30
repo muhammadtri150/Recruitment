@@ -173,7 +173,7 @@
                                 <input type="date" class="form-control" id="AVAILABLE_JOIN" name="AVAILABLE_JOIN" />
                             </div>
                             <div class="form-group">
-                                <label for="EXPECTED_sALARY">Excpected Salary</label>
+                                <label for="EXPECTED_sALARY">Expected Salary</label>
                                 @Html.TextBoxFor(m => m.EXPECTED_sALARY, new { @class = "form-control", @id = "EXPECTED_sALARY" })
                             </div>
                             <div class="form-group">
@@ -208,7 +208,13 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="CANDIDATE_DEGREE">Degree</label>
-                                    @Html.TextBoxFor(m => m.CANDIDATE_DEGREE, new { @class = "form-control", @id = "CANDIDATE_DEGREE" })
+                                    <select id="CANDIDATE_DEGREE" class="form-control" name="CANDIDATE_DEGREE">
+                                        <option value="High School" @(Model.CANDIDATE_DEGREE == "High School" ? "selected" : "")>High School</option>
+                                        <option value="Diploma" @(Model.CANDIDATE_DEGREE == "Diploma" ? "selected" : "")>Diploma</option>
+                                        <option value="Bachelor" @(Model.CANDIDATE_DEGREE == "Bachelor" ? "selected" : "")>Bachelor</option>
+                                        <option value="Master" @(Model.CANDIDATE_DEGREE == "Master" ? "selected" : "")>Magister</option>
+                                        <option value="Doctor" @(Model.CANDIDATE_DEGREE == "Doctor" ? "selected" : "")>Doctor</option>
+                                    </select>
                                     @Html.ValidationMessageFor(m => m.CANDIDATE_DEGREE, null, new { @class = "text-danger" })
                                 </div>
                                 <div class="form-group">

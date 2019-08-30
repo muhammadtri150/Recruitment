@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="JOB_PORTAL">
           <Key>
             <PropertyRef Name="JOB_ID" />
@@ -119,8 +119,10 @@
           <Property Name="CANDIDATE_SUITABLE_POSITION" Type="varchar" MaxLength="50" />
           <Property Name="CANDIDATE_SOURCE" Type="varchar" MaxLength="50" />
           <Property Name="CANDIDATE_STATE" Type="int" />
+          <Property Name="CANDIDATE_CLIENT" Type="int" />
           <Property Name="CANDIDATE_EXPECTED_SALARY" Type="money" />
           <Property Name="CANDIDATE_INTERVIEW_DATE" Type="datetime" />
+          <Property Name="LAST_UPDATE" Type="datetime" />
           <Property Name="PROCESS_DATE" Type="datetime" />
           <Property Name="NOTES" Type="text" />
         </EntityType>
@@ -568,8 +570,7 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
             <End Role="TB_USER" EntitySet="TB_USER" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -699,6 +700,7 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <Property Name="CANDIDATE_SUITABLE_POSITION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CANDIDATE_SOURCE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CANDIDATE_STATE" Type="Int32" />
+          <Property Name="CANDIDATE_CLIENT" Type="Int32" />
           <Property Name="CANDIDATE_EXPECTED_SALARY" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="CANDIDATE_INTERVIEW_DATE" Type="DateTime" Precision="3" />
           <Property Name="PROCESS_DATE" Type="DateTime" Precision="3" />
@@ -706,6 +708,7 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <NavigationProperty Name="TB_CANDIDATE" Relationship="Self.FK__TB_CANDID__CANDI__75A278F5" FromRole="TB_CANDIDATE_SELECTION_HISTORY" ToRole="TB_CANDIDATE" />
           <NavigationProperty Name="TB_STATE_CANDIDATE" Relationship="Self.FK__TB_CANDID__CANDI__778AC167" FromRole="TB_CANDIDATE_SELECTION_HISTORY" ToRole="TB_STATE_CANDIDATE" />
           <NavigationProperty Name="TB_USER" Relationship="Self.FK__TB_CANDID__USER___76969D2E" FromRole="TB_CANDIDATE_SELECTION_HISTORY" ToRole="TB_USER" />
+          <Property Name="LAST_UPDATE" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="TB_CANDIDATE_SKILL">
           <Key>
@@ -1279,6 +1282,7 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
           <EntitySetMapping Name="TB_CANDIDATE_SELECTION_HISTORY">
             <EntityTypeMapping TypeName="DBModel.TB_CANDIDATE_SELECTION_HISTORY">
               <MappingFragment StoreEntitySet="TB_CANDIDATE_SELECTION_HISTORY">
+                <ScalarProperty Name="LAST_UPDATE" ColumnName="LAST_UPDATE" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="CANDIDATE_ID" ColumnName="CANDIDATE_ID" />
                 <ScalarProperty Name="PIC_ID" ColumnName="PIC_ID" />
@@ -1286,6 +1290,7 @@ warning 6002: The table/view 'FinalProject_adp3.dbo.TB_PREFIX' does not have a p
                 <ScalarProperty Name="CANDIDATE_SUITABLE_POSITION" ColumnName="CANDIDATE_SUITABLE_POSITION" />
                 <ScalarProperty Name="CANDIDATE_SOURCE" ColumnName="CANDIDATE_SOURCE" />
                 <ScalarProperty Name="CANDIDATE_STATE" ColumnName="CANDIDATE_STATE" />
+                <ScalarProperty Name="CANDIDATE_CLIENT" ColumnName="CANDIDATE_CLIENT" />
                 <ScalarProperty Name="CANDIDATE_EXPECTED_SALARY" ColumnName="CANDIDATE_EXPECTED_SALARY" />
                 <ScalarProperty Name="CANDIDATE_INTERVIEW_DATE" ColumnName="CANDIDATE_INTERVIEW_DATE" />
                 <ScalarProperty Name="PROCESS_DATE" ColumnName="PROCESS_DATE" />

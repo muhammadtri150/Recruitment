@@ -114,8 +114,10 @@
     <Property Name="CANDIDATE_SUITABLE_POSITION" Type="varchar" MaxLength="50" />
     <Property Name="CANDIDATE_SOURCE" Type="varchar" MaxLength="50" />
     <Property Name="CANDIDATE_STATE" Type="int" />
+    <Property Name="CANDIDATE_CLIENT" Type="int" />
     <Property Name="CANDIDATE_EXPECTED_SALARY" Type="money" />
     <Property Name="CANDIDATE_INTERVIEW_DATE" Type="datetime" />
+    <Property Name="LAST_UPDATE" Type="datetime" />
     <Property Name="PROCESS_DATE" Type="datetime" />
     <Property Name="NOTES" Type="text" />
   </EntityType>

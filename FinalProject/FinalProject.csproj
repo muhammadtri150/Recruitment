@@ -135,6 +135,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Content Include="Content\Assets\Css\table-fixed.css" />
     <Content Include="Content\Assets\Js\candidate\Dashboard\Dashboard.js" />
     <Content Include="Content\Assets\Js\candidate\delivery\Delivery.js" />
     <Content Include="Content\Assets\Js\candidate\delivery\suggest.js" />
@@ -2158,7 +2159,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Assets\Css\" />
     <Folder Include="Content\Assets\Images\User\" />
     <Folder Include="Data\DataCandidate\Cv\" />
     <Folder Include="Data\DataCandidate\Pict\" />

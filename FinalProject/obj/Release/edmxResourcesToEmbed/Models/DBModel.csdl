@@ -126,6 +126,7 @@
     <Property Name="CANDIDATE_SUITABLE_POSITION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="CANDIDATE_SOURCE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="CANDIDATE_STATE" Type="Int32" />
+    <Property Name="CANDIDATE_CLIENT" Type="Int32" />
     <Property Name="CANDIDATE_EXPECTED_SALARY" Type="Decimal" Precision="19" Scale="4" />
     <Property Name="CANDIDATE_INTERVIEW_DATE" Type="DateTime" Precision="3" />
     <Property Name="PROCESS_DATE" Type="DateTime" Precision="3" />
@@ -133,6 +134,7 @@
     <NavigationProperty Name="TB_CANDIDATE" Relationship="Self.FK__TB_CANDID__CANDI__75A278F5" FromRole="TB_CANDIDATE_SELECTION_HISTORY" ToRole="TB_CANDIDATE" />
     <NavigationProperty Name="TB_STATE_CANDIDATE" Relationship="Self.FK__TB_CANDID__CANDI__778AC167" FromRole="TB_CANDIDATE_SELECTION_HISTORY" ToRole="TB_STATE_CANDIDATE" />
     <NavigationProperty Name="TB_USER" Relationship="Self.FK__TB_CANDID__USER___76969D2E" FromRole="TB_CANDIDATE_SELECTION_HISTORY" ToRole="TB_USER" />
+    <Property Name="LAST_UPDATE" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="TB_CANDIDATE_SKILL">
     <Key>

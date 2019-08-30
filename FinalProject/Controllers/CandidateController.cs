@@ -40,8 +40,12 @@ namespace FinalProject.Controllers
                 float DataCount = db.TB_CANDIDATE_SELECTION_HISTORY.Where(sh => sh.CANDIDATE_STATE == 1).ToList().Count();
                 int PageCount = Convert.ToInt16(Math.Ceiling(DataCount / perPage));
                 int idx = (i == null ? 0 : (perPage * int.Parse(i) - perPage));
-                List<CandidateSelectionHistoryDTO> ListCandidate = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().Where(d =>
-                d.CANDIDATE_STATE == 1 || d.CANDIDATE_STATE == 10 || d.CANDIDATE_STATE == 11).Skip(idx).Take(perPage).ToList();
+            
+                List<CandidateSelectionHistoryDTO> ListCandidate = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory()
+                .Where(d => d.CANDIDATE_STATE == 1)
+                .Skip(idx)
+                .Take(perPage)
+                .ToList();
 
                 //---------------------------- prepare data viewbag --------------------
 
@@ -102,13 +106,22 @@ namespace FinalProject.Controllers
                         PageCount = Convert.ToInt16(Math.Ceiling(DataCount / perPage));
                     }
                 }
-                //============================ end process searchng ============================
+            //============================ end process searchng ============================
+            List<string> Degree = new List<string>()
+            {
+                "High School", "Diploma", "Bachelor", "Magister", "Doctor"
+            };
+
                 ViewBag.DataView = new Dictionary<string, object>{
                     {"title","Praselection"},
                     {"ListPosition",Manage_JobPositionDTO.GetData()},
-                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 1)},
-                    {"PageCount",PageCount}
+                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 1 || d.ID == 10 || d.ID == 11)},
+                    {"PageCount",PageCount},
                     };
+            ViewBag.Degree = new Dictionary<string, object>
+            {
+                { "ListDegree", new List<string>{"High School", "Diploma" }}
+            };
                 //return view
                 return View("Preselection/Index", ListCandidate);
             //}
@@ -230,7 +243,7 @@ namespace FinalProject.Controllers
                 ViewBag.DataView = new Dictionary<string, object>()
                 {
                     {"title","praselection"},
-                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 2 || d.ID == 1 ).ToList() }
+                    {"ListState",Manage_StateCandidateDTO.GetData().Where(d => d.ID == 2 || d.ID == 1 || d.ID == 11 ).ToList() }
                 };
 
                 return View("Preselection/EditCandidate", DataCandidate);
@@ -251,26 +264,63 @@ namespace FinalProject.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var ProcessEdit = Manage_CandidateDTO.EditCandidate(Data, Pict, Cv);
-
-                    if (ProcessEdit > 0)
+                    if (Data.CANDIDATE_STATE_ID == 11)
                     {
-                        if(TempData["message"] == null)
+                        using (DBEntities db = new DBEntities())
                         {
-                        TempData.Add("message", "Candidate Update successfully");
-                        TempData.Add("type", "success");
-                        UserLogingUtils.SaveLoggingUserActivity("Edit Candidate" + Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID));
+                            var SelectCan = db.TB_CANDIDATE.FirstOrDefault(d => d.ID == Data.ID);
+                            var SelectHis = db.TB_CANDIDATE_SELECTION_HISTORY.FirstOrDefault(d => d.CANDIDATE_STATE == 1 && d.CANDIDATE_ID == Data.ID);
+                            var SelectJobExp = db.TB_CANDIDATE_JOB_EXPERIENCE.FirstOrDefault(d => d.CANDIDATE_ID == Data.ID);
+                            //process removing state call
+                            db.TB_CANDIDATE_SELECTION_HISTORY.Remove(SelectHis);
+                            if( SelectJobExp != null) {
+                                db.TB_CANDIDATE_JOB_EXPERIENCE.Remove(SelectJobExp);
+                            }
+                            db.TB_CANDIDATE.Remove(SelectCan);
+                            var Edit = db.SaveChanges();
+
+                            if (Edit > 0)
+                            {
+                                if (TempData["message"] == null)
+                                {
+                                    TempData.Add("message", "Candidate Update successfully");
+                                    TempData.Add("type", "success");
+                                    UserLogingUtils.SaveLoggingUserActivity("Drop Candidate" + Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID));
+                                }
+                            }
+                            else
+                            {
+                                if (TempData["message"] == null)
+                                {
+                                    TempData.Add("message", "Candidate drop is Failed");
+                                    TempData.Add("type", "warning");
+                                }
+                            }
                         }
                     }
-                    else
-                    {
-                        if(TempData["message"] == null)
+                    else { 
+                        var ProcessEdit = Manage_CandidateDTO.EditCandidate(Data, Pict, Cv);
+
+                    
+
+                        if (ProcessEdit > 0)
                         {
-                        TempData.Add("message", "Candidate failed to Update");
-                        TempData.Add("type", "warning");
+                            if(TempData["message"] == null)
+                            {
+                            TempData.Add("message", "Candidate Update successfully");
+                            TempData.Add("type", "success");
+                            UserLogingUtils.SaveLoggingUserActivity("Edit Candidate" + Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID));
+                            }
+                        }
+                        else
+                        {
+                            if(TempData["message"] == null)
+                            {
+                            TempData.Add("message", "Candidate failed to Update");
+                            TempData.Add("type", "warning");
+                            }
                         }
                     }
-
                     return Redirect("~/candidate/praselection/read");
                 }
                 CandidateDTO DataCandidate = Manage_CandidateDTO.GetDataCandidate().FirstOrDefault(d => d.ID == Data.ID);
@@ -1361,7 +1411,7 @@ namespace FinalProject.Controllers
                     
                 var Candidate = db.TB_CANDIDATE.FirstOrDefault(c => c.ID == data.CANDIDATE_ID);
                 Candidate.CANDIDATE_STATE_ID = 6;
-                ProcessEdit = db.SaveChanges();
+                     ProcessEdit = db.SaveChanges();
                 //process add selection history
                 //preparedata pic
                 UserDTO DataPic = (UserDTO)Session["UserLogin"];
@@ -1390,7 +1440,8 @@ namespace FinalProject.Controllers
                     NOTE = data.NOTE,
                     CANDIDATE_POSITION = Candidate.SUITABLE_POSITION
                 });
-                    if (ProcessEdit > 0)
+                    
+                    if ( ProcessAddDelivery > 0 && ProcessAddSelectionHistory > 0)
                     {
                         if(TempData["message"] == null)
                         {
@@ -1527,6 +1578,7 @@ namespace FinalProject.Controllers
                     Delivery.CANDIDATE_STATE = Data.CANDIDATE_STATE;
 
                     db.TB_CANDIDATE_SELECTION_HISTORY.FirstOrDefault(s => s.ID == Data.SELECTION_ID).CANDIDATE_STATE = Data.CANDIDATE_STATE;
+                    db.TB_CANDIDATE_SELECTION_HISTORY.FirstOrDefault(s => s.ID == Data.SELECTION_ID).CANDIDATE_CLIENT = Data.CLIENT_ID;
 
                     if (db.SaveChanges() > 0)
                     {
@@ -1573,31 +1625,29 @@ namespace FinalProject.Controllers
                 List<CandidateSelectionHistoryDTO> ListCandidate = Manage_CandidateSelectionHistoryDTO.GetDataSelectionHistory().Where(d => d.CANDIDATE_STATE == 14 || d.CANDIDATE_STATE == 21).Skip(idx).Take(perPage).ToList();
 
 
+
                 //============================ process searchng ============================
                 if (Request["filter"] != null)
                 {
-                    string Position = Request["POSITION"];
+                    int ClientId = Convert.ToInt16(Request["CLIENT"]);
                     int StateId = Convert.ToInt16(Request["CANDIDATE_STATE"]);
                     string Keyword = Request["Keyword"];
                     string DataPerPage = Request["DataPerPage"];
                     int dt = DataPerPage == "" ? 5 : Convert.ToInt16(DataPerPage);
 
-                    if (StateId != 0 && (Position == "all" && Keyword == ""))
+                    if (StateId != 0 && (ClientId == 0 && Keyword == ""))
                     {
                         ListCandidate = ListCandidate.Where(d => d.CANDIDATE_STATE == StateId).ToList();
                         DataCount = ListCandidate.Count();
                         PageCount = Convert.ToInt16(Math.Ceiling(DataCount / perPage));
                     }
-                    if (Position != "all" && (StateId == 0 && Keyword == ""))
+                    if (ClientId != 0 && (StateId == 0 && Keyword == ""))
                     {
-                        ListCandidate = ListCandidate.Where(d =>
-                        d.CANDIDATE_APPLIED_POSITION == Position ||
-                        d.CANDIDATE_SUITABLE_POSITION == Position &&
-                        ( d.ID == 14 || d.ID == 21)).ToList();
+                        ListCandidate = ListCandidate.Where(m => m.CANDIDATE_CLIENT == ClientId && (m.CANDIDATE_STATE == 14 || m.CANDIDATE_STATE == 21)).ToList();
                         DataCount = ListCandidate.Count();
                         PageCount = Convert.ToInt16(Math.Ceiling(DataCount / perPage));
                     }
-                    if (Keyword != "" && (StateId == 0 && Position == "all"))
+                    if (Keyword != "" && (StateId == 0 && ClientId == 0))
                     {
                         ListCandidate = ListCandidate.Where(d =>
                         d.CANDIDATE_EMAIL.Contains(Keyword) ||
@@ -1619,8 +1669,7 @@ namespace FinalProject.Controllers
                     else
                     {
                         ListCandidate = ListCandidate.Where(d =>
-                         d.CANDIDATE_APPLIED_POSITION == Position ||
-                         d.CANDIDATE_SUITABLE_POSITION == Position ||
+                         d.CANDIDATE_CLIENT ==  ClientId ||
                          d.CANDIDATE_STATE == StateId ||
                          d.CANDIDATE_EMAIL.Contains(Keyword) ||
                          d.CANDIDATE_NAME.Contains(Keyword) ||
@@ -1635,15 +1684,16 @@ namespace FinalProject.Controllers
                 //---------------------------- prepare data viewbag --------------------
                 ViewBag.DataView = new Dictionary<string, object>{
                     {"title","Suggestion"},
-                    {"ListPosition",Manage_JobPositionDTO.GetData()},
+                    {"ListClient", Manage_ClientDTO.GetData()},
                     {"PageCount",PageCount}
                     };
 
                 return View("Suggestion/Suggestion", ListCandidate);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return Redirect("~/auth/error");
+                string msg = e.Message.Replace('\n', ' ') + e.StackTrace.Replace('\n', ' ');
+                return Redirect("~/auth/error?msg=" + (ConfigurationManager.AppSettings["env"].ToString().Equals("development") ? msg : " "));
             }
         }
 
@@ -1663,6 +1713,9 @@ namespace FinalProject.Controllers
                     Delivery.CANDIDATE_STATE = Data.CANDIDATE_STATE;
 
                     db.TB_CANDIDATE_SELECTION_HISTORY.FirstOrDefault(s => s.ID == Data.SELECTION_ID).CANDIDATE_STATE = Data.CANDIDATE_STATE;
+                    db.TB_CANDIDATE_SELECTION_HISTORY.FirstOrDefault(s => s.ID == Data.SELECTION_ID).CANDIDATE_CLIENT = Data.CLIENT_ID;
+
+
 
                     if (db.SaveChanges() > 0)
                     {

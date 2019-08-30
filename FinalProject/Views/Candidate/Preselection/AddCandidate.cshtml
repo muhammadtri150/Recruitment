@@ -180,7 +180,7 @@
                                 @Html.ValidationMessageFor(m => m.AVAILABLE_JOIN, null, new { @class = "text-danger" })
                             </div>
                             <div class="form-group">
-                                <label for="EXPECTED_sALARY">Excpected Salary<font color="red">*</font></label>
+                                <label for="EXPECTED_sALARY">Expected Salary<font color="red">*</font></label>
                                 @Html.TextBoxFor(m => m.EXPECTED_sALARY, new { @class = "form-control", @id = "EXPECTED_sALARY" })
                                 @Html.ValidationMessageFor(m => m.EXPECTED_sALARY, null, new { @class = "text-danger" })
                             </div>
@@ -205,7 +205,13 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="CANDIDATE_DEGREE">Degree<font color="red">*</font></label>
-                                    @Html.TextBoxFor(m => m.CANDIDATE_DEGREE, new { @class = "form-control", @id = "CANDIDATE_DEGREE" })
+                                    <select id="CANDIDATE_DEGREE" class="form-control" name="CANDIDATE_DEGREE" >
+                                        <option value="High School">High School</option>
+                                        <option value="Diploma">Diploma</option>
+                                        <option value="Bachelor">Bachelor</option>
+                                        <option value="Master">Magister</option>
+                                        <option value="Doctor">Doctor</option>
+                                    </select>
                                     @Html.ValidationMessageFor(m => m.CANDIDATE_DEGREE, null, new { @class = "text-danger" })
                                 </div>
                                 <div class="form-group">

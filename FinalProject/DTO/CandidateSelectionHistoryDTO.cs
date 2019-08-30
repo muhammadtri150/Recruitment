@@ -22,6 +22,8 @@ namespace FinalProject.DTO
         public System.DateTime? PROCESS_DATE { get; set; }
         public string NOTES { get; set; }
         public System.DateTime? CANDIDATE_INTERVIEW_DATE { get; set; }
+        public int? CANDIDATE_CLIENT { get; set; }
+        public System.DateTime? LAST_UPDATE { get; set; }
 
 
         //data candidate
@@ -47,7 +49,7 @@ namespace FinalProject.DTO
         {
             using(DBEntities db = new DBEntities())
             {
-                
+
                 db.TB_CANDIDATE_SELECTION_HISTORY.Add(new TB_CANDIDATE_SELECTION_HISTORY
                 {
                     CANDIDATE_ID = data.CANDIDATE_ID,
@@ -59,7 +61,9 @@ namespace FinalProject.DTO
                     CANDIDATE_EXPECTED_SALARY = data.CANDIDATE_EXPECTED_SALARY,
                     PROCESS_DATE = DateTime.Now,
                     NOTES = data.NOTES,
-                    CANDIDATE_INTERVIEW_DATE = data.CANDIDATE_INTERVIEW_DATE
+                    CANDIDATE_INTERVIEW_DATE = data.CANDIDATE_INTERVIEW_DATE,
+                    LAST_UPDATE = DateTime.Now
+                    
                 });
 
                 return db.SaveChanges();
@@ -92,7 +96,9 @@ namespace FinalProject.DTO
                         PIC_ID = sh.PIC_ID,
                         //DataPic = Manage_UserDTO.GetDataUser().FirstOrDefault(d => d.USER_ID == sh.PIC_ID)
                         PIC_FULL_NAME = db.TB_USER.FirstOrDefault(u => u.USER_ID == sh.PIC_ID).FULL_NAME,
-                        CANDIDATE_INTERVIEW_DATE = sh.CANDIDATE_INTERVIEW_DATE
+                        CANDIDATE_INTERVIEW_DATE = sh.CANDIDATE_INTERVIEW_DATE,
+                        CANDIDATE_CLIENT = sh.CANDIDATE_CLIENT,
+                        
                     }
                 ).ToList();
                 return Data;
@@ -117,9 +123,12 @@ namespace FinalProject.DTO
                 DataSelectHistory.CANDIDATE_APPLIED_POSITION = Data.CANDIDATE_APPLIED_POSITION;
                 DataSelectHistory.CANDIDATE_SUITABLE_POSITION = Data.CANDIDATE_SUITABLE_POSITION;
                 DataSelectHistory.CANDIDATE_SOURCE = Data.CANDIDATE_SOURCE;
+                DataSelectHistory.CANDIDATE_CLIENT = Data.CANDIDATE_CLIENT;
                 return db.SaveChanges();
             }
         }
+
+        
 
     }
 }
